@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  ============================================================
+  知识文档默认 HTML 阅读模板 (Knowledge Doc Template)
+  版本: v1.0  日期: 2026-09-09
+
+  占位符约定（供 MD→HTML 转换脚本替换，边界用 HTML 注释标记）:
+    &lt;title&gt;...&lt;/title&gt;                                      页面标题
+    &lt;!-- DOC_TITLE_START --&gt; ... &lt;!-- DOC_TITLE_END --&gt;     文档主标题
+    &lt;!-- DOC_DATE_START --&gt; ... &lt;!-- DOC_DATE_END --&gt;       日期
+    &lt;!-- DOC_TAGS_START --&gt; ... &lt;!-- DOC_TAGS_END --&gt;       标签(逗号分隔)
+    &lt;!-- DOC_AUTHOR_START --&gt; ... &lt;!-- DOC_AUTHOR_END --&gt;   作者
+    &lt;!-- TOC_START --&gt; ... &lt;!-- TOC_END --&gt;                 目录(留空则内联 JS 自动生成)
+    &lt;!-- CONTENT_START --&gt; ... &lt;!-- CONTENT_END --&gt;         正文(转换脚本替换此区)
+
+  零外网依赖: 所有 CSS/JS 内嵌, 不加载任何 CDN/字体/图片。
+  代码高亮: 内置 Pygments 风格 token 类 CSS, 配合 python-markdown
+            (fenced_code + codehilite) 或 pandoc 的 highlight-style=pygments 参数。
+  ============================================================
+-->
+<title>iGEM Wiki — Model 页面框架</title>
+<style>
+/* ============ 主题变量 (浅色默认 / 深色跟随系统) ============ */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --heading: #0d1117;
+  --border: #d0d7de;
+  --accent: #c22b2b;          /* 强调/链接色: 克制红 */
+  --accent-soft: #fdf0f0;
+  --code-bg: #f6f8fa;
+  --code-border: #e7ebef;
+  --inline-code-bg: #eff1f3;
+  --table-head-bg: #f6f8fa;
+  --table-stripe: #fafbfc;
+  --quote-border: #c22b2b;
+  --quote-bg: #fdf5f5;
+  --toc-active: #c22b2b;
+  --toc-active-bg: #fdf0f0;
+  --shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-soft: #161b22;
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --heading: #f0f6fc;
+  --border: #30363d;
+  --accent: #ff7b72;
+  --accent-soft: #2a1614;
+  --code-bg: #161b22;
+  --code-border: #30363d;
+  --inline-code-bg: #21262d;
+  --table-head-bg: #161b22;
+  --table-stripe: #11161d;
+  --quote-border: #ff7b72;
+  --quote-bg: #1c1413;
+  --toc-active: #ff7b72;
+  --toc-active-bg: #2a1614;
+  --shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --bg: #0d1117;
+    --bg-soft: #161b22;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --heading: #f0f6fc;
+    --border: #30363d;
+    --accent: #ff7b72;
+    --accent-soft: #2a1614;
+    --code-bg: #161b22;
+    --code-border: #30363d;
+    --inline-code-bg: #21262d;
+    --table-head-bg: #161b22;
+    --table-stripe: #11161d;
+    --quote-border: #ff7b72;
+    --quote-bg: #1c1413;
+    --toc-active: #ff7b72;
+    --toc-active-bg: #2a1614;
+    --shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+}
+
+/* ============ 基础重置与排版 ============ */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============ 顶栏 ============ */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 10px 22px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar .brand { font-weight: 700; font-size: 15px; color: var(--heading); }
+.topbar .brand::before { content: "▤ "; color: var(--accent); }
+.topbar .tools { display: flex; gap: 8px; }
+.icon-btn {
+  border: 1px solid var(--border); background: var(--bg-soft);
+  color: var(--text-muted); border-radius: 6px;
+  padding: 4px 10px; font-size: 13px; cursor: pointer; line-height: 1.5;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ============ 文档头部(标题 + 元信息) ============ */
+.doc-header {
+  max-width: 1180px; margin: 0 auto;
+  padding: 40px 28px 20px;
+}
+.doc-title {
+  margin: 0 0 12px; font-size: 2em; line-height: 1.3;
+  color: var(--heading); font-weight: 700; letter-spacing: .2px;
+}
+.doc-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--text-muted); font-size: 13.5px; }
+.doc-meta .meta-item { display: inline-flex; align-items: center; gap: 5px; }
+.doc-meta .meta-item::before { content: "·"; color: var(--accent); font-weight: 700; }
+.doc-meta .tag { display: inline-block; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); font-size: 12.5px; }
+
+/* ============ 布局: TOC 侧栏 + 正文 ============ */
+.layout {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 250px minmax(0, 1fr);
+  gap: 28px; padding: 0 28px 60px; align-items: start;
+}
+.toc {
+  position: sticky; top: 70px; max-height: calc(100vh - 90px);
+  overflow-y: auto; padding-right: 6px; font-size: 13.5px;
+}
+.toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin: 0 0 8px; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 1px 0; }
+.toc a {
+  display: block; padding: 3px 10px; border-left: 2px solid transparent;
+  color: var(--text-muted); border-radius: 0 4px 4px 0; line-height: 1.5;
+}
+.toc a:hover { color: var(--text); }
+.toc li.lvl2 > a { padding-left: 22px; font-size: 12.5px; }
+.toc a.active {
+  color: var(--toc-active); background: var(--toc-active-bg);
+  border-left-color: var(--toc-active); font-weight: 600;
+}
+
+/* ============ 正文 ============ */
+.content { max-width: 72ch; min-width: 0; }
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  color: var(--heading); line-height: 1.35; scroll-margin-top: 80px; margin-top: 1.6em;
+}
+.content h2 { font-size: 1.5em; margin-top: 2em; padding-bottom: .35em;
+  border-bottom: 1px solid var(--border); }
+.content h3 { font-size: 1.25em; }
+.content h4 { font-size: 1.1em; }
+.content h5, .content h6 { font-size: 1em; }
+.content p { margin: .85em 0; }
+.content strong { color: var(--heading); }
+.content ul, .content ol { padding-left: 1.6em; margin: .7em 0; }
+.content li { margin: .3em 0; }
+.content li > ul, .content li > ol { margin: .2em 0; }
+.content img { max-width: 100%; border-radius: 6px; }
+.content code {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .875em;
+  background: var(--inline-code-bg); border: 1px solid var(--code-border);
+  padding: .15em .4em; border-radius: 4px; color: var(--accent);
+}
+.content hr { border: none; border-top: 1px solid var(--border); margin: 2.2em 0; }
+
+/* ============ 代码块 + 复制按钮 ============ */
+.content pre {
+  position: relative; margin: 1.1em 0; padding: 16px 18px;
+  background: var(--code-bg); border: 1px solid var(--code-border);
+  border-radius: 8px; overflow-x: auto; line-height: 1.6;
+  box-shadow: var(--shadow);
+}
+.content pre code {
+  background: none; border: none; padding: 0; color: var(--text);
+  font-size: 13.5px; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text-muted);
+  border-radius: 6px; font-size: 12px; padding: 2px 9px; cursor: pointer; opacity: 0;
+  transition: opacity .15s;
+}
+.content pre:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+/* 触屏设备无 hover, 复制按钮常显 */
+@media (hover: none) { .content .copy-btn { opacity: 1; } }
+
+/* ============ 表格 ============ */
+.table-wrap { overflow-x: auto; margin: 1.2em 0; border: 1px solid var(--border); border-radius: 8px; }
+.content table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+.content th, .content td { padding: 8px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+.content thead th { background: var(--table-head-bg); font-weight: 600; color: var(--heading); white-space: nowrap; }
+.content tbody tr:nth-child(even) { background: var(--table-stripe); }
+.content tbody tr:last-child td { border-bottom: none; }
+
+/* ============ 引用块 ============ */
+.content blockquote {
+  margin: 1.2em 0; padding: 10px 18px;
+  border-left: 4px solid var(--quote-border);
+  background: var(--quote-bg); border-radius: 0 6px 6px 0; color: var(--text);
+}
+.content blockquote p { margin: .4em 0; }
+.content blockquote cite { display: block; margin-top: .5em; color: var(--text-muted); font-size: .9em; }
+
+/* ============ 页脚 ============ */
+.doc-footer { max-width: 1180px; margin: 0 auto; padding: 20px 28px 48px;
+  border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; text-align: center; }
+
+/* ============ 响应式 ============ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 0; padding: 0 20px 48px; }
+  .toc { display: none; }          /* 窄屏折叠侧栏, 依赖顶栏阅读 */
+  .doc-header { padding: 28px 20px 14px; }
+  .doc-title { font-size: 1.6em; }
+  .content { max-width: 100%; }
+}
+@media (max-width: 560px) {
+  body { font-size: 15px; }
+  .content pre { padding: 12px 12px; }
+  .content pre code { font-size: 12.5px; }
+  .doc-title { font-size: 1.45em; }
+  .topbar { padding: 8px 14px; }
+}
+
+/* ============ 打印 ============ */
+@media print {
+  .topbar, .toc, .copy-btn { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  .doc-header { padding: 0 0 12px; }
+  body { background: #fff; color: #000; }
+}
+
+/* ============ Pygments 语法高亮 token 类 ============ */
+/* 关键词 */ .content .k, .content .kc, .content .kd, .content .kn, .content .kp,
+             .content .kr, .content .kt { color: var(--accent); font-weight: 600; }
+/* 字符串 */ .content .s, .content .s1, .content .s2, .content .sb, .content .sc,
+             .content .sd, .content .se, .content .sh, .content .si, .content .sx,
+             .content .sr, .content .ss { color: #0a6f5a; }
+:root[data-theme="dark"] .content .s, :root[data-theme="dark"] .content .s1,
+:root[data-theme="dark"] .content .s2, :root[data-theme="dark"] .content .sd,
+:root[data-theme="dark"] .content .sb, :root[data-theme="dark"] .content .sc,
+:root[data-theme="dark"] .content .se, :root[data-theme="dark"] .content .sh,
+:root[data-theme="dark"] .content .si, :root[data-theme="dark"] .content .sx,
+:root[data-theme="dark"] .content .sr, :root[data-theme="dark"] .content .ss { color: #7ee787; }
+/* 注释 */ .content .c, .content .c1, .content .cm, .content .cs, .content .cp { color: var(--text-muted); font-style: italic; }
+/* 数字 */ .content .m, .content .mi, .content .mf, .content .mh, .content .mo { color: #0550ae; }
+:root[data-theme="dark"] .content .m, :root[data-theme="dark"] .content .mi,
+:root[data-theme="dark"] .content .mf, :root[data-theme="dark"] .content .mh,
+:root[data-theme="dark"] .content .mo { color: #79c0ff; }
+/* 函数名 */ .content .nf { color: #8250df; }
+:root[data-theme="dark"] .content .nf { color: #d2a8ff; }
+/* 类/类型 */ .content .nc, .content .nn, .content .nt { color: #953800; }
+:root[data-theme="dark"] .content .nc, :root[data-theme="dark"] .content .nn,
+:root[data-theme="dark"] .content .nt { color: #ffa657; }
+/* 运算符 */ .content .o, .content .ow { color: var(--accent); }
+/* 内建/装饰器/标签属性 */ .content .nb, .content .bp { color: #953800; }
+:root[data-theme="dark"] .content .nb, :root[data-theme="dark"] .content .bp { color: #ffa657; }
+.content .nd, .content .na { color: #8250df; }
+:root[data-theme="dark"] .content .nd, :root[data-theme="dark"] .content .na { color: #d2a8ff; }
+
+/* pandoc 核心类兜底映射(转换时用 --highlight-style=pygments 得短类名) */
+.content .kw, .content .cf, .content .im { color: var(--accent); font-weight: 600; } /* 关键字/控制流/导入 */
+.content .op { color: var(--accent); }                                               /* 运算符 */
+.content .dt, .content .bu, .content .ex { color: #953800; }                         /* 类型/内建/异常 */
+.content .dv, .content .bn, .content .fl { color: #0550ae; }                         /* 数字 */
+.content .st, .content .ch, .content .ss, .content .vs, .content .re { color: #0a6f5a; } /* 字符串类 */
+.content .co, .content .do, .content .an { color: var(--text-muted); font-style: italic; } /* 注释/文档 */
+.content .fu, .content .at, .content .va, .content .pp { color: #8250df; }           /* 函数/属性/变量/预处理 */
+:root[data-theme="dark"] .content .dt, :root[data-theme="dark"] .content .bu,
+:root[data-theme="dark"] .content .ex { color: #ffa657; }
+:root[data-theme="dark"] .content .dv, :root[data-theme="dark"] .content .bn,
+:root[data-theme="dark"] .content .fl { color: #79c0ff; }
+:root[data-theme="dark"] .content .st, :root[data-theme="dark"] .content .ch,
+:root[data-theme="dark"] .content .ss, :root[data-theme="dark"] .content .vs,
+:root[data-theme="dark"] .content .re { color: #7ee787; }
+:root[data-theme="dark"] .content .fu, :root[data-theme="dark"] .content .at,
+:root[data-theme="dark"] .content .va, :root[data-theme="dark"] .content .pp { color: #d2a8ff; }
+</style>
+</head>
+<body>
+<!-- ============ 顶栏 ============ -->
+<div class="topbar">
+  <span class="brand">知识文档</span>
+  <div class="tools">
+    <button class="icon-btn" id="theme-btn" title="切换深浅色">浅色</button>
+    <button class="icon-btn" id="backtop-btn" title="回到顶部">回到顶部</button>
+  </div>
+</div>
+
+<!-- ============ 文档头部 ============ -->
+<header class="doc-header">
+  <h1 class="doc-title">iGEM Wiki — Model 页面框架</h1>
+  <div class="doc-meta">
+    <span class="meta-item">2026-09-14</span>
+    
+    
+  </div>
+</header>
+
+<!-- ============ 布局 ============ -->
+<div class="layout">
+  <nav class="toc" id="toc">
+    <!-- TOC_START -->
+    <h2>目录</h2>
+    <ul id="toc-list"><!-- 内联 JS 自动填充，或由转换脚本静态注入 --></ul>
+    <!-- TOC_END -->
+  </nav>
+
+  <main class="content" id="content">
+    <article>
+      <blockquote>
+<p>主题：筛选管线的原理与开发过程　｜　正文建议用英文</p>
+</blockquote>
+<hr />
+<h2 id="0-页面定位">0. 页面定位</h2>
+<p>说明本页回答什么问题（如何从共缺失的 20–40
+个基因中挑出主效靶点），以及与其他页面的引用关系。</p>
+<h2 id="1-问题定义">1. 问题定义</h2>
+<p>疾病背景（WBS 7q11.23 / WHS
+4p16.3）；为什么必须筛主效基因；治疗策略对靶点的三条约束（剂量不足驱动、上调可挽救、过表达安全）。</p>
+<h2 id="2-为什么自建管线而不是直接用现成-ai">2.
+为什么自建管线，而不是直接用现成 AI</h2>
+<p>用项目自身的负结果说明必要性：归因与扰动效应 r=0.02、GEARS
+对候选基因覆盖 4/41、Nature Methods 2025
+基准显示深度模型未超线性基线。结论：改用证据金字塔 + 强制对照。</p>
+<h2 id="3-原理四层证据金字塔">3. 原理：四层证据金字塔</h2>
+<p>总览图 + 严格单向的层间关系（下游不可回补上游）。</p>
+<ul>
+<li><strong>3.1 L1 遗传学证据层</strong> —— ClinGen HI/三倍剂量、gnomAD
+pLI/LOEUF、DeepLOF（可选 AI 层）、HGNC 主键与三值标注</li>
+<li><strong>3.2 L2 验证层</strong> —— scRNA-seq mRNA 补偿状态（ratio
+与四种分类），为什么它只做验证不做发现</li>
+<li><strong>3.3 L3 机制假设层</strong> —— VirtualCellTool
+五个引擎的分工与定位；为什么选
+CIPHER（零训练、上下调对称）；为什么强制并排线性基线</li>
+<li><strong>3.4 被否决的方案</strong> —— 表格列出否决项与理由（AI
+直接排序、scRNA-seq CNV 发现、HPA 惩罚项、rank 归一化、CellOracle
+当因果引擎）</li>
+<li><strong>3.5 为什么不可回补</strong> —— 回补会重新引入归因偏倚与 mRNA
+隐身问题</li>
+</ul>
+<h2 id="4-开发过程dbtl-七轮循环">4. 开发过程：DBTL 七轮循环</h2>
+<p>每轮统一写：假设 → 实现 → 测试数据 → 发现 → 下一轮改动。 七轮主题：v1
+骨架 / WBS 首跑发现归一化伪影 / raw 修正与 DeepLOF 接入 / v2.1-v2.2
+六项优化 / WHS 实证与符号缺口修复 / 六 mode 全验证 / VirtualCellTool
+修复与可视化。</p>
+<h2 id="5-验证正对照与负对照">5. 验证：正对照与负对照</h2>
+<p>正对照结果（WHS NSD2 #1、WBS 6/6 命中）；负对照设置（线性基线、GEARS
+覆盖性检查）；未通过的案例与原因。</p>
+<h2 id="6-与湿实验治疗设计的接口">6. 与湿实验/治疗设计的接口</h2>
+<p>三列决策面板（L1 排名 × 补偿状态 × 机制假设）；案例：GTF2I
+的排名分歧；进入湿实验的前置条件。</p>
+<h2 id="7-局限与未来工作">7. 局限与未来工作</h2>
+<p>表格化呈现局限（翻译层盲区、单基因-多基因错配、mRNA
+隐身、组织选择、数据缺口、未验证假设）与对应的未来工作。</p>
+<h2 id="8-可复现性">8. 可复现性</h2>
+<p>数据源与 checksum、审计产物、配置驱动、测试命令、代码获取方式。</p>
+<h2 id="9-图表清单">9. 图表清单</h2>
+<p>列出全页配图及来源（四层架构图、负结果图、正对照热图、补偿分布、DBTL
+时间线、CIPHER 预测示例、ELN 负结果、基线对照、位移图）。</p>
+
+    </article>
+  </main>
+</div>
+<!-- ============ 页脚 ============ -->
+<footer class="doc-footer">
+  由知识文档 HTML 模板 v1.0 生成 · 零外网依赖 · 适配桌面与移动端
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 1. 目录(TOC)自动生成: 收集正文 h2/h3 ---------- */
+  var content = document.getElementById('content');
+  var tocList = document.getElementById('toc-list');
+  if (content && tocList) {
+    var headings = content.querySelectorAll('h2, h3');
+    headings.forEach(function (h, i) {
+      if (!h.id) { h.id = 'sec-' + i; }        // 无 id 时自动补锚点
+      var li = document.createElement('li');
+      li.className = h.tagName.toLowerCase() === 'h3' ? 'lvl2' : 'lvl1';
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  }
+
+  /* ---------- 2. scrollspy: 滚动时高亮当前章节 ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#toc-list a'));
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    var map = {};
+    tocLinks.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          tocLinks.forEach(function (a) { a.classList.remove('active'); });
+          var link = map[e.target.id];
+          if (link) { link.classList.add('active'); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    content.querySelectorAll('h2, h3').forEach(function (h) { spy.observe(h); });
+  }
+
+  /* ---------- 3. 代码块复制按钮 ---------- */
+  content.querySelectorAll('pre').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.addEventListener('click', function () {
+      var text = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* ---------- 4. 深浅色切换(light / dark / auto 循环) ---------- */
+  var themeBtn = document.getElementById('theme-btn');
+  var order = ['auto', 'light', 'dark'];
+  var label = { auto: '跟随系统', light: '浅色', dark: '深色' };
+  var saved = null;
+  try { saved = localStorage.getItem('kd-theme'); } catch (e) {}
+  if (saved && order.indexOf(saved) >= 0) { document.documentElement.setAttribute('data-theme', saved); }
+  var idx = saved ? order.indexOf(saved) : 0;
+  function renderTheme() {
+    document.documentElement.setAttribute('data-theme', order[idx]);
+    if (themeBtn) { themeBtn.textContent = label[order[idx]]; }
+    try { localStorage.setItem('kd-theme', order[idx]); } catch (e) {}
+  }
+  renderTheme();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      idx = (idx + 1) % order.length;
+      renderTheme();
+    });
+  }
+
+  /* ---------- 5. 回到顶部 ---------- */
+  var backTop = document.getElementById('backtop-btn');
+  if (backTop) {
+    backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+})();
+</script>
+</body>
+</html>

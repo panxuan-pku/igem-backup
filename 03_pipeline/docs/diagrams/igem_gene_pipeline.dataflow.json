@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "iGEM 微缺失主效基因筛选管线",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1080, 520]
+  },
+  "stages": [
+    { "label": "数据源" },
+    { "label": "整理" },
+    { "label": "推断" },
+    { "label": "提取 · 整合 · 共识" },
+    { "label": "产出 · 下游" }
+  ],
+  "nodes": [
+    { "id": "scrna", "type": "external", "label": "scRNA-seq 原始", "sublabel": "GEO GSE283473 · 10x mtx", "stage": 0, "row": 0, "tag": "CTRL1 / WS1" },
+    { "id": "gtf", "type": "external", "label": "GENCODE v44", "sublabel": "蛋白编码基因注释 GTF", "stage": 0, "row": 1, "tag": "GRCh38" },
+    { "id": "refdb", "type": "external", "label": "参考数据库", "sublabel": "ClinGen · gnomAD · HPA · HGNC", "stage": 0, "row": 2, "width": 132 },
+    { "id": "stage_samples", "type": "backend", "label": "stage-samples", "sublabel": "GEO → per-sample 10x", "stage": 1, "row": 0 },
+    { "id": "prepare_order", "type": "backend", "label": "prepare-order", "sublabel": "GTF → 基因排序表", "stage": 1, "row": 1 },
+    { "id": "infercnv", "type": "backend", "label": "infercnv", "sublabel": "QC → 归一化 → infercnvpy", "stage": 2, "row": 0, "tag": "回退路径" },
+    { "id": "extract_genes", "type": "backend", "label": "call-segments · extract-genes", "sublabel": "片段 → candidates.csv", "stage": 3, "row": 0, "width": 190, "tag": "仅已知区间" },
+    { "id": "normalize_merge", "type": "backend", "label": "normalize · merge_evidence", "sublabel": "HGNC ID 归一化 + 证据整合", "stage": 3, "row": 1, "width": 168, "tag": "ADR-001" },
+    { "id": "consensus", "type": "backend", "label": "consensus_v2", "sublabel": "加权排名 + Borda + LOO", "stage": 3, "row": 2 },
+    { "id": "ranked", "type": "database", "label": "candidates_ranked_v2", "sublabel": "top-N 排名 + report_v2.md", "stage": 4, "row": 2, "width": 140 },
+    { "id": "downstream", "type": "external", "label": "L3 扰动工具", "sublabel": "VirtualCellTool · CellOracle", "stage": 4, "row": 0, "width": 150 }
+  ],
+  "flows": [
+    { "from": "scrna", "to": "stage_samples", "label": "10x mtx", "classification": "原始表达矩阵", "variant": "emphasis" },
+    { "from": "gtf", "to": "prepare_order", "label": "GTF 注释", "classification": "基因坐标", "variant": "default" },
+    { "from": "stage_samples", "to": "infercnv", "label": "per-sample 10x", "classification": "样本矩阵", "variant": "emphasis" },
+    { "from": "prepare_order", "to": "infercnv", "label": "基因排序表", "classification": "基因组坐标", "variant": "default", "fromSide": "right", "toSide": "bottom", "via": [[530, 271]] },
+    { "from": "infercnv", "to": "extract_genes", "label": "窗口信号", "classification": "两档分辨率", "variant": "emphasis", "labelDy": -18 },
+    { "from": "extract_genes", "to": "normalize_merge", "label": "candidates.csv", "classification": "CNV → L1 交接", "variant": "emphasis", "labelDy": 35 },
+    { "from": "refdb", "to": "normalize_merge", "label": "证据源", "classification": "HI · pLI · 表达", "variant": "default", "fromSide": "right", "toSide": "left", "via": [[620, 385], [620, 271]] },
+    { "from": "normalize_merge", "to": "consensus", "label": "evidence.parquet", "classification": "归一化证据", "variant": "emphasis", "labelDy": 35 },
+    { "from": "consensus", "to": "ranked", "label": "排名表", "classification": "top-N", "variant": "emphasis" },
+    { "from": "ranked", "to": "downstream", "label": "top-N 基因", "classification": "候选主效基因", "variant": "default", "labelDy": -70 }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "两条子管线",
+      "items": [
+        "CNV 工作流：scRNA → candidates.csv（表达型推断为回退路径）",
+        "L1 共识管线：HGNC ID 主键（ADR-001），加权 + Borda + LOO"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "验收门槛（GSE283473）",
+      "items": [
+        "AC-CNV-2 PASS：marker 基因 ELN/GTF2I/LIMK1/CLIP2 检出",
+        "AC-CNV-1 FAIL（预期内）：mRNA 隐身使推断无法恢复微缺失"
+      ]
+    }
+  ]
+}

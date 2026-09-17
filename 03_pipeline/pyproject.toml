@@ -1,0 +1,20 @@
+[project]
+name = "igem-gene-pipeline"
+version = "2.2.0"
+description = "染色体微缺失主效基因筛选管线 v2.2（L0 归一化 → L1 证据层 → L2 AI 可选 → L3 共识排序）"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyyaml",
+    "pyarrow",
+    "anndata",
+    "scipy",
+    "matplotlib",
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

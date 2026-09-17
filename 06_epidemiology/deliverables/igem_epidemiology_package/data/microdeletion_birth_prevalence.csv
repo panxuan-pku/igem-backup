@@ -1,0 +1,15 @@
+name,src,kind,pt,lo,hi,n_cases,n_total,one_in
+2q37 deletion,"literature (~1 in 100,000)",range,0.1,0.05,0.15,,,100000
+Wolf-Hirschhorn (4p),"Orphanet (~1 in 50,000)",range,0.2,0.1,0.3,,,50000
+Phelan-McDermid (22q13),"Orphanet / literature (rare, ~1 in 50,000)",range,0.2,0.1,0.3,,,50000
+Koolen-de Vries (17q21.31),"GeneReviews (1 in 16,000-55,000)",range,0.33,0.18,0.63,,,30303
+3q29 deletion,"GeneReviews / literature (~1 in 30,000)",range,0.33,0.2,0.5,,,30303
+Cri-du-chat (5p),"Orphanet (1 in 15,000-50,000)",range,0.5,0.2,0.67,,,20000
+Smith-Magenis (17p11.2),"GeneReviews (1 in 15,000-25,000)",range,0.5,0.4,0.67,,,20000
+Williams (7q11.23),"GeneReviews / Orphanet (1 in 7,500-20,000)",range,1.0,0.5,1.3,,,10000
+1p36 deletion,"Tucker 2013; Heilstedt 2003 (1 in 5,000)",count,1.467782181124321,0.03716095837745531,8.175215638970625,1.0,6813.0,6813
+15q13.3 deletion,Gillentine 2018 (J Hum Genet),range,2.5,1.8,3.3,,,4000
+15q11-q13 (PWS/Angelman),"Tucker 2013, French-Canadian newborns",count,2.935564362248642,0.3555302364585176,10.60020255254214,2.0,6813.0,3407
+16p11.2 (proximal),"Cooper 2011, adult controls (Nat Genet)",count,3.601872973946452,0.7428544030724762,10.522557515526417,3.0,8329.0,2776
+22q11.2 (DiGeorge/VCFS),"Blagojevic 2021, Ontario newborn screening (CMAJ Open)",count,4.655183879763251,2.545258593916641,7.809375249476166,14.0,30074.0,2148
+1q21.1 deletion,"Smajlagić 2020, MoBa Norway (Eur J Hum Genet)",count,4.897159647404505,1.7973765411141802,10.655984297997142,6.0,12252.0,2042

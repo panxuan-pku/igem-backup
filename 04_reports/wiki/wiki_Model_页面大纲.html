@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  ============================================================
+  知识文档默认 HTML 阅读模板 (Knowledge Doc Template)
+  版本: v1.0  日期: 2026-09-09
+
+  占位符约定（供 MD→HTML 转换脚本替换，边界用 HTML 注释标记）:
+    &lt;title&gt;...&lt;/title&gt;                                      页面标题
+    &lt;!-- DOC_TITLE_START --&gt; ... &lt;!-- DOC_TITLE_END --&gt;     文档主标题
+    &lt;!-- DOC_DATE_START --&gt; ... &lt;!-- DOC_DATE_END --&gt;       日期
+    &lt;!-- DOC_TAGS_START --&gt; ... &lt;!-- DOC_TAGS_END --&gt;       标签(逗号分隔)
+    &lt;!-- DOC_AUTHOR_START --&gt; ... &lt;!-- DOC_AUTHOR_END --&gt;   作者
+    &lt;!-- TOC_START --&gt; ... &lt;!-- TOC_END --&gt;                 目录(留空则内联 JS 自动生成)
+    &lt;!-- CONTENT_START --&gt; ... &lt;!-- CONTENT_END --&gt;         正文(转换脚本替换此区)
+
+  零外网依赖: 所有 CSS/JS 内嵌, 不加载任何 CDN/字体/图片。
+  代码高亮: 内置 Pygments 风格 token 类 CSS, 配合 python-markdown
+            (fenced_code + codehilite) 或 pandoc 的 highlight-style=pygments 参数。
+  ============================================================
+-->
+<title>iGEM Wiki — Model 页面大纲</title>
+<style>
+/* ============ 主题变量 (浅色默认 / 深色跟随系统) ============ */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --heading: #0d1117;
+  --border: #d0d7de;
+  --accent: #c22b2b;          /* 强调/链接色: 克制红 */
+  --accent-soft: #fdf0f0;
+  --code-bg: #f6f8fa;
+  --code-border: #e7ebef;
+  --inline-code-bg: #eff1f3;
+  --table-head-bg: #f6f8fa;
+  --table-stripe: #fafbfc;
+  --quote-border: #c22b2b;
+  --quote-bg: #fdf5f5;
+  --toc-active: #c22b2b;
+  --toc-active-bg: #fdf0f0;
+  --shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-soft: #161b22;
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --heading: #f0f6fc;
+  --border: #30363d;
+  --accent: #ff7b72;
+  --accent-soft: #2a1614;
+  --code-bg: #161b22;
+  --code-border: #30363d;
+  --inline-code-bg: #21262d;
+  --table-head-bg: #161b22;
+  --table-stripe: #11161d;
+  --quote-border: #ff7b72;
+  --quote-bg: #1c1413;
+  --toc-active: #ff7b72;
+  --toc-active-bg: #2a1614;
+  --shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --bg: #0d1117;
+    --bg-soft: #161b22;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --heading: #f0f6fc;
+    --border: #30363d;
+    --accent: #ff7b72;
+    --accent-soft: #2a1614;
+    --code-bg: #161b22;
+    --code-border: #30363d;
+    --inline-code-bg: #21262d;
+    --table-head-bg: #161b22;
+    --table-stripe: #11161d;
+    --quote-border: #ff7b72;
+    --quote-bg: #1c1413;
+    --toc-active: #ff7b72;
+    --toc-active-bg: #2a1614;
+    --shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+}
+
+/* ============ 基础重置与排版 ============ */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============ 顶栏 ============ */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 10px 22px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar .brand { font-weight: 700; font-size: 15px; color: var(--heading); }
+.topbar .brand::before { content: "▤ "; color: var(--accent); }
+.topbar .tools { display: flex; gap: 8px; }
+.icon-btn {
+  border: 1px solid var(--border); background: var(--bg-soft);
+  color: var(--text-muted); border-radius: 6px;
+  padding: 4px 10px; font-size: 13px; cursor: pointer; line-height: 1.5;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ============ 文档头部(标题 + 元信息) ============ */
+.doc-header {
+  max-width: 1180px; margin: 0 auto;
+  padding: 40px 28px 20px;
+}
+.doc-title {
+  margin: 0 0 12px; font-size: 2em; line-height: 1.3;
+  color: var(--heading); font-weight: 700; letter-spacing: .2px;
+}
+.doc-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--text-muted); font-size: 13.5px; }
+.doc-meta .meta-item { display: inline-flex; align-items: center; gap: 5px; }
+.doc-meta .meta-item::before { content: "·"; color: var(--accent); font-weight: 700; }
+.doc-meta .tag { display: inline-block; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); font-size: 12.5px; }
+
+/* ============ 布局: TOC 侧栏 + 正文 ============ */
+.layout {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 250px minmax(0, 1fr);
+  gap: 28px; padding: 0 28px 60px; align-items: start;
+}
+.toc {
+  position: sticky; top: 70px; max-height: calc(100vh - 90px);
+  overflow-y: auto; padding-right: 6px; font-size: 13.5px;
+}
+.toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin: 0 0 8px; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 1px 0; }
+.toc a {
+  display: block; padding: 3px 10px; border-left: 2px solid transparent;
+  color: var(--text-muted); border-radius: 0 4px 4px 0; line-height: 1.5;
+}
+.toc a:hover { color: var(--text); }
+.toc li.lvl2 > a { padding-left: 22px; font-size: 12.5px; }
+.toc a.active {
+  color: var(--toc-active); background: var(--toc-active-bg);
+  border-left-color: var(--toc-active); font-weight: 600;
+}
+
+/* ============ 正文 ============ */
+.content { max-width: 72ch; min-width: 0; }
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  color: var(--heading); line-height: 1.35; scroll-margin-top: 80px; margin-top: 1.6em;
+}
+.content h2 { font-size: 1.5em; margin-top: 2em; padding-bottom: .35em;
+  border-bottom: 1px solid var(--border); }
+.content h3 { font-size: 1.25em; }
+.content h4 { font-size: 1.1em; }
+.content h5, .content h6 { font-size: 1em; }
+.content p { margin: .85em 0; }
+.content strong { color: var(--heading); }
+.content ul, .content ol { padding-left: 1.6em; margin: .7em 0; }
+.content li { margin: .3em 0; }
+.content li > ul, .content li > ol { margin: .2em 0; }
+.content img { max-width: 100%; border-radius: 6px; }
+.content code {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .875em;
+  background: var(--inline-code-bg); border: 1px solid var(--code-border);
+  padding: .15em .4em; border-radius: 4px; color: var(--accent);
+}
+.content hr { border: none; border-top: 1px solid var(--border); margin: 2.2em 0; }
+
+/* ============ 代码块 + 复制按钮 ============ */
+.content pre {
+  position: relative; margin: 1.1em 0; padding: 16px 18px;
+  background: var(--code-bg); border: 1px solid var(--code-border);
+  border-radius: 8px; overflow-x: auto; line-height: 1.6;
+  box-shadow: var(--shadow);
+}
+.content pre code {
+  background: none; border: none; padding: 0; color: var(--text);
+  font-size: 13.5px; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text-muted);
+  border-radius: 6px; font-size: 12px; padding: 2px 9px; cursor: pointer; opacity: 0;
+  transition: opacity .15s;
+}
+.content pre:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+/* 触屏设备无 hover, 复制按钮常显 */
+@media (hover: none) { .content .copy-btn { opacity: 1; } }
+
+/* ============ 表格 ============ */
+.table-wrap { overflow-x: auto; margin: 1.2em 0; border: 1px solid var(--border); border-radius: 8px; }
+.content table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+.content th, .content td { padding: 8px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+.content thead th { background: var(--table-head-bg); font-weight: 600; color: var(--heading); white-space: nowrap; }
+.content tbody tr:nth-child(even) { background: var(--table-stripe); }
+.content tbody tr:last-child td { border-bottom: none; }
+
+/* ============ 引用块 ============ */
+.content blockquote {
+  margin: 1.2em 0; padding: 10px 18px;
+  border-left: 4px solid var(--quote-border);
+  background: var(--quote-bg); border-radius: 0 6px 6px 0; color: var(--text);
+}
+.content blockquote p { margin: .4em 0; }
+.content blockquote cite { display: block; margin-top: .5em; color: var(--text-muted); font-size: .9em; }
+
+/* ============ 页脚 ============ */
+.doc-footer { max-width: 1180px; margin: 0 auto; padding: 20px 28px 48px;
+  border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; text-align: center; }
+
+/* ============ 响应式 ============ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 0; padding: 0 20px 48px; }
+  .toc { display: none; }          /* 窄屏折叠侧栏, 依赖顶栏阅读 */
+  .doc-header { padding: 28px 20px 14px; }
+  .doc-title { font-size: 1.6em; }
+  .content { max-width: 100%; }
+}
+@media (max-width: 560px) {
+  body { font-size: 15px; }
+  .content pre { padding: 12px 12px; }
+  .content pre code { font-size: 12.5px; }
+  .doc-title { font-size: 1.45em; }
+  .topbar { padding: 8px 14px; }
+}
+
+/* ============ 打印 ============ */
+@media print {
+  .topbar, .toc, .copy-btn { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  .doc-header { padding: 0 0 12px; }
+  body { background: #fff; color: #000; }
+}
+
+/* ============ Pygments 语法高亮 token 类 ============ */
+/* 关键词 */ .content .k, .content .kc, .content .kd, .content .kn, .content .kp,
+             .content .kr, .content .kt { color: var(--accent); font-weight: 600; }
+/* 字符串 */ .content .s, .content .s1, .content .s2, .content .sb, .content .sc,
+             .content .sd, .content .se, .content .sh, .content .si, .content .sx,
+             .content .sr, .content .ss { color: #0a6f5a; }
+:root[data-theme="dark"] .content .s, :root[data-theme="dark"] .content .s1,
+:root[data-theme="dark"] .content .s2, :root[data-theme="dark"] .content .sd,
+:root[data-theme="dark"] .content .sb, :root[data-theme="dark"] .content .sc,
+:root[data-theme="dark"] .content .se, :root[data-theme="dark"] .content .sh,
+:root[data-theme="dark"] .content .si, :root[data-theme="dark"] .content .sx,
+:root[data-theme="dark"] .content .sr, :root[data-theme="dark"] .content .ss { color: #7ee787; }
+/* 注释 */ .content .c, .content .c1, .content .cm, .content .cs, .content .cp { color: var(--text-muted); font-style: italic; }
+/* 数字 */ .content .m, .content .mi, .content .mf, .content .mh, .content .mo { color: #0550ae; }
+:root[data-theme="dark"] .content .m, :root[data-theme="dark"] .content .mi,
+:root[data-theme="dark"] .content .mf, :root[data-theme="dark"] .content .mh,
+:root[data-theme="dark"] .content .mo { color: #79c0ff; }
+/* 函数名 */ .content .nf { color: #8250df; }
+:root[data-theme="dark"] .content .nf { color: #d2a8ff; }
+/* 类/类型 */ .content .nc, .content .nn, .content .nt { color: #953800; }
+:root[data-theme="dark"] .content .nc, :root[data-theme="dark"] .content .nn,
+:root[data-theme="dark"] .content .nt { color: #ffa657; }
+/* 运算符 */ .content .o, .content .ow { color: var(--accent); }
+/* 内建/装饰器/标签属性 */ .content .nb, .content .bp { color: #953800; }
+:root[data-theme="dark"] .content .nb, :root[data-theme="dark"] .content .bp { color: #ffa657; }
+.content .nd, .content .na { color: #8250df; }
+:root[data-theme="dark"] .content .nd, :root[data-theme="dark"] .content .na { color: #d2a8ff; }
+
+/* pandoc 核心类兜底映射(转换时用 --highlight-style=pygments 得短类名) */
+.content .kw, .content .cf, .content .im { color: var(--accent); font-weight: 600; } /* 关键字/控制流/导入 */
+.content .op { color: var(--accent); }                                               /* 运算符 */
+.content .dt, .content .bu, .content .ex { color: #953800; }                         /* 类型/内建/异常 */
+.content .dv, .content .bn, .content .fl { color: #0550ae; }                         /* 数字 */
+.content .st, .content .ch, .content .ss, .content .vs, .content .re { color: #0a6f5a; } /* 字符串类 */
+.content .co, .content .do, .content .an { color: var(--text-muted); font-style: italic; } /* 注释/文档 */
+.content .fu, .content .at, .content .va, .content .pp { color: #8250df; }           /* 函数/属性/变量/预处理 */
+:root[data-theme="dark"] .content .dt, :root[data-theme="dark"] .content .bu,
+:root[data-theme="dark"] .content .ex { color: #ffa657; }
+:root[data-theme="dark"] .content .dv, :root[data-theme="dark"] .content .bn,
+:root[data-theme="dark"] .content .fl { color: #79c0ff; }
+:root[data-theme="dark"] .content .st, :root[data-theme="dark"] .content .ch,
+:root[data-theme="dark"] .content .ss, :root[data-theme="dark"] .content .vs,
+:root[data-theme="dark"] .content .re { color: #7ee787; }
+:root[data-theme="dark"] .content .fu, :root[data-theme="dark"] .content .at,
+:root[data-theme="dark"] .content .va, :root[data-theme="dark"] .content .pp { color: #d2a8ff; }
+</style>
+</head>
+<body>
+<!-- ============ 顶栏 ============ -->
+<div class="topbar">
+  <span class="brand">知识文档</span>
+  <div class="tools">
+    <button class="icon-btn" id="theme-btn" title="切换深浅色">浅色</button>
+    <button class="icon-btn" id="backtop-btn" title="回到顶部">回到顶部</button>
+  </div>
+</div>
+
+<!-- ============ 文档头部 ============ -->
+<header class="doc-header">
+  <h1 class="doc-title">iGEM Wiki — Model 页面大纲</h1>
+  <div class="doc-meta">
+    <span class="meta-item">2026-09-14</span>
+    
+    
+  </div>
+</header>
+
+<!-- ============ 布局 ============ -->
+<div class="layout">
+  <nav class="toc" id="toc">
+    <!-- TOC_START -->
+    <h2>目录</h2>
+    <ul id="toc-list"><!-- 内联 JS 自动填充，或由转换脚本静态注入 --></ul>
+    <!-- TOC_END -->
+  </nav>
+
+  <main class="content" id="content">
+    <article>
+      <blockquote>
+<p><strong>页面主题</strong>：染色体微缺失主效基因筛选管线的<strong>原理与开发过程</strong>
+<strong>起草日期</strong>：2026-09-14
+<strong>项目状态</strong>：未完全开发（本大纲标注每节的实际完成度）</p>
+</blockquote>
+<p><strong>状态标记</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>【✓ 可落笔】</td>
+<td>数据/代码已就绪，可直接写正文</td>
+</tr>
+<tr>
+<td>【◐ 待整理】</td>
+<td>有原始产出，需要整理成 wiki 语言</td>
+</tr>
+<tr>
+<td>【○ 待补】</td>
+<td>尚未产出，需后续实验/开发</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>语言建议</strong>：iGEM
+评审为英文，<strong>正文最终需英文</strong>。下方每节给出建议英文小标题，可先写中文草稿再翻译。</p>
+<hr />
+<h2 id="0-页面定位">0. 页面定位</h2>
+<p><strong>建议英文标题</strong>：<code>Model — Prioritizing the Causal Gene in a Chromosomal Microdeletion</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>一句话说明本页回答什么问题：<em>一条染色体微缺失带走了 20–40
+个基因，我们如何找出该用 AAV + RNA
+binder（SINEUP）去救的那一个？</em></li>
+<li>本页与项目其他页面的关系（Design / Engineering / Parts / Human
+Practices 的引用关系）</li>
+<li>对应评分标准：<strong>Model</strong>（建模）+
+<strong>Contribution</strong>（可复用工具）</li>
+</ul>
+<p><strong>要避免</strong></p>
+<ul>
+<li>不要一上来讲代码实现（那是 Document 页的职责）</li>
+<li>不要宣称"我们找到了主效基因"——本项目产出的是<strong>候选优先级</strong>，不是因果证明</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="1-问题定义">1. 问题定义</h2>
+<p><strong>建议英文标题</strong>：<code>1. Problem Statement</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>疾病背景：Williams 综合征（WBS, 7q11.23, ~1.5–1.8 Mb, 26–28
+基因）、Wolf-Hirschhorn 综合征（WHS, 4p16.3, ~1.8 Mb, 19 基因）</li>
+<li>为什么需要筛主效基因：微缺失是<strong>连续基因综合征</strong>，但临床上往往有一两个基因承担主要表型（WBS
+的 ELN→主动脉瓣上狭窄；WHS 的 NSD2→核心表型）</li>
+<li>治疗策略约束（决定筛选标准）：靶点必须满足
+<ol type="1">
+<li><strong>剂量不足驱动</strong>（单倍剂量不足，而非显性负效应）</li>
+<li><strong>上调可挽救</strong>（SINEUP 是翻译层增强，不是 CRISPR
+修复）</li>
+<li><strong>过表达安全</strong>（AAV 递送后的剂量窗口）</li>
+</ol></li>
+<li>手工筛选不可行的量化理由：区间内 20–40 个基因 × 多数据库证据 ×
+表型异质性</li>
+</ul>
+<p><strong>可用素材</strong></p>
+<ul>
+<li><code>outputs/reports/管线文档/管线现状与Williams主效基因筛选实验总结_2026-09-05.md</code></li>
+<li><code>outputs/reports/microdeletion_prevalence_report.md</code>（发病率）</li>
+<li><code>outputs/reports/管线文档/WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</code>（NSD2
+证据链 6 步）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="2-为什么必须建模型而不是跑-ai">2. 为什么必须"建模型"而不是"跑
+AI"</h2>
+<p><strong>建议英文标题</strong>：<code>2. Why a Purpose-Built Pipeline Instead of an Off-the-Shelf AI Model</code></p>
+<p><strong>这是本页最有说服力的一节</strong>——用项目自身的负结果论证设计必要性。</p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li><strong>E3/E4 负结果</strong>：SIGnature 归因分数与真实扰动效应
+<strong>r = 0.02（p=0.83）</strong>——归因 ≠ 因果</li>
+<li><strong>E11 覆盖失败</strong>：GEARS（Perturb-seq
+训练）对微缺失候选基因 <strong>4/41 覆盖</strong>，且训练于 K562
+癌细胞系，对 CNS 神经元双重域外</li>
+<li><strong>领域级佐证</strong>：Nature Methods 2025 基准（Ahlmann-Eltze
+et al.）——5 个基础模型 + 2
+个深度学习模型在基因扰动转录预测上<strong>均未超过简单线性基线</strong>，存在
+mean collapse</li>
+<li><strong>方法论结论</strong>：我们不用"一个 AI
+模型给出答案"，改用<strong>证据金字塔 + 强制正对照 +
+诚实报负结果</strong></li>
+</ul>
+<p><strong>要避免</strong></p>
+<ul>
+<li>不要写成"AI
+没用"——要写成"我们测试过、量化了它的边界，因此重新设计了架构"（这是
+Engineering Success 的叙事）</li>
+</ul>
+<p><strong>可用素材</strong></p>
+<ul>
+<li><code>outputs/reports/虚拟细胞/AI虚拟细胞扰动响应预测工具调研报告.md</code></li>
+<li><code>outputs/reports/管线文档/文献调研_虚拟细胞药物效应与基因扰动_2026-09-12.md</code>（含
+24 条 DOI）</li>
+<li><code>docs/decisions/</code> ADR</li>
+</ul>
+<p><strong>状态</strong>：【✓
+可落笔】（负结果数据齐全，这是项目的特色资产）</p>
+<hr />
+<h2 id="3-核心原理四层证据金字塔">3. 核心原理：四层证据金字塔</h2>
+<p><strong>建议英文标题</strong>：<code>3. Architecture — A Four-Layer Evidence Pyramid</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>总览图：L1 遗传学证据 → L2 验证（mRNA 补偿） → L3 机制假设 → L4
+输出</li>
+<li>强调<strong>严格单向</strong>：下游层不能回补上游（为什么？见
+3.5）</li>
+<li>每层写：输入、证据源、算法、输出、为什么放这一层</li>
+</ul>
+<h3 id="31-l1--人类遗传学证据层">3.1 L1 — 人类遗传学证据层</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>证据源</th>
+<th>字段</th>
+<th>方向</th>
+<th>权重</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen 单倍剂量不足评分</td>
+<td><code>clinGen_hi_score</code></td>
+<td>高=好</td>
+<td>3</td>
+</tr>
+<tr>
+<td>ClinGen 三倍剂量敏感性</td>
+<td><code>clinGen_triplo_score</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>gnomAD pLI</td>
+<td><code>gnomad_pLI</code></td>
+<td>高=好</td>
+<td>2</td>
+</tr>
+<tr>
+<td>gnomAD LOEUF</td>
+<td><code>gnomad_LOEUF</code></td>
+<td><strong>低</strong>=好</td>
+<td>2</td>
+</tr>
+<tr>
+<td>DeepLOF（AI 层，可选）</td>
+<td><code>DeepLOF_score</code></td>
+<td>高=好</td>
+<td>见配置</td>
+</tr>
+<tr>
+<td>HPA 组织表达</td>
+<td><code>hpa_*_expr</code></td>
+<td>双重角色（见 3.4）</td>
+<td>0（v2.2 起）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>要写什么</strong></p>
+<ul>
+<li><strong>三值标注</strong>：ClinGen 的 3 / 30 / 40
+分语义（30=不确定、40=无证据）→ 中性不扣分</li>
+<li><strong>HGNC 主键</strong>：为什么用 HGNC ID
+而非基因符号（符号会变，见 4.2 的 WHS 案例）</li>
+<li><strong>归一化的坑</strong>：rank
+归一化在小样本下产生伪影（pLI=0.002 的基因排到 #1）→ 改用 raw</li>
+</ul>
+<h3 id="32-l2--验证层mrna-剂量补偿状态">3.2 L2 — 验证层：mRNA
+剂量补偿状态</h3>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>概念：单倍剂量不足基因未必表现为 mRNA 减半——转录/翻译层存在补偿</li>
+<li>方法：CNV 工作流（scRNA-seq）+ 逐基因 ratio =
+mean(患者)/mean(对照)</li>
+<li>状态分类（<code>compensation_class</code>）：<code>full</code> /
+<code>partial_high</code> / <code>overcompensated</code> /
+<code>unreliable</code></li>
+<li>实测：GTF2I ratio = 0.995（完美转录补偿）、ELN = 3.138（过补偿）、35
+基因中 17+ 过补偿</li>
+<li><strong>关键洞察</strong>：补偿状态<strong>逐基因可变</strong>，不是全或无；且<strong>在
+Down
+综合征中几乎不存在转录补偿</strong>——说明补偿不是微缺失的自然后果</li>
+<li>为什么 scRNA-seq 从"发现引擎"降格为"验证层"（scRNA-seq CNV caller 对
+&lt;3Mb focal CNV 灵敏度极低，Schmid et al. 2025）</li>
+</ul>
+<h3 id="33-l3--机制假设层virtualcelltool">3.3 L3 —
+机制假设层（VirtualCellTool）</h3>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>定位声明：<strong>只做机制假设与演示，不进 L1 排序</strong></li>
+<li>五个引擎与各自定位（CIPHER 主力 / 线性基线对照 / 反事实演示 /
+归因解释 / GEARS 负对照）</li>
+<li>为什么选 CIPHER：
+<ol type="1">
+<li><strong>零训练</strong>——只需未扰动对照细胞（我们没有 Perturb-seq
+数据）</li>
+<li><strong>上下调对称</strong>——SINEUP
+是<strong>上调</strong>治疗，而绝大多数模型只学过敲除方向</li>
+<li>秒级响应，可交互</li>
+</ol></li>
+<li>为什么要<strong>强制并排展示线性基线</strong>（Nature Methods 2025
+的学术诚实性要求）</li>
+</ul>
+<h3 id="34-反向设计被否决的方案与理由">3.4
+反向设计：被否决的方案与理由</h3>
+<p><strong>要写什么</strong>（这一节体现 Engineering 思维）</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>被否决的方案</th>
+<th>否决理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用 AI 排序直接产出主效基因</td>
+<td>r=0.02；GEARS 4/41 覆盖</td>
+</tr>
+<tr>
+<td>用 scRNA-seq CNV caller 自动发现缺失区间</td>
+<td>对 &lt;3Mb focal CNV 灵敏度极低</td>
+</tr>
+<tr>
+<td>HPA 作为器官惩罚项</td>
+<td>错杀正对照（STX1A/ELN/GTF2I 因肝肾表达被罚），v2.2
+起改为双重角色、权重置 0</td>
+</tr>
+<tr>
+<td>rank 归一化</td>
+<td>小样本伪影</td>
+</tr>
+<tr>
+<td>把 CellOracle 作为因果引擎</td>
+<td>只能扰动 TF，对非 TF 无出边</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="35-为什么严格单向不可回补">3.5 为什么严格单向（不可回补）</h3>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>若允许 L3 回补 L1：信息源与转录组重叠 → 重新引入 E3（归因≠因果）与
+E8（mRNA 隐身）偏倚</li>
+<li>单向性是可验证性的前提：L1
+只依赖外部遗传学证据，任何人可独立复算</li>
+</ul>
+<p><strong>状态</strong>：3.1–3.3 【✓ 可落笔】；3.4 【◐ 待整理】（需从
+PROJECT_LOG 提炼成表格）；3.5 【✓ 可落笔】</p>
+<hr />
+<h2 id="4-开发过程dbtl-循环">4. 开发过程：DBTL 循环</h2>
+<p><strong>建议英文标题</strong>：<code>4. Development Process — Seven Design-Build-Test-Learn Cycles</code></p>
+<blockquote>
+<p>本节是 Model 页的"过程"部分，对应 <strong>Engineering
+Success</strong>。
+素材主源：<code>outputs/reports/PROJECT_LOG.md</code>（条目 #0–#15）</p>
+</blockquote>
+<p><strong>每轮循环统一写法</strong>：Design（假设）→
+Build（代码/配置）→ Test（在哪个数据上跑）→ Learn（发现什么）→
+下一轮改什么</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>主题</th>
+<th>关键产出</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>v1 四层架构骨架</td>
+<td><code>normalize → merge_evidence → (AI) → consensus</code>；27+
+测试</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>2</td>
+<td>WBS 35 基因端到端首跑</td>
+<td>发现 rank 归一化伪影（FZD9 pLI=0.002 排 #1）；ClinGen 覆盖率仅
+14%</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>3</td>
+<td>修归一化 + 接入 DeepLOF</td>
+<td>raw 归一化（Spearman ρ 0.23→0.71）；发现 GTF2I 在 DeepLOF
+中缺失</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>4</td>
+<td>v2.1/v2.2 六项优化</td>
+<td>mRNA 补偿维度、隐性致病过滤器、ClinGen 三值标注、权重敏感性、四
+mode、稀疏性警告</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>5</td>
+<td>WHS 实证运行</td>
+<td><strong>发现并修复 gnomAD 符号别名缺口</strong>（WHSC1/NSD2）→ NSD2
+从 #5 升至 #1</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>6</td>
+<td>六 mode 全验证</td>
+<td>WBS 正对照 6/6；WHS NSD2 全 mode #1；移除了错杀正对照的 HPA
+惩罚</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>7</td>
+<td>VirtualCellTool 修复与可视化</td>
+<td>修复不可启动（21.9GB 内存爆）→ 冷启动 6.2s；分组响应判别力
+2/12→10/12；位移可视化</td>
+<td>【✓】</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>每轮要突出的"Learn → 下一步"链</strong></p>
+<ul>
+<li>Cycle 2 → 3：伪影 → 换归一化方式</li>
+<li>Cycle 4 → 5：架构通用化 → 立刻被真实数据检验出符号缺口</li>
+<li>Cycle 5 → 6：单点修复 → 需要系统性正对照回归</li>
+<li>Cycle 6 → 7：筛选层稳定 → 转向机制假设层的可用性</li>
+</ul>
+<p><strong>要写的"诚实"细节</strong></p>
+<ul>
+<li>Cycle 5 的 bug 是<strong>静默失败</strong>（匹配率
+17/19，无人察觉最强证据被丢弃）——这类 bug 的教训值得单独一段</li>
+<li>每次修复都保留负结果，未删除历史条目</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】（PROJECT_LOG
+已是最完整的素材源）</p>
+<hr />
+<h2 id="5-验证正对照与负对照">5. 验证：正对照与负对照</h2>
+<p><strong>建议英文标题</strong>：<code>5. Validation — Positive and Negative Controls</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="51-正对照已知答案反测流程">5.1 正对照（已知答案反测流程）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>疾病</th>
+<th>已知主效基因</th>
+<th>管线排名</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WHS</td>
+<td>NSD2</td>
+<td><strong>#1</strong>/19（score 3.889，领先第 2 名 1.91）</td>
+<td>✅ 修复符号缺口后</td>
+</tr>
+<tr>
+<td>WBS</td>
+<td>STX1A / ELN / BAZ1B / CLIP2 / LIMK1 / GTF2I</td>
+<td>#1 / #3 / #4 / #5 / #8 / #9</td>
+<td>✅ 6/6 命中 Top10</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>正对照设计：跑排序时<strong>不告知</strong>已知答案</li>
+<li>Mode B 内置正对照检验表</li>
+</ul>
+<h3 id="52-负对照">5.2 负对照</h3>
+<ul>
+<li>线性基线（control-mean）：为什么必须并排展示</li>
+<li>GEARS 覆盖性检查：做成产品内建功能（按钮灰掉 +
+明确提示），而非隐藏</li>
+</ul>
+<h3 id="53-未通过的案例诚实呈现">5.3 未通过的案例（诚实呈现）</h3>
+<ul>
+<li>CIPHER 对表达稀疏基因不敏感（CD3D/CD3E 未命中目标细胞类型）</li>
+<li>ELN 在脑类器官中 |Δ|max 仅 0.006（组织特异性，非失败）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="6-与湿实验治疗设计的接口">6. 与湿实验/治疗设计的接口</h2>
+<p><strong>建议英文标题</strong>：<code>6. From Ranking to Wet-Lab Target</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>三列表决策面板：<code>L1 证据排名 × mRNA 补偿状态 × L3 机制假设</code></li>
+<li>靶点优先级 = 遗传学证据（该救谁）× 补偿状态（救了有没有用）×
+机制假设（救了会怎样）</li>
+<li>具体案例：<strong>GTF2I 的排名分歧</strong>——管线
+#9，但脑类器官中转录组效应量第一（|Δ|max =
+10.08）且全部落在神经发育/突触基因上 → 建议上调优先级</li>
+<li>每个候选基因进入湿实验前必须满足的三个条件（见 1. 的问题定义）</li>
+</ul>
+<p><strong>状态</strong>：【◐ 待整理】（素材在 PROJECT_LOG
+#14，需整理成决策表）</p>
+<hr />
+<h2 id="7-局限与未来工作">7. 局限与未来工作</h2>
+<p><strong>建议英文标题</strong>：<code>7. Limitations and Future Work</code></p>
+<p><strong>要写什么</strong>（结构化呈现，不要含糊）</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>局限</th>
+<th>性质</th>
+<th>缓解/未来</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>翻译层盲区</td>
+<td><strong>根本性</strong>——RNA 层面的计算无法预测 SINEUP
+的翻译增强效果</td>
+<td>需蛋白层方法（ProteinTalks 等，尚未成熟）</td>
+</tr>
+<tr>
+<td>单基因 vs 多基因错配</td>
+<td>微缺失是连续基因综合征</td>
+<td>优化为按表型分层排序而非唯一排名</td>
+</tr>
+<tr>
+<td>mRNA 隐身（E8）</td>
+<td>删失基因稳态 mRNA 检测不到</td>
+<td>用蛋白组/翻译组数据补充</td>
+</tr>
+<tr>
+<td>组织选择维度</td>
+<td>ELN 在脑无效应</td>
+<td>接入心血管/成纤维细胞数据集</td>
+</tr>
+<tr>
+<td>补偿状态数据缺口</td>
+<td>WHS 无公开 scRNA-seq 数据</td>
+<td>依赖小鼠模型（GSE232564）</td>
+</tr>
+<tr>
+<td>未验证假设</td>
+<td>CIPHER 预测未经扰动实验验证</td>
+<td>设计小规模 benchmark（见下）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>未来工作要具体</strong></p>
+<ul>
+<li>低成本「基准对比小实验」把负结果转化为 Contribution</li>
+<li>扩展病种：补齐 8 病区间表</li>
+<li>【○ 待补】湿实验验证循环</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】（局限清单在文档中已梳理）</p>
+<hr />
+<h2 id="8-可复现性">8. 可复现性</h2>
+<p><strong>建议英文标题</strong>：<code>8. Reproducibility</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>数据源清单与版本（<code>config/sources.json</code>，含 URL +
+checksum）</li>
+<li>每次运行的审计产物：<code>audit/run.json</code>、<code>data_checksums.txt</code></li>
+<li>配置文件驱动：阈值与权重全在
+<code>config/pipeline.yaml</code>，改配置不改代码</li>
+<li>测试：<code>uv run pytest tests/ -q</code>（21 用例，20 passed / 1
+skipped）</li>
+<li>代码与数据获取方式（注意：管线目录目前无 git
+版本控制——需说明如何获取固定版本）</li>
+<li>【○ 待补】对外的代码/数据仓库与许可证</li>
+</ul>
+<p><strong>状态</strong>：【◐
+待整理】（技术信息齐全，但"对外如何取用"待定）</p>
+<hr />
+<h2 id="9-图表清单wiki-用图">9. 图表清单（wiki 用图）</h2>
+<p><strong>建议英文标题</strong>：<code>9. Figures</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>图</th>
+<th>内容</th>
+<th>素材来源</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fig 1</td>
+<td>四层证据金字塔总览</td>
+<td>需新绘（架构图可在
+<code>igem_gene_pipeline/docs/diagrams/</code>、<code>derived/tools/VirtualCellTool/docs/architecture.html</code>
+基础上改造）</td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 2</td>
+<td>为什么不用 AI：r=0.02 散点图 + GEARS 覆盖率饼图</td>
+<td>项目 E3/E4/E11 数据</td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 3</td>
+<td>正对照结果热图（WBS 6 基因 × 6 mode；WHS NSD2）</td>
+<td><code>outputs/mode/ranked_*.csv</code></td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 4</td>
+<td>补偿状态分布（35 基因 ratio 条形图）</td>
+<td><code>outputs/mode/compensation_wbs.csv</code></td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 5</td>
+<td>DBTL 七轮循环时间线</td>
+<td>需新绘</td>
+<td>【○】</td>
+</tr>
+<tr>
+<td>Fig 6</td>
+<td>CIPHER 预测示例（GTF2I 过表达：基因条形 + 分组响应）</td>
+<td>VirtualCellTool 截图</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>Fig 7</td>
+<td>ELN 组织特异性负结果（对照表达 0.042，</td>
+<td>Δ</td>
+<td>max 0.006）</td>
+</tr>
+<tr>
+<td>Fig 8</td>
+<td>线性基线对照图（诚实性）</td>
+<td>VirtualCellTool 截图</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>Fig 9</td>
+<td>反事实位移（患者细胞能否推回对照群）</td>
+<td>VirtualCellTool 双视图截图</td>
+<td>【✓】</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>状态</strong>：【◐ 待整理】</p>
+<hr />
+<h2 id="10-待补清单写正文前需先产出">10.
+待补清单（写正文前需先产出）</h2>
+<ul>
+<li>【○】对外的代码/数据发布方式（仓库、许可证、DOI）</li>
+<li>【○】Fig 1 / Fig 5 的绘图</li>
+<li>【○】"基准对比小实验"的设计与结果（用于把负结果转成
+Contribution）</li>
+<li>【○】8 病区间表补全后的扩展验证</li>
+<li>【◐】<code>pipeline.yaml</code>
+全部权重的<strong>来源依据</strong>（每个权重值需要文献或数据支撑，否则需在局限中说明为经验取值）</li>
+<li>【◐】CIPHER 预测的独立验证方案（当前未经验证，必须明确标注）</li>
+</ul>
+<hr />
+<h2 id="附写作顺序建议">附：写作顺序建议</h2>
+<ol type="1">
+<li>先写 <strong>§2（为什么不用现成 AI）</strong> 和
+<strong>§5（正/负对照）</strong>——素材最全、最体现项目特色</li>
+<li>再写 <strong>§3（原理）</strong> 和
+<strong>§4（开发过程）</strong>——这是主体</li>
+<li>然后 <strong>§1、§6、§7</strong></li>
+<li>最后补 <strong>§8、§9</strong>（依赖对外发布方式）</li>
+</ol>
+
+    </article>
+  </main>
+</div>
+<!-- ============ 页脚 ============ -->
+<footer class="doc-footer">
+  由知识文档 HTML 模板 v1.0 生成 · 零外网依赖 · 适配桌面与移动端
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 1. 目录(TOC)自动生成: 收集正文 h2/h3 ---------- */
+  var content = document.getElementById('content');
+  var tocList = document.getElementById('toc-list');
+  if (content && tocList) {
+    var headings = content.querySelectorAll('h2, h3');
+    headings.forEach(function (h, i) {
+      if (!h.id) { h.id = 'sec-' + i; }        // 无 id 时自动补锚点
+      var li = document.createElement('li');
+      li.className = h.tagName.toLowerCase() === 'h3' ? 'lvl2' : 'lvl1';
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  }
+
+  /* ---------- 2. scrollspy: 滚动时高亮当前章节 ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#toc-list a'));
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    var map = {};
+    tocLinks.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          tocLinks.forEach(function (a) { a.classList.remove('active'); });
+          var link = map[e.target.id];
+          if (link) { link.classList.add('active'); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    content.querySelectorAll('h2, h3').forEach(function (h) { spy.observe(h); });
+  }
+
+  /* ---------- 3. 代码块复制按钮 ---------- */
+  content.querySelectorAll('pre').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.addEventListener('click', function () {
+      var text = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* ---------- 4. 深浅色切换(light / dark / auto 循环) ---------- */
+  var themeBtn = document.getElementById('theme-btn');
+  var order = ['auto', 'light', 'dark'];
+  var label = { auto: '跟随系统', light: '浅色', dark: '深色' };
+  var saved = null;
+  try { saved = localStorage.getItem('kd-theme'); } catch (e) {}
+  if (saved && order.indexOf(saved) >= 0) { document.documentElement.setAttribute('data-theme', saved); }
+  var idx = saved ? order.indexOf(saved) : 0;
+  function renderTheme() {
+    document.documentElement.setAttribute('data-theme', order[idx]);
+    if (themeBtn) { themeBtn.textContent = label[order[idx]]; }
+    try { localStorage.setItem('kd-theme', order[idx]); } catch (e) {}
+  }
+  renderTheme();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      idx = (idx + 1) % order.length;
+      renderTheme();
+    });
+  }
+
+  /* ---------- 5. 回到顶部 ---------- */
+  var backTop = document.getElementById('backtop-btn');
+  if (backTop) {
+    backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+})();
+</script>
+</body>
+</html>

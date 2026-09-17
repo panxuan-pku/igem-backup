@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  ============================================================
+  知识文档默认 HTML 阅读模板 (Knowledge Doc Template)
+  版本: v1.0  日期: 2026-09-09
+
+  占位符约定（供 MD→HTML 转换脚本替换，边界用 HTML 注释标记）:
+    &lt;title&gt;...&lt;/title&gt;                                      页面标题
+    &lt;!-- DOC_TITLE_START --&gt; ... &lt;!-- DOC_TITLE_END --&gt;     文档主标题
+    &lt;!-- DOC_DATE_START --&gt; ... &lt;!-- DOC_DATE_END --&gt;       日期
+    &lt;!-- DOC_TAGS_START --&gt; ... &lt;!-- DOC_TAGS_END --&gt;       标签(逗号分隔)
+    &lt;!-- DOC_AUTHOR_START --&gt; ... &lt;!-- DOC_AUTHOR_END --&gt;   作者
+    &lt;!-- TOC_START --&gt; ... &lt;!-- TOC_END --&gt;                 目录(留空则内联 JS 自动生成)
+    &lt;!-- CONTENT_START --&gt; ... &lt;!-- CONTENT_END --&gt;         正文(转换脚本替换此区)
+
+  零外网依赖: 所有 CSS/JS 内嵌, 不加载任何 CDN/字体/图片。
+  代码高亮: 内置 Pygments 风格 token 类 CSS, 配合 python-markdown
+            (fenced_code + codehilite) 或 pandoc 的 highlight-style=pygments 参数。
+  ============================================================
+-->
+<title>iGEM Wiki — Document 页面大纲（工具说明书）</title>
+<style>
+/* ============ 主题变量 (浅色默认 / 深色跟随系统) ============ */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --heading: #0d1117;
+  --border: #d0d7de;
+  --accent: #c22b2b;          /* 强调/链接色: 克制红 */
+  --accent-soft: #fdf0f0;
+  --code-bg: #f6f8fa;
+  --code-border: #e7ebef;
+  --inline-code-bg: #eff1f3;
+  --table-head-bg: #f6f8fa;
+  --table-stripe: #fafbfc;
+  --quote-border: #c22b2b;
+  --quote-bg: #fdf5f5;
+  --toc-active: #c22b2b;
+  --toc-active-bg: #fdf0f0;
+  --shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-soft: #161b22;
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --heading: #f0f6fc;
+  --border: #30363d;
+  --accent: #ff7b72;
+  --accent-soft: #2a1614;
+  --code-bg: #161b22;
+  --code-border: #30363d;
+  --inline-code-bg: #21262d;
+  --table-head-bg: #161b22;
+  --table-stripe: #11161d;
+  --quote-border: #ff7b72;
+  --quote-bg: #1c1413;
+  --toc-active: #ff7b72;
+  --toc-active-bg: #2a1614;
+  --shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --bg: #0d1117;
+    --bg-soft: #161b22;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --heading: #f0f6fc;
+    --border: #30363d;
+    --accent: #ff7b72;
+    --accent-soft: #2a1614;
+    --code-bg: #161b22;
+    --code-border: #30363d;
+    --inline-code-bg: #21262d;
+    --table-head-bg: #161b22;
+    --table-stripe: #11161d;
+    --quote-border: #ff7b72;
+    --quote-bg: #1c1413;
+    --toc-active: #ff7b72;
+    --toc-active-bg: #2a1614;
+    --shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+}
+
+/* ============ 基础重置与排版 ============ */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============ 顶栏 ============ */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 10px 22px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar .brand { font-weight: 700; font-size: 15px; color: var(--heading); }
+.topbar .brand::before { content: "▤ "; color: var(--accent); }
+.topbar .tools { display: flex; gap: 8px; }
+.icon-btn {
+  border: 1px solid var(--border); background: var(--bg-soft);
+  color: var(--text-muted); border-radius: 6px;
+  padding: 4px 10px; font-size: 13px; cursor: pointer; line-height: 1.5;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ============ 文档头部(标题 + 元信息) ============ */
+.doc-header {
+  max-width: 1180px; margin: 0 auto;
+  padding: 40px 28px 20px;
+}
+.doc-title {
+  margin: 0 0 12px; font-size: 2em; line-height: 1.3;
+  color: var(--heading); font-weight: 700; letter-spacing: .2px;
+}
+.doc-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--text-muted); font-size: 13.5px; }
+.doc-meta .meta-item { display: inline-flex; align-items: center; gap: 5px; }
+.doc-meta .meta-item::before { content: "·"; color: var(--accent); font-weight: 700; }
+.doc-meta .tag { display: inline-block; padding: 1px 9px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); font-size: 12.5px; }
+
+/* ============ 布局: TOC 侧栏 + 正文 ============ */
+.layout {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 250px minmax(0, 1fr);
+  gap: 28px; padding: 0 28px 60px; align-items: start;
+}
+.toc {
+  position: sticky; top: 70px; max-height: calc(100vh - 90px);
+  overflow-y: auto; padding-right: 6px; font-size: 13.5px;
+}
+.toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin: 0 0 8px; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 1px 0; }
+.toc a {
+  display: block; padding: 3px 10px; border-left: 2px solid transparent;
+  color: var(--text-muted); border-radius: 0 4px 4px 0; line-height: 1.5;
+}
+.toc a:hover { color: var(--text); }
+.toc li.lvl2 > a { padding-left: 22px; font-size: 12.5px; }
+.toc a.active {
+  color: var(--toc-active); background: var(--toc-active-bg);
+  border-left-color: var(--toc-active); font-weight: 600;
+}
+
+/* ============ 正文 ============ */
+.content { max-width: 72ch; min-width: 0; }
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  color: var(--heading); line-height: 1.35; scroll-margin-top: 80px; margin-top: 1.6em;
+}
+.content h2 { font-size: 1.5em; margin-top: 2em; padding-bottom: .35em;
+  border-bottom: 1px solid var(--border); }
+.content h3 { font-size: 1.25em; }
+.content h4 { font-size: 1.1em; }
+.content h5, .content h6 { font-size: 1em; }
+.content p { margin: .85em 0; }
+.content strong { color: var(--heading); }
+.content ul, .content ol { padding-left: 1.6em; margin: .7em 0; }
+.content li { margin: .3em 0; }
+.content li > ul, .content li > ol { margin: .2em 0; }
+.content img { max-width: 100%; border-radius: 6px; }
+.content code {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .875em;
+  background: var(--inline-code-bg); border: 1px solid var(--code-border);
+  padding: .15em .4em; border-radius: 4px; color: var(--accent);
+}
+.content hr { border: none; border-top: 1px solid var(--border); margin: 2.2em 0; }
+
+/* ============ 代码块 + 复制按钮 ============ */
+.content pre {
+  position: relative; margin: 1.1em 0; padding: 16px 18px;
+  background: var(--code-bg); border: 1px solid var(--code-border);
+  border-radius: 8px; overflow-x: auto; line-height: 1.6;
+  box-shadow: var(--shadow);
+}
+.content pre code {
+  background: none; border: none; padding: 0; color: var(--text);
+  font-size: 13.5px; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--text-muted);
+  border-radius: 6px; font-size: 12px; padding: 2px 9px; cursor: pointer; opacity: 0;
+  transition: opacity .15s;
+}
+.content pre:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+/* 触屏设备无 hover, 复制按钮常显 */
+@media (hover: none) { .content .copy-btn { opacity: 1; } }
+
+/* ============ 表格 ============ */
+.table-wrap { overflow-x: auto; margin: 1.2em 0; border: 1px solid var(--border); border-radius: 8px; }
+.content table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+.content th, .content td { padding: 8px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+.content thead th { background: var(--table-head-bg); font-weight: 600; color: var(--heading); white-space: nowrap; }
+.content tbody tr:nth-child(even) { background: var(--table-stripe); }
+.content tbody tr:last-child td { border-bottom: none; }
+
+/* ============ 引用块 ============ */
+.content blockquote {
+  margin: 1.2em 0; padding: 10px 18px;
+  border-left: 4px solid var(--quote-border);
+  background: var(--quote-bg); border-radius: 0 6px 6px 0; color: var(--text);
+}
+.content blockquote p { margin: .4em 0; }
+.content blockquote cite { display: block; margin-top: .5em; color: var(--text-muted); font-size: .9em; }
+
+/* ============ 页脚 ============ */
+.doc-footer { max-width: 1180px; margin: 0 auto; padding: 20px 28px 48px;
+  border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; text-align: center; }
+
+/* ============ 响应式 ============ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 0; padding: 0 20px 48px; }
+  .toc { display: none; }          /* 窄屏折叠侧栏, 依赖顶栏阅读 */
+  .doc-header { padding: 28px 20px 14px; }
+  .doc-title { font-size: 1.6em; }
+  .content { max-width: 100%; }
+}
+@media (max-width: 560px) {
+  body { font-size: 15px; }
+  .content pre { padding: 12px 12px; }
+  .content pre code { font-size: 12.5px; }
+  .doc-title { font-size: 1.45em; }
+  .topbar { padding: 8px 14px; }
+}
+
+/* ============ 打印 ============ */
+@media print {
+  .topbar, .toc, .copy-btn { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  .doc-header { padding: 0 0 12px; }
+  body { background: #fff; color: #000; }
+}
+
+/* ============ Pygments 语法高亮 token 类 ============ */
+/* 关键词 */ .content .k, .content .kc, .content .kd, .content .kn, .content .kp,
+             .content .kr, .content .kt { color: var(--accent); font-weight: 600; }
+/* 字符串 */ .content .s, .content .s1, .content .s2, .content .sb, .content .sc,
+             .content .sd, .content .se, .content .sh, .content .si, .content .sx,
+             .content .sr, .content .ss { color: #0a6f5a; }
+:root[data-theme="dark"] .content .s, :root[data-theme="dark"] .content .s1,
+:root[data-theme="dark"] .content .s2, :root[data-theme="dark"] .content .sd,
+:root[data-theme="dark"] .content .sb, :root[data-theme="dark"] .content .sc,
+:root[data-theme="dark"] .content .se, :root[data-theme="dark"] .content .sh,
+:root[data-theme="dark"] .content .si, :root[data-theme="dark"] .content .sx,
+:root[data-theme="dark"] .content .sr, :root[data-theme="dark"] .content .ss { color: #7ee787; }
+/* 注释 */ .content .c, .content .c1, .content .cm, .content .cs, .content .cp { color: var(--text-muted); font-style: italic; }
+/* 数字 */ .content .m, .content .mi, .content .mf, .content .mh, .content .mo { color: #0550ae; }
+:root[data-theme="dark"] .content .m, :root[data-theme="dark"] .content .mi,
+:root[data-theme="dark"] .content .mf, :root[data-theme="dark"] .content .mh,
+:root[data-theme="dark"] .content .mo { color: #79c0ff; }
+/* 函数名 */ .content .nf { color: #8250df; }
+:root[data-theme="dark"] .content .nf { color: #d2a8ff; }
+/* 类/类型 */ .content .nc, .content .nn, .content .nt { color: #953800; }
+:root[data-theme="dark"] .content .nc, :root[data-theme="dark"] .content .nn,
+:root[data-theme="dark"] .content .nt { color: #ffa657; }
+/* 运算符 */ .content .o, .content .ow { color: var(--accent); }
+/* 内建/装饰器/标签属性 */ .content .nb, .content .bp { color: #953800; }
+:root[data-theme="dark"] .content .nb, :root[data-theme="dark"] .content .bp { color: #ffa657; }
+.content .nd, .content .na { color: #8250df; }
+:root[data-theme="dark"] .content .nd, :root[data-theme="dark"] .content .na { color: #d2a8ff; }
+
+/* pandoc 核心类兜底映射(转换时用 --highlight-style=pygments 得短类名) */
+.content .kw, .content .cf, .content .im { color: var(--accent); font-weight: 600; } /* 关键字/控制流/导入 */
+.content .op { color: var(--accent); }                                               /* 运算符 */
+.content .dt, .content .bu, .content .ex { color: #953800; }                         /* 类型/内建/异常 */
+.content .dv, .content .bn, .content .fl { color: #0550ae; }                         /* 数字 */
+.content .st, .content .ch, .content .ss, .content .vs, .content .re { color: #0a6f5a; } /* 字符串类 */
+.content .co, .content .do, .content .an { color: var(--text-muted); font-style: italic; } /* 注释/文档 */
+.content .fu, .content .at, .content .va, .content .pp { color: #8250df; }           /* 函数/属性/变量/预处理 */
+:root[data-theme="dark"] .content .dt, :root[data-theme="dark"] .content .bu,
+:root[data-theme="dark"] .content .ex { color: #ffa657; }
+:root[data-theme="dark"] .content .dv, :root[data-theme="dark"] .content .bn,
+:root[data-theme="dark"] .content .fl { color: #79c0ff; }
+:root[data-theme="dark"] .content .st, :root[data-theme="dark"] .content .ch,
+:root[data-theme="dark"] .content .ss, :root[data-theme="dark"] .content .vs,
+:root[data-theme="dark"] .content .re { color: #7ee787; }
+:root[data-theme="dark"] .content .fu, :root[data-theme="dark"] .content .at,
+:root[data-theme="dark"] .content .va, :root[data-theme="dark"] .content .pp { color: #d2a8ff; }
+</style>
+</head>
+<body>
+<!-- ============ 顶栏 ============ -->
+<div class="topbar">
+  <span class="brand">知识文档</span>
+  <div class="tools">
+    <button class="icon-btn" id="theme-btn" title="切换深浅色">浅色</button>
+    <button class="icon-btn" id="backtop-btn" title="回到顶部">回到顶部</button>
+  </div>
+</div>
+
+<!-- ============ 文档头部 ============ -->
+<header class="doc-header">
+  <h1 class="doc-title">iGEM Wiki — Document 页面大纲（工具说明书）</h1>
+  <div class="doc-meta">
+    <span class="meta-item">2026-09-14</span>
+    
+    
+  </div>
+</header>
+
+<!-- ============ 布局 ============ -->
+<div class="layout">
+  <nav class="toc" id="toc">
+    <!-- TOC_START -->
+    <h2>目录</h2>
+    <ul id="toc-list"><!-- 内联 JS 自动填充，或由转换脚本静态注入 --></ul>
+    <!-- TOC_END -->
+  </nav>
+
+  <main class="content" id="content">
+    <article>
+      <blockquote>
+<p><strong>页面主题</strong>：筛选管线 + VirtualCellTool
+的<strong>使用说明书</strong>（README 风格）
+<strong>起草日期</strong>：2026-09-14
+<strong>项目状态</strong>：未完全开发（本大纲标注每节的实际完成度）
+<strong>读者假设</strong>：会跑命令行、有单细胞/遗传学基础的下一位队员或外部复用者</p>
+</blockquote>
+<p><strong>状态标记</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>【✓ 照抄即可】</td>
+<td>现有 README/文档已有可搬内容</td>
+</tr>
+<tr>
+<td>【◐ 需重写】</td>
+<td>有素材但需改写成说明文体/补步骤</td>
+</tr>
+<tr>
+<td>【○ 待补】</td>
+<td>功能未完成，先留占位</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>语言建议</strong>：iGEM
+评审为英文，<strong>正文最终需英文</strong>。命令与参数名保持原样不译。</p>
+<p><strong>重要前提</strong>：说明书写给"没参与开发的人"。当他们卡住时，<strong>文档的责任，不是他们的</strong>。每步都要写"预期看到什么"。</p>
+<hr />
+<h2 id="0-页面定位与结构">0. 页面定位与结构</h2>
+<p><strong>建议英文标题</strong>：<code>Documentation — Microdeletion Gene Prioritization Pipeline &amp; VirtualCellTool</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>本页是<strong>两个人的工具</strong>的说明书：① 筛选管线（Python
+CLI）② VirtualCellTool（交互式网页）</li>
+<li>两者的关系图：管线输出 <code>ranked_*.csv</code> → 作为
+VirtualCellTool 的输入基因列表 → 输出机制假设 → 回到实验设计</li>
+<li>导航：每节开头一句"读完这节你会得到什么"</li>
+<li>版本对应关系（避免读者拿到不匹配的组合）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="1-工具概览tldr">1. 工具概览（TL;DR）</h2>
+<p><strong>建议英文标题</strong>：<code>1. Overview</code></p>
+<p><strong>要写什么</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>筛选管线</th>
+<th>VirtualCellTool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一句话</td>
+<td>给一串基因，按遗传学证据排出优先级</td>
+<td>给一个基因，预测扰动后的细胞反应</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>Python CLI（<code>python -m src.*</code>）</td>
+<td>FastAPI 网页（localhost:8377）</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>HGNC 基因符号列表 / 缺失区间坐标</td>
+<td>基因名 + 数据集选择</td>
+</tr>
+<tr>
+<td>输出</td>
+<td><code>candidates_ranked*.csv</code> + <code>report*.md</code></td>
+<td>交互图表（预测 / 对照组 / 位移）</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>秒级</td>
+<td>秒级（首次启动 6.2s）</td>
+</tr>
+<tr>
+<td>是否需要 GPU</td>
+<td>否</td>
+<td>否（CPU 可跑）</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>五分钟决策表</strong>：你想做什么 → 用哪个工具 →
+跳到第几节</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="2-系统要求与环境">2. 系统要求与环境</h2>
+<p><strong>建议英文标题</strong>：<code>2. Requirements</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="21-筛选管线">2.1 筛选管线</h3>
+<ul>
+<li>Python 3.11；依赖通过 <code>uv</code> 管理（<strong>不要用系统
+Python，不要 pip install</strong>）</li>
+<li>依赖：pandas / pyarrow / pyyaml / numpy / requests；测试需
+pytest</li>
+<li>磁盘：数据源约数百 MB（<code>data/</code> 不入库）</li>
+<li>无需网络（数据源预先下载）</li>
+</ul>
+<h3 id="22-virtualcelltool">2.2 VirtualCellTool</h3>
+<ul>
+<li>解释器固定为同级 SIGnature 项目的
+venv：<code>derived/tools/SIGnature/.venv/bin/python</code>（Python 3.11
++ torch/captum/scanpy/fastapi/umap-learn/plotly）</li>
+<li>内存：<strong>重要</strong>——见下方"已知陷阱"</li>
+<li>磁盘：CIPHER 缓存 <code>cipher_pbmc.npz</code> 105M /
+<code>cipher_ms.npz</code> 104M / <code>cipher_ws.npz</code> 12M</li>
+<li>端口：8377</li>
+</ul>
+<p><strong>要写的"已知陷阱"表（强烈建议保留，能救下一个人的一天）</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>陷阱</th>
+<th>后果</th>
+<th>规避</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表达式矩阵被稠密化</td>
+<td>ws 数据集 96969×28231 float64 ≈ <strong>21.9 GB</strong> → OOM/swap
+卡死</td>
+<td>全程保持 CSR 稀疏，只在 5000 HVG 子矩阵上 dense</td>
+</tr>
+<tr>
+<td>用系统 Python / pip</td>
+<td>依赖冲突/权限报错</td>
+<td>只用指定 venv</td>
+</tr>
+<tr>
+<td>CIPHER 缓存字段不全</td>
+<td>每次启动全量重算（数秒～数十秒）</td>
+<td>缓存必须含
+<code>gene_list/ctrl_mean/Sigma/hvg_idx/full_mean</code></td>
+</tr>
+<tr>
+<td>用 <code>file://</code> 打开 index.html</td>
+<td>页面静默失败（API 不可用）</td>
+<td>必须经 <code>http://127.0.0.1:8377</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>状态</strong>：【✓ 照抄即可】（陷阱表来自实际踩坑记录）</p>
+<hr />
+<h2 id="3-安装与启动">3. 安装与启动</h2>
+<p><strong>建议英文标题</strong>：<code>3. Installation &amp; Startup</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="31-筛选管线">3.1 筛选管线</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 环境</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--python</span> 3.11</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas pyarrow pyyaml numpy requests</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add <span class="at">--dev</span> pytest</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据源（见 config/sources.json）</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   ClinGen / gnomAD / HPA / HGNC 别名表 → data/</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 测试</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/ <span class="at">-q</span>        <span class="co"># 预期：20 passed, 1 skipped</span></span></code></pre></div>
+<h3 id="32-virtualcelltool">3.2 VirtualCellTool</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> derived/tools/VirtualCellTool</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./启动VirtualCellTool.command</span>          <span class="co"># 或双击</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期输出：🚀 启动… / ✅ 服务已在运行 / 🌐 打开 http://127.0.0.1:8377</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 浏览器打开 http://127.0.0.1:8377</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 停止：pkill -f &quot;web/app.py&quot;</span></span></code></pre></div>
+<ul>
+<li><strong>每步写"预期看到什么"</strong>（成功信号 vs 失败信号）</li>
+<li>冷启动 6.2s；切换数据集为懒加载（首次切 ws 约 5s）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="4-快速上手最小可行示例">4. 快速上手（最小可行示例）</h2>
+<p><strong>建议英文标题</strong>：<code>4. Quick Start — A Minimal Working Example</code></p>
+<p><strong>要写什么</strong>：一条完整的端到端路径，读者照抄就能跑出结果。</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1 准备候选（WBS 7q11.23 区间示例）</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;STX1A
+ELN
+BAZ1B
+GTF2I
+&quot;</span> <span class="op">&gt;</span> input/candidates.csv</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2 归一化 + 合并证据</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--out</span> data/normalized.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> data/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="at">--audit</span> outputs/audit</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3 排序</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="dt">\</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> auto <span class="dt">\</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/candidates_ranked_v2.csv <span class="at">--report</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/report_v2.md</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4 看结果 → 预期：CSV 按 consensus_score 降序</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5 用 VirtualCellTool 看机制 → 把基因名粘进网页搜索框</span></span></code></pre></div>
+<ul>
+<li>每步给出<strong>预期输出片段</strong>（复制真实输出，不要写"跑完即可"）</li>
+<li>加入一个<strong>截图占位</strong>（<code>[Figure: 快速上手结果示例]</code>）</li>
+</ul>
+<p><strong>状态</strong>：【◐
+需重写】（命令已准确，需补预期输出与截图）</p>
+<hr />
+<h2 id="5-输入准备">5. 输入准备</h2>
+<p><strong>建议英文标题</strong>：<code>5. Preparing Your Inputs</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="51-候选基因列表">5.1 候选基因列表</h3>
+<ul>
+<li>格式：每行一个 HGNC
+基因符号（<code>input/candidates.csv</code>）</li>
+<li>符号会自动经 HGNC 别名表解析为 HGNC ID
+主键（<strong>支持旧符号</strong>，如 WHSC1→NSD2）</li>
+<li>正对照文件：<code>input/controls_wbs.txt</code> /
+<code>controls_whs.txt</code></li>
+</ul>
+<h3 id="52-缺失区间坐标可选">5.2 缺失区间坐标（可选）</h3>
+<ul>
+<li>若只有区间坐标：用 <code>src/cnv/</code> 工作流从 GTF
+提取区间内基因</li>
+<li><strong>重要限制</strong>：scRNA-seq CNV caller 对 &lt;3 Mb focal
+CNV 灵敏度极低 → 用已知临床区间提取基因是正确策略</li>
+</ul>
+<h3 id="53-数据源准备">5.3 数据源准备</h3>
+<ul>
+<li><code>config/sources.json</code> 列出 4 个源（ClinGen / gnomAD / HPA
+/ HGNC 别名）的 URL 与 checksum</li>
+<li>checksum 校验步骤</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="6-配置参考">6. 配置参考</h2>
+<p><strong>建议英文标题</strong>：<code>6. Configuration Reference</code></p>
+<p><strong>要写什么</strong>：<code>config/pipeline.yaml</code>
+的逐项说明表——<strong>全项目最实用的一张表</strong>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>取值</th>
+<th>默认</th>
+<th>含义</th>
+<th>改它会怎样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>consensus_v2.normalize</code></td>
+<td><code>raw</code> / <code>rank</code></td>
+<td><code>raw</code></td>
+<td>证据归一化方式</td>
+<td><code>rank</code> 在小样本下有伪影（曾让 pLI=0.002 的基因排
+#1）</td>
+</tr>
+<tr>
+<td><code>consensus_v2.hpa_penalty</code>（cap / per_organ_weight）</td>
+<td>数值</td>
+<td><code>0.0</code></td>
+<td>HPA 器官惩罚</td>
+<td>非 0 会错杀正对照（STX1A/ELN/GTF2I）</td>
+</tr>
+<tr>
+<td><code>consensus_v2.evidence.*.weight</code></td>
+<td>数值</td>
+<td>见文件</td>
+<td>各证据源权重</td>
+<td>直接影响排名</td>
+</tr>
+<tr>
+<td><code>pipeline_mode</code></td>
+<td><code>auto</code> / 四 mode</td>
+<td><code>auto</code></td>
+<td>运行模式</td>
+<td>见 §7</td>
+</tr>
+<tr>
+<td><code>tuning.enabled</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>LOO 权重调优</td>
+<td>对照数 &lt;3 时应保持关闭</td>
+</tr>
+<tr>
+<td><code>tuning.positive_controls</code></td>
+<td>基因列表</td>
+<td>TBX1/ELN…</td>
+<td>调优用的已知主效基因</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>每个权重的<strong>来源依据</strong>需注明（见图表/局限，属于待补项）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】（需从 config
+逐项抄写并补依据）</p>
+<hr />
+<h2 id="7-运行模式">7. 运行模式</h2>
+<p><strong>建议英文标题</strong>：<code>7. Running Modes</code></p>
+<p><strong>要写什么</strong>：四种模式的"什么时候用哪个"决策表。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>名称</th>
+<th>场景</th>
+<th>输出差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validate</code></td>
+<td>A 验证</td>
+<td>主效基因已确定（如 WHS 的 NSD2）</td>
+<td>验证报告面板（ClinGen/pLI/SINEUP 靶向条件表）</td>
+</tr>
+<tr>
+<td><code>rank</code></td>
+<td>B 增强筛选</td>
+<td>有争议候选、有正对照</td>
+<td>排序 + 正对照检验表</td>
+</tr>
+<tr>
+<td><code>exploratory</code></td>
+<td>D 探索</td>
+<td>全新 CNV、无任何证据</td>
+<td>探索声明，<strong>不给实验建议</strong></td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>自动（默认）</td>
+<td>不确定时</td>
+<td>按输入丰富度自动选择</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>每个 mode 给一条<strong>完整命令</strong> +
+一段<strong>真实输出节选</strong></li>
+<li>⚠️ 注意：代码支持 <code>full</code>（Mode C 全栈筛选，排序 +
+补偿集成），README 表中应包含</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="8-输出解读">8. 输出解读</h2>
+<p><strong>建议英文标题</strong>：<code>8. Understanding the Output</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="81-产物位置">8.1 产物位置</h3>
+<ul>
+<li>产物按主题归档：<code>outputs/{wbs,whs,mode,cnv}/</code>（<strong>不在根目录</strong>）</li>
+<li>索引：<code>outputs/README.md</code></li>
+<li>审计：<code>outputs/audit/</code>（<code>run.json</code> +
+<code>data_checksums.txt</code>）</li>
+</ul>
+<h3 id="82-排名-csv-字段表逐列说明">8.2 排名 CSV 字段表（逐列说明）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>怎么读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rank</code></td>
+<td>最终排名</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>hgnc_id</code> / <code>input_symbol</code></td>
+<td>主键 / 输入符号</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clinGen_hi_score</code></td>
+<td>单倍剂量不足评分</td>
+<td>3=明确、30=不确定、40=无证据</td>
+</tr>
+<tr>
+<td><code>gnomad_pLI</code></td>
+<td>功能缺失不耐受</td>
+<td><strong>高</strong>=剂量敏感</td>
+</tr>
+<tr>
+<td><code>gnomad_LOEUF</code></td>
+<td>观察/期望 LOF 比</td>
+<td><strong>低</strong>=剂量敏感（与 pLI 反直觉，重点说明）</td>
+</tr>
+<tr>
+<td><code>DeepLOF_score</code></td>
+<td>AI 层分数（可选）</td>
+<td>高=预测剂量敏感</td>
+</tr>
+<tr>
+<td><code>compensation_ratio</code> /
+<code>compensation_class</code></td>
+<td>患者/对照 mRNA 比</td>
+<td>&gt;1=过补偿，<code>unreliable</code>=表达过低不可判</td>
+</tr>
+<tr>
+<td><code>consensus_score</code></td>
+<td>加权总分</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>contrib_*</code></td>
+<td>各证据源贡献分解</td>
+<td><strong>排查"为什么它排第一"用这一列</strong></td>
+</tr>
+<tr>
+<td><code>hpa_penalty</code></td>
+<td>惩罚项</td>
+<td>v2.2 起为 0</td>
+</tr>
+<tr>
+<td><code>borda_score</code> / <code>borda_rank</code></td>
+<td>Borda 对照排名</td>
+<td>与加性排序不一致时提示权重敏感</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>特别说明：<strong>LOEUF 低才好</strong>、<strong>pLI
+高才好</strong>——这是最常被误读的一对</li>
+</ul>
+<h3 id="83-验证报告怎么看mode-ab">8.3 验证报告怎么看（Mode A/B）</h3>
+<ul>
+<li>正对照检查表的五个维度：in_candidates / rank / top10 / 共识 /
+证据</li>
+<li>"正对照没进 Top10 意味着什么"</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="9-virtualcelltool-使用手册">9. VirtualCellTool 使用手册</h2>
+<p><strong>建议英文标题</strong>：<code>9. VirtualCellTool — User Manual</code></p>
+<p><strong>要写什么</strong>：按界面从上到下写，含每类图表的<strong>读图方法</strong>。</p>
+<h3 id="91-界面结构">9.1 界面结构</h3>
+<ul>
+<li>顶栏：数据集下拉（3 个）+ 加载状态</li>
+<li>左控制栏：① 选细胞 ② 归因 Top 基因 ③ 选基因 ④ CIPHER 扰动预测 ⑤
+反事实位移 ⑥ GEARS 因果</li>
+<li>右工作区：标签页（UMAP 主图 + 各类结果图）</li>
+<li>底部状态栏：统计摘要</li>
+</ul>
+<h3 id="92-三个数据集的语义最容易踩的坑">9.2
+三个数据集的语义（<strong>最容易踩的坑</strong>）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>key</th>
+<th>数据集</th>
+<th>细胞数</th>
+<th>分组语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pbmc</code></td>
+<td>PBMC 2700</td>
+<td>2,700</td>
+<td><strong>细胞类型</strong>（B/T/NK/单核/树突）</td>
+</tr>
+<tr>
+<td><code>ms</code></td>
+<td>MS 少突胶质</td>
+<td>17,799</td>
+<td><strong>病健分组</strong>（MS / normal）</td>
+</tr>
+<tr>
+<td><code>ws</code></td>
+<td>Williams 脑类器官</td>
+<td>96,969</td>
+<td><strong>病健分组</strong>（WS / CTRL）</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ ws/ms 的"细胞类型"实际是<strong>病健分组</strong>——读图时别把"WS
+响应第一"理解成"某种细胞类型"。</p>
+</blockquote>
+<h3 id="93-八类图表的读法">9.3 八类图表的读法</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>图</th>
+<th>怎么读</th>
+<th>常见误读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UMAP 细胞图谱</td>
+<td>点=细胞，近=状态相似；<strong>坐标轴无物理意义</strong></td>
+<td>把簇间距当绝对距离</td>
+</tr>
+<tr>
+<td>CIPHER 双子图</td>
+<td>左=转录组变化（红=目标/绿=上调/蓝=下调）；右=哪个分组最敏感（橙）</td>
+<td>把"上调/下调"当成好坏</td>
+</tr>
+<tr>
+<td>线性基线对照</td>
+<td>彩色条<strong>超出灰线</strong>的部分才是模型增量信号</td>
+<td>忽略基线，直接信模型</td>
+</tr>
+<tr>
+<td>反事实位移（双视图）</td>
+<td>左=全景定位+取景框；右=放大后 ⚫扰动前 → ⭐扰动后</td>
+<td>以为位移小=没效果（实为 UMAP 尺度问题）</td>
+</tr>
+<tr>
+<td>质心距离图</td>
+<td>灰色=扰动前，红=最近的类型；身份是否改变</td>
+<td>—</td>
+</tr>
+<tr>
+<td>表达分布图</td>
+<td>左=UMAP 按表达着色（灰=不表达）；右=分组表达水平</td>
+<td>拿它当"功能重要性"</td>
+</tr>
+<tr>
+<td>归因图</td>
+<td><strong>长度=重要性，颜色只表方向</strong>（橙=推高/紫=推低嵌入）</td>
+<td><strong>把负值当"负面基因"</strong>（最严重的误读）</td>
+</tr>
+<tr>
+<td>GEARS 图</td>
+<td>负对照，标注了域外推断</td>
+<td>把它当有效预测</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="94-推荐分析顺序四步法">9.4 推荐分析顺序（四步法）</h3>
+<ol type="1">
+<li>🎨 <strong>表达分布</strong> ——
+先确认基因在该组织是否表达（<strong>排除组织特异性问题</strong>）</li>
+<li>📉/📈 <strong>CIPHER</strong> —— 转录组效应 + 最敏感分组</li>
+<li>📏 <strong>线性基线</strong> —— 诚实性对照</li>
+<li>🎯 <strong>位移 + 质心</strong> —— 细胞身份能否被推回对照状态</li>
+</ol>
+<h3 id="95-已知边界写进说明书避免误用">9.5
+已知边界（写进说明书，避免误用）</h3>
+<ul>
+<li>CIPHER 只覆盖 Top 5000
+HVG；区间外基因按钮会灰掉并给出相近基因建议</li>
+<li>CIPHER 对表达稀疏基因不敏感（实测 CD3D/CD3E 未命中）</li>
+<li>GEARS 对微缺失候选基因 0 覆盖——仅作负对照</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】（来自 VirtualCellTool/README.md
+与 ARCHITECTURE_v3.md）</p>
+<hr />
+<h2 id="10-端到端示例完整案例">10. 端到端示例（完整案例）</h2>
+<p><strong>建议英文标题</strong>：<code>10. Worked Example — WBS 7q11.23</code></p>
+<p><strong>要写什么</strong>：用一个真实案例串起两个工具。</p>
+<ol type="1">
+<li>输入：WBS 区间 35 基因</li>
+<li>管线运行（命令 + 输出节选）</li>
+<li>结果解读：STX1A #1 / ELN #3 / GTF2I #9 …</li>
+<li>拿到 VirtualCellTool 里逐个查：
+<ul>
+<li>GTF2I 过表达 → |Δ|max = 10.08，全部落在神经发育/突触基因</li>
+<li>ELN → |Δ|max = 0.006（脑内无效应，组织特异性）</li>
+</ul></li>
+<li>综合结论：GTF2I 优先级建议上调；ELN 需换组织验证</li>
+<li><strong>明确写出这次分析得出了什么、没得出什么</strong></li>
+</ol>
+<p><strong>状态</strong>：【◐ 需重写】（数据齐全，需整理成叙事）</p>
+<hr />
+<h2 id="11-故障排查">11. 故障排查</h2>
+<p><strong>建议英文标题</strong>：<code>11. Troubleshooting</code></p>
+<p><strong>要写什么</strong>：症状 → 原因 → 解决 三段式表格。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>症状</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动卡住/无响应</td>
+<td>大数据集被稠密化（内存不足）</td>
+<td>确认代码保持稀疏；默认用 pbmc</td>
+</tr>
+<tr>
+<td>页面白屏</td>
+<td>服务未就绪或经 <code>file://</code> 打开</td>
+<td>等就绪；改用 <code>http://127.0.0.1:8377</code></td>
+</tr>
+<tr>
+<td>每次启动都很慢</td>
+<td>CIPHER 缓存字段不全 → 全量重算</td>
+<td>检查缓存 5 个字段</td>
+</tr>
+<tr>
+<td>切换数据集后结果像没变</td>
+<td>前端请求未带 <code>ds</code> 参数</td>
+<td>已在 v3.1 修复；确认版本 ≥ v3.1</td>
+</tr>
+<tr>
+<td>基因按钮灰掉</td>
+<td>不在 Top 5000 HVG</td>
+<td>用提示的相近基因，或换高变基因</td>
+</tr>
+<tr>
+<td><code>uv run pytest</code> 报找不到 pytest</td>
+<td>未装 dev 依赖</td>
+<td><code>uv add --dev pytest</code></td>
+</tr>
+<tr>
+<td>排名与上次不同</td>
+<td>配置被改（权重/归一化）</td>
+<td>对比 <code>config/pipeline.yaml</code> 与 audit 产物</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>状态</strong>：【✓ 照抄即可】（陷阱表已有）</p>
+<hr />
+<h2 id="12-版本与变更记录">12. 版本与变更记录</h2>
+<p><strong>建议英文标题</strong>：<code>12. Versions &amp; Changelog</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>两套工具的版本对应表（避免读者混用）
+<ul>
+<li>筛选管线：<strong>v2.2</strong>（代码自述）</li>
+<li>VirtualCellTool：<strong>v3.3</strong>，tag
+<code>v1.0-scimilarity</code> / <code>v2.0-gears</code> /
+<code>v3.1-fixed</code> / <code>v3.2-zoom</code> /
+<code>v3.3-viz</code></li>
+</ul></li>
+<li>完整变更史指向 <code>outputs/reports/PROJECT_LOG.md</code>（条目
+#0–#15）</li>
+<li><strong>诚实标注</strong>：筛选管线目录目前<strong>不在任何 git
+仓库跟踪范围内</strong>，无独立 tag——引用版本时需写 v2.2 + 快照</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="13-归属与引用">13. 归属与引用</h2>
+<p><strong>建议英文标题</strong>：<code>13. Attribution &amp; Citation</code></p>
+<p><strong>要写什么</strong></p>
+<ul>
+<li>自有工作 vs 第三方依赖的明确分界（iGEM 归属要求）
+<ul>
+<li>第三方：SCimilarity（Genentech）、Captum、GEARS、scipy/scanpy、ClinGen/gnomAD/HPA/DeepLOF
+数据</li>
+<li>自有：管线四层架构与全部模块、CIPHER 引擎实现、VirtualCellTool
+前端与 API、方法学修复（余弦对齐度公式等）</li>
+</ul></li>
+<li>每条第三方依赖的许可证 + 原始文献 DOI</li>
+<li>引用格式（可参考
+<code>ATTRIBUTIONS.md</code>、<code>docs/api/ai_scores.md</code>）</li>
+<li>【○ 待补】本项目的正式引用条目 / DOI / 代码仓库地址</li>
+</ul>
+<p><strong>状态</strong>：【◐ 需重写】（<code>ATTRIBUTIONS.md</code>
+已有登记，需整理成表）</p>
+<hr />
+<h2 id="14-附录">14. 附录</h2>
+<p><strong>建议英文标题</strong>：<code>14. Appendix</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>附录</th>
+<th>内容</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>数据源清单与 URL/checksum</td>
+<td>【✓】<code>config/sources.json</code></td>
+</tr>
+<tr>
+<td>B</td>
+<td>全参数默认值速查表</td>
+<td>【◐】从 <code>pipeline.yaml</code> 抄</td>
+</tr>
+<tr>
+<td>C</td>
+<td>目录结构说明</td>
+<td>【✓】两份 README</td>
+</tr>
+<tr>
+<td>D</td>
+<td>术语表（pLI / LOEUF / HI / SINEUP / CIPHER / 补偿状态…）</td>
+<td>【◐】可参考
+<code>outputs/reports/管线文档/名词解释_WBS筛选管线报告.md</code></td>
+</tr>
+<tr>
+<td>E</td>
+<td>API 端点全表（19 个）</td>
+<td>【✓】<code>docs/ARCHITECTURE_v3.md</code> 第三节</td>
+</tr>
+<tr>
+<td>F</td>
+<td>测试与回归说明</td>
+<td>【✓】<code>tests/</code> + <code>tests_e2e_playwright.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>状态</strong>：【◐ 待整理】</p>
+<hr />
+<h2 id="15-待补清单写正文前需先产出">15.
+待补清单（写正文前需先产出）</h2>
+<ul>
+<li>【○】对外发布方式（仓库地址、许可证、DOI）— 影响 §12/§13</li>
+<li>【○】快速上手与端到端示例的<strong>截图</strong>（§4/§10）</li>
+<li>【◐】每个配置权重的来源依据（§6）</li>
+<li>【◐】把 <code>ATTRIBUTIONS.md</code> 整理成归属表（§13）</li>
+<li>【○】英文翻译（全文）</li>
+<li>【◐】确认是否有对外复用的使用者反馈/测试案例（iGEM
+很看重"别人真的用了吗"）</li>
+</ul>
+<hr />
+<h2 id="附写作顺序建议">附：写作顺序建议</h2>
+<ol type="1">
+<li><strong>§2（环境与陷阱）+ §11（排查）</strong> ——
+最实用，也最容易写</li>
+<li><strong>§6（配置）+ §8（输出解读）</strong> ——
+使用者真正要查的两张表</li>
+<li><strong>§9（VirtualCellTool 手册）</strong> —— 界面与 8
+类图表读法</li>
+<li><strong>§4 + §10（示例）</strong> —— 依赖截图，稍后补</li>
+<li>最后 <strong>§12/§13</strong>（依赖对外发布方式）</li>
+</ol>
+
+    </article>
+  </main>
+</div>
+<!-- ============ 页脚 ============ -->
+<footer class="doc-footer">
+  由知识文档 HTML 模板 v1.0 生成 · 零外网依赖 · 适配桌面与移动端
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 1. 目录(TOC)自动生成: 收集正文 h2/h3 ---------- */
+  var content = document.getElementById('content');
+  var tocList = document.getElementById('toc-list');
+  if (content && tocList) {
+    var headings = content.querySelectorAll('h2, h3');
+    headings.forEach(function (h, i) {
+      if (!h.id) { h.id = 'sec-' + i; }        // 无 id 时自动补锚点
+      var li = document.createElement('li');
+      li.className = h.tagName.toLowerCase() === 'h3' ? 'lvl2' : 'lvl1';
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  }
+
+  /* ---------- 2. scrollspy: 滚动时高亮当前章节 ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#toc-list a'));
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    var map = {};
+    tocLinks.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          tocLinks.forEach(function (a) { a.classList.remove('active'); });
+          var link = map[e.target.id];
+          if (link) { link.classList.add('active'); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    content.querySelectorAll('h2, h3').forEach(function (h) { spy.observe(h); });
+  }
+
+  /* ---------- 3. 代码块复制按钮 ---------- */
+  content.querySelectorAll('pre').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.addEventListener('click', function () {
+      var text = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* ---------- 4. 深浅色切换(light / dark / auto 循环) ---------- */
+  var themeBtn = document.getElementById('theme-btn');
+  var order = ['auto', 'light', 'dark'];
+  var label = { auto: '跟随系统', light: '浅色', dark: '深色' };
+  var saved = null;
+  try { saved = localStorage.getItem('kd-theme'); } catch (e) {}
+  if (saved && order.indexOf(saved) >= 0) { document.documentElement.setAttribute('data-theme', saved); }
+  var idx = saved ? order.indexOf(saved) : 0;
+  function renderTheme() {
+    document.documentElement.setAttribute('data-theme', order[idx]);
+    if (themeBtn) { themeBtn.textContent = label[order[idx]]; }
+    try { localStorage.setItem('kd-theme', order[idx]); } catch (e) {}
+  }
+  renderTheme();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      idx = (idx + 1) % order.length;
+      renderTheme();
+    });
+  }
+
+  /* ---------- 5. 回到顶部 ---------- */
+  var backTop = document.getElementById('backtop-btn');
+  if (backTop) {
+    backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+})();
+</script>
+</body>
+</html>

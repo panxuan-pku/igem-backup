@@ -1,0 +1,25 @@
+{
+  "clinGen": {
+    "url": "https://ftp.clinicalgenome.org/",
+    "file": "ClinGen_gene_curation_list_GRCh38.tsv",
+    "checksum_sha256": "<paste here>",
+    "verified": "2025-09-01"
+  },
+  "gnomad_constraint": {
+    "url": "https://gnomad.broadinstitute.org/help/constraint",
+    "file": "gnomad_constraint.tsv",
+    "notes": "Per-gene pLI and LOEUF; see Downloads section",
+    "verified": "2025-09-01"
+  },
+  "hpa_rna_expression": {
+    "url": "https://www.proteinatlas.org/about/download",
+    "file": "rna_expression_consensus.tsv",
+    "notes": "v23 consensus, 51 tissues, ~19,297 genes",
+    "verified": "2025-09-01"
+  },
+  "hgnc_aliases": {
+    "url": "https://www.genenames.org/help/custom-downloads/",
+    "file": "hgnc_aliases.tsv",
+    "verified": "2025-09-01"
+  }
+}

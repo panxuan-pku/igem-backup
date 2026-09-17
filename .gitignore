@@ -1,0 +1,37 @@
+# Environments, local caches, logs and editor artifacts are not source data.
+.venv/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.benchmarks/
+**/.DS_Store
+*.py[cod]
+*.log
+
+# Generated CNV sample layouts are rebuilt from the six raw GEO files.
+03_pipeline/data/scrna/GSE283473/CTRL1/
+03_pipeline/data/scrna/GSE283473/WS1/
+03_pipeline/data/scrna/GSE283473/CTRL1_repro/
+03_pipeline/data/scrna/GSE283473/WS1_repro/
+
+# Local validation copies and newly generated artifacts are not release inputs.
+07_independent_reproduction_20260916/
+08_gitlab_export/
+09_github_export/
+03_pipeline/outputs_repro/
+05_tools/VirtualCellTool/test_artifacts/
+05_tools/VirtualCellTool/.mplconfig_repro/
+05_tools/VirtualCellTool/.mplconfig/
+05_tools/VirtualCellTool/.playwright-browsers/
+
+# Public raw data and regenerable products are fetched/rebuilt after clone.
+/01_disease-22q11.2/data/
+/02_disease-williams/01_rawdata/
+/02_disease-williams/03_intermediate/processed.h5ad
+/03_pipeline/data/scrna/GSE283473/
+/03_pipeline/outputs/cnv/cnv_input.h5ad
+/05_tools/SIGnature/model_files/model_files.tar.gz
+/05_tools/VirtualCellTool/gears_data/norman/
+/05_tools/VirtualCellTool/gears_data/norman.zip
+/05_tools/VirtualCellTool/data/ms_attribution_fp16.npy
+/05_tools/VirtualCellTool/data/cipher_*.npz

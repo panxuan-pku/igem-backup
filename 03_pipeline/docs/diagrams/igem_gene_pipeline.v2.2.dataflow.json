@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "微缺失主效基因筛选管线 v2.2",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1080, 500]
+  },
+  "stages": [
+    { "label": "输入" },
+    { "label": "L0 · L1 证据层" },
+    { "label": "L2 AI（可选）" },
+    { "label": "L3 排序 · 产出" },
+    { "label": "下游" }
+  ],
+  "nodes": [
+    { "id": "candidates", "type": "external", "label": "candidates.csv", "sublabel": "候选基因列表", "stage": 0, "row": 0 },
+    { "id": "refdb", "type": "external", "label": "参考数据库", "sublabel": "HI · pLI · 表达", "stage": 0, "row": 1 },
+    { "id": "scrna", "type": "external", "label": "scRNA-seq", "sublabel": "补偿分析（可选）", "stage": 0, "row": 2 },
+    { "id": "normalize", "type": "backend", "label": "normalize", "sublabel": "→ HGNC ID", "stage": 1, "row": 0, "tag": "ADR-001" },
+    { "id": "merge_evidence", "type": "backend", "label": "merge_evidence", "sublabel": "证据合并", "stage": 1, "row": 1 },
+    { "id": "ai", "type": "backend", "label": "ai_scores", "sublabel": "DeepLOF 可选", "stage": 2, "row": 1, "tag": "覆盖 28/35" },
+    { "id": "report", "type": "database", "label": "report_v2.md", "sublabel": "正对照 · 警告", "stage": 3, "row": 0 },
+    { "id": "consensus", "type": "backend", "label": "consensus_v2", "sublabel": "raw 加权 · Borda", "stage": 3, "row": 1, "tag": "四 mode" },
+    { "id": "compensation", "type": "backend", "label": "compensation", "sublabel": "补偿（可选）", "stage": 3, "row": 2 },
+    { "id": "ranked", "type": "database", "label": "ranked_v2.csv", "sublabel": "top-N 排名", "stage": 4, "row": 1 },
+    { "id": "vct", "type": "external", "label": "VirtualCellTool", "sublabel": "L4 机制假设层", "stage": 4, "row": 2, "tag": "不回补排序" }
+  ],
+  "flows": [
+    { "from": "candidates", "to": "normalize", "label": "候选基因", "classification": "symbol 列表", "variant": "emphasis" },
+    { "from": "normalize", "to": "merge_evidence", "label": "HGNC ID", "classification": "主键归一化", "variant": "emphasis", "labelDy": 35 },
+    { "from": "refdb", "to": "merge_evidence", "label": "证据值", "classification": "HI · pLI · 表达", "variant": "default" },
+    { "from": "merge_evidence", "to": "ai", "label": "归一化证据", "classification": "evidence.parquet", "variant": "emphasis" },
+    { "from": "ai", "to": "consensus", "label": "AI 分数", "classification": "ai_scores.csv", "variant": "emphasis" },
+    { "from": "scrna", "to": "compensation", "label": "表达矩阵", "classification": "患者 / 对照", "variant": "default" },
+    { "from": "compensation", "to": "consensus", "label": "补偿状态", "classification": "可选回灌", "variant": "default", "labelDy": -20 },
+    { "from": "consensus", "to": "report", "label": "检验 · 警告", "classification": "四 mode 报告", "variant": "default", "labelDy": -20 },
+    { "from": "consensus", "to": "ranked", "label": "排名表", "classification": "top-N", "variant": "emphasis" },
+    { "from": "ranked", "to": "vct", "label": "top-N 基因", "classification": "机制假设输入", "variant": "default", "labelDy": 35 }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "主路径",
+      "items": [
+        "candidates.csv → normalize → merge_evidence → consensus_v2 → ranked_v2.csv",
+        "全程 HGNC ID 主键（ADR-001）：符号变更不再静默丢证据"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "实测验证",
+      "items": [
+        "WBS 正对照 top-10 命中 6/6；WHS NSD2 全 mode 排名 #1",
+        "测试 20 passed / 1 skipped"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "v2.0 设计尚未实现",
+      "items": [
+        "extract_genes 区间提取 · 表型分组 · 五维证据面板",
+        "HPA 现仅 liver / kidney 两列，脑表达列未映射"
+      ]
+    }
+  ]
+}
