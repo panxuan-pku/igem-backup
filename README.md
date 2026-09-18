@@ -9,7 +9,7 @@
 - `07_independent_reproduction_20260916/` 是本机验证副本，不属于发布内容。原有子项目的 `.git` 元数据也不能作为普通目录嵌套提交；发布时应使用不含嵌套 `.git` 的导出副本。
 - 不要把现有 `03_pipeline/.venv` 或 `05_tools/SIGnature/.venv` 上传；它们含旧绝对路径，不能搬迁。根目录 `.gitignore` 已排除。
 
-发布者在原项目根目录运行 `bash scripts/export_github.sh`，从新建的 `09_github_export/` 建立 GitHub 仓库，**不要直接提交原项目目录或旧的 `08_gitlab_export/`**。导出脚本排除原始大数据、生成缓存、旧环境、嵌套 `.git` 和本机验证副本，并执行核心文件检查。在 `git add` **之前**运行 `git lfs install`；提交前检查 `git lfs ls-files` 包含 `hgnc_aliases.tsv` 和 `encoder.ckpt`，且普通 Git 中没有超过 100 MiB 的文件。当前机器尚未安装 Git LFS，实际提交、推送和从 GitHub 全新克隆仍待验证。
+发布者在原项目根目录运行 `bash scripts/export_github.sh`，从新建的 `09_github_export/` 建立 GitHub 仓库，**不要直接提交原项目目录或旧的 `08_gitlab_export/`**。导出脚本排除原始大数据、生成缓存、旧环境、嵌套 `.git` 和本机验证副本，并执行核心文件检查。在 `git add` **之前**运行 `git lfs install`；提交前检查 `git lfs ls-files` 包含 `hgnc_aliases.tsv` 和 `encoder.ckpt`，且普通 Git 中没有超过 100 MiB 的文件。2026-09-18 已从 GitHub 全新克隆提交 `ee37779` 并下载 33 个 LFS 对象：核心筛选测试 22 通过/1 跳过，WBS/WHS 排名与报告产出；加入本机保留的 GSE283473 和 Norman 数据后，CNV→筛选数据流及 VirtualCellTool 18/18 API 均通过。公开数据的下载链接已核对，但尚未从源站重新下载全部数据，也未做浏览器端到端验收。
 
 新用户克隆后在仓库根目录运行：
 

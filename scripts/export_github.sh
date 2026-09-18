@@ -25,6 +25,8 @@ rsync -a \
   --exclude='.DS_Store' --exclude='*.log' \
   --exclude='/07_independent_reproduction_20260916/' \
   --exclude='/08_gitlab_export/' --exclude='/09_github_export/' \
+  --exclude='/10_fresh_github_validation_20260917/' \
+  --exclude='/00_docs/cleanup_evidence_20260918/' \
   --exclude='/01_disease-22q11.2/data/' \
   --exclude='/02_disease-williams/01_rawdata/' \
   --exclude='/02_disease-williams/03_intermediate/processed.h5ad' \
