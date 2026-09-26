@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """Build the iGEM-ready epidemiology package (self-contained bilingual HTML + report.md + README)."""
 import os, shutil, re
+from pathlib import Path
 
-FIG_SRC = "outputs/figures"   # source SVG/PNG figures (moved here in reorg)
-DATA_SRC = "outputs/data"     # source CSV tables
-PKG = os.path.join("outputs", "deliverables", "igem_epidemiology_package")
+PKG = Path(__file__).resolve().parent
+FIG_SRC = PKG.parents[1] / "figures"
+DATA_SRC = PKG.parents[1] / "data"
 FIG = os.path.join(PKG, "figures")
 DATA = os.path.join(PKG, "data")
 for d in (PKG, FIG, DATA):
@@ -27,8 +28,8 @@ def load_svg_inline(name):
 for name in FIGURES:
     for ext in ("svg", "png"):
         shutil.copy(os.path.join(FIG_SRC, f"{name}.{ext}"), os.path.join(FIG, f"{name}.{ext}"))
-for csv in ("microdeletion_birth_prevalence.csv", "microdeletion_denovo_fraction.csv"):
-    shutil.copy(os.path.join(DATA_SRC, csv), os.path.join(DATA, csv))
+for name in FIGURES:
+    shutil.copy(os.path.join(DATA_SRC, name + ".csv"), os.path.join(DATA, name + ".csv"))
 
 SVG = {n: load_svg_inline(n) for n in FIGURES}
 
@@ -196,8 +197,17 @@ html += """
 </ol>
 <p class="note">Data compiled from public literature and population cohorts (no internal disease database).
 Full source detail and CSV tables: see <code>report.md</code> and <code>data/</code>.
-Figures regenerate via <code>outputs/scripts/microdeletion_prevalence.py</code>.</p>
+Figures regenerate via <code>06_epidemiology/scripts/microdeletion_prevalence.py</code>.</p>
+<p class="note">CR-051: The 16p11.2 birth estimate in the birth/adult comparison (2.94 per 10,000)
+has an unverified source and differs from the summary chart (3.60). Original values are retained;
+do not treat them as a reconciled estimate. 来源待核对，本次未修改统计取值或科学解释。</p>
 """
+html += "<h2>Figure source tables / 图表数据</h2><ul>\n"
+for name in FIGURES:
+    html += f'<li><a href="data/{name}.csv">{name}.csv</a></li>\n'
+html += "</ul>\n"
 html += HTML_FOOT
 open(os.path.join(PKG, "index.html"), "w", encoding="utf-8").write(html)
 print("wrote index.html (", len(html), "bytes)")
+archive = shutil.make_archive(str(PKG), "zip", root_dir=PKG.parent, base_dir=PKG.name)
+print("wrote", archive)

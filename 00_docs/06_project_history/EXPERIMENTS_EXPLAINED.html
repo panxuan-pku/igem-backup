@@ -1,0 +1,276 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>11 个实验逐项讲解</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f4f6f3;color:#20322f;font:17px/1.85 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}a{color:#176858;text-underline-offset:4px}a:focus-visible,summary:focus-visible{outline:3px solid #b7762e;outline-offset:4px}main{max-width:1220px;margin:auto;padding:32px 28px 70px}nav{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;border-bottom:1px solid #ccd7ce;padding-bottom:15px}.eyebrow{color:#647567;font-size:13px;letter-spacing:.08em;margin:26px 0 8px}h1{font-size:36px;line-height:1.4;margin:8px 0 18px}h2{font-size:25px;line-height:1.5;margin:8px 0 22px}h3{font-size:20px;line-height:1.6;margin:30px 0 12px}.lead{font-size:20px;max-width:860px}.layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:26px;align-items:start}aside{position:sticky;top:20px;background:#e8efe8;border-radius:14px;padding:18px;font-size:14px;max-height:90vh;overflow:auto}aside ol{padding-left:23px}aside li{margin:9px 0}.card,.chapter{background:white;border:1px solid #d9e2da;border-radius:16px;padding:26px;margin-bottom:24px}.note{background:#fff2df;border:1px solid #d6b88c;padding:18px 22px;border-radius:12px;margin:22px 0}.muted,small{color:#5f7066;font-size:14px}.num{display:inline-block;font-size:13px;background:#e8f1e9;color:#386047;padding:2px 10px;border-radius:16px;margin-bottom:12px}p{margin:12px 0 20px}li{margin:6px 0}blockquote{border-left:3px solid #abc4b0;margin:18px 0;padding:1px 18px;color:#42574a}.table-wrap{overflow-x:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.75}th,td{min-width:90px;vertical-align:top;text-align:left;border-bottom:1px solid #dce4dc;padding:12px}th{background:#eaf1eb}tr:nth-child(even){background:#f8faf7}code,pre{font-size:13px;background:#eef2ee;border-radius:5px;overflow-wrap:anywhere}code{padding:2px 4px}pre{padding:18px;overflow:auto;white-space:pre-wrap}hr{border:0;border-top:1px solid #dce4dc;margin:25px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.flow{display:flex;gap:12px;margin:25px 0}.flow div{flex:1;padding:14px;background:#e8efe8;border-radius:12px}.flow b{display:block}summary{cursor:pointer;font-weight:650}footer{font-size:13px;color:#5f7066;border-top:1px solid #ccd7ce;margin-top:30px;padding-top:18px}@media(max-width:850px){.layout,.grid{grid-template-columns:1fr}aside{position:static;max-height:none}aside ol{columns:2}.flow{flex-direction:column}main{padding:22px 16px}h1{font-size:29px}.chapter,.card{padding:19px}}@media(max-width:480px){aside ol{columns:1}}@media print{aside,nav{display:none}.layout{display:block}body{background:white}.chapter{border:0;padding:0;break-before:page}main{max-width:none}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav aria-label="文档导航"><a href="index.html">项目历史</a><a href="../01_guides/MINIMAL_ROBUST_CORE.html">当前核心设计</a><a data-local-only-href="../01_guides/DOCUMENTATION_RULES.html" title="本地保留的来源文件，不随公开仓库发布">整理规则</a></nav><div class="eyebrow">项目日志 / 原第 14 项 / 完整阅读版</div><h1>11 个实验逐项讲解</h1><p class="lead">按 E1—E11 查数据来源、操作、数字及当时的解释。</p><div class="note"><strong>这是当时的记录与解释。</strong>保留原有思路、实验步骤、数字和判断，包括尚需核实的表述。文中的“已验证”“可复现”、旧路径与操作仅描述当时；当前能力及待核问题请看<a data-local-only-href="../02_agent/PROJECT_STATE.yaml" title="本地保留的来源文件，不随公开仓库发布">当前状态</a>。<br><small>这里用目录和分节帮助阅读，没有把历史内容压缩成摘要。</small></div><div class="layout"><aside id="contents"><strong>阅读目录</strong><ol><li><a href="#chapter-1">实验总览（先看这张地图）</a></li><li><a href="#chapter-2">E1｜工具可信度验证：归因能否复现已知生物学（08-13）</a></li><li><a href="#chapter-3">E2｜扰动预测闭环：GEARS 预测像不像真实扰动（08-13）</a></li><li><a href="#chapter-4">E3｜归因的因果预测力检验：r=0.02（08-17）⭐ 全项目最重要的负结果</a></li><li><a href="#chapter-5">E4｜归因 vs 差异表达：它是不是多余的信息（08-17 / 08-18）</a></li><li><a href="#chapter-6">E5｜首个真实疾病数据验证：多发性硬化（08-13）</a></li><li><a href="#chapter-7">E6｜疾病选择检验：22q11.2 为什么被放弃（08-18）</a></li><li><a href="#chapter-8">E7｜主线数据预处理：Williams 6 样本（08-18）</a></li><li><a href="#chapter-9">E8｜疾病归因：Williams 差异归因看到了什么（08-18）</a></li><li><a href="#chapter-10">E9｜扰动验证：GTF2I 敲低/过表达能不能复现/逆转疾病（08-18）</a></li><li><a href="#chapter-11">E10｜交叉验证：两条独立线收敛到同一批基因（08-18）✅</a></li><li><a href="#chapter-12">E11｜GEARS 适用性检查：主效基因在不在训练图里（08-17）⚠️</a></li><li><a href="#chapter-13">总结：11 个实验拼出的完整图景</a></li></ol></aside><article><div class="chapter" id="source-intro"><span class="num">原记录 · 开篇</span><div data-source="intro"><h2>实验结果逐个讲解（易懂版）</h2>
+<blockquote>
+<p>项目：iGEM 2026 微缺失病干实验 ｜ 配套：<a href="PROJECT_PROGRESS_REPORT.html">PROJECT_PROGRESS_REPORT.md</a>
+每个实验按四段讲：<strong>数据从哪来 → 做了什么操作 → 得到什么数字 → 这个数字说明什么</strong>
+阅读提示：文中&quot;归因分数&quot;指模型认为某基因对判定细胞状态的重要性；&quot;DE（差异表达）&quot;指疾病 vs 健康的基因表达量之差。</p>
+</blockquote>
+<hr>
+</div></div><section class="chapter" id="chapter-1"><span class="num">第 1 节 · 历史记录</span><div data-source="chapter-1"><h2>实验总览（先看这张地图）</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>实验一句话</th>
+<th>核心数字</th>
+<th>结论性质</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E1</td>
+<td>工具准不准：归因能不能认出 B 细胞的标志基因</td>
+<td>Top5 全中</td>
+<td>✅ 正面（工具可信）</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>扰动预测模型接不接得通：GEARS 预测像不像真实</td>
+<td>r=0.972</td>
+<td>✅ 正面（管线通）</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>归因有没有因果预测力：能不能提前预言扰动结果</td>
+<td>r=0.02</td>
+<td>❌ 负结果（核心）</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>归因是不是表达量的&quot;复读机&quot;</td>
+<td>r=0.86 / 0.949</td>
+<td>⚠️ 负结果（冗余）</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>换真实疾病数据还能不能看：MS 少突胶质细胞</td>
+<td>PLP1 第一</td>
+<td>✅ 正面（sanity）</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>第一个病（22q11.2）可不可行：TBX1 在脑表达吗</td>
+<td>15/9293</td>
+<td>⚠️ 死路→pivot</td>
+</tr>
+<tr>
+<td>E7</td>
+<td>主线数据预处理：Williams 6 样本聚类</td>
+<td>96,969×3,016</td>
+<td>✅ 中间产物</td>
+</tr>
+<tr>
+<td>E8</td>
+<td>疾病归因看到了什么：Williams 差异归因</td>
+<td>r=0.949</td>
+<td>⚠️ 信号真实但冗余</td>
+</tr>
+<tr>
+<td>E9</td>
+<td>扰动验证：GTF2I 敲低/过表达能不能复现疾病</td>
+<td>r≈−0.05/+0.07</td>
+<td>⚠️ 负结果+方向线索</td>
+</tr>
+<tr>
+<td>E10</td>
+<td>两条独立线有没有交叉验证</td>
+<td>同一批基因</td>
+<td>✅ 最硬的正面结果</td>
+</tr>
+<tr>
+<td>E11</td>
+<td>GEARS 能不能用在我们病上：41 基因覆盖检查</td>
+<td>4/41 且全是次要</td>
+<td>⚠️ 结构性死路</td>
+</tr>
+</tbody></table></div>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-2"><span class="num">第 2 节 · 历史记录</span><div data-source="chapter-2"><h2>E1｜工具可信度验证：归因能否复现已知生物学（08-13）</h2>
+<p><strong>数据来源</strong>：10x Genomics 官方 PBMC 3k 数据集（2,700 个外周血单个核细胞，包含 B 细胞/T 细胞/单核细胞等，细胞类型标签是社区公认的金标准）。</p>
+<p><strong>实验操作</strong>：</p>
+<ol>
+<li>用 scanpy 预处理（QC、归一化），把细胞表达对齐到 SCimilarity 的 28,231 基因空间；</li>
+<li>过 SCimilarity 编码器得到每个细胞的 128 维嵌入，UMAP 降维可视化；</li>
+<li>对每个细胞用 Integrated Gradients（n_steps=16）算全部基因的归因分数；</li>
+<li>挑出 B 细胞，看归因分数最高的基因是什么。</li>
+</ol>
+<p><strong>实验结果</strong>：B 细胞归因 Top 基因 = <strong>MS4A1（CD20）、CD79A、BANK1</strong>——全部是免疫学教科书级的 B 细胞标志物，与 SIGnature 原论文的结果一致。</p>
+<p><strong>结果分析</strong>：这一步是&quot;先验工具、再谈结论&quot;。如果归因给出的 top 是 MALAT1 这类高表达但无功能的基因，说明工具只复读表达量，后面全部实验作废。结果复现原论文 → SCimilarity+IG 这套组合在我们环境里是<strong>可信的</strong>，E3 之后的负结果才有了&quot;不是工具坏了&quot;的前提。量化验收：方向性检验 p&lt;0.0005（AC1/AC2 通过），交互延迟 1.4 秒（AC3）。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-3"><span class="num">第 3 节 · 历史记录</span><div data-source="chapter-3"><h2>E2｜扰动预测闭环：GEARS 预测像不像真实扰动（08-13）</h2>
+<p><strong>数据来源</strong>：Norman et al. 2019 Perturb-seq 数据（K562 白血病细胞系，单基因/组合基因敲低后测全转录组）。官方 dataverse 被 AWS WAF 封锁，改用 Zenodo 镜像 17252307 下载。</p>
+<p><strong>实验操作</strong>：</p>
+<ol>
+<li>安装 cell-gears 0.1.2（注意 PyPI 上的 <code>gears</code> 是错误包名），加载 HuggingFace 预训练权重 <code>matthewshu/gears-norman</code>；</li>
+<li>把 CEBPA（髓系转录因子）敲低<strong>留出</strong>（不参与训练），让 GEARS 预测&quot;敲低 CEBPA 后 5000 个基因各自怎么变&quot;；</li>
+<li>把预测表达谱和真实敲低细胞的表达谱对比，算 Spearman 相关；同时算嵌入空间的位移距离。</li>
+</ol>
+<p><strong>实验结果</strong>：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>v1（SCimilarity 直接反事实）</th>
+<th>v2（GEARS 预测）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>预测 vs 真实相关性</td>
+<td>无法逐基因预测</td>
+<td><strong>r = 0.972</strong></td>
+</tr>
+<tr>
+<td>扰动嵌入位移</td>
+<td>0.01</td>
+<td><strong>0.338（34 倍）</strong></td>
+</tr>
+<tr>
+<td>生物学方向</td>
+<td>一阶、无级联</td>
+<td>红系基因↓、髓系基因↑，符合已知髓系分化生物学</td>
+</tr>
+</tbody></table></div>
+<p><strong>结果分析</strong>：GEARS 确实&quot;学会了&quot;扰动后的级联效应——预测和真实的相关性高达 0.972，位移信号是 v1 的 34 倍。这说明&quot;归因找靶 → 模型预测扰动 → 再归因验证&quot;这条工具链<strong>在工程上接得通</strong>。但注意：这只是在 GEARS 自己训练过的数据分布内（K562）的验证，它能不能迁移到我们的病，由 E11 回答（结论是不能）。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-4"><span class="num">第 4 节 · 历史记录</span><div data-source="chapter-4"><h2>E3｜归因的因果预测力检验：r=0.02（08-17）⭐ 全项目最重要的负结果</h2>
+<p><strong>数据来源</strong>：同 E2 的 Norman Perturb-seq（真实敲低实验 = 因果的 ground truth）。</p>
+<p><strong>实验操作</strong>（预测性测试设计）：</p>
+<ol>
+<li>对 101 个基因，各自有&quot;敲低后细胞&quot;和&quot;对照细胞&quot;的真实数据；</li>
+<li><strong>只给模型看对照细胞</strong>，算每个基因的归因分数（不告诉模型任何扰动信息）；</li>
+<li>问：归因分数高的基因，被敲低后产生的转录组变化是不是也大？</li>
+<li>计算归因分数与真实扰动效应量（energy distance / DEG 数）的相关。</li>
+</ol>
+<p><strong>实验结果</strong>：<strong>r = 0.02（p = 0.83）</strong>——完全等于随机。对照组：归因 vs 表达量 r=0.86（见 E4）。</p>
+<p><strong>结果分析</strong>：</p>
+<ul>
+<li>p=0.83 意味着&quot;归因高 ⇒ 扰动效应大&quot;这个命题<strong>没有任何统计支持</strong>；</li>
+<li>原因是概念性的：归因衡量&quot;模型的判断<strong>依赖</strong>哪些基因&quot;（表征敏感性），而&quot;改了它病会不会好&quot;是<strong>因果问题</strong>——一个高表达的下游 marker 归因可以很高但扰动它什么都改变不了；一个低表达的 TF 恰恰相反；</li>
+<li><strong>决策</strong>：归因从&quot;靶点证明工具&quot;降级为&quot;候选生成器&quot;（把全基因组压缩到几十个优先候选）。这个边界写进了复盘报告，也成了我们后面所有叙事的地基——它排除了&quot;继续用归因硬找靶点&quot;这条死路。</li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-5"><span class="num">第 5 节 · 历史记录</span><div data-source="chapter-5"><h2>E4｜归因 vs 差异表达：它是不是多余的信息（08-17 / 08-18）</h2>
+<p><strong>数据来源</strong>：E3 同款 Norman 数据（单基因层面）+ 后续 Williams 患者数据（疾病层面，见 E8）。</p>
+<p><strong>实验操作</strong>：对同一批细胞，分别计算①每个基因的差分归因（疾病组归因均值 − 对照组归因均值）和②经典差异表达（疾病组表达均值 − 对照组表达均值），然后求两者的相关。</p>
+<p><strong>实验结果</strong>：</p>
+<ul>
+<li>Norman 数据上：|Δ归因| vs |DE| r ≈ 0.81–0.85；但<strong>方向</strong>相关 r ≈ 0.03–0.12（归因说不出基因是升还是降）；</li>
+<li>Williams 数据上：Δ归因 vs DE <strong>r = 0.949</strong>（近乎完全镜像）。</li>
+</ul>
+<p><strong>结果分析</strong>：</p>
+<ul>
+<li>r≈0.9 意味着归因排出来的&quot;重要基因&quot;和差异表达排出来的<strong>几乎是同一批</strong>——因为 IG 归因在数学上约等于&quot;梯度 × 表达量&quot;，表达变化的基因归因天然跟着变；</li>
+<li>也就是说：花大力气算的归因，在&quot;找哪些基因变了&quot;这件事上<strong>没有提供比 DE 更多的信息</strong>，还额外丢失了方向；</li>
+<li>这不是 SIGnature 论文的错（论文的招牌用法是&quot;签名查询&quot;，方向本来就和我们的&quot;疾病→找基因&quot;相反），而是我们把它的变体用在了不匹配的问题上。<strong>结论：差异归因保留为&quot;刻画疾病状态&quot;的描述性工具，不再承担&quot;找靶点&quot;任务。</strong></li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-6"><span class="num">第 6 节 · 历史记录</span><div data-source="chapter-6"><h2>E5｜首个真实疾病数据验证：多发性硬化（08-13）</h2>
+<p><strong>数据来源</strong>：CELLxGENE 公共库数据集 16c1e722「Progressive MS 少突胶质细胞」，17,799 个细胞（MS 患者 11,208 vs 正常对照 6,591）。踩坑记录：该数据的 var_names 是 Ensembl ID，需用 <code>var[&#39;feature_name&#39;]</code> 列映射成基因符号才能进 SCimilarity。</p>
+<p><strong>实验操作</strong>：把 MS 组和正常组分别过 SCimilarity + IG 批量归因（实测吞吐 645 细胞/秒），算两组的组内归因均值之差（差异归因），看哪些基因的&quot;重要性&quot;在 MS 里变了。</p>
+<p><strong>实验结果</strong>（sanity check 三连全过）：</p>
+<ul>
+<li><strong>PLP1</strong> 在两组归因里都排第一（它是少突胶质细胞的核心髓鞘基因，本该如此）；</li>
+<li><strong>MOG</strong>（髓鞘少突胶质糖蛋白）在 MS 组的重要性<strong>降到对照组的一半</strong>——MS 正是髓鞘被免疫攻击的病，髓鞘基因重要性下降完全符合病理；</li>
+<li>产出差异归因候选清单（FTL/ASPA/MOG 等）。</li>
+</ul>
+<p><strong>结果分析</strong>：这是归因方法第一次在<strong>真实疾病数据</strong>上给出符合医学常识的结果——说明 E1 验证过的工具链能从&quot;细胞类型标记物&quot;升级到&quot;疾病状态刻画&quot;。它给了我们信心把方法推向微缺失病主线（E6-E9），也为 iGEM 提供了&quot;真实疾病分析&quot;的可展示产物。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-7"><span class="num">第 7 节 · 历史记录</span><div data-source="chapter-7"><h2>E6｜疾病选择检验：22q11.2 为什么被放弃（08-18）</h2>
+<p><strong>数据来源</strong>：22q11.2DS 患者脑类器官单细胞数据（GSE244005 类似来源）。</p>
+<p><strong>实验操作</strong>：统计主效候选基因 <strong>TBX1</strong> 在该数据集的表达情况；同时用 CellOracle 的可行性检查（工具只能扰动&quot;有表达的转录因子&quot;）。</p>
+<p><strong>实验结果</strong>：<strong>TBX1 仅在 9,293 个细胞中的 15 个表达（0.16%）</strong>。原因：TBX1 是心脏/咽弓发育的主效 TF，在脑类器官里几乎沉默。</p>
+<p><strong>结果分析</strong>：不是数据不好，是&quot;疾病 × 组织&quot;配错了——22q11.2 的心脏表型由 TBX1 驱动，但我们手里只有脑类器官数据。工具的硬约束（只能扰 TF + 必须有表达）让这条路走不通。<strong>决策：pivot 到 Williams 综合征 + GTF2I</strong>（GTF2I 是脑内高表达的 TF，E7 验证了这一点）。这个 pivot 的原始证据保留在 <code>01_disease-22q11.2/</code>，作为复盘报告第 1 步的&quot;负结果资产&quot;。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-8"><span class="num">第 8 节 · 历史记录</span><div data-source="chapter-8"><h2>E7｜主线数据预处理：Williams 6 样本（08-18）</h2>
+<p><strong>数据来源</strong>：GSE283473——Williams 综合征患者脑类器官单细胞数据，6 个样本（患者 WS1-3 + 对照 CTRL1-3）。</p>
+<p><strong>实验操作</strong>（<code>02_scripts/preprocess.py</code>）：</p>
+<ol>
+<li>用 scanpy 读取 6 个 10x 格式样本，合并 + 质控（每细胞 ≥200 基因、每基因 ≥3 细胞）；</li>
+<li>选 3000 个高变基因（HVG），<strong>同时强制保留 7q11.23 缺失区段的 20 个基因</strong>（GTF2I、ELN、LIMK1 等）——这一步很关键：主效基因表达量不高，纯靠 HVG 筛选很可能把它们筛掉；</li>
+<li>PCA → UMAP → Leiden 聚类（resolution 0.8）。</li>
+</ol>
+<p><strong>实验结果</strong>：<strong>96,969 个细胞 × 3,016 基因</strong>，聚成 16 个 cluster（对应脑类器官里混杂的多种神经元/前体状态）；GTF2I 在 <strong>82% 细胞表达、均值 3.39</strong>——满足 CellOracle 的扰动前提。产出 <code>03_intermediate/processed.h5ad</code>。</p>
+<p><strong>结果分析</strong>：数据质量合格、主效基因有表达、是 TF——三个前提满足，五步通路可以往下走。已知短板：16 个 cluster 未做细胞类型注释，后续 DE 对比是&quot;混合细胞 bulk 对比&quot;，可能被细胞组成差异污染（这个不足写进了报告）。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-9"><span class="num">第 9 节 · 历史记录</span><div data-source="chapter-9"><h2>E8｜疾病归因：Williams 差异归因看到了什么（08-18）</h2>
+<p><strong>数据来源</strong>：E7 的 processed 数据，从两组各随机抽 5,000 细胞（种子固定，可复现）。</p>
+<p><strong>实验操作</strong>（<code>02_scripts/attribution_analysis.py</code>）：</p>
+<ol>
+<li>原始 counts 对齐到 SCimilarity 28,231 基因空间，lognorm 归一化；</li>
+<li>逐批算 IG 归因（batch 1000，n_steps=16），得到 10,000 × 28,231 归因矩阵；</li>
+<li>计算<strong>差异归因</strong> = WS 组归因均值 − CTRL 组归因均值（每个基因一个 Δattr）；</li>
+<li>同步算经典差异表达（DE）作对照；</li>
+<li>检查重点：删失基因（GTF2I/GTF2IRD1/ELN 等 7 个）自己的 Δattr 是多少。</li>
+</ol>
+<p><strong>实验结果</strong>：</p>
+<ul>
+<li>Δattr Top 基因 = <strong>NEUROD2、NEUROD6、SOX5、NFIA</strong> 等神经元分化基因（即疾病里&quot;重要性发生迁移&quot;的是下游神经程序）；</li>
+<li><strong>删失基因自身的 Δattr ≈ 0</strong>：GTF2I 虽然物理上缺失了一个拷贝，但在稳态 mRNA 层面，它的表达和&quot;重要性&quot;在患者和对照里<strong>几乎测不出差别</strong>；</li>
+<li>Δattr vs DE 相关 <strong>r = 0.949</strong>（与 E4 结论一致）。</li>
+</ul>
+<p><strong>结果分析</strong>：两层含义。正面：疾病信号是真实可测的——患者细胞确实在&quot;神经元分化程序&quot;上与健康细胞系统性不同，这个信号稳定复现。负的一层：缺失基因本身在 mRNA 层面&quot;隐身&quot;（剂量减半被稳态调控吸收了），所以<strong>想从 mRNA 数据里直接看到&quot;该补哪个基因&quot;是不可能的</strong>——这是整条 mRNA 路线的一个结构性天花板（复盘报告三大不足之三）。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-10"><span class="num">第 10 节 · 历史记录</span><div data-source="chapter-10"><h2>E9｜扰动验证：GTF2I 敲低/过表达能不能复现/逆转疾病（08-18）</h2>
+<p><strong>数据来源</strong>：E7 的 processed.h5ad；调控网络用 CellOracle 官方预构建的 hg38 promoter base GRN（gimmemotifsv5_fpr2，基于 motif 数据库推断的 TF→靶基因关系）。</p>
+<p><strong>实验操作</strong>（<code>02_scripts/celloracle_run.py</code>）：</p>
+<ol>
+<li>按 16 个 cluster 分别拟合 GRN（<code>fit_GRN_for_simulation</code>，alpha=10）；</li>
+<li><strong>敲低模拟</strong>：<code>simulate_shift(GTF2I → 0)</code>，模拟患者&quot;只剩半个剂量&quot;的状态，得到每个基因的预测位移 shift_ko；</li>
+<li><strong>过表达模拟</strong>：<code>simulate_shift(GTF2I → 2×均值)</code>，模拟 RNA binder 把剂量补回 100% 的治疗动作，得到 shift_oe；</li>
+<li>把两个 shift 分别和<strong>真实疾病 DE</strong>（E7 数据的 WS−CTRL）算 Spearman 相关。</li>
+</ol>
+<p><strong>实验结果</strong>：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>模拟</th>
+<th>期望</th>
+<th>实际</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GTF2I 敲低（复现疾病）</td>
+<td>与疾病 DE 正相关</td>
+<td><strong>r = −0.046 ≈ 0</strong> ❌</td>
+</tr>
+<tr>
+<td>GTF2I 过表达（逆转疾病）</td>
+<td>与疾病 DE 负相关</td>
+<td><strong>r = +0.072 ≈ 0</strong> ❌</td>
+</tr>
+<tr>
+<td>Top 被恢复基因</td>
+<td>—</td>
+<td>SOX5/NEUROD2/NFIA 等神经基因确实被 OE 往健康方向拉 ✅（部分线索）</td>
+</tr>
+</tbody></table></div>
+<p><strong>结果分析</strong>：</p>
+<ul>
+<li>全局相关性≈0 的根因不是工具坏了，而是<strong>结构不匹配</strong>：Williams 缺失区有 ~25 个基因同时单倍不足，疾病转录组是 25 份&quot;剂量减半&quot;效应的叠加；GRN 里只有 GTF2I 一个 TF 可以拨，单基因扰动只能抓到疾病信号的零头（复盘报告三大不足之二）；</li>
+<li>但 Top 恢复基因方向正确，说明 GTF2I 的调控网络方向是对的——它管的那部分神经基因，过表达确实往上拉了。<strong>&quot;全局不够、方向对&quot;</strong>——这直接支撑了 8 月 26 日定下的选病原则：优先选&quot;有明确单一主效基因&quot;的微缺失病（如 Angelman/UBE3A），单基因 RNA binder 才有理论依据。</li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-11"><span class="num">第 11 节 · 历史记录</span><div data-source="chapter-11"><h2>E10｜交叉验证：两条独立线收敛到同一批基因（08-18）✅</h2>
+<p><strong>数据来源</strong>：E8 的差异归因结果（SIGnature 线）+ E9 的 OE 恢复排序（CellOracle 线）。</p>
+<p><strong>实验操作</strong>：取 |Δ归因| 最大的基因集合，与&quot;被 GTF2I 过表达拉回健康方向最明显的 top 基因&quot;求交集，检查两法是否给出同一批候选。</p>
+<p><strong>实验结果</strong>：两条线给出<strong>同一批候选</strong>——神经元分化程序：<strong>NEUROD2、NEUROD6、SOX5、NFIA、ZEB2、BCL11B</strong>。SIGnature 基于&quot;嵌入空间的重要性&quot;，CellOracle 基于&quot;调控网络的传播&quot;，两者的数据流、算法、假设完全独立，却在终点相遇。</p>
+<p><strong>结果分析</strong>：两个独立方法撞出同一个答案，最可能的解释是它们都抓到了<strong>真实的疾病生物学信号</strong>（而不是各自的算法伪影）。这是本项目最经得起推敲的正面产出，可以直接作为 iGEM 干实验结论——但必须诚实标注：它是&quot;相关/候选&quot;级别的证据，不是&quot;因果/可成药靶点&quot;（因果链需要 L1 遗传学 + L2 真实扰动数据补齐，见 E11 后的新框架）。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-12"><span class="num">第 12 节 · 历史记录</span><div data-source="chapter-12"><h2>E11｜GEARS 适用性检查：主效基因在不在训练图里（08-17）⚠️</h2>
+<p><strong>数据来源</strong>：8 种微缺失病的 41 个候选主效基因清单（文献汇总）；GEARS 训练用的 Norman 5045 基因共表达图。</p>
+<p><strong>实验操作</strong>：逐一比对 41 个基因是否在 GEARS 的共表达图里（在图里 = 模型认识它、能对它做预测）。</p>
+<p><strong>实验结果</strong>：<strong>41 个里只有 4 个在图内</strong>（COMT、UFD1L、CLIP2、FGFR3），且全是次要基因。要靶的主效基因<strong>全军覆没</strong>：TBX1 ❌ UBE3A ❌ GTF2I ❌ RAI1 ❌ CHRNA7 ❌ CTNND2 ❌ SKI ❌ NSD2 ❌。</p>
+<p><strong>结果分析</strong>：根因是结构性的——所有 Perturb-seq 数据集（Norman/Adamson/Replogle）都做在<strong>癌细胞系</strong>（K562 等）上，癌细胞根本不表达心脏发育基因（TBX1）、神经元基因（CHRNA7）这些&quot;组织特异性&quot;基因，所以它们永远进不了共表达图。<strong>换数据集也救不了</strong>；叠加文献结论（Ahlmann-Eltze 2024：深度扰动模型在未见过的扰动上不优于线性基线），结论：GEARS 对微缺失病逐基因药效预测这条线<strong>画叉</strong>。E2 建成的 v2 闭环保留为&quot;工具接通能力&quot;的证明，不再用于本项目靶点决策。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-13"><span class="num">第 13 节 · 历史记录</span><div data-source="chapter-13"><h2>总结：11 个实验拼出的完整图景</h2>
+<pre><code>工具可信（E1/E2/E5）→ 但归因≠因果（E3）、归因≈表达（E4）
+     ↓
+主线验证：22q11 死路（E6）→ pivot Williams（E7）
+     ↓
+归因看到下游神经程序（E8）＋ 扰动证实单基因救不回（E9）
+     ↓
+两线交叉验证收敛（E10 ✅ 最硬资产）＋ GEARS 适用性排除（E11）
+     ↓
+结论：计算工具的正确位置 = 候选生成 + 机制假设；
+     因果裁决交给证据金字塔（L1 遗传学 → L2 真实 Perturb-seq → L3 虚拟扰动）
+</code></pre>
+<p>每个实验的原始数据、脚本与输出都在本仓库对应位置（见 PROJECT_PROGRESS_REPORT.md 产出清单），可复现。</p>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><details class="card"><summary>来源与查阅说明</summary><p><a data-local-only-href="sources/EXPERIMENTS_EXPLAINED.md" title="本地保留的来源文件，不随公开仓库发布">逐字保留的原 Markdown</a> · <a data-local-only-href="agent/EXPERIMENTS_EXPLAINED.yaml" title="本地保留的来源文件，不随公开仓库发布">agent 索引与完整分节记录</a> · <a data-local-only-href="agent/INDEX.yaml" title="本地保留的来源文件，不随公开仓库发布">旧路径与引用注意事项</a></p><p>原文内的代码路径和会话编号保持历史写法；可点击链接已指向现位置。外部科学来源、本机旧会话和旧环境没有在本轮重新核验。</p></details></article></div><footer>2026-09-25 格式整理 · 原记录覆盖 2026-07-27 至 09-01 · 本批未重新运行历史实验或核验其科学结论。</footer></main></body></html>

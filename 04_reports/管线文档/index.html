@@ -1,0 +1,3813 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管线文档 文档盘点</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>管线文档 文档盘点</h1><p class="lead">按早期实验 → 架构/质询 → 2026-09-19 复核阅读，保留结论变化的原因。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>所有原文、数字、引文和历史建议均保留；本次整理不等同重新核实文献，也不把旧建议当成实施授权。</li><li>正文按需展开；当前代码使用方式以 03_pipeline/docs/index.html 和工具现行 README 为准。</li><li>优先阅读 2026-09-19 复核；v2/v2.2 与工程指导中的旧接口、默认控制基因、HPA/AI 解释不能覆盖当前契约。</li><li>NSD2 证据链保留了对早期资料三处作者名的修正；更强的唯一性/疗效措辞仍须正式科学核验，不能仅凭本次整理确认。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a data-local-only-href="%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A_WBS%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF%E6%8A%A5%E5%91%8A.md" title="本地保留的来源文件，不随公开仓库发布">名词解释_WBS筛选管线报告.md</a></td><td>WBS 报告中的数据、生物学、评分和结果术语解释</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>2</td><td><a data-local-only-href="%E7%AE%A1%E7%BA%BF%E7%8E%B0%E7%8A%B6%E4%B8%8EWilliams%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0%E7%AD%9B%E9%80%89%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93_2026-09-05.md" title="本地保留的来源文件，不随公开仓库发布">管线现状与Williams主效基因筛选实验总结_2026-09-05.md</a></td><td>2026-09-05 的筛选流程、结果、方法反思</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>3</td><td><a data-local-only-href="%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1_v2.2_%E9%80%9A%E7%94%A8%E5%BE%AE%E7%BC%BA%E5%A4%B1%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF.md" title="本地保留的来源文件，不随公开仓库发布">架构设计_v2.2_通用微缺失主效基因筛选管线.md</a></td><td>v2.2 历史架构、模式、接口和证据面板设计</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>4</td><td><a data-local-only-href="%E7%AE%A1%E7%BA%BF%E6%9E%B6%E6%9E%84%E9%A2%84%E5%AE%A1_%E4%B8%83%E4%B8%AA%E8%B4%A8%E8%AF%A2%E9%97%AE%E9%A2%98.md" title="本地保留的来源文件，不随公开仓库发布">管线架构预审_七个质询问题.md</a></td><td>设计审查提出的七类问题与反思依据</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>5</td><td><a data-local-only-href="WHS%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0NSD2%E8%AF%81%E6%8D%AE%E9%93%BE%E4%B8%8E%E5%8F%99%E4%BA%8B%E6%8C%87%E5%8D%97_2026-09-12.md" title="本地保留的来源文件，不随公开仓库发布">WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</a></td><td>NSD2 文献证据与措辞修正；保存研究思路及原引文</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>6</td><td><a data-local-only-href="%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%8C%87%E5%AF%BC%E4%B9%A6_%E5%BE%AE%E7%BC%BA%E5%A4%B1%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF.md" title="本地保留的来源文件，不随公开仓库发布">工程化指导书_微缺失主效基因筛选管线.md</a></td><td>历史工程设计与计划，不作为现行安装入口</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>7</td><td><a data-local-only-href="AI%E8%BE%85%E5%8A%A9%E5%B1%82%E6%8E%A5%E5%85%A5_DeepLOF_%E7%BB%93%E6%9E%9C%E6%8A%A5%E5%91%8A_2026-09-06.md" title="本地保留的来源文件，不随公开仓库发布">AI辅助层接入_DeepLOF_结果报告_2026-09-06.md</a></td><td>DeepLOF 早期接入实验及排名变化</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>8</td><td><a data-local-only-href="%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1_v2_%E9%80%9A%E7%94%A8%E5%BE%AE%E7%BC%BA%E5%A4%B1%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF.md" title="本地保留的来源文件，不随公开仓库发布">架构设计_v2_通用微缺失主效基因筛选管线.md</a></td><td>v2 初始架构和设计理由，供与 v2.2/复核比较</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>9</td><td><a data-local-only-href="%E5%BE%AE%E7%BC%BA%E5%A4%B1%E4%B8%BB%E6%95%88%E5%9F%BA%E5%9B%A0%E7%AD%9B%E9%80%89%E6%96%B9%E6%B3%95%E6%B1%87%E6%8A%A5.docx" title="本地保留的来源文件，不随公开仓库发布">微缺失主效基因筛选方法汇报.docx</a></td><td>AI 与传统方法的中文文献汇报，含独立表格与引文，保留 Word 原件</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>10</td><td><a data-local-only-href="%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">筛选逻辑复核与修复_2026-09-19.md</a></td><td>后续复核纠正早期评分和解释，关联 outputs/review_20260919</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>11</td><td><a data-local-only-href="%E7%AE%A1%E7%BA%BF%E6%9E%B6%E6%9E%84%E9%A2%84%E5%AE%A1_%E8%B4%A8%E8%AF%A2%E5%9B%9E%E7%AD%94%E4%B8%8E%E7%AE%A1%E7%BA%BF%E4%BC%98%E5%8C%96_2026-09-07.md" title="本地保留的来源文件，不随公开仓库发布">管线架构预审_质询回答与管线优化_2026-09-07.md</a></td><td>设计质询回应及 DBTL Learn → Design 过程</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. 名词解释_WBS筛选管线报告.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc1-报告名词解释wbs-主效基因筛选管线">报告名词解释（WBS 主效基因筛选管线）</h1>
+<blockquote>
+<p>配套：《管线现状与 Williams 主效基因筛选实验总结》 按四组整理：数据与生物学基础 / 数据源 / 管线流程 / 结果解读</p>
+</blockquote>
+<hr />
+<h2 id="doc1-a.-数据与生物学基础">A. 数据与生物学基础</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>名词</th>
+<th>一句话解释</th>
+<th>类比/备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>染色体微缺失</strong></td>
+<td>某条染色体上一段 DNA 物理上丢失了（不是突变，是整段没了）</td>
+<td>一页书被撕掉</td>
+</tr>
+<tr>
+<td><strong>缺失区间</strong></td>
+<td>丢的那一段的范围，用染色体坐标表示，如 chr7:72.7–74.8 Mb</td>
+<td>书的第 72–74 页</td>
+</tr>
+<tr>
+<td><strong>CNV</strong>（copy number variant）</td>
+<td>拷贝数变异：某段 DNA 的份数异常（缺失=0 份或 1 份，重复=3 份+）</td>
+<td>欠/多印的页</td>
+</tr>
+<tr>
+<td><strong>杂合缺失</strong></td>
+<td>两条同源染色体中只有一条缺，另一条正常 → 基因只有 1 份</td>
+<td>一人只剩一条腿能用</td>
+</tr>
+<tr>
+<td><strong>单倍剂量不足（haploinsufficiency）</strong></td>
+<td>1 份不够”维持正常”，缺一份就出问题</td>
+<td>两道菜只给一道就吃不饱</td>
+</tr>
+<tr>
+<td><strong>主效基因（driver gene）</strong></td>
+<td>微缺失综合征里解释核心表型的那（几）个基因</td>
+<td>泰坦尼克的主因是撞冰</td>
+</tr>
+<tr>
+<td><strong>候选基因</strong></td>
+<td>缺失区间里所有基因，主效基因的候选池</td>
+<td>嫌疑名单</td>
+</tr>
+<tr>
+<td><strong>基因型 vs 表型</strong></td>
+<td>基因型=你 DNA 丢了什么；表型=因此长出/表现出的症状</td>
+<td>病因 vs 症状</td>
+</tr>
+<tr>
+<td><strong>scRNA-seq（单细胞 RNA 测序）</strong></td>
+<td>逐个细胞测 mRNA（每个细胞里基因”开了多少”）</td>
+<td>给每个细胞拍”哪些基因在工作”</td>
+</tr>
+<tr>
+<td><strong>表达量 / TPM / nTPM</strong></td>
+<td>表达量=一个基因转录了多少；TPM 是标准单位（nTPM 在 HPA 里指每个组织一个值）</td>
+<td>基因”开工了多少活”</td>
+</tr>
+<tr>
+<td><strong>GRCh38 / hg38 / 坐标</strong></td>
+<td>人类基因组参考版本的编号；坐标即碱基位置（chr7:72,700,000 表示 7 号染色体第 7270 万碱基处）</td>
+<td>地图版本 + 经纬度</td>
+</tr>
+<tr>
+<td><strong>转录因子（TF）</strong></td>
+<td>调控其他基因开关的”总开关”蛋白</td>
+<td>物业主任</td>
+</tr>
+<tr>
+<td><strong>基因家族</strong></td>
+<td>序列同源、功能相近的一组基因（如 GTF2I/GTF2IRD1/GTF2IRD2）</td>
+<td>同一个家族的表兄弟</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-b.-数据源">B. 数据源</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>名词</th>
+<th>一句话解释</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基因符号 vs HGNC ID</strong></td>
+<td>符号=短名字（ELN）；HGNC ID=稳定唯一编号（HGNC:3327）。符号会改名，ID 不会</td>
+<td>身份证号 vs 昵称</td>
+</tr>
+<tr>
+<td><strong>别名/旧名</strong></td>
+<td>同一基因过去的符号（如 ELN 曾叫…）</td>
+<td>曾用名</td>
+</tr>
+<tr>
+<td><strong>novel gene / ENSG…</strong></td>
+<td>注释里存在但尚无公认 HGNC 符号的新基因（报告里 ENSG00000289346）</td>
+<td>无身份证的基因</td>
+</tr>
+<tr>
+<td><strong>ClinGen 剂量敏感性评级</strong></td>
+<td>人工专家对”缺一份会不会致病”的证据打分</td>
+<td>专家评审</td>
+</tr>
+<tr>
+<td><strong>HI score（0–3）</strong></td>
+<td>0=无证据 / 1=少证据 / 2=有些证据 / 3=充分证据支持单倍剂量不足</td>
+<td>证据强度等级</td>
+</tr>
+<tr>
+<td><strong>30 / 40 分</strong></td>
+<td>30=与常染色体隐性表型相关（不能当显性剂量敏感用）；40=无证据。均<strong>不是</strong> HI 评级，所以实验里按缺失处理不计分</td>
+<td>不属于本量表</td>
+</tr>
+<tr>
+<td><strong>gnomAD</strong></td>
+<td>几十万人外显子/基因组的大数据库，统计”人群中每个基因自然出现多少破坏性突变”</td>
+<td>全城体检数据</td>
+</tr>
+<tr>
+<td><strong>pLI</strong></td>
+<td>“该基因可能是 LOF 不耐受”的概率，0–1，越高越不耐受</td>
+<td>越接近 1 越金贵</td>
+</tr>
+<tr>
+<td><strong>LOEUF</strong>（oe_lof_upper）</td>
+<td>实际 LOF 突变数 / 期望值（的上界），越低=被清除得越多=越不耐受</td>
+<td>比值越低越金贵</td>
+</tr>
+<tr>
+<td><strong>约束分数（constraint）</strong></td>
+<td>pLI/LOEUF 这类”人群中突变被自然选择清除得多不多”的统称</td>
+<td>自然选择的红牌记录</td>
+</tr>
+<tr>
+<td><strong>HPA（人类蛋白图谱）</strong></td>
+<td>各组织/细胞系蛋白表达数据库 → 查某基因在肝/脑里开不开</td>
+<td>全组织”谁在开工”地图</td>
+</tr>
+<tr>
+<td><strong>连接率（join rate）</strong></td>
+<td>候选基因能在该数据源找到记录的比率（ClinGen 14%、gnomAD 77%、HPA 97%）</td>
+<td>查档案查得到的比例</td>
+</tr>
+<tr>
+<td><strong>GTF / GENCODE</strong></td>
+<td>基因注释文件：每个基因的染色体、起止、类型（蛋白编码/lncRNA…）</td>
+<td>基因版”户口本”</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-c.-管线流程">C. 管线流程</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>名词</th>
+<th>一句话解释</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Layer 0/1/2/3</strong></td>
+<td>管线的四层：符号归一化 / 证据整合 / AI 预测（可选）/ 共识排序</td>
+<td>车间流水线工序</td>
+</tr>
+<tr>
+<td><strong>candidates.csv</strong></td>
+<td>输入文件：每行一个候选基因符号</td>
+<td>候选名单</td>
+</tr>
+<tr>
+<td><strong>normalize（Layer 0 的）</strong></td>
+<td>把符号/别名/旧名统一转到 HGNC ID</td>
+<td>统一身份证</td>
+</tr>
+<tr>
+<td><strong>merge（证据整合）</strong></td>
+<td>把 ClinGen/gnomAD/HPA 按基因 ID 拼到一张表（join）</td>
+<td>把多份档案合并成一份</td>
+</tr>
+<tr>
+<td><strong>evidence.parquet</strong></td>
+<td>合并后的中间表格（每基因一行，各证据一列）</td>
+<td>合并档案袋</td>
+</tr>
+<tr>
+<td><strong>consensus（共识）</strong></td>
+<td>多种证据加权汇总成一个分数再排名</td>
+<td>多评委打分取加权总分</td>
+</tr>
+<tr>
+<td><strong>权重（weight）</strong></td>
+<td>每个证据的重要性倍数（ClinGen 3、gnomAD 2 等）</td>
+<td>评委权重</td>
+</tr>
+<tr>
+<td><strong>归一化（consensus 的 rank/raw/zscore）</strong></td>
+<td>打分前把不同尺度的证据（0–1 的 pLI、0–3 的 ClinGen、0–100+ 的表达）映射到可比区间：rank=按排名百分比；raw=线性最小最大；zscore=标准化</td>
+<td>把斤/米/秒都换成统一单位</td>
+</tr>
+<tr>
+<td><strong>HPA 惩罚</strong></td>
+<td>某基因在肝/肾等器官高表达就扣分（因为可能不适合做 SINEUP/AAV 靶点）</td>
+<td>扣分项</td>
+</tr>
+<tr>
+<td><strong>Borda 计数</strong></td>
+<td>每个证据单独排名次，各名次换算分数再加总——另一种”投票”排序</td>
+<td>世界杯各评委打分的另一种算法</td>
+</tr>
+<tr>
+<td><strong>Spearman ρ</strong></td>
+<td>两种排序方法之间的相关度（0.23 表示两种算法结果几乎不一致）</td>
+<td>两个榜单多不一样</td>
+</tr>
+<tr>
+<td><strong>LOO（留一法）</strong></td>
+<td>每次藏起一个正对照基因，用其余调权重，看藏起的那个排到第几</td>
+<td>考试验分</td>
+</tr>
+<tr>
+<td><strong>正对照（positive control）</strong></td>
+<td>已知答案的基因（如 ELN、GTF2I 是已知 WBS 主效基因），用来验收排序是否有效</td>
+<td>已知答案的测验题</td>
+</tr>
+<tr>
+<td><strong>top-N / hit rate</strong></td>
+<td>只检查正对照进没进前 N 名；命中率=进去的比例</td>
+<td>检验榜单前 N 名准不准</td>
+</tr>
+<tr>
+<td><strong>audit / checksum（SHA256）</strong></td>
+<td>每次运行记录输入文件校验值 + 参数，确保可复现、可追溯</td>
+<td>存档盖章</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-d.-结果解读">D. 结果解读</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>名词</th>
+<th>一句话解释</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>群体约束强信号</strong></td>
+<td>pLI &gt; 0.9 且 LOEUF &lt; 0.35：说明人群里破坏性突变被清除得特别狠 → 基因”缺不可”</td>
+<td>报告第一梯队判据</td>
+</tr>
+<tr>
+<td><strong>BAZ1B / BAF 染色质重塑</strong></td>
+<td>BAZ1B 是 BAF 复合体（拆装组蛋白让 DNA 可被读取）成员 → 影响很多基因开关</td>
+<td>全公司电闸</td>
+</tr>
+<tr>
+<td><strong>CLIP2 / 微管结合</strong></td>
+<td>结合微管骨架的蛋白 → 神经发育相关</td>
+<td>细胞骨架上的小工</td>
+</tr>
+<tr>
+<td><strong>LIMK1</strong></td>
+<td>激酶，调控肌动蛋白骨架 → WBS 认知识表型经典候选</td>
+<td>细胞骨架调节员</td>
+</tr>
+<tr>
+<td><strong>GTF2I / 转录因子</strong></td>
+<td>通用 TF，“总开关” → WBS 神经/颅面表型主效候选，本项目 E7 在脑类器官 82% 细胞表达 → pivot 到它的主效基因</td>
+<td>报告/项目核心基因</td>
+</tr>
+<tr>
+<td><strong>STX1A / SNARE</strong></td>
+<td>突触囊泡释放相关蛋白 → 突触功能</td>
+<td>神经元发送信号的工具</td>
+</tr>
+<tr>
+<td><strong>GTF2IRD1</strong></td>
+<td>GTF2I 家族成员，也是 WBS 候选</td>
+<td>GTF2I 表弟</td>
+</tr>
+<tr>
+<td><strong>ELN 高 ClinGen、低约束</strong></td>
+<td>ClinGen=3（人工确证剂量敏感）但 pLI≈0、LOEUF≈0.87（人群约束测不到）——机制差异：心血管表型不走”突变被清除”路径</td>
+<td>重要 ≠ 人群里罕见破坏</td>
+</tr>
+<tr>
+<td><strong>rank 归一化伪影</strong></td>
+<td>小样本里”第 1 名 vs 第 35 名”被固定成最大分数差，把 pLI 极低的 FZD9/FKBP6 抬成第一——统计上无意义</td>
+<td>小样本榜单失真</td>
+</tr>
+<tr>
+<td><strong>加性排序 vs Borda</strong></td>
+<td>加的分数不同（一个直接加权、一个按名次打分）→ 结果不一致（ρ=0.23）</td>
+<td>两种投票法吵起来了</td>
+</tr>
+<tr>
+<td><strong>E6 / E7</strong></td>
+<td>项目实验代号：E6=22q11.2（TBX1 脑不表达，放弃）；E7=Williams（GTF2I 82% 表达，可行）</td>
+<td>项目历史实验</td>
+</tr>
+<tr>
+<td><strong>CellOracle</strong></td>
+<td>网络扰动推断工具：预测敲掉/过表达某 TF 后细胞状态怎么变（只处理有表达的 TF）</td>
+<td>虚拟实验</td>
+</tr>
+<tr>
+<td><strong>第一/第二梯队</strong></td>
+<td>报告里按证据强弱分组：第一梯队=gnomAD 约束强；第二梯队=人工确证但约束弱</td>
+<td>分层看证据</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>配套：报告原文 <code>outputs/reports/管线现状与Williams主效基因筛选实验总结_2026-09-05.md</code></em></p>
+</details><details id="file2"><summary>2. 管线现状与Williams主效基因筛选实验总结_2026-09-05.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc2-管线现状与-williams-主效基因筛选实验总结">管线现状与 Williams 主效基因筛选实验总结</h1>
+<blockquote>
+<p>生成日期：2026-09-05 · 项目：iGEM SINEUP 微缺失主效基因筛选 本文件整合：①管线架构现状 ②本次三层管线实验流程 ③结果解读 ④方法学反思与下一步</p>
+</blockquote>
+<hr />
+<h2 id="doc2-一管线现状总览">一、管线现状总览</h2>
+<pre><code>scRNA-seq（患者+对照）
+   ↓  [上游 CNV 工作流  src/cnv/]  ← 已用 GSE283473 验证
+已知缺失区间 + GTF → candidates.csv（35 个 WBS 区间基因）
+   ↓
+【Layer 0】normalize.py       基因符号 → HGNC ID（别名/旧名映射）
+   ↓
+【Layer 1】merge_evidence.py  ClinGen（人工金标准）+ gnomAD（pLI/LOEUF）+ HPA（器官表达）
+   ↓
+【Layer 2】AI 预测层（可选）   DeepLOF / DosaCNV / DeepGenePrior —— 当前未启用（按此前决策降权搁置）
+   ↓
+【Layer 3】consensus_v2.py    归一化加权 + Borda 对照 + 可选 LOO 正对照调权
+   ↓
+outputs/candidates_ranked_v2.csv + report_v2.md</code></pre>
+<h3 id="doc2-各模块状态">各模块状态</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>模块</th>
+<th>文件</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上游 CNV 工作流</td>
+<td><code>src/cnv/</code>（5 模块）</td>
+<td>✅ 22/22 测试通过，GSE283473 端到端验证</td>
+</tr>
+<tr>
+<td>Layer 0 归一化</td>
+<td><code>src/normalize.py</code></td>
+<td>✅ 运行通过</td>
+</tr>
+<tr>
+<td>Layer 1 证据层</td>
+<td><code>src/merge_evidence.py</code></td>
+<td>✅ 本次修复了多个真实数据格式问题（见 §二）</td>
+</tr>
+<tr>
+<td>Layer 2 AI 层</td>
+<td>（无运行代码）</td>
+<td>⏸️ 搁置；<code>docs/api/ai_scores.csv</code> 契约已定义</td>
+</tr>
+<tr>
+<td>Layer 3 共识</td>
+<td><code>src/consensus.py</code>（v1）+ <code>src/consensus_v2.py</code>（v2）</td>
+<td>✅ v2 含归一化/Borda/LOO 调权</td>
+</tr>
+<tr>
+<td>配置</td>
+<td><code>config/pipeline.yaml</code>、<code>config/cnv.yaml</code></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-测试状态">测试状态</h3>
+<ul>
+<li><code>tests/</code> 共 27+ 个测试（22 个 CNV + consensus 回归），全部通过。</li>
+</ul>
+<hr />
+<h2 id="doc2-二本次实验流程">二、本次实验流程</h2>
+<h3 id="doc2-输入">输入</h3>
+<p><code>outputs/cnv/candidates.csv</code>：<strong>35 个威廉姆斯综合征（WBS）7q11.23 缺失区间基因</strong>，来自上一轮 CNV 工作流（已知临床区间 chr7:72.7–74.8 Mb，GRCh38）。</p>
+<h3 id="doc2-数据源下载">数据源下载</h3>
+<table>
+<thead>
+<tr>
+<th>数据源</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen</td>
+<td>2026-09-05 快照</td>
+<td>基因剂量敏感性人工评级（HI 0–3）</td>
+</tr>
+<tr>
+<td>gnomAD</td>
+<td>v2.1.1</td>
+<td>pLI / LOEUF（oe_lof_upper）约束</td>
+</tr>
+<tr>
+<td>HPA</td>
+<td>v23 consensus</td>
+<td>肝/肾（下载版本只含这两器官列）</td>
+</tr>
+<tr>
+<td>HGNC</td>
+<td>最新 complete set</td>
+<td>符号→HGNC ID 别名映射</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-layer-0归一化">Layer 0：归一化</h3>
+<ul>
+<li>35 个符号 → <strong>34 个解析成功</strong>（97%），1 个失败：<code>ENSG00000289346</code>（candidates.csv 里的一个未命名 novel gene，无 HGNC 符号）。</li>
+</ul>
+<h3 id="doc2-layer-1证据整合含本轮修复的-4-个真实数据问题">Layer 1：证据整合（含本轮修复的 4 个真实数据问题）</h3>
+<ol type="1">
+<li><strong>ClinGen</strong>：TSV 头部有 5 行 <code>#</code> 注释 → <code>skiprows=5</code>；列名含 <code>#Gene Symbol</code> → 去 <code>#</code>。</li>
+<li><strong>ClinGen 用基因符号而非 HGNC ID</strong> → 用 HGNC 别名表映射（1524/1528 映射成功）。</li>
+<li><strong>ClinGen 重复 PMID 列名</strong> → 去重列。</li>
+<li><strong>ClinGen 的 30/40 分数</strong>（“基因与隐性表型相关”/“无证据”，不是剂量敏感评级）→ 转为缺失，避免被当作高分。</li>
+<li><strong>gnomAD 用 <code>gene</code> 列</strong> → 直接符号匹配（27/35 = 77%）。</li>
+</ol>
+<h3 id="doc2-连接率关键诊断">连接率（关键诊断）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据源</th>
+<th>连接率</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen HI</td>
+<td><strong>14%</strong>（5/35）</td>
+<td>WBS 区间基因大多没有被 ClinGen 评级过 → 人工金标准覆盖不足</td>
+</tr>
+<tr>
+<td>gnomAD</td>
+<td><strong>77%</strong>（27/35）</td>
+<td>8 个缺：多为 SPDYE 重复基因家族、novel gene</td>
+</tr>
+<tr>
+<td>HPA</td>
+<td><strong>97%</strong>（34/35）</td>
+<td>肝、肾两器官</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-layer-3共识排序consensus_v2-tune">Layer 3：共识排序（consensus_v2 –tune）</h3>
+<ul>
+<li>归一化：rank（排序百分位）</li>
+<li>权重：ClinGen 3 / gnomAD LOEUF 2 / pLI 2（配置默认）</li>
+<li>HPA 惩罚：每器官 &gt;1.0 TPM 扣 2，上限 -4</li>
+<li>Borda 对照排序 + Spearman 一致性 + LOO 正对照调权</li>
+</ul>
+<hr />
+<h2 id="doc2-三结果解读">三、结果解读</h2>
+<h3 id="doc2-按证据强度的生物学梯队证据层原始数据最可信">3.1 按证据强度的生物学梯队（证据层原始数据，最可信）</h3>
+<p><strong>第一梯队 — 群体约束强信号（pLI &gt; 0.9 且 LOEUF &lt; 0.35）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>基因</th>
+<th>pLI</th>
+<th>LOEUF</th>
+<th>功能提示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BAZ1B</strong></td>
+<td>1.000</td>
+<td>0.109</td>
+<td>染色质重塑（BAF 复合物亚基），WBS 表型候选</td>
+</tr>
+<tr>
+<td><strong>CLIP2</strong></td>
+<td>0.99997</td>
+<td>0.196</td>
+<td>微管结合，神经发育</td>
+</tr>
+<tr>
+<td><strong>LIMK1</strong></td>
+<td>0.9993</td>
+<td>0.225</td>
+<td>WBS 认知表型经典候选</td>
+</tr>
+<tr>
+<td><strong>GTF2I</strong></td>
+<td>0.9959</td>
+<td>0.270</td>
+<td><strong>本项目 pivot 主效基因</strong>（E7 验证 82% 细胞表达）</td>
+</tr>
+<tr>
+<td><strong>STX1A</strong></td>
+<td>0.9785</td>
+<td>0.293</td>
+<td>突触 SNARE 蛋白</td>
+</tr>
+<tr>
+<td><strong>GTF2IRD1</strong></td>
+<td>0.9004</td>
+<td>0.329</td>
+<td>GTF2I 家族，WBS 表型相关</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第二梯队 — 人工确认但约束信号弱：</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>基因</th>
+<th>ClinGen HI</th>
+<th>pLI</th>
+<th>LOEUF</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ELN</strong></td>
+<td><strong>3</strong>（确认剂量敏感）</td>
+<td>~0</td>
+<td>0.871</td>
+<td>WBS 心血管表型主效基因（文献金标准），但群体约束测不出——机制差异</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-与项目的交叉验证">3.2 与项目的交叉验证</h3>
+<ul>
+<li><strong>GTF2I 排名第 4（证据层）</strong> — 与 E7 完全一致（脑类器官 82% 表达、是 TF、CellOracle 可用）。</li>
+<li><strong>ELN”高 ClinGen 低约束”</strong> — 单倍剂量不足机制多样性的教科书案例：重要 ≠ 群体突变清除强。</li>
+<li><strong>LIMK1 高约束</strong> — 与文献认知（认知表型候选）吻合。</li>
+</ul>
+<h3 id="doc2-consensus_v2-排序结果带警示">3.3 consensus_v2 排序结果（带警示）</h3>
+<p><code>--tune</code> 后的排序：FZD9(#1) &gt; FKBP6(#2) &gt; TMEM270 &gt; SPDYE… &gt; ELN(#9) &gt; BAZ1B(#10) &gt; CLIP2(#11) &gt; GTF2I(#21) &gt; LIMK1(#20)</p>
+<p><strong>⚠️ 该方法学问题（必须说明）：</strong> &gt; <strong>2026-09-19 纠错</strong>：以下保留历史解释，但第 1 点把 pLI 方向写反（高 pLI 才是强约束），也不能由排名异常推出 rank 单调变换颠倒了该方向。具体归因需拆分贡献/连接/惩罚/调权；raw 仍是候选集 min–max，不是普遍正确性的保证。参见 <a data-local-only-href="%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">最新复核第 6 节</a>。</p>
+<ol type="1">
+<li><strong>rank 归一化把小样本排名扭曲了</strong>：FZD9/FKBP6 的 pLI 极低（0.002 / 0.000001），在 rank 方向映射下被当成”最不耐受”排到最前——理由是”低 pLI 更不耐受”只在全基因组比例分布下有统计意义，35 个基因的小集合里第 1/第 35 的差距被放大成固定分数差，与生物学无关。</li>
+<li><strong>HPA 惩罚过度</strong>：BAZ1B 肝表达 23.4 TPM → 被扣 2 分，把强约束基因压到第 10。</li>
+<li><strong>LOO 调权失败（0%）</strong>：35 基因里只有 ELN + GTF2I 两个正对照（TBX1/KCTD13/RAI1 不在 WBS 区间内，属预期），top-N=10 对样本量过大，调权无统计效力。</li>
+<li><strong>加性排序 vs Borda 排序 Spearman ρ ≈ 0.23</strong>：两法高度不一致——主要因 Borda 不含 HPA 惩罚 + rank 伪影，恰好暴露了配置的不合理处。</li>
+</ol>
+<h3 id="doc2-诚实结论">3.4 诚实结论</h3>
+<blockquote>
+<p><strong>证据层（原始数据）比共识层（当前配置）更可信。</strong> 90% 的有效信号来自”ClinGen ELN=3 + gnomAD 高 pLI/低 LOEUF 六个基因”这一小撮证据；共识层当前的排序主要由配置瑕疵（rank 归一化 + HPA 惩罚 + 调权重参数）驱动，而不是生物学。</p>
+</blockquote>
+<hr />
+<h2 id="doc2-四方法学反思哪些结果可信-不可信">四、方法学反思（哪些结果可信 / 不可信）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>结果</th>
+<th>可信度</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BAZ1B/CLIP2/LIMK1/GTF2I/STX1A/GTF2IRD1 高约束</td>
+<td>🟢 高</td>
+<td>两个独立 gnomAD 指标一致</td>
+</tr>
+<tr>
+<td>ELN ClinGen=3</td>
+<td>🟢 高</td>
+<td>人工金标准</td>
+</tr>
+<tr>
+<td>FZD9/FKBP6 排名第一</td>
+<td>🔴 不可信</td>
+<td>rank 归一化伪影</td>
+</tr>
+<tr>
+<td>ELN 排名第 9</td>
+<td>🟡 部分</td>
+<td>ClinGen 强但约束弱，机制真实但排序被 HPA 惩罚压低</td>
+</tr>
+<tr>
+<td>LOO 调权结果</td>
+<td>🔴 无效</td>
+<td>对照数 2 远不足</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-当前管线的已知短板">当前管线的已知短板</h3>
+<ol type="1">
+<li>ClinGen 覆盖不足（WBS 区间仅 14% 有评级）→ 多数基因只能靠 gnomAD。</li>
+<li>HPA 只有肝/肾两器官（下载版本限制），脑表达缺失 → 无法直接做 E6 型组织可行性检查。</li>
+<li>AI 层（DeepLOF 等）未接入 → 无法覆盖”ClinGen 缺失 + gnomAD 弱”的基因（如 ELN 型）。</li>
+<li>上游 CNV 工作流只配置了 WBS 一个区间；8 种病其余 7 个区间待补（坐标需逐个核实）。</li>
+</ol>
+<hr />
+<h2 id="doc2-五下一步优先级排序">五、下一步（优先级排序）</h2>
+<ol type="1">
+<li><strong>修排序合理性（低投入高回报）</strong>：
+<ul>
+<li><code>consensus_v2.normalize</code> 从 <code>rank</code> 改为 <code>raw</code>（或 zscore）；</li>
+<li>HPA 惩罚降权（<code>per_organ_weight: -1</code>）或对高 pLI 基因豁免；</li>
+<li>关闭或下调 LOO 调权（对照数太少时直接报”无效”，不产出误导排名）。</li>
+</ul></li>
+<li><strong>补 HPA 脑表达</strong>：换下载源拿到全 51 组织版本，补 <code>hpa_brain_expr</code> 列，恢复 E6 型可行性检查。</li>
+<li><strong>AI 层试点</strong>：等 ClinGen 缺失 + gnomAD 弱的那批基因需要佐证时，再接 DeepLOF（条件权重模式，先验已写好）。</li>
+<li><strong>补全 8 病区间表</strong>：22q11.2、16p11.2、17p11.2、15q13.3、1p36、2p15p16.1 等，坐标逐条以 DECIPHER/ClinGen 核实（GTF2I 坐标教训）。</li>
+</ol>
+<hr />
+<p><em>配套文件：<code>outputs/candidates_ranked_v2.csv</code>（完整排名）、<code>outputs/report_v2.md</code>（consensus 报告）、<code>outputs/evidence.parquet</code>（证据表）、<code>outputs/audit/data_checksums.txt</code>（数据源校验）、<code>docs/cnv_workflow.md</code>（上游工作流）。</em></p>
+</details><details id="file3"><summary>3. 架构设计_v2.2_通用微缺失主效基因筛选管线.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc3-染色体微缺失主效基因筛选管线-v2.2-架构设计">染色体微缺失主效基因筛选管线 — v2.2 架构设计</h1>
+<blockquote>
+<p><strong>2026-09-25 整理注记：</strong> 本文中的旧架构、<code>config/sources.json</code> 与 uv 命令只用于历史参考。数据来源已整合至 <a href="../../03_pipeline/README.md#data-sources">README 数据来源</a>，旧登记的占位校验和不表示完成核验；当前环境只按 <a href="../../03_pipeline/README.md">README 唯一安装入口</a>建立，旧锁文件已删除。</p>
+</blockquote>
+<blockquote>
+<p><strong>历史操作说明（标注于 2026-09-24，CR-042）</strong>：本文版本/时间为 v2.2 / 2026-09-14 实施记录。设计、实验和报告正文保留，适用于理解当时过程，不作为当前安装、启动或验收指令；旧 uv 初始化、安装和测试命令仅为历史记录，请勿直接沿用。当前安装以<a href="../../README.md">仓库 README</a>为准，管线操作见<a href="../../03_pipeline/README.md">管线 README</a>与<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>，网页启动见<a href="../../05_virtual_cell/README.md">工具 README</a>。历史测试数字不代表当前版本。</p>
+</blockquote>
+<blockquote>
+<p><strong>2026-09-19 复核说明</strong>：本文是历史实施记录，其中 ClinGen 类别/原始字段、raw 缺失值、隐性降权、正对照/LOO、HPA 映射和审计保证存在实现偏差；“补偿”和“SINEUP 靶向条件”结论过强。已修复项、仍未实现项及最新结果以 <a data-local-only-href="%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">筛选逻辑复核与修复_2026-09-19.md</a> 和 PROJECT_LOG #18 为准，不再沿用本文的“全部已实现”标记作验收依据。</p>
+</blockquote>
+<blockquote>
+<p>版本：<strong>v2.2</strong> · 日期：2026-09-14 替代：<code>架构设计_v2_通用微缺失主效基因筛选管线.md</code> (v2.0, 2026-09-07) 关联：<code>PROJECT_LOG.md</code> 条目 #0–#15 · <code>管线架构预审_质询回答与管线优化_2026-09-07.md</code> 代码位置：<code>03_pipeline/</code>（无独立 git 仓库，版本以本文 + 日志为准）</p>
+</blockquote>
+<hr />
+<h2 id="doc3-本文与-v2.0-的关系先读这一节">0. 本文与 v2.0 的关系（<strong>先读这一节</strong>）</h2>
+<p>v2.0 是一份<strong>设计意图</strong>文档，其中相当一部分模块<strong>从未实现</strong>；而 v2.1/v2.2 实际做的改动<strong>没有写进 v2.0</strong>。两者双向脱节。</p>
+<p>本文的定位：<strong>以代码实际行为为准的实施文档</strong>。每节标注实现状态：</p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>已实现</strong></td>
+<td>代码中存在且经过运行验证</td>
+</tr>
+<tr>
+<td>⚠️ <strong>部分实现</strong></td>
+<td>有代码但行为与设计不符，或依赖条件未满足</td>
+</tr>
+<tr>
+<td>❌ <strong>未实现</strong></td>
+<td>仅存在于 v2.0 设计中，代码里没有</td>
+</tr>
+</tbody>
+</table>
+<p>v2.0 中未实现的设计<strong>不删除</strong>，一并列在 §8 供后续决策（沿用”不删除历史条目”的惯例）。</p>
+<hr />
+<h2 id="doc3-设计原则v2.0-提出附实现状态">1. 设计原则（v2.0 提出，附实现状态）</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>原则</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>scRNA-seq 是<strong>可选增强层</strong>，不是前提条件</td>
+<td>✅</td>
+<td>区间基因来源已不依赖 scRNA-seq；补偿分析需 <code>--compensation</code> 传入才生效</td>
+</tr>
+<tr>
+<td>2</td>
+<td>基因提取独立化（区间坐标 + GTF → 基因列表）</td>
+<td>❌</td>
+<td><code>src/extract_genes.py</code> 与 <code>config/intervals.yaml</code> 不存在；当前靠人工整理 <code>input/candidates.csv</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>按表型分组</strong>，组内排序</td>
+<td>❌</td>
+<td>无 <code>phenotype_grouper.py</code>，输出无 phenotype 列</td>
+</tr>
+<tr>
+<td>4</td>
+<td>输出<strong>证据分层</strong>（确认/推测/探索性）</td>
+<td>❌</td>
+<td>无 <code>evidence_grade</code> 列；实际仍输出单一 <code>consensus_score</code> 排名（与 v2.0 §4.4 声明冲突）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>通用架构，覆盖从”主效基因已确定”到”全新 CNV”</td>
+<td>⚠️</td>
+<td>四 mode 已实现为真实行为差异（见 §6），但 Mode C 与 Mode B 当前行为相同</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HPA 从”惩罚层”改为<strong>双重角色</strong></td>
+<td>⚠️</td>
+<td>惩罚已移除（权重置 0）✅；但”靶组织可行性 / 安全性标记”两个新字段未实现 ❌</td>
+</tr>
+<tr>
+<td>7</td>
+<td>归一化从 rank 改为 <strong>raw</strong></td>
+<td>✅</td>
+<td>config <code>normalize: raw</code>；解决了小样本伪影（见 §7.2）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>强制<strong>正对照检验</strong></td>
+<td>✅</td>
+<td>全 mode 输出正对照检验表</td>
+</tr>
+<tr>
+<td>9</td>
+<td>证据<strong>缺口要显式警告</strong>，不静默降级</td>
+<td>✅</td>
+<td><code>--warnings</code> / auto / exploratory 触发稀疏性警告</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc3-总体架构实际数据流">2. 总体架构（实际数据流）</h2>
+<blockquote>
+<p>📊 <strong>可交互架构图</strong>：<code>03_pipeline/docs/diagrams/igem_gene_pipeline.v2.2.dataflow.html</code> （源规格 <code>igem_gene_pipeline.v2.2.dataflow.json</code>；Archify dataflow，9/9 showcase 校验通过，四视口无溢出） 下方 ASCII 图与之一致，便于纯文本环境阅读。</p>
+</blockquote>
+<pre><code>                    ┌──────────────────────────────────┐
+                    │ 输入: input/candidates.csv       │
+   scRNA-seq (可选)  │ 每行一个 HGNC 基因符号            │
+        │           └──────────────┬───────────────────┘
+        │                          │
+        │                          ▼
+        │              ┌────────────────────────┐
+        │              │ L0 归一化               │  ✅ src/normalize.py
+        │              │ symbol → HGNC ID        │
+        │              │ (经 HGNC 别名表，支持旧符号) │
+        │              └───────────┬────────────┘
+        │                          │  data/normalized.csv
+        │                          ▼
+        │              ┌────────────────────────┐
+        │              │ L1 证据层               │  ✅ src/merge_evidence.py
+        │              │ ClinGen / gnomAD / HPA  │
+        │              │ 全部按 hgnc_id 合并      │
+        │              └───────────┬────────────┘
+        │                          │  evidence.parquet + audit/
+        │                          ▼
+        │              ┌────────────────────────┐
+        │              │ L2 AI 层（可选）        │  ⚠️ src/ai_scores.py
+        │              │ DeepLOF 已接入          │
+        │              │ DosaCNV/DeepGenePrior   │  ❌ 仅配置占位
+        │              └───────────┬────────────┘
+        │                          │  ai_scores.csv
+        │                          ▼
+        │              ┌────────────────────────────────────┐
+        │              │ L3 证据整合与排序                    │  ✅ src/consensus_v2.py
+        │              │  · 归一化 (raw)                     │
+        │              │  · 加权求和 → consensus_score       │
+        │              │  · Borda 对照 (rank 一致性诊断)      │
+        │              │  · HPA 惩罚项 (权重 0，已停用)       │
+        │              │  · 隐性基因惩罚 (可选)               │
+        │              │  · LOO 权重调优 (可选)               │
+        │              │  · 权重敏感性分析 (可选)             │
+        │              └───────────┬────────────────────────┘
+        │                          │
+        │                          ▼
+        │              ┌────────────────────────┐
+        │              │ 四 mode 差异化输出       │  ✅ (Mode C 同 B)
+        │              │ validate/rank/full/     │
+        │              │ exploratory + auto      │
+        │              └───────────┬────────────┘
+        │                          │
+        ▼                          ▼
+┌──────────────────────┐  ┌──────────────────────────────┐
+│ CNV 工作流（可选）      │  │ 输出                          │
+│ src/cnv/workflow.py   │  │  candidates_ranked*.csv       │
+│ stage-samples →       │  │  report*.md                   │
+│ prepare-order →       │  │  audit/                       │
+│ infercnv →            │  │  ── 下游 ──                   │
+│ call-segments →       │  │  VirtualCellTool（机制假设层）  │
+│ extract-genes         │  └──────────────────────────────┘
+│ (+ expression_qc.py)  │
+└──────────┬───────────┘
+           ▼
+    compensation.csv（mRNA 补偿状态）
+    src/compensation.py ← 可选，经 --compensation 回灌 L3</code></pre>
+<p><strong>关键约束</strong>：L3 的输出<strong>单向</strong>流向 VirtualCellTool（L4 机制假设层），机制预测结果<strong>不回补 L1/L3 排序</strong>。理由见 §9。</p>
+<hr />
+<h2 id="doc3-模块详解">3. 模块详解</h2>
+<h3 id="doc3-l0-归一化-srcnormalize.py">3.1 L0 归一化 ✅ <code>src/normalize.py</code></h3>
+<p><strong>职责</strong>：基因符号 → HGNC ID 主键解析。</p>
+<div class="sourceCode" id="doc3-cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb2-1"><a href="#doc3-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--out</span> data/normalized.csv <span class="dt">\</span></span>
+<span id="doc3-cb2-2"><a href="#doc3-cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span></code></pre></div>
+<p><strong>为什么必须由 HGNC ID 做主键</strong>（ADR-001）：基因符号会变更与合并。实测案例——gnomAD 表中 NSD2 的数据以旧符号 <strong>WHSC1</strong> 存储，按符号精确匹配会静默丢弃最强约束证据（见 §7.1）。</p>
+<p><strong>别名表覆盖</strong>：<code>prev_symbol</code> / <code>alias_symbol</code> 均参与解析（实测 18651/19704 条解析成功）。</p>
+<h3 id="doc3-l1-证据层-srcmerge_evidence.py">3.2 L1 证据层 ✅ <code>src/merge_evidence.py</code></h3>
+<p><strong>职责</strong>：把三个外部数据源合并到候选表上，输出 <code>evidence.parquet</code>。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据源</th>
+<th>关键列</th>
+<th>合并键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen gene curation</td>
+<td><code>clinGen_hi_score</code>、<code>clinGen_triplo_score</code></td>
+<td>hgnc_id</td>
+<td><strong>三值语义</strong>：3=明确 HI；30=不确定；40=无证据。30/40 转中性不扣分</td>
+</tr>
+<tr>
+<td>gnomAD constraint</td>
+<td><code>gnomad_pLI</code>、<code>gnomad_LOEUF</code></td>
+<td><strong>先解析为 hgnc_id</strong></td>
+<td>保留原始列名映射（<code>pli</code>、<code>oe_lof_upper</code>）；v2.1.1 列名兼容</td>
+</tr>
+<tr>
+<td>HPA RNA consensus</td>
+<td><code>hpa_{organ}_expr</code></td>
+<td>hgnc_id</td>
+<td>宽表（Gene, Tissue, nTPM）→ pivot 成逐器官列</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实测输出形状</strong>（WBS 35 基因）：<code>evidence_wbs_modeA.parquet</code> = 35 × 8 列</p>
+<pre><code>hgnc_id, input_symbol, clinGen_hi_score, clinGen_triplo_score,
+gnomad_pLI, gnomad_LOEUF, hpa_liver_expr, hpa_kidney_expr</code></pre>
+<p>⚠️ <strong>已知缺陷</strong>：HPA 当前只 pivot 出 <code>liver</code> / <code>kidney</code> 两列（config 的 <code>hpa_filter.organs</code> 虽列了 brain/gastrointestinal，脑组织列名未进入映射）。这直接影响脑相关表型的靶组织可行性判断——B 组待修（见 §10）。</p>
+<p><strong>审计</strong>：每次运行写 <code>audit/run.json</code> + <code>data_checksums.txt</code>。</p>
+<h3 id="doc3-l2-ai-层-srcai_scores.py">3.3 L2 AI 层 ⚠️ <code>src/ai_scores.py</code></h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>模型</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DeepLOF</strong></td>
+<td>✅ 已接入</td>
+<td>官方预计算分数 19,197 基因（CC BY 4.0）；实测覆盖 WBS 28/35</td>
+</tr>
+<tr>
+<td>DosaCNV</td>
+<td>❌ 未实现</td>
+<td>config 有权重项（<code>DosaCNV_score: 1</code>）但无实现代码</td>
+</tr>
+<tr>
+<td>DeepGenePrior</td>
+<td>❌ 未实现</td>
+<td>同上（权重 1）</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>DeepLOF 的已知盲区</strong>：<strong>GTF2I 不在 19,197 行评分中</strong>——不是管线 bug，是 DeepLOF 训练时部分特征缺失被过滤。引用 DeepLOF 结果时需说明。</p>
+<p>配置权重（<code>consensus_v2.evidence.*.weight</code>）：<code>DeepLOF_score: 1</code>（低权重，仅在遗传学证据弱时提供加成）。</p>
+<h3 id="doc3-l3-证据整合与排序-srcconsensus_v2.py">3.4 L3 证据整合与排序 ✅ <code>src/consensus_v2.py</code></h3>
+<p><strong>核心算法</strong>：归一化 → 加权求和 → 排序，并附带 Borda 对照与多个可选的诊断/调优层。</p>
+<div class="sourceCode" id="doc3-cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb4-1"><a href="#doc3-cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="dt">\</span></span>
+<span id="doc3-cb4-2"><a href="#doc3-cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--evidence</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="dt">\</span></span>
+<span id="doc3-cb4-3"><a href="#doc3-cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="dt">\</span></span>
+<span id="doc3-cb4-4"><a href="#doc3-cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="doc3-cb4-5"><a href="#doc3-cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--mode</span> auto <span class="dt">\</span></span>
+<span id="doc3-cb4-6"><a href="#doc3-cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/candidates_ranked_v2.csv <span class="dt">\</span></span>
+<span id="doc3-cb4-7"><a href="#doc3-cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--report</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/report_v2.md</span></code></pre></div>
+<p><strong>证据源与权重</strong>（<code>config/pipeline.yaml</code> → <code>consensus_v2.evidence</code>）</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>证据</th>
+<th>direction</th>
+<th>weight</th>
+<th>归一化方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clinGen_hi_score</code></td>
+<td><code>ordinal</code>（scale=3，低分惩罚 0.5）</td>
+<td><strong>3</strong></td>
+<td>序数映射</td>
+</tr>
+<tr>
+<td><code>gnomad_LOEUF</code></td>
+<td><code>lower_better</code></td>
+<td>2</td>
+<td>反向归一化</td>
+</tr>
+<tr>
+<td><code>gnomad_pLI</code></td>
+<td><code>higher_better</code></td>
+<td>2</td>
+<td>直接归一化</td>
+</tr>
+<tr>
+<td><code>DeepLOF_score</code></td>
+<td><code>higher_better</code></td>
+<td>1</td>
+<td>直接归一化</td>
+</tr>
+<tr>
+<td><code>DosaCNV_score</code></td>
+<td><code>higher_better</code></td>
+<td>1</td>
+<td>❌ 无数据源</td>
+</tr>
+<tr>
+<td><code>DeepGenePrior_score</code></td>
+<td><code>higher_better</code></td>
+<td>1</td>
+<td>❌ 无数据源</td>
+</tr>
+</tbody>
+</table>
+<p><strong>归一化方法</strong>：<code>normalize: raw</code>（✅ v2.2）。<strong>不要改回 <code>rank</code></strong>——小样本下会产生伪影（§7.2）。</p>
+<p><strong>Borda 对照</strong>：并行计算 Borda 分数与排名，输出 <code>borda_score</code> / <code>borda_rank</code>，并算 Spearman ρ 作为”加性 vs Borda 是否一致”的诊断指标。</p>
+<p><strong>停用项</strong>： - <code>hpa_penalty</code>：<code>cap: 0.0</code>、<code>per_organ_weight: 0.0</code>、<code>expr_threshold: 9999.0</code> —— 等效关闭。原因见 §7.3。</p>
+<p><strong>可选层</strong>（需显式开启）</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>功能</th>
+<th>开关</th>
+<th>作用</th>
+<th>输出位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mRNA 补偿集成</td>
+<td><code>--compensation comp.csv</code></td>
+<td>合并 <code>compensation_class</code> 等列，并在报告中渲染补偿状态表</td>
+<td>CSV 列 + 报告</td>
+</tr>
+<tr>
+<td>隐性基因惩罚</td>
+<td>config <code>recessive</code> + <code>df["recessive"]</code> 列</td>
+<td>对隐性致病基因的 gnomAD 贡献乘 <code>gnomad_weight_multiplier</code>(0.5)</td>
+<td><code>meta.recessive_applied</code></td>
+</tr>
+<tr>
+<td>LOO 权重调优</td>
+<td><code>--tune</code> 或 config <code>tuning.enabled</code></td>
+<td>用已知正对照留一法搜权重</td>
+<td><code>meta.tuning</code></td>
+</tr>
+<tr>
+<td>权重敏感性</td>
+<td><code>--sensitivity</code></td>
+<td>每个证据权重 ±1，看排名位移与 Top3 变化</td>
+<td><code>meta.sensitivity.robustness</code></td>
+</tr>
+<tr>
+<td>稀疏性警告</td>
+<td><code>--warnings</code>（auto/exploratory 自动开）</td>
+<td>ClinGen 覆盖率低/分数差距小/零覆盖时警告</td>
+<td><code>meta.warnings</code> → 报告</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc3-辅助模块">3.5 辅助模块</h3>
+<h4 id="doc3-srccompensation.py-mrna-补偿状态"><code>src/compensation.py</code> — mRNA 补偿状态 ✅</h4>
+<div class="sourceCode" id="doc3-cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="doc3-cb5-1"><a href="#doc3-cb5-1" aria-hidden="true" tabindex="-1"></a>compute_compensation(adata, genes_of_interest, group_col<span class="op">=</span><span class="st">&quot;condition&quot;</span>,</span>
+<span id="doc3-cb5-2"><a href="#doc3-cb5-2" aria-hidden="true" tabindex="-1"></a>                     patient_cat<span class="op">=</span><span class="st">&quot;WS&quot;</span>, ref_cat<span class="op">=</span><span class="st">&quot;CTRL&quot;</span>,</span>
+<span id="doc3-cb5-3"><a href="#doc3-cb5-3" aria-hidden="true" tabindex="-1"></a>                     layer<span class="op">=</span><span class="st">&quot;counts&quot;</span>, min_detection_pct<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre></div>
+<p>输出列：<code>gene, compensation_ratio, compensation_class, mean_patient, mean_reference, pct_patient, pct_reference, n_patient, n_reference</code></p>
+<p>分类阈值（config <code>compensation.thresholds</code>）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th>ratio 区间</th>
+<th>对 SINEUP 的含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>full</code></td>
+<td>0.95–1.05</td>
+<td>★ 理想——转录层已完全补偿，问题在翻译层，正是 SINEUP 的适用场景</td>
+</tr>
+<tr>
+<td><code>partial_high</code></td>
+<td>0.85–0.95</td>
+<td>▲ 部分补偿</td>
+</tr>
+<tr>
+<td><code>partial_low</code></td>
+<td>0.70–0.85</td>
+<td>部分补偿（较弱）</td>
+</tr>
+<tr>
+<td><code>uncompensated</code></td>
+<td>0.40–0.70</td>
+<td>✗ 未补偿——可能需要转录层干预而非翻译层</td>
+</tr>
+<tr>
+<td><code>unreliable</code></td>
+<td>表达过低不可判</td>
+<td>? 无法判定</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <code>compensation.enabled: false</code>（默认关闭），必须显式传 <code>--compensation</code> 才生效。</p>
+<h4 id="doc3-srcfilter_recessive.py-隐性致病基因过滤"><code>src/filter_recessive.py</code> — 隐性致病基因过滤 ✅</h4>
+<div class="sourceCode" id="doc3-cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb6-1"><a href="#doc3-cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.filter_recessive <span class="at">--normalized</span> data/normalized.csv <span class="dt">\</span></span>
+<span id="doc3-cb6-2"><a href="#doc3-cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv <span class="at">--omim</span> <span class="op">&lt;</span>genemap2.txt<span class="op">&gt;</span> --clinvar <span class="op">&lt;</span>clinvar.tsv<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="doc3-cb6-3"><a href="#doc3-cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> data/recessive_flags.csv</span></code></pre></div>
+<p>用途：识别 OMIM/ClinVar 标注的<strong>隐性</strong>致病基因，在 L3 中降低其 gnomAD 约束贡献——因为隐性致病基因的杂合携带者通常无症状，其 pLI/LOEUF 不耐受性不直接对应主效基因。</p>
+<h4 id="doc3-cnv-工作流-srccnv-仅-mode-c-路径使用">CNV 工作流 <code>src/cnv/</code> ✅（仅 Mode C 路径使用）</h4>
+<div class="sourceCode" id="doc3-cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb7-1"><a href="#doc3-cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.cnv.workflow all <span class="at">--config</span> config/cnv.yaml</span></code></pre></div>
+<p>阶段：<code>stage-samples</code>（整理 GEO 原始文件为 per-sample 10x 目录）→ <code>prepare-order</code>（基因排序）→ <code>infercnv</code> → <code>call-segments</code> → <code>extract-genes</code>。另有 <code>expression_qc.py</code> 做区间基因表达 QC。</p>
+<p><strong>用途定位</strong>：提供 scRNA-seq 侧的<strong>验证信息</strong>（表达 QC、组织特异性），<strong>不用于自动发现缺失区间</strong>——scRNA-seq CNV caller 对 &lt;3 Mb focal CNV 灵敏度极低（Schmid et al. 2025）。</p>
+<hr />
+<h2 id="doc3-配置参考configpipeline.yaml-实际键">4. 配置参考（<code>config/pipeline.yaml</code> 实际键）</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>段</th>
+<th>键</th>
+<th>实际值</th>
+<th>作用 / 改动影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>consensus_v2</code></td>
+<td><code>normalize</code></td>
+<td><code>raw</code></td>
+<td>归一化方式。<strong>改回 <code>rank</code> 会复现小样本伪影</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><code>borda.enabled</code></td>
+<td><code>true</code></td>
+<td>Borda 对照排名（诊断用）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>borda.missing</code></td>
+<td><code>median</code></td>
+<td>缺失值补位策略</td>
+</tr>
+<tr>
+<td></td>
+<td><code>evidence.*.weight</code></td>
+<td>见 §3.4</td>
+<td>各证据源权重，直接影响排名</td>
+</tr>
+<tr>
+<td></td>
+<td><code>hpa_penalty.cap</code> / <code>per_organ_weight</code></td>
+<td><code>0.0</code> / <code>0.0</code></td>
+<td><strong>已停用</strong>。改为非 0 会错杀正对照（§7.3）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>hpa_penalty.expr_threshold</code></td>
+<td><code>9999.0</code></td>
+<td>等效关闭（高于任何真实值）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tuning.enabled</code></td>
+<td><code>false</code></td>
+<td>LOO 权重调优开关</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tuning.positive_controls</code></td>
+<td>TBX1, ELN, KCTD13, RAI1, GTF2I</td>
+<td>LOO 调优与正对照检验用的已知基因</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tuning.target_top_n</code></td>
+<td><code>10</code></td>
+<td>正对照命中判定的 Top-N 阈值</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tuning.weight_grid</code></td>
+<td><code>[0,1,2,3]</code></td>
+<td>权重搜索网格</td>
+</tr>
+<tr>
+<td><code>compensation</code></td>
+<td><code>enabled</code></td>
+<td><code>false</code></td>
+<td>mRNA 补偿分析总开关（需 <code>--compensation</code> 配合）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>thresholds.*</code></td>
+<td>见 §3.5</td>
+<td>补偿状态分类阈值</td>
+</tr>
+<tr>
+<td><code>recessive</code></td>
+<td><code>gnomad_weight_multiplier</code></td>
+<td><code>0.5</code></td>
+<td>隐性基因的 gnomAD 贡献折扣</td>
+</tr>
+<tr>
+<td><code>gene_constraints</code></td>
+<td><code>pLI_threshold</code></td>
+<td><code>0.9</code></td>
+<td>pLI 判为剂量敏感的阈值</td>
+</tr>
+<tr>
+<td></td>
+<td><code>LOEUF_upper</code></td>
+<td><code>0.35</code></td>
+<td>LOEUF 判为剂量敏感的阈值（<strong>低</strong>才好）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>use_LOEUF_v4</code></td>
+<td><code>true</code></td>
+<td>LOEUF 数据版本</td>
+</tr>
+<tr>
+<td><code>validation</code></td>
+<td><code>max_missing_rate</code></td>
+<td><code>0.5</code></td>
+<td>缺失率校验上限</td>
+</tr>
+<tr>
+<td></td>
+<td><code>require_unique_hgnc</code></td>
+<td><code>true</code></td>
+<td>要求 HGNC ID 唯一</td>
+</tr>
+<tr>
+<td><code>warnings</code></td>
+<td><code>max_genes_for_single_driver</code></td>
+<td><code>20</code></td>
+<td>超过此基因数触发”多基因贡献”警告</td>
+</tr>
+<tr>
+<td></td>
+<td><code>min_clingen_coverage</code></td>
+<td><code>0.2</code></td>
+<td>ClinGen 覆盖率下限，低于则警告</td>
+</tr>
+<tr>
+<td><code>pipeline_mode</code></td>
+<td>—</td>
+<td><code>auto</code></td>
+<td>默认运行模式（可被 <code>--mode</code> 覆盖）</td>
+</tr>
+<tr>
+<td><code>experiments</code></td>
+<td><code>enabled</code></td>
+<td><code>true</code></td>
+<td>生成实验建议</td>
+</tr>
+<tr>
+<td><code>sensitivity</code></td>
+<td><code>enabled</code></td>
+<td><code>false</code></td>
+<td>权重敏感性分析开关</td>
+</tr>
+<tr>
+<td><code>hpa_filter.organs</code></td>
+<td>—</td>
+<td>liver, brain, kidney, gastrointestinal</td>
+<td>器官清单（⚠️ 实际只 pivot 出 liver/kidney）</td>
+</tr>
+<tr>
+<td><code>clinGen.weight_hi</code></td>
+<td>—</td>
+<td><code>3</code></td>
+<td>v1 段，v2 走 <code>consensus_v2.evidence</code></td>
+</tr>
+<tr>
+<td><code>consensus.*</code></td>
+<td>—</td>
+<td>—</td>
+<td><strong>v1 段</strong>（<code>src/consensus.py</code> 使用），保留兼容</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc3-输出与产物">5. 输出与产物</h2>
+<h3 id="doc3-产物位置">5.1 产物位置</h3>
+<p>产物<strong>按实验主题归档</strong>，不写在 <code>outputs/</code> 根目录：</p>
+<pre><code>outputs/
+├── wbs/     WBS 主实验（v2 / v2.1 排名）
+├── whs/     WHS 实证（修复前 A / 修复后 B）
+├── mode/    六 mode 验证（含 compensation_wbs.csv）
+├── cnv/     CNV 工作流产物（h5ad / segments / QC）
+├── audit/   数据校验和与运行记录
+├── evidence.parquet   主证据面板
+├── ai_scores.csv      DeepLOF 全基因分数
+└── README.md          索引</code></pre>
+<h3 id="doc3-排名-csv-字段">5.2 排名 CSV 字段</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>读法要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rank</code></td>
+<td>最终排名</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>hgnc_id</code> / <code>input_symbol</code></td>
+<td>主键 / 输入符号</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clinGen_hi_score</code></td>
+<td>单倍剂量不足评分</td>
+<td>3=明确 HI；<strong>30/40 = 不确定/无证据</strong>（不是分数）</td>
+</tr>
+<tr>
+<td><code>clinGen_triplo_score</code></td>
+<td>三倍剂量敏感性</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>gnomad_pLI</code></td>
+<td>对 LOF 不耐受概率</td>
+<td><strong>高</strong>才算剂量敏感</td>
+</tr>
+<tr>
+<td><code>gnomad_LOEUF</code></td>
+<td>观察/期望 LOF 比</td>
+<td><strong>低</strong>才算剂量敏感（最常被读反的一对）</td>
+</tr>
+<tr>
+<td><code>hpa_*_expr</code></td>
+<td>HPA 组织表达</td>
+<td>组织可行性参考</td>
+</tr>
+<tr>
+<td><code>DeepLOF_score</code></td>
+<td>AI 层 LOF 不耐受</td>
+<td>可选；GTF2I 等部分基因缺失</td>
+</tr>
+<tr>
+<td><code>compensation_ratio</code> / <code>compensation_class</code></td>
+<td>患者/对照 mRNA 比与分类</td>
+<td>需 <code>--compensation</code> 才有值</td>
+</tr>
+<tr>
+<td><code>consensus_score</code></td>
+<td>加权总分</td>
+<td>排序依据</td>
+</tr>
+<tr>
+<td><code>contrib_*</code></td>
+<td><strong>各证据源贡献分解</strong></td>
+<td><strong>排查”它凭什么排第一”看这几列</strong></td>
+</tr>
+<tr>
+<td><code>hpa_penalty</code></td>
+<td>惩罚项</td>
+<td>当前恒为 0</td>
+</tr>
+<tr>
+<td><code>borda_score</code> / <code>borda_rank</code></td>
+<td>Borda 对照</td>
+<td>与加性排名分歧大 → 提示权重敏感</td>
+</tr>
+<tr>
+<td><code>mean_patient</code> / <code>mean_reference</code> / <code>pct_*</code> / <code>n_*</code></td>
+<td>补偿分析的原始统计</td>
+<td>判断 <code>unreliable</code> 时看 <code>n_</code> 与 <code>pct_</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc3-报告report_.md">5.3 报告（<code>report_*.md</code>）</h3>
+<p>包含：模式标签、Top-N 表、<strong>正对照检验表</strong>（全 mode）、补偿状态表（若有）、验证面板（Mode A）、探索声明（Mode D）、稀疏性警告、实验建议（非 Mode D）。</p>
+<hr />
+<h2 id="doc3-运行模式实际行为">6. 运行模式（实际行为）</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>Mode</th>
+<th>CLI 取值</th>
+<th>正对照检验</th>
+<th>稀疏警告</th>
+<th>验证面板</th>
+<th>实验建议</th>
+<th>探索声明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A 验证</td>
+<td><code>validate</code></td>
+<td>✅</td>
+<td>仅 <code>--warnings</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td>B 增强筛选</td>
+<td><code>rank</code></td>
+<td>✅</td>
+<td>仅 <code>--warnings</code></td>
+<td>—</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td>C 全栈筛选</td>
+<td><code>full</code></td>
+<td>✅</td>
+<td>仅 <code>--warnings</code></td>
+<td>—</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td>D 探索</td>
+<td><code>exploratory</code></td>
+<td>✅（信息性）</td>
+<td>✅ 自动</td>
+<td>—</td>
+<td><strong>❌ 不给</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>自动</td>
+<td><code>auto</code>（默认）</td>
+<td>✅</td>
+<td>✅ 自动</td>
+<td>—</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>两点必须知道</strong>： 1. <strong><code>auto</code> 不会自动解析成 A/B/C/D</strong>。它的实际含义 = “正对照检验 + 稀疏警告”，是独立的一组行为，不是”数据丰富度自动检测”。v2.0 §2/§8 对此的描述与实现不符。 2. <strong>Mode C（<code>full</code>）当前行为与 Mode B（<code>rank</code>）相同</strong>——只有报告标签不同。补偿集成是靠 <code>--compensation</code> 参数启用的，<strong>不由 mode 决定</strong>。</p>
+<h3 id="doc3-使用示例">使用示例</h3>
+<div class="sourceCode" id="doc3-cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb9-1"><a href="#doc3-cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode A（验证：已知主效基因，如 WHS 的 NSD2）</span></span>
+<span id="doc3-cb9-2"><a href="#doc3-cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/whs/evidence_whs_B.parquet <span class="dt">\</span></span>
+<span id="doc3-cb9-3"><a href="#doc3-cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> validate <span class="dt">\</span></span>
+<span id="doc3-cb9-4"><a href="#doc3-cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--controls</span> input/controls_whs.txt <span class="dt">\</span></span>
+<span id="doc3-cb9-5"><a href="#doc3-cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/whs/candidates_ranked_whs_B.csv <span class="at">--report</span> outputs/whs/report_whs_B.md</span>
+<span id="doc3-cb9-6"><a href="#doc3-cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc3-cb9-7"><a href="#doc3-cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode B（增强筛选：有正对照、要排序）</span></span>
+<span id="doc3-cb9-8"><a href="#doc3-cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/mode/evidence_wbs_modeA.parquet <span class="dt">\</span></span>
+<span id="doc3-cb9-9"><a href="#doc3-cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> rank <span class="dt">\</span></span>
+<span id="doc3-cb9-10"><a href="#doc3-cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--controls</span> input/controls_wbs.txt <span class="at">--sensitivity</span> <span class="dt">\</span></span>
+<span id="doc3-cb9-11"><a href="#doc3-cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/mode/ranked_wbs_modeB.csv <span class="at">--report</span> outputs/mode/report_wbs_modeB.md</span>
+<span id="doc3-cb9-12"><a href="#doc3-cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc3-cb9-13"><a href="#doc3-cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode C（全栈：加补偿状态）</span></span>
+<span id="doc3-cb9-14"><a href="#doc3-cb9-14" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/mode/evidence_wbs_modeA.parquet <span class="dt">\</span></span>
+<span id="doc3-cb9-15"><a href="#doc3-cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> full <span class="dt">\</span></span>
+<span id="doc3-cb9-16"><a href="#doc3-cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--compensation</span> outputs/mode/compensation_wbs.csv <span class="dt">\</span></span>
+<span id="doc3-cb9-17"><a href="#doc3-cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/mode/ranked_wbs_modeC.csv <span class="at">--report</span> outputs/mode/report_wbs_modeC.md</span>
+<span id="doc3-cb9-18"><a href="#doc3-cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc3-cb9-19"><a href="#doc3-cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode D（探索：无金标准，不给实验建议）</span></span>
+<span id="doc3-cb9-20"><a href="#doc3-cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> <span class="op">&lt;</span>novel<span class="op">&gt;</span>.parquet <span class="dt">\</span></span>
+<span id="doc3-cb9-21"><a href="#doc3-cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> exploratory <span class="at">--warnings</span> <span class="dt">\</span></span>
+<span id="doc3-cb9-22"><a href="#doc3-cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/novel/ranked.csv <span class="at">--report</span> outputs/novel/report.md</span></code></pre></div>
+<hr />
+<h2 id="doc3-版本变更记录v2.0-v2.2">7. 版本变更记录（v2.0 → v2.2）</h2>
+<h3 id="doc3-v2.1-六项优化dbtl-cycle-4">7.1 v2.1 — 六项优化（DBTL Cycle 4）</h3>
+<table>
+<thead>
+<tr>
+<th>优化</th>
+<th>实现位置</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mRNA 补偿状态维度</td>
+<td><code>src/compensation.py</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>隐性致病基因过滤器</td>
+<td><code>src/filter_recessive.py</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ClinGen 三值标注（30/40→中性）</td>
+<td><code>src/merge_evidence.py</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>权重敏感性分析</td>
+<td><code>consensus_v2.py --sensitivity</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>实验建议生成器</td>
+<td><code>consensus_v2.py</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Mode D 稀疏性警告</td>
+<td><code>consensus_v2.py --warnings</code></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>同时修掉的静默失败</strong>：gnomAD 分支改为先解析 HGNC 别名再按 <code>hgnc_id</code> 合并。修复前 NSD2（表中旧符号 WHSC1）的最强约束证据被丢弃，匹配率 17/19 且无人察觉；修复后 NSD2 从 #5 升至 <strong>#1</strong>。</p>
+<h3 id="doc3-v2.1v2.2-排序与归一化修正">7.2 v2.1/v2.2 — 排序与归一化修正</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>修正前</th>
+<th>修正后</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normalize</code></td>
+<td><code>rank</code></td>
+<td><strong><code>raw</code></strong></td>
+<td>rank 归一化在小样本下产生伪影（FZD9 pLI=0.002 排到 #1）；改 raw 后加性 vs Borda 的 Spearman ρ 由 0.23 升至 0.71</td>
+</tr>
+<tr>
+<td>HPA 惩罚权重</td>
+<td><code>-2</code>/器官</td>
+<td><strong><code>0</code></strong>（停用）</td>
+<td>惩罚错杀正对照：STX1A/ELN/GTF2I 因肝肾表达被罚 -4，而低表达噪声基因（FZD9/FKBP6）不罚</td>
+</tr>
+<tr>
+<td>报告正对照检验</td>
+<td>无</td>
+<td><strong>全 mode 输出</strong></td>
+<td>修复后 WBS 正对照 Top10 命中 6/6</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc3-v2.2-mode-真实行为化">7.3 v2.2 — mode 真实行为化</h3>
+<p><code>--mode</code> 从纯元数据标记升级为真实行为差异：validate 输出验证面板、rank/full 输出正对照检验表、exploratory 输出探索声明且<strong>不产生实验建议</strong>。CLI 帮助文本同步补全 <code>full</code>。</p>
+<hr />
+<h2 id="doc3-v2.0-已设计但未实现的功能清单保留待决策">8. v2.0 已设计但<strong>未实现</strong>的功能清单（保留待决策）</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>v2.0 设计</th>
+<th>缺什么</th>
+<th>是否仍需</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Module A：<code>extract_genes.py</code> 区间→基因独立入口</td>
+<td>模块 + <code>config/intervals.yaml</code></td>
+<td>待定</td>
+<td>目前候选基因靠人工整理；新增病种需手工列表</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>config/known_drivers.yaml</code> 已知主效基因注册表</td>
+<td>文件</td>
+<td>待定</td>
+<td>正对照现靠 <code>input/controls_*.txt</code> 平铺，缺少结构化证据字段</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>phenotype_grouper.py</code> 表型分组</td>
+<td>模块 + HPO 映射</td>
+<td><strong>建议做</strong></td>
+<td>v2.0 原则 #3/#4 未落地；输出仍是单排名，无法回答”这个基因管哪个表型”</td>
+</tr>
+<tr>
+<td>4</td>
+<td>五维证据面板 + 证据等级（★★★/★★☆/★☆☆/⚠️）</td>
+<td>输出列</td>
+<td><strong>建议做</strong></td>
+<td>直接对应 iGEM Model 页的呈现方式</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HPA 双重角色标签（<code>hpa_target_support</code> / <code>hpa_safety_flag</code>）</td>
+<td>计算逻辑</td>
+<td>建议做</td>
+<td>安全性与靶向可行性目前只能靠人读 <code>hpa_*_expr</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>src/report.py</code> 独立报告模块</td>
+<td>模块</td>
+<td>可选</td>
+<td>现由 <code>consensus_v2.render_report()</code> 内置</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>outputs/candidates_by_phenotype/</code></td>
+<td>目录</td>
+<td>依赖 #3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>DosaCNV / DeepGenePrior 接入</td>
+<td>数据源 + 实现</td>
+<td>待定</td>
+<td>config 已有权重项，无数据源等于空转</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>tests/test_extract_genes.py</code>、<code>test_phenotype_grouper.py</code></td>
+<td>测试</td>
+<td>依赖 #1/#3</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc3-为什么机制层l4不能回补排序">9. 为什么机制层（L4）不能回补排序</h2>
+<p>L3 的输出单向流向 VirtualCellTool，机制预测结果<strong>不回补 L1/L3 排序</strong>。理由：</p>
+<ol type="1">
+<li><strong>信息源重叠</strong>：回补等于用转录组数据二次加权转录组数据，重新引入项目已验证过的偏倚（归因与真实扰动效应 r=0.02）</li>
+<li><strong>mRNA 隐身</strong>：删失基因的稳态 mRNA 在转录层不可检测（E8），若允许回补，这类基因会被系统性低估</li>
+<li><strong>可验证性</strong>：L1 只依赖外部遗传学证据，任何人可独立复算；混入模型预测后不再可独立复核</li>
+</ol>
+<p>机制层的定位是<strong>生成假设与可视化演示</strong>，不是裁决。</p>
+<hr />
+<h2 id="doc3-已知限制与待办">10. 已知限制与待办</h2>
+<h3 id="doc3-数据层限制">10.1 数据层限制</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>限制</th>
+<th>影响</th>
+<th>缓解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HPA 仅 liver/kidney 两器官</td>
+<td>脑等靶组织可行性判断缺失</td>
+<td>修 <code>merge_evidence</code> 的器官映射（<strong>优先</strong>）</td>
+</tr>
+<tr>
+<td>ClinGen 对 WBS 覆盖率仅 14%（5/35）</td>
+<td>微缺失病的普遍问题：多数区间基因无人工评级</td>
+<td>靠 gnomAD 约束 + 警告提示置信度</td>
+</tr>
+<tr>
+<td>DeepLOF 缺 GTF2I 等基因</td>
+<td>AI 层不完整</td>
+<td>引用时说明；考虑补充替代模型</td>
+</tr>
+<tr>
+<td>WHS 无公开 scRNA-seq 数据</td>
+<td>无法做补偿分析</td>
+<td>依赖小鼠模型（GSE232564）</td>
+</tr>
+<tr>
+<td>gnomAD 符号别名依赖别名表完整</td>
+<td>表不全会再次静默丢证据</td>
+<td>已修；建议加”匹配率过低”警告</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc3-方法层限制">10.2 方法层限制</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>限制</th>
+<th>性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单基因 vs 多基因错配</td>
+<td>微缺失是连续基因综合征；单排名不应被读作”唯一因果基因”（已有警告）</td>
+</tr>
+<tr>
+<td>排名 ≠ 组织内效应量</td>
+<td>实测 GTF2I 排名 #9 但在脑类器官中效应量第一（</td>
+</tr>
+<tr>
+<td>翻译层盲区</td>
+<td><strong>根本性</strong>——RNA 层证据无法预测 SINEUP 的翻译增强效果</td>
+</tr>
+<tr>
+<td>权重来源缺依据</td>
+<td>config 中各证据权重多为经验取值，尚无文献/数据支撑依据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc3-工程待办">10.3 工程待办</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>修 HPA 器官映射（补 brain）</td>
+<td>高</td>
+</tr>
+<tr>
+<td>补 <code>phenotype_grouper.py</code> + 证据等级输出（§8 #3/#4）</td>
+<td>高</td>
+</tr>
+<tr>
+<td><code>consensus_v2.py</code> 第 60 行回退默认 <code>normalize: "rank"</code> → 建议改 <code>raw</code></td>
+<td>中（配置缺失时会静默回退到有 bug 的旧默认）</td>
+</tr>
+<tr>
+<td>建立独立 git 仓库 + 版本 tag</td>
+<td>中（当前无版本控制）</td>
+</tr>
+<tr>
+<td>加”证据匹配率过低”自动警告</td>
+<td>中</td>
+</tr>
+<tr>
+<td>补 8 病区间表</td>
+<td>低</td>
+</tr>
+<tr>
+<td>DosaCNV / DeepGenePrior 接入或从 config 移除</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc3-附录-a实际目录结构">附录 A：实际目录结构</h2>
+<pre><code>igem_gene_pipeline/
+├── README.md
+├── config/
+│   ├── pipeline.yaml        # 阈值 / 权重（见 §4）
+│   ├── cnv.yaml             # CNV 工作流配置
+│   └── sources.json         # 数据源 URL + checksum（4 个源）
+├── data/                    # 数据本体（不入 git）
+├── input/
+│   ├── candidates.csv       # WBS 候选
+│   ├── candidates_whs.csv   # WHS 候选
+│   ├── controls_wbs.txt     # 正对照（WBS）
+│   └── controls_whs.txt     # 正对照（WHS）
+├── src/
+│   ├── normalize.py         # L0
+│   ├── merge_evidence.py    # L1
+│   ├── ai_scores.py         # L2（DeepLOF）
+│   ├── consensus.py         # v1 共识（保留兼容）
+│   ├── consensus_v2.py      # L3（主力）
+│   ├── compensation.py      # mRNA 补偿
+│   ├── filter_recessive.py  # 隐性基因过滤
+│   ├── cnv/                 # CNV 工作流（workflow/infercnv/segments/
+│   │                        #   gene_order/expression_qc）
+│   └── utils/
+├── tests/                   # 7 个测试文件，21 用例
+├── outputs/                 # 见 §5.1
+└── docs/
+    ├── cnv_workflow.md · CNV_工作流详解.md
+    ├── ARCHIFY_流程讲解.md
+    ├── decisions/ADR-001-hgnc-indexing.md
+    ├── api/ai_scores.md
+    └── diagrams/            # archify 数据流图</code></pre>
+<h2 id="doc3-附录-b命令速查">附录 B：命令速查</h2>
+<div class="sourceCode" id="doc3-cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb11-1"><a href="#doc3-cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 环境与测试</span></span>
+<span id="doc3-cb11-2"><a href="#doc3-cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--python</span> 3.11 <span class="kw">&amp;&amp;</span> <span class="ex">uv</span> add pandas pyarrow pyyaml numpy requests <span class="kw">&amp;&amp;</span> <span class="ex">uv</span> add <span class="at">--dev</span> pytest</span>
+<span id="doc3-cb11-3"><a href="#doc3-cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/ <span class="at">-q</span>                    <span class="co"># 预期 20 passed, 1 skipped</span></span>
+<span id="doc3-cb11-4"><a href="#doc3-cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc3-cb11-5"><a href="#doc3-cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 主流程</span></span>
+<span id="doc3-cb11-6"><a href="#doc3-cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--out</span> data/normalized.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span>
+<span id="doc3-cb11-7"><a href="#doc3-cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> data/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="at">--audit</span> outputs/audit</span>
+<span id="doc3-cb11-8"><a href="#doc3-cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> auto <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/candidates_ranked_v2.csv <span class="at">--report</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/report_v2.md</span>
+<span id="doc3-cb11-9"><a href="#doc3-cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc3-cb11-10"><a href="#doc3-cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 可选</span></span>
+<span id="doc3-cb11-11"><a href="#doc3-cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.filter_recessive <span class="at">--normalized</span> data/normalized.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv <span class="at">--out</span> data/recessive_flags.csv</span>
+<span id="doc3-cb11-12"><a href="#doc3-cb11-12" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.compensation <span class="at">--h5ad</span> outputs/cnv/cnv_input.h5ad <span class="at">--genes</span> input/candidates.csv <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/compensation.csv</span>
+<span id="doc3-cb11-13"><a href="#doc3-cb11-13" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.cnv.workflow all <span class="at">--config</span> config/cnv.yaml</span></code></pre></div>
+<h2 id="doc3-附录-c版本与引用">附录 C：版本与引用</h2>
+<ul>
+<li><strong>版本</strong>：v2.2（代码自述见 <code>src/consensus_v2.py</code> 中 <code>v2.2:</code> 文档串）</li>
+<li><strong>版本控制</strong>：本目录<strong>不在任何 git 仓库跟踪范围内</strong>（Kady 沙盒 <code>projects/</code> 被 gitignore）。引用时请写明 v2.2 并附 <code>src/</code> + <code>config/</code> 快照；变更史以 <code>PROJECT_LOG.md</code> 为准</li>
+<li><strong>相关文档</strong>：<code>PROJECT_LOG.md</code>（条目 #0–#15）· <code>管线架构预审_质询回答与管线优化_2026-09-07.md</code> · <code>WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</code> · <code>derived/tools/VirtualCellTool/docs/HANDOFF_v3.md</code>（L4 机制层）</li>
+</ul>
+<hr />
+<p><em>本文为 v2.2 实施文档。v2.0 设计文档保留不删，未实现部分见 §8。</em></p>
+</details><details id="file4"><summary>4. 管线架构预审_七个质询问题.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc4-v2-管线架构预审-七个质询问题">v2 管线架构预审 — 七个质询问题</h1>
+<blockquote>
+<p>日期：2026-09-07 · 来源：设计审查对话 关联：<code>架构设计_v2_通用微缺失主效基因筛选管线.md</code> · <code>PROJECT_LOG.md</code> 条目 #5 用法：在开始搭建平台之前，逐一回答以下每个问题。回答完成后打 [x]。</p>
+</blockquote>
+<hr />
+<h2 id="doc4-维度一架构原理">维度一：架构原理</h2>
+<h3 id="doc4-质询-1-逐基因排序的核心假设是否成立">质询 #1 — 逐基因排序的核心假设是否成立？</h3>
+<p>逐基因排序隐含了前提：<strong>存在某个基因，其单倍剂量不足是表型的主要驱动因素，而其他基因的贡献可以忽略或次要。</strong></p>
+<p>但： - WS：ELN 驱动心血管表型，GTF2I 驱动神经表型——两个”主效”基因各负责不同系统 - 22q11.2：TBX1 杂合子小鼠不能完全重现 22q11.2 表型谱，可能需要双基因组合（TBX1 + CRKL） - Contiguous gene syndrome 的原意本身就是”多基因协同剂量效应” - 一些微缺失可能根本没有单一主效基因</p>
+<p><strong>问题</strong>：如果用户在 Mode D（探索）下输入一个新发现的 4 Mb 缺失（含 60 个基因），其中根本没有”单一主效基因”，管线给出的”#1 排名基因”会不会产生误导？管线如何在输出中诚实地表达”可能不存在单一主效基因”这种可能性？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h2 id="doc4-维度二筛选可行性与逻辑合理性">维度二：筛选可行性与逻辑合理性</h2>
+<h3 id="doc4-质询-2-证据金字塔是否在筛正确的目标">质询 #2 — 证据金字塔是否在筛”正确的目标”？</h3>
+<p>管线的核心权重（ClinGen HI + gnomAD pLI/LOEUF）测量的是”人类群体遗传学上该基因对功能缺失突变的耐受程度”。但你要筛的是”在患者体内剂量减半后造成最大表型后果的基因”。</p>
+<p><strong>这两个可能指向不同的基因</strong>： - 一个普遍高约束的基因（如核糖体蛋白）→ 缺失 → 细胞死亡 → 在 ClinGen 中无疾病记录 - 一个组织特异性低约束的 TF（如短暂表达的发育调控因子）→ 缺失 → 特定神经环路失败 → 严重表型</p>
+<p><strong>问题</strong>：管线能否区分”群体遗传学上不耐受”和”在疾病表型相关细胞中有不可替代功能”？如果两者指向不同的基因，管线倾向于哪一种？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h3 id="doc4-质询-3-五个证据维度的权重是否可通约权重设定的依据是什么">质询 #3 — 五个证据维度的权重是否可通约？权重设定的依据是什么？</h3>
+<p>当前权重：</p>
+<div class="sourceCode" id="doc4-cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc4-cb1-1"><a href="#doc4-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evidence</span><span class="kw">:</span></span>
+<span id="doc4-cb1-2"><a href="#doc4-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">clinGen_hi_score</span><span class="kw">:</span><span class="at">   weight: 3</span></span>
+<span id="doc4-cb1-3"><a href="#doc4-cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">gnomad_pLI</span><span class="kw">:</span><span class="at">         weight: 2</span></span>
+<span id="doc4-cb1-4"><a href="#doc4-cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">gnomad_LOEUF</span><span class="kw">:</span><span class="at">       weight: 2</span></span>
+<span id="doc4-cb1-5"><a href="#doc4-cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">DeepLOF_score</span><span class="kw">:</span><span class="at">      weight: 1</span></span></code></pre></div>
+<p>这些权重没有经验校准——为什么 3:2:2:1 而不是其他？WBS 实验中 normalize 从 rank 切到 raw 就让 ρ 从 0.23 跳到了 0.71——<strong>算法选择和参数设置比数据本身更能驱动排序结果</strong>。</p>
+<p><strong>问题</strong>：你打算如何校准权重？靠正对照 LOO 调权？还是承认主观性并在输出中标注”排序结果对参数选择敏感”？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h2 id="doc4-维度三数据来源可靠性">维度三：数据来源可靠性</h2>
+<h3 id="doc4-质询-4-gnomad-的系统性偏倚依赖的信号源是否自己在看走眼">质询 #4 — gnomAD 的系统性偏倚：依赖的信号源是否自己在”看走眼”？</h3>
+<p><strong>已知偏倚</strong>： 1. <strong>基因长度偏倚</strong>：长基因有更多突变机会 → pLI 统计效力被长度驱动 → 短基因（许多 TF）可能被错误分类为”耐受” 2. <strong>隐性致病基因悖论</strong>：隐性致病基因在杂合缺失时可能完全没有单倍剂量不足效应，但 gnomAD 会因为它”在纯合子中不存在”而给予高 pLI → 管线会错误地给它高分 3. <strong>人群结构偏倚</strong>：gnomAD 主要基于欧洲人群，对其他人群的代表性不足</p>
+<p><strong>问题</strong>：管线面对”隐性致病基因高 pLI”时如何避免误判？是否需要额外步骤来筛选”已知隐性致病基因”并降低其权重？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h3 id="doc4-质询-5-clingen-对绝大多数基因无评级是没有证据还是没人研究过">质询 #5 — ClinGen 对绝大多数基因无评级：是”没有证据”还是”没人研究过”？</h3>
+<p>WBS 实验数据：35 个区间基因中 ClinGen HI 仅覆盖 5 个（14%）。剩下的 30 个基因——无评级 = 0 分？</p>
+<p>这可能不是生物学的”不敏感”，而是文献偏倚——<strong>这些基因从未被临床遗传学家系统评估过</strong>。</p>
+<p><strong>问题</strong>：管线能否区分”ClinGen 已评级为 0 = 有证据表明不敏感”和”无评级 = 无人研究过”？如果不能，对于一个新发现的微缺失区间，是否可能在排序中误杀真正的主效基因？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h3 id="doc4-质询-6-deeplof-分数本身从-clingengnomad-标签训练出来循环推理风险">质询 #6 — DeepLOF 分数本身从 ClinGen/gnomAD 标签训练出来：循环推理风险？</h3>
+<pre><code>ClinGen/gnomAD → DeepLOF 训练 → DeepLOF_score
+ClinGen/gnomAD → L1 证据层 → clinGen_hi_score / gnomad_pLI
+                                  ↓
+                            L3 共识整合
+                      (同一信息源被数了两次)</code></pre>
+<p>v2 已将 DeepLOF 权重降到 1，但如果 L1 信号弱（短基因、gnomAD 覆盖差），DeepLOF 的训练标签偏倚也会随之而来。</p>
+<p><strong>问题</strong>：如何确保 AI 层和 L1 不构成”同一信息源的重复计权”？是否需要声明 DeepLOF 的独立信息增量，并仅在 L1 证据弱时激活？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h2 id="doc4-维度四平台搭建要求">维度四：平台搭建要求</h2>
+<h3 id="doc4-质询-7-从排名到实验决策管线如何指导实际的靶点选择">质询 #7 — 从排名到实验决策：管线如何指导实际的靶点选择？</h3>
+<ul>
+<li>SINEUP 只能靶向一个基因</li>
+<li>AAV 载体容量有限（~4.7 kb）</li>
+<li>SINEUP 分子的设计、合成、验证周期通常数周到数月——切换备选靶点成本很高</li>
+<li>如果排名 #1 的基因只恢复了 40% 表型，是重新审视排名还是接受它？</li>
+</ul>
+<p><strong>问题</strong>：管线是否需要输出”实验验证建议”——包括①第一候选失败后的切换策略；②是否建议组合靶向（如果证据指向多基因贡献）；③排名不确定时（多基因同等级），是否建议更多预实验而不是直接靶向？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+<hr />
+<h2 id="doc4-补充问题scrna-seq-思路的根本可行性">补充问题：scRNA-seq 思路的根本可行性</h2>
+<h3 id="doc4-质询-0-从-scrna-seq-数据中寻找-sineup-治疗靶点这条思路到底能不能走通">质询 #0 — 从 scRNA-seq 数据中寻找 SINEUP 治疗靶点，这条思路到底能不能走通？</h3>
+<blockquote>
+<p><strong>注</strong>：这个问题比上面七个更根本。如果这个方向从原理上就走不通，管线的 Mode C（全栈筛选）就没有存在的必要，整个工具的设计边界也需要重新划定。</p>
+</blockquote>
+<p><strong>项目自身的负结果记录</strong>： - E3/E4: 归因 ≈ 差异表达（r=0.949），归因分数无独立预测能力 - E6: TBX1 在脑类器官中只有 0.16% 细胞表达——一个真实的驱动基因几乎不可见于数据中 - E8: 删失基因稳态 mRNA”隐身”（Δattr≈0）——剂量补偿消灭了信号 - GEARS: 41 个微缺失主效基因只有 4 个在训练图中——结构性死路 - 三个天花板：翻译层盲区、单基因 vs 多基因错配、mRNA 隐身</p>
+<p><strong>本调研新增的证据</strong>： - Schmid et al. (2025): 所有 scRNA-seq CNV caller 对 &lt;3 Mb focal CNV 灵敏度极低 - 你的 WBS 实验：infercnvpy AC-CNV-1 FAIL（预期内）</p>
+<p><strong>但另一方面</strong>： - scRNA-seq 可以回答数据库无法回答的问题：基因在这个具体的细胞类型里是否表达？（而 HPA 是 bulk 组织平均值） - 患者缺失背景下的表达 vs 正常对照的差异——可能揭示补偿机制的强度和范围 - 细胞类型级别的分辨率是 HPA/GTEx 达不到的</p>
+<p><strong>问题</strong>：综合以上所有证据，你认为 scRNA-seq 数据在筛选管线中的正确角色是什么？是”核心发现引擎”、“辅助验证层”还是”在特定场景下的增强信息源”？如果答案是”辅助验证层”，管线的 Mode C 是否应该降格为”可选可视化”，而不是”全栈筛选模式”？</p>
+<p><strong>我的回答</strong>：[ ]</p>
+</details><details id="file5"><summary>5. WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc5-whs-主效基因-nsd2-是如何被文献确定的-证据链与叙事指南">WHS 主效基因 NSD2 是如何被文献确定的 — 证据链与叙事指南</h1>
+<blockquote>
+<p>日期：2026-09-12 · 目的：为「WBS 开发管线、WHS 湿实验验证」的 iGEM 叙事提供可辩护的证据链 关键修正：原始调研文档（<code>WHS_scRNA-seq_data_survey.md</code>、<code>PROJECT_LOG.md</code> #5）中三处引文作者有误，本文档给出正确引用与 DOI/PMID。 配套：<code>架构设计_v2_通用微缺失主效基因筛选管线.md</code>（Mode A 验证模式）· <code>文献调研_虚拟细胞药物效应与基因扰动_2026-09-12.md</code></p>
+</blockquote>
+<hr />
+<h2 id="doc5-一句话回答">一句话回答</h2>
+<p><strong>文献并没有把 NSD2 确立为 WHS 的「唯一」主效基因——它确立的是：NSD2 是 WHS 核心表型（发育迟缓、典型面容、生长受限、癫痫）的<code>必要主效基因</code>，但 WHS 整体是一个由 4p16.3 缺失引起多个基因同时单倍剂量不足的<code>连续基因综合征（contiguous gene syndrome）</code>。</strong></p>
+<p>这个区分对你们的叙事不但无害，反而有利：它精确地解释了<strong>为什么 WBS 需要多基因排序管线（WS 是真正的多基因病），而 WHS 适合做单基因湿实验验证（NSD2 是干净的、可单独测量的剂量缺失）</strong>。</p>
+<hr />
+<h2 id="doc5-一证据链文献是如何一步步指向-nsd2-的">一、证据链：文献是如何一步步指向 NSD2 的</h2>
+<h3 id="doc5-第-1-步用缺失大小做基因型-表型关联1960s1990s">第 1 步：用缺失大小做基因型-表型关联（1960s–1990s）</h3>
+<p>WHS 是 4p16.3 的<strong>终端/间质缺失综合征</strong>，表型（精神发育迟滞、生长迟缓、典型面容、癫痫）与缺失大小相关。<strong>重叠缺失分析</strong>把核心表型映射到最小缺失重叠区（临界区）。</p>
+<ul>
+<li><strong>WHSCR 定义（~165 kb）</strong>：以 2 个非典型间质缺失患者界定 → 这是 NSD2 所在区间。（Wiley；见 <code>First known microdeletion within the WHS critical region</code>）</li>
+<li><strong>WHSCR-2 细化（300–600 kb）</strong>：在 D4S3327–D4S98/D4S168 之间提出第二个临界区，其中 <strong>LETM1 被指定为癫痫的候选基因</strong>。（Zollino 系工作；WHSCR/WHSCR-2）</li>
+</ul>
+<p><strong>这一阶段的意义</strong>：临界区把「候选主效基因」的候选数量从全部缺失基因压缩到几个（NSD2/WHSC1、LETM1、NELFA、TACC3 等），NSD2 因位于最核心区间而在候选序中靠前。</p>
+<h3 id="doc5-第-2-步发现缺失-whsc1letm1-必要但不充分anderson-2014">第 2 步：发现「缺失 WHSC1+LETM1 必要但不充分」（Anderson 2014）</h3>
+<p>关键词论文：<strong>Andersen EF, Carey JC, Earl DL, Corzo D, Suttie M, Hammond P, South ST. <em>Deletions involving genes WHSC1 and LETM1 may be necessary, but are not sufficient to cause Wolf–Hirschhorn Syndrome</em>. European Journal of Human Genetics 22:464–470 (2014).</strong> doi:10.1038/ejhg.2013.192</p>
+<ul>
+<li>三个 &lt;400 kb 的微小缺失患者，只删 WHSC1/NSD2 + LETM1，呈现的是<strong>部分/非典型</strong> WHS 表型。</li>
+<li>结论：<strong>单倍剂量不足是必要条件，但不足以独立产生完整 WHS</strong> —— 这为「连续基因综合征」奠定基础，也留下悬念：单基因到底能贡献多少表型？</li>
+</ul>
+<h3 id="doc5-第-3-步单基因变异的患者证据2019-单基因可变现表型的第一硬证据">第 3 步：单基因变异的患者证据（2019）—— 「单基因可变现表型」的第一硬证据</h3>
+<p>关键词论文：<strong>Barrie ES, Alfaro MP, Pfau RB, Goff MJ, McBride KL, Manickam K, Zmuda EJ. <em>De novo loss-of-function variants in NSD2 (WHSC1) associate with a subset of Wolf–Hirschhorn syndrome</em>. Cold Spring Harbor Molecular Case Studies 5(4):a004044 (2019).</strong> doi:10.1101/mcs.a004044 · PMC6672030</p>
+<ul>
+<li><strong>3 例互不相关的患者</strong>，全部携带<strong>de novo（亲本均不含）</strong> NSD2 功能缺失变异：c.708G&gt;A (p.Trp236Ter, nonsense)、c.1569dupG (p.Lys524GlufsTer17, frameshift)、c.793C&gt;T (p.Gln265Ter, nonsense)。</li>
+<li>他们<strong>只有 NSD2 单基因变异，没有任何 4p 缺失</strong>，却呈现 WHS 特征表型：宫内生长受限（IUGR）、全面发育迟缓、典型面容；两人另有微电极/矮小/肾发育不全等。</li>
+<li>作者结论：「growing evidence for de novo loss-of-function variants in the NSD2 gene to be pathogenic <strong>and contributing to a subset of WHS</strong> patients」——即 NSD2 单基因变异与 WHS 的一个子集强相关。</li>
+</ul>
+<p><strong>这是证据链的转折点</strong>：从「删除相关」升级为「单基因变异直接致病」。</p>
+<h3 id="doc5-第-4-步功能验证2021-甲基化活性确证致病机制">第 4 步：功能验证（2021）—— 甲基化活性确证致病机制</h3>
+<p>关键词论文：<strong><em>Loss-of-function and missense variants in NSD2 cause decreased methylation activity and are associated with a distinct developmental phenotype</em>. Genetics in Medicine (2021).</strong> doi:10.1038/s41436-021-01158-1 · PMID:33941880</p>
+<ul>
+<li><strong>18 名新患者 + 10 名既往患者</strong>，携带杂合错义/延展/截断型 NSD2 变异。</li>
+<li>功能实验（酶活性测量）证实这些变异导致<strong>H3K36 甲基化活性降低</strong>——NSD2 是组蛋白甲基转移酶，机制即「表观遗传剂量不足」。</li>
+<li>临床谱被判定为「与典型 WHS 有重叠、但有别的发育表型」——再次支持「NSD2 是主效之一，但不是 WHS 全谱的唯一原因」。</li>
+</ul>
+<h3 id="doc5-第-5-步范式转变综述2022-命名shifting-paradigm">第 5 步：范式转变综述（2022）—— 命名「shifting paradigm」</h3>
+<p>关键词论文：<strong>Cortellazzo Wiel L, Bruno I, Barbi E, Sirchia F. <em>From Wolf-Hirschhorn syndrome to NSD2 haploinsufficiency: a shifting paradigm through the description of a new case and a review of the literature</em>. Italian Journal of Pediatrics 48:72 (2022).</strong> doi:10.1186/s13052-022-01267-w · PMID:35550183</p>
+<ul>
+<li>新案例 + 全文献综述。</li>
+<li>明确表述（全文原意）：
+<ul>
+<li><strong>完整 WHS 表型是 4p16.3 多个基因单倍剂量不足的累积效应（连续基因综合征）</strong>；</li>
+<li><strong>NSD2 单倍剂量不足产生一个「与 WHS 表型部分重叠的独立实体」，其临床发现不足以单独做出 WHS 的确定性诊断</strong>；</li>
+<li>NSD2 被干扰的患者发育迟缓更严重——支持其核心贡献。</li>
+</ul></li>
+<li>文中证据回顾也确认：<code>WHSC1/NSD2</code>（现名 NSD2，别名 WHSC1）+ <code>LETM1</code> 的缺失「必要但不足」。</li>
+</ul>
+<h3 id="doc5-第-6-步动物模型机制验证2024">第 6 步：动物模型机制验证（2024）</h3>
+<p>关键词论文：<strong>Kinoshita S, Kojima K, Ohnishi E, Takayama Y, Kikuchi H, Takada S, Nakabayashi K, Kawai T, Hata K. <em>Loss of NSD2 causes dysregulation of synaptic genes and altered H3K36 dimethylation in mice</em>. Frontiers in Genetics 15 (2024).</strong> doi:10.3389/fgene.2024.1308234 · PMC10899350 · GEO:GSE232564/GSE232566</p>
+<ul>
+<li><strong>Nsd2 KO 小鼠</strong>（缺失模型中少见的单基因模型，全脑 E15.5 bulk RNA-seq + H3K36me2 ChIP-seq）。</li>
+<li>结果：突触传递/形成基因失调；H3K36me2 在静止区减少、在转录基因与增强子重分布。</li>
+<li>意义：NSD2 缺失→突触基因失调→发育/认知表型的<strong>机制通路</strong>得到单基因动物模型直接支持。</li>
+</ul>
+<h3 id="doc5-临床数据库共识现行">临床/数据库共识（现行）</h3>
+<ul>
+<li><strong>ClinGen 剂量敏感性分级：NSD2 = HI 3（「有充分剂量致病性证据」）</strong>，4p16.3 chr4:1871393-1982192，截至 2023-10-25 更新（MONDO:0000508）。见管线数据 <code>clinGen_gene_curation_list_GRCh38.tsv</code>。</li>
+<li>gnomAD 约束：NSD2 pLI≈1.0、LOEUF 极低——群体中几乎无杂合 LOF 存活，与强选择压（必要基因）一致。</li>
+</ul>
+<hr />
+<h2 id="doc5-二一个必须修正的表述叙事严谨性">二、一个必须修正的表述（叙事严谨性）</h2>
+<p>此前文档的表述「<strong>NSD2 单基因功能缺失即可产生整体 WHS 核心表型</strong>」是<strong>过强的简化</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>表述</th>
+<th>判定</th>
+<th>文献依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「NSD2 单基因缺失即可产生<strong>完整 WHS 核心表型</strong>」</td>
+<td>❌ 过强</td>
+<td>Cortellazzo Wiel 2022：NSD2 单倍剂量不足≠确定性 WHS 诊断；Andersen 2014：必要不充分</td>
+</tr>
+<tr>
+<td>「NSD2 是 WHS <strong>核心表型的主要（necessary）单基因贡献者</strong>，单基因变异可复现 WHS 的<strong>子集</strong>表型」</td>
+<td>✅ 准确</td>
+<td>Barrie 2019（3 例 de novo LOF，WHS 子集表型）；Genet Med 2021（28 例，重叠但有别）</td>
+</tr>
+<tr>
+<td>「NSD2 是 WHS 的<strong>唯一</strong>主效基因」</td>
+<td>❌ 过强</td>
+<td>LETM1（癫痫）、NELFA（非典型 WHS 表型）、TACC3（颅面）均有独立贡献证据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>推荐叙事措辞（准确且有利）</strong>： &gt; “WHS 核心表型由 4p16.3 缺失中多个基因共同决定，但文献（2019–2024）已确立 <strong>NSD2 为唯一获得单基因变异 + 功能 + 动物模型三重证据的主效基因</strong>。对湿实验而言，这使其成为理想的可测量单基因剂量缺失系统——这正是我们选择 WHS 验证 SINEUP 剂量补偿原理、而用 WBS 开发多基因排序管线的分工逻辑。”</p>
+<hr />
+<h2 id="doc5-三叙事指南wbs-开发管线-whs-湿实验验证为什么自洽">三、叙事指南：WBS 开发管线 + WHS 湿实验验证为什么自洽</h2>
+<p>你们（用户）的原话：「我一直在 WBS 上开发管线，但最终选择了 WHS 做湿实验验证」——这个组合在证据链下完全合理，且有一个评委欢迎的「双疾病分工」故事：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>WBS (Williams 7q11.23)</th>
+<th>WHS (4p16.3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主效基因格局</strong></td>
+<td>多基因争议：ELN(心血管)、GTF2I/BAZ1B/CLIP2/LIMK1(神经)，无单一共识</td>
+<td>单基因共识：NSD2 为主效 + LETM1/NELFA/TACC3 修饰</td>
+</tr>
+<tr>
+<td><strong>管线角色</strong></td>
+<td><strong>开发与压测</strong>：多基因多表型排序、正对照（ELN/GTF2I）、证据分层</td>
+<td><strong>验证（Mode A）</strong>：已知主效基因确认 + 证据面板输出</td>
+</tr>
+<tr>
+<td><strong>湿实验价值</strong></td>
+<td>排序正确性的检验（为什么选这个基因？）</td>
+<td><strong>剂量不足→SINEUP 上调→蛋白恢复</strong>的可测量闭环</td>
+</tr>
+<tr>
+<td><strong>为什么这样分工</strong></td>
+<td>若管线只在「答案已知」的单基因病上开发，无法证明排序能力</td>
+<td>若湿实验在多基因病上做，无法干净归因治疗效果到单个基因</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一句话叙事（可放 wiki/评委问答）</strong>： &gt; “我们故意把管线开发在最难的问题上（WS：多基因、无共识、需要排序），把湿实验验证放在最干净的系统上（WHS：NSD2 单基因剂量缺失，三重文献证据 + 可量化蛋白输出）。管线证明我们’能把因果基因排在前面’；湿实验证明我们’能修复剂量不足’。两者互补而非冗余。”</p>
+<p><strong>被追问时的防御要点</strong>： 1. Q:「NSD2 又不是 WHS 的唯一基因，你们怎么敢说主效？」 → A: 我们不说唯一；我们说 NSD2 是拿到单基因变异+功能+小鼠三重证据的主效基因（Barrie 2019 / Genet Med 2021 / Kinoshita 2024）；湿实验定位是<strong>验证剂量补偿治疗范式</strong>（修复剂量不足基因），而非宣称 WS 全谱归因。 2. Q:「为什么不用 WS 做湿实验？」 → A: WS 是多基因结构，效果归因不清；WHS 的 NSD2 提供单基因、可测量的剂量缺失系统，是 SINEUP（单基因靶向上调）原理最干净的验证场。 3. Q:「NSD2 单基因变异患者只有 3 例（2019），证据够吗？」 → A: 2019 后扩大至 28 例（2021 加功能验证）+ 小鼠模型（2024）+ ClinGen HI=3 + gnomAD pLI≈1.0——证据是<strong>多源汇聚</strong>而非单点。</p>
+<hr />
+<h2 id="doc5-四参考文献核实版直接可用">四、参考文献（核实版，直接可用）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>引用（作者. 年份. 题目. 期刊 卷:页）</th>
+<th>DOI / PMID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Battaglia A 等. 2021. The delineation of the Wolf-Hirschhorn syndrome over six decades.</strong></td>
+<td>Am J Med Genet Part A（综述；4p 支持组 PDF）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>临界区映射（历史）：Molecular definition of the smallest region of deletion overlap in WHS (1992)；Wiley 微缺失案例（WHSCR 首个内缺失患者）</td>
+<td>PubMed 1992;51(3):571-8 · doi:10.1002/ajmg.1203</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Andersen EF, Carey JC, Earl DL, Corzo D, Suttie M, Hammond P, South ST. 2014. Deletions involving genes WHSC1 and LETM1 may be necessary, but are not sufficient to cause WHS. EJMGG 22:464–470.</strong></td>
+<td>doi:10.1038/ejhg.2013.192</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Barrie ES, Alfaro MP, Pfau RB, Goff MJ, McBride KL, Manickam K, Zmuda EJ. 2019. De novo LOF variants in NSD2 (WHSC1) associate with a subset of WHS. CSH Mol Case Studies 5(4):a004044.</strong></td>
+<td>doi:10.1101/mcs.a004044 · PMC6672030</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong><em>Loss-of-function and missense variants in NSD2 cause decreased methylation activity and are associated with a distinct developmental phenotype. 2021. Genet Med.</em></strong></td>
+<td>doi:10.1038/s41436-021-01158-1 · PMID:33941880</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Cortellazzo Wiel L, Bruno I, Barbi E, Sirchia F. 2022. From WHS to NSD2 haploinsufficiency: a shifting paradigm… Ital J Pediatr 48:72.</strong></td>
+<td>doi:10.1186/s13052-022-01267-w · PMID:35550183</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Kinoshita S, 等. 2024. Loss of NSD2 causes dysregulation of synaptic genes and altered H3K36 dimethylation in mice. Front Genet 15.</strong></td>
+<td>doi:10.3389/fgene.2024.1308234 · PMC10899350 · GSE232564/66</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ClinGen Gene Curation（NSD2 HI=3，2023-10-25）</td>
+<td>管线本地数据 <code>clinGen_gene_curation_list_GRCh38.tsv</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>gnomAD v4 约束（NSD2 pLI/LOEUF）</td>
+<td>管线本地数据 <code>gnomad_constraint.tsv</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：请用本表替换 <code>WHS_scRNA-seq_data_survey.md</code> / <code>PROJECT_LOG.md</code> #5 中的三处作者名错误（“Tassano E”→<strong>Cortellazzo Wiel L 等</strong>；“Kimura S”→<strong>Kinoshita S 等</strong>；“Zanoni P”→<strong>Barrie ES 等</strong>），并核对 <code>架构设计_v2</code> 的 <code>known_drivers.yaml</code> 证据条目措辞（「单基因功能缺失变异产生整体 WHS 核心表型」→「产生 WHS 子集表型，为三重证据主效基因」）。</p>
+</details><details id="file6"><summary>6. 工程化指导书_微缺失主效基因筛选管线.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc6-igem-sineup-微缺失主效基因筛选管线-工程化指导书">iGEM SINEUP 微缺失主效基因筛选管线 —— 工程化指导书</h1>
+<blockquote>
+<p><strong>2026-09-25 整理注记：</strong> 本文中的旧架构、<code>config/sources.json</code> 与 uv 命令只用于历史参考。数据来源已整合至 <a href="../../03_pipeline/README.md#data-sources">README 数据来源</a>，旧登记的占位校验和不表示完成核验；当前环境只按 <a href="../../03_pipeline/README.md">README 唯一安装入口</a>建立，旧锁文件已删除。</p>
+</blockquote>
+<blockquote>
+<p><strong>历史操作说明（标注于 2026-09-24，CR-042）</strong>：本文版本/时间为 v1.0；原文日期为 2025-09-01，其准确性未核实，保留不改。设计、实验和报告正文保留，适用于理解当时过程，不作为当前安装、启动或验收指令；旧 uv 安装命令仅为历史记录，请勿直接沿用。当前安装以<a href="../../README.md">仓库 README</a>为准，管线操作见<a href="../../03_pipeline/README.md">管线 README</a>与<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>，网页启动见<a href="../../05_virtual_cell/README.md">工具 README</a>。历史测试数字不代表当前版本。</p>
+</blockquote>
+<p><strong>版本</strong>：v1.0 · <strong>生成时间</strong>：2025-09-01<br />
+<strong>目标</strong>：将“几十个基因 → 精准排序”的人工筛选过程工程化，成为可重复、可审计、可扩展的团队管线。</p>
+<hr />
+<h2 id="doc6-项目愿景与范围">1. 项目愿景与范围</h2>
+<ul>
+<li><strong>输入</strong>：一个或多个微缺失区间的候选基因列表（HGNC 基因符号，每行一个，从 BED/VCF/Symblex-V 或直接由 DECIPHER 导出，也可手动维护 CSV）。</li>
+<li><strong>输出</strong>：按 consensus 排序的 top-N 推荐清单，附带每一级的证据等级、ClinGen 评分、pLI/LOEUF、组织表达过滤，及供 SINEUP/AAV 设计选择的标注（如 short-gene / tissue-specific / liver-risk）。</li>
+<li><strong>设计原则</strong>：非侵入于团队既有流程；核心是“join + score + rank”，把外部数据源对齐到 HGNC symbol。所有 AI/ML 打分以“预计算”或“推荐接口”形式接入，工程上不耦合具体模型，便于升级。</li>
+</ul>
+<hr />
+<h2 id="doc6-总体架构">2. 总体架构</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  输入                                                           │
+│   HGNC gene symbol list (candidates.txt or candidates.csv)      │
+│           ↓                                                     │
+│  ┌───────────────────────────┐                                  │
+│  │ Module 0: 归一化 &amp; 校验  │  resolve HGNC symbols → HGNC ID   │
+│  └───────────────────────────┘                                  │
+│           ↓                                                     │
+│  ┌───────────────────────────┐                                  │
+│  │ Module 1: 证据层整合       │  join ClinGen（❗人工金标准）    │
+│  │                          │  gnomAD pLI / LOEUF（非AI约束）   │
+│  │                          │  HPA organ expression（肝毒性）   │
+│  └───────────────────────────┘                                  │
+│           ↓                                                     │
+│  ┌───────────────────────────┐   可选扩展（预计算或插件式）     │
+│  │ Module 2: 预测层          │   DeepLOF/DosaCNV/DeepGenePrior   │
+│  └───────────────────────────┘                                  │
+│           ↓                                                     │
+│  ┌───────────────────────────┐                                  │
+│  │ Module 3: 共识排序        │  consensus score &amp; 投票整合      │
+│  └───────────────────────────┘                                  │
+│           ↓                                                     │
+│  输出 CSV + 报告（MD）                                          │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<blockquote>
+<p>“低耦合设计”背后的理由：让 ClinGen/约束分数先落地（可不用联网也可完全内置），AI 方法被设计成“可选预计算结果”或“环境依赖的可选模块”，保持 pipeline 可运行而可演进。sdflo</p>
+</blockquote>
+<hr />
+<h2 id="doc6-数据规范">3. 数据规范</h2>
+<h3 id="doc6-主键">3.1 主键</h3>
+<ul>
+<li><strong>主键</strong>：HGNC ID（稳定、不可变）<br />
+</li>
+<li><strong>展示</strong>：HGNC symbol（gene symbol）</li>
+<li>输入里任何别名要先映射到 HGNC symbol（入库时要做别名字典，可用 HGNC custom downloads 官方别名表）</li>
+</ul>
+<h3 id="doc6-输入-file-candidates.csv">3.2 输入 file: <code>candidates.csv</code></h3>
+<p>只需一次性提供，列：<code>gene_symbol</code>（或另列 <code>source</code>, <code>deletion_id</code>）。<br />
+- <strong>格式验证</strong>：UTF-8，逗号分隔，必需列存在；空行删除；引号可选。 - <strong>最小规模</strong>：≥ 5 genes；推荐 20–100 genes。</p>
+<h3 id="doc6-数据源核心-已验证为稳定">3.3 数据源（核心 — 已验证为稳定）</h3>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 47%" />
+<col style="width: 15%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据</th>
+<th>下载来源（已验证）</th>
+<th>用途</th>
+<th>是否内置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen Dosage Sensitivity curation</td>
+<td><code>https://ftp.clinicalgenome.org/</code>（具体任一 <code>ClinGen_gene_curation_list_GRCh38.tsv</code>）</td>
+<td>人工金标准</td>
+<td><strong>内置必装</strong></td>
+</tr>
+<tr>
+<td>gnomAD constraint (pLI, LOEUF)</td>
+<td>Downloads 区（gnomad.broadinstitute.org/help/constraint；也可 UCSC track 导出）</td>
+<td>非AI约束基线</td>
+<td><strong>内置</strong></td>
+</tr>
+<tr>
+<td>Human Protein Atlas RNA expression</td>
+<td><code>https://www.proteinatlas.org/about/download</code> → <code>rna_expression_consensus.tsv</code></td>
+<td>肝/器官毒性过滤（AAV）</td>
+<td><strong>内置</strong></td>
+</tr>
+<tr>
+<td>HGNC gene symbol / aliases</td>
+<td>HGNC Custom Downloads</td>
+<td>symbol normalization</td>
+<td><strong>内置</strong></td>
+</tr>
+<tr>
+<td>DECIPHER（可选扩展）</td>
+<td>DECIPHER web（表格式下载需要账号；仅用作研究级别）</td>
+<td>phenotype context</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>DeepLOF / DosaCNV / DeepGenePrior</td>
+<td>接口有示例接口定义，但不预装依赖</td>
+<td>AI layer（可选）</td>
+<td><strong>可选外部服务</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 说明：HPA 的“rna_expression_consensus.tsv”包含 51 consensus tissues（v23，样本数为 19297 genes）— 检出列表（“Liver”, “Brain”, “Kidney”, “Gastrointestinal”）微有偏移，但用内置的过滤（<code>tissue in ("liver","brain","kidney","gastrointest")</code>）保持简单即可。</p>
+</blockquote>
+<h3 id="doc6-中间结果-schemaevidence.parquet">3.4 中间结果 schema（<code>evidence.parquet</code>）</h3>
+<ul>
+<li><strong>一张长表</strong>：多行每 gene，列包括
+<ul>
+<li><code>hgnc_id</code>, <code>gene_symbol</code>, <code>clinGen_hi_score</code> (0|1|2|3|NaN), <code>clinGen_triplo_score</code>(同),</li>
+<li><code>gnomad_pLI</code>（可缺）、<code>gnomad_LOEUF</code>（可缺）、<code>hpa_liver_expr</code>、<code>hpa_brain_expr</code>、<code>hpa_kidney_expr</code>、<code>hpa_gi_expr</code></li>
+<li><code>microlength</code>（可选，mRNA 长度，用于 SINEUP 载体容量评估）</li>
+<li>每台 AI 预计算：<code>deeplof_score</code>, <code>dosacnv_score</code>, <code>deepgeneprior_score</code>（均默认 NaN）</li>
+</ul></li>
+</ul>
+<p>存储建议：Parquet（压缩去重），但每人可换 CSV 也可以。</p>
+<hr />
+<h2 id="doc6-目录结构monorepo">4. 目录结构（monorepo）</h2>
+<p>指导书以“monorepo”收纳代码、配置、数据、测试，并给出最简目录。</p>
+<pre><code>gene_prioritization_pipeline/
+├── README.md                     # 本指导书 + 团队实施约定
+├── environment.yml               # uv/conda（Compliant to sandbox pattern）
+├── config/
+│   ├── pipeline.yaml               # pLI/LOEUF/APOB/etc 阈值、运行参数
+│   └── sources.json                # 每个 data source 的 url/checksum/local path
+├── data/                           # 数据本体（git 不收录；记录 MD5）
+│   ├── clinGen_gene_curation_list_GRCh38.tsv
+│   ├── gnomad_constraint.tsv       # pLI + LOEUF
+│   ├── hpa_rna_expression_consensus.tsv
+│   ├── hgnc_aliases.tsv            # HGNC official alias table
+│   └── locus/                      # 微缺失智能片，记录 patient 缺失区间（可空）
+├── input/
+│   └── candidates.csv               # 唯一：HGNC symbol list
+├── src/
+│   ├── normalize.py                # 映射 symbol → HGNC ID
+│   ├── merge_evidence.py           # Module 1
+│   ├── prescore.py                  # Module 2（可选 AI）
+│   ├── consensus.py                # Module 3 （共识排序）
+│   ├── report.py                   # 输出 MD/文字汇总
+│   └── utils/
+│       ├── io.py                    # schema 保证
+│       └── validation.py            # 静态输入校验
+├── tests/
+│   ├── test_normalize.py
+│   ├── test_evidence.py             # 验证 join 完整与褚定值范围
+│   └── test_consensus.py            # 证据缺失不 collapse，排序稳定
+├── outputs/
+│   ├── evidence.parquet            # Module 1 输出
+│   ├── candidates_ranked.csv       # Module 3 核心输出
+│   ├── report.md                   # Markdown 快照供 iGEM 汇报
+│   └── audit/
+│       ├── run.json                 # 元数据（run id, dates, versions）
+│       └── data_checksums.txt       # 数据源校验值
+└── docs/
+    ├── decisions/                   # ADR（架构决策）
+    └── api/                         # 可选接口的“契约”文档</code></pre>
+<hr />
+<h2 id="doc6-配置文件样例configpipeline.yaml">5. 配置文件样例（<code>config/pipeline.yaml</code>）</h2>
+<div class="sourceCode" id="doc6-cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc6-cb3-1"><a href="#doc6-cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># —— 约束分数阈值（非AI）</span></span>
+<span id="doc6-cb3-2"><a href="#doc6-cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gene_constraints</span><span class="kw">:</span></span>
+<span id="doc6-cb3-3"><a href="#doc6-cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pLI_threshold</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.9</span><span class="co">          # pLI &gt; 0.9 视为 HI-suspect</span></span>
+<span id="doc6-cb3-4"><a href="#doc6-cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">LOEUF_upper</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.35</span><span class="co">           # LOEUF &lt; 0.35（v2）/ &lt; 0.6（v4）</span></span>
+<span id="doc6-cb3-5"><a href="#doc6-cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">use_LOEUF_v4</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">           # 团队约定用 v4 threshold</span></span>
+<span id="doc6-cb3-6"><a href="#doc6-cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc6-cb3-7"><a href="#doc6-cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># —— ClinGen 强化加权</span></span>
+<span id="doc6-cb3-8"><a href="#doc6-cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">clinGen</span><span class="kw">:</span></span>
+<span id="doc6-cb3-9"><a href="#doc6-cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">weight_hi</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span><span class="co">                 # score ∈ [0,3]；weight 用于 consensus</span></span>
+<span id="doc6-cb3-10"><a href="#doc6-cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">use_score</span><span class="kw">:</span><span class="at"> haploinsufficiency</span></span>
+<span id="doc6-cb3-11"><a href="#doc6-cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc6-cb3-12"><a href="#doc6-cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># —— HPA 器官毒性过滤（AAV 敏感性）</span></span>
+<span id="doc6-cb3-13"><a href="#doc6-cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hpa_filter</span><span class="kw">:</span></span>
+<span id="doc6-cb3-14"><a href="#doc6-cb3-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">organs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;liver&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;brain&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;kidney&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;gastrointestinal&quot;</span><span class="kw">]</span></span>
+<span id="doc6-cb3-15"><a href="#doc6-cb3-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">high_expression_log</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0</span><span class="co">     # 可微调；默认从 TP1 100 TPM log1p 阈值</span></span>
+<span id="doc6-cb3-16"><a href="#doc6-cb3-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">negative_expr_threshold</span><span class="kw">:</span><span class="at"> </span><span class="fl">4.0</span><span class="co"> # 负分数：高表达的过滤逻辑</span></span>
+<span id="doc6-cb3-17"><a href="#doc6-cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc6-cb3-18"><a href="#doc6-cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># —— 共识排序权重（见 Module 3）</span></span>
+<span id="doc6-cb3-19"><a href="#doc6-cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">consensus</span><span class="kw">:</span></span>
+<span id="doc6-cb3-20"><a href="#doc6-cb3-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">base_weights</span><span class="kw">:</span></span>
+<span id="doc6-cb3-21"><a href="#doc6-cb3-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">clinGen_hi_score</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="doc6-cb3-22"><a href="#doc6-cb3-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gnomad_LOEUF</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span><span class="co">            # 只在一个 direction（LOEUF↓）入账</span></span>
+<span id="doc6-cb3-23"><a href="#doc6-cb3-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gnomad_pLI</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="doc6-cb3-24"><a href="#doc6-cb3-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">DeepLOF_score</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="doc6-cb3-25"><a href="#doc6-cb3-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">DosaCNV_score</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="doc6-cb3-26"><a href="#doc6-cb3-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">DeepGenePrior_score</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="doc6-cb3-27"><a href="#doc6-cb3-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">negative_hpa_organ</span><span class="kw">:</span><span class="at"> </span><span class="dv">-2</span></span>
+<span id="doc6-cb3-28"><a href="#doc6-cb3-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ranking_method</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;weighted_vote&quot;</span><span class="co"> # 或 &quot;borda&quot; / &quot;top_counts&quot;</span></span>
+<span id="doc6-cb3-29"><a href="#doc6-cb3-29" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">missing_handling</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;neutral&quot;</span><span class="co">      # 缺数据等于 0，不罚</span></span>
+<span id="doc6-cb3-30"><a href="#doc6-cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc6-cb3-31"><a href="#doc6-cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># —— 外部服务（可选；空则忽略）</span></span>
+<span id="doc6-cb3-32"><a href="#doc6-cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">external</span><span class="kw">:</span></span>
+<span id="doc6-cb3-33"><a href="#doc6-cb3-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">api_endpoints</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="doc6-cb3-34"><a href="#doc6-cb3-34" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cache_dir</span><span class="kw">:</span><span class="at"> .cache/</span></span>
+<span id="doc6-cb3-35"><a href="#doc6-cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc6-cb3-36"><a href="#doc6-cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># —— 数据校验（决定是否运行）</span></span>
+<span id="doc6-cb3-37"><a href="#doc6-cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">validation</span><span class="kw">:</span></span>
+<span id="doc6-cb3-38"><a href="#doc6-cb3-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">max_missing_rate</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span><span class="co">            # 任何 source 中竟超过 50% 就 fail</span></span>
+<span id="doc6-cb3-39"><a href="#doc6-cb3-39" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">require_unique_hgnc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">        # 每行必需唯一 HGNC ID</span></span></code></pre></div>
+<hr />
+<h2 id="doc6-关键模块设计">6. 关键模块设计</h2>
+<h3 id="doc6-module-0normalize.py">6.1 Module 0：<code>normalize.py</code></h3>
+<ul>
+<li><strong>职责</strong>：输入候选 → 输出标准 HGNC ID。<br />
+</li>
+<li><strong>实现</strong>：从 HGNC 别名表（hgnc_aliases.tsv）构建 dict {prev/names → HGNC ID}，然后忽名匹配与 previous symbol 匹配；失败的基因 log 到 audit。</li>
+<li><strong>产出</strong>：<code>normalized.csv</code>（含 <code>hgnc_id</code>, <code>input_symbol</code>, <code>status</code>(ok|alias|previous|unresolved)）。</li>
+<li><strong>质量</strong>：若 &gt; 10% unresolved，报错 fail（看 log）。</li>
+</ul>
+<h3 id="doc6-module-1merge_evidence.py">6.2 Module 1：<code>merge_evidence.py</code></h3>
+<ul>
+<li><strong>职责</strong>：将 normalized gene list join 到 ClinGen + gnomAD + HPA 表，输出 <code>evidence.parquet</code>。<br />
+</li>
+<li><strong>关键做法</strong>：ClinGen/gnomAD/HPA 都先单独 indexed by HGNC ID，然后 <code>large join</code>；缺失填 NaN，权重的配置从 <code>pipeline.yaml</code> 读。</li>
+<li><strong>verify</strong>：每个数据源要有 checksum 记录；连接比例要与 candidates size 记录（连接率 &lt; 100% 无问题，但 host 会有 log）。</li>
+<li><strong>产出</strong>：<code>outputs/evidence.parquet</code> + <code>outputs/audit/data_checksums.txt</code></li>
+</ul>
+<h3 id="doc6-module-2prescore.py可选-ai-预计算扩展">6.3 Module 2：<code>prescore.py</code>（可选 AI 预计算/扩展）</h3>
+<ul>
+<li><strong>职责</strong>：生成 AI 分数（DoseCNV / DeepLOF / DeepGenePrior）。
+<ul>
+<li><strong>推荐方式</strong>：独立脚本/服务运行式，把 AI 运行结果输出为一个 CSV：<code>ai_scores.csv</code>，列：<code>hgnc_id</code>,<code>DeepLOF_score</code>,<code>DosaCNV_score</code>,<code>DeepGenePrior_score</code>；然后在 pipeline 里只做 join。</li>
+<li><strong>接口契约</strong>（详细见 docs/api）：温度不固定，每次新模型重跑所有基因。</li>
+</ul></li>
+<li><strong>产出</strong>：<code>outputs/ai_scores.csv</code>（若未运行，为 None，不 fail）。</li>
+</ul>
+<h3 id="doc6-module-3consensus.py">6.4 Module 3：<code>consensus.py</code></h3>
+<ul>
+<li><strong>职责</strong>：把所有证据汇成单一 ranked list，输出 <code>candidates_ranked.csv</code> + <code>report.md</code>。<br />
+</li>
+<li><strong>算法</strong>（复杂可自定义）：<code>weighted_vote</code>
+<ul>
+<li>对每个证据，根据配置权重+ direction：
+<ul>
+<li>LOEUF ↓，pLI ↑ 的 gene 记 +weight；如果有缺失记 0；负向 hpa_organ 高表达记 −weight。</li>
+</ul></li>
+<li>得出 <code>consensus_score</code>，然后 sort descending、公布前 N（如 top 10）。</li>
+<li><strong>决定</strong>：只在“正样本 ≥ 1”提交时才公布；避免缺少数据时忘记。</li>
+</ul></li>
+<li><strong>可审计性</strong>：在 report.md 里保留每个 gene 的“投票”分项表格，及谁对哪个权重。这样议 does the test 固定。</li>
+</ul>
+<h3 id="doc6-报告report.py">6.5 报告（<code>report.py</code>）</h3>
+<ul>
+<li><strong>形式</strong>：每 run 生成 <code>outputs/report.md</code>（花园式 snapshot）可读</li>
+<li><strong>必须包含</strong>：
+<ul>
+<li>run 元数据：run id、日期、输入 gene 数、完成 join 的百分比</li>
+<li>10 行候选 table（gene symbol、最终排名、几个关键证据）</li>
+<li>每个证据分数的加权和（贡献表）</li>
+<li>数据校验警告（某 source 连接率、基因名 unresolved 列表）</li>
+</ul></li>
+<li><strong>建议</strong>：同时输出 <code>candidates_ranked.csv</code> 的完整全量文件（CSV，UTF-8）。</li>
+</ul>
+<hr />
+<h2 id="doc6-可行路径与验收门槛">7. 可行路径与验收门槛</h2>
+<h3 id="doc6-里程碑">7.1 里程碑</h3>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 46%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>已完成判据</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>candidates.csv 转 normalized.csv，≥90% 正确 HGNC ID</td>
+<td>归一化可行</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>evidence.parquet 生成，src 接口文件可 checksum</td>
+<td>数据对齐合格</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>有 clinGen/pLI/LOEUF/HPA join 字段，evidence 有 audit</td>
+<td>证据层稳定</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>candidates_ranked.csv + report.md 自动生成</td>
+<td>容许放行</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>小组评审（technique + 伦理）通过，签署决策</td>
+<td>发布到实验阶段</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc6-数据质量工位gitci">7.2 数据质量工位（GIT/ci）</h3>
+<ul>
+<li><strong>属性测试</strong>（快速试）：normalize 输入 a few known symbols → 应得 HGNC ID；若不能 → pipeline fail。</li>
+<li><strong>模式属性</strong>：所有 fabricate 的 <code>hgnc_id</code> 都应在 ClinGen/gnomAD 连接后 <strong>被保持</strong>；若某 source 缺失则 log；</li>
+<li><strong>处理-顺序的排序稳定性</strong>：run consensus 两次，结果应该相同（默认和 stable sort）。</li>
+<li><strong>审计输出</strong>：每 run 输出 <code>audit/run.json</code> 列：times、input、缺失比例、使用数据文件 MD5。</li>
+</ul>
+<h3 id="doc6-交付前检查清单team">7.3 交付前检查清单（team）</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><code>evidence.parquet</code> 已经存在，<strong>覆盖</strong> <code>hgnc_id</code> 到 <code>clinGen_hi_score</code> join；即 conn rate 已计算</label></li>
+<li><label><input type="checkbox" /><code>candidates_ranked.csv</code> 全量可下载，<strong>top 10</strong> 已完成小组评审</label></li>
+<li><label><input type="checkbox" /><code>report.md</code> 包含：每基因的加权投票细目； ClinGen / pLI 的统一截图</label></li>
+<li><label><input type="checkbox" />若使用 AI：docs/api 中有被约定的方式preserve</label></li>
+<li><label><input type="checkbox" />数据 checksums 数据已commit/repository 里 mobile 遗失不可能</label></li>
+<li><label><input type="checkbox" />伦理/peer review 已 sign-off</label></li>
+</ul>
+<hr />
+<h2 id="doc6-安装与启动本机服务器">8. 安装与启动（本机/服务器）</h2>
+<p>选择 uv（推荐，与沙盒一致）或 conda。</p>
+<div class="sourceCode" id="doc6-cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc6-cb4-1"><a href="#doc6-cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># uv 方案</span></span>
+<span id="doc6-cb4-2"><a href="#doc6-cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> gene_prioritization_pipeline</span>
+<span id="doc6-cb4-3"><a href="#doc6-cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--python</span> 3.11</span>
+<span id="doc6-cb4-4"><a href="#doc6-cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas pyarrow pyyaml numpy scipy requests</span></code></pre></div>
+<p>或 conda <code>environment.yml</code>：</p>
+<div class="sourceCode" id="doc6-cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc6-cb5-1"><a href="#doc6-cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> igem-gene-pipeline</span></span>
+<span id="doc6-cb5-2"><a href="#doc6-cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">channels</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">conda-forge</span><span class="kw">]</span></span>
+<span id="doc6-cb5-3"><a href="#doc6-cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dependencies</span><span class="kw">:</span></span>
+<span id="doc6-cb5-4"><a href="#doc6-cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> python=3.11</span></span>
+<span id="doc6-cb5-5"><a href="#doc6-cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> pandas</span></span>
+<span id="doc6-cb5-6"><a href="#doc6-cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> pyarrow</span></span>
+<span id="doc6-cb5-7"><a href="#doc6-cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> pyyaml</span></span>
+<span id="doc6-cb5-8"><a href="#doc6-cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> numpy</span></span>
+<span id="doc6-cb5-9"><a href="#doc6-cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> scipy</span></span>
+<span id="doc6-cb5-10"><a href="#doc6-cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> requests</span></span></code></pre></div>
+<p><strong>启动一次运行</strong>（推荐一个端点）：</p>
+<div class="sourceCode" id="doc6-cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc6-cb6-1"><a href="#doc6-cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="dt">\</span></span>
+<span id="doc6-cb6-2"><a href="#doc6-cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span> input/candidates.csv <span class="dt">\</span></span>
+<span id="doc6-cb6-3"><a href="#doc6-cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> data/normalized.csv <span class="dt">\</span></span>
+<span id="doc6-cb6-4"><a href="#doc6-cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span>
+<span id="doc6-cb6-5"><a href="#doc6-cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="dt">\</span></span>
+<span id="doc6-cb6-6"><a href="#doc6-cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--normalized</span> data/normalized.csv <span class="dt">\</span></span>
+<span id="doc6-cb6-7"><a href="#doc6-cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="doc6-cb6-8"><a href="#doc6-cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc6-cb6-9"><a href="#doc6-cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--audit</span> outputs/audit</span>
+<span id="doc6-cb6-10"><a href="#doc6-cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus <span class="dt">\</span></span>
+<span id="doc6-cb6-11"><a href="#doc6-cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evidence</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc6-cb6-12"><a href="#doc6-cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="dt">\</span></span>
+<span id="doc6-cb6-13"><a href="#doc6-cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="doc6-cb6-14"><a href="#doc6-cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs/candidates_ranked.csv <span class="dt">\</span></span>
+<span id="doc6-cb6-15"><a href="#doc6-cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--report</span> outputs/report.md</span></code></pre></div>
+<hr />
+<h2 id="doc6-团队运行约定">9. 团队运行约定</h2>
+<ol type="1">
+<li><strong>只修改 config 不改代码</strong>——所有阈值（pLI/LOEUF/HPA）从 <code>config/pipeline.yaml</code> 集中。</li>
+<li><strong>数据源 dummy files</strong>——数据不寄 git，但在 <code>data/</code> 提供 <code>sources.json</code> + 预期的 checksum；图例见模板。</li>
+<li><strong>每次 run 留 metadata</strong>——audit/run.json 记录，供决定追溯。</li>
+<li><strong>分布式/重复性</strong>：每次逐笔运行 update evidence 新生产；cache 不选用 public。</li>
+<li><strong>AI 扩展的边界</strong>——prescore 模块可选跑，跑不跑不影响 pipeline 流程。若为了对照在团队内部，把 AI 准备为一个 summaries <code>ai_scores.csv</code>。</li>
+</ol>
+<hr />
+<h2 id="doc6-风险与警示">10. 风险与警示</h2>
+<ul>
+<li><strong>不直接断定机制</strong>：ClinGen/pLI / AI 只是提名；最终必须让小鼠/斑马鱼/细胞模型验证（22q11.2 TBX1/16p11.2 KCTD13 的经典方法）。其他为“证明上调 recover”才是答案。</li>
+<li><strong>标签偏倚</strong>：HI 监督历史短暂，；HIPred、DeepGenePrior、DeepLOF 都强提醒了这种确证偏倚，请<strong>不要</strong>把 pLI/LOEUF/AI 当作真理。</li>
+<li><strong>预印本风险</strong>：DosaCNV 是预印本（bioRxiv，在检索日），故把它当“实验性增强”，不应影响 team 的主流程的决策。</li>
+</ul>
+<hr />
+<h2 id="doc6-附录-api-契约示例docsapiai_scores.md">附录 — API 契约示例（<code>docs/api/ai_scores.md</code>）</h2>
+<p>管道对 AI 是“可弃”： - <strong>输入</strong>（若运行 AI）：读取 <code>evidence.parquet</code>，让一个端口（可运行 DeepLOF/DosaCNV/DeepGenePrior）写出一个 CSV：<code>ai_scores.csv</code>。 - <strong>契约</strong>： - column: <code>hgnc_id</code>, <code>DeepLOF_score</code>, <code>DosaCNV_score</code>, <code>DeepGenePrior_score</code> - 缺失为空，或者用 NaN - 每次从 pipeline 启动后读这个文件；当缺失时该基因在该 weight 中 = 0 - <strong>说明</strong>：任何应公司 microservice，可以在内部对 cache 进行 get/set，但从 pipeline 视角只读 CSV。pipeline 不负责实际模型的运行环境。</p>
+<hr />
+</details><details id="file7"><summary>7. AI辅助层接入_DeepLOF_结果报告_2026-09-06.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc7-ai-辅助层接入deeplof2026-09-06">AI 辅助层接入：DeepLOF（2026-09-06）</h1>
+<blockquote>
+<p><strong>历史操作说明（标注于 2026-09-24，CR-042）</strong>：本文版本/时间为 2026-09-06 DeepLOF 接入记录（未标版本号）。设计、实验和报告正文保留，适用于理解当时过程，不作为当前安装、启动或验收指令；旧 uv 临时安装和执行命令仅为历史记录，请勿直接沿用。当前安装以<a href="../../README.md">仓库 README</a>为准，管线操作见<a href="../../03_pipeline/README.md">管线 README</a>与<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>，网页启动见<a href="../../05_virtual_cell/README.md">工具 README</a>。历史测试数字不代表当前版本。</p>
+</blockquote>
+<blockquote>
+<p>配套：<code>docs/api/ai_scores.md</code>（契约）、<code>src/ai_scores.py</code>（转换脚本）、<code>src/consensus_v2.py --ai-scores</code> 现状：Layer 2（AI 层）从”搁置”变为”已接入 DeepLOF”，DosaCNV/DeepGenePrior 仍留接口未启用。</p>
+</blockquote>
+<hr />
+<h2 id="doc7-一deeplof-分数来源官方可复现">一、DeepLOF 分数来源（官方、可复现）</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>论文</td>
+<td>LaPolice TM &amp; Huang YF. BMC Bioinformatics 24:347 (2023)</td>
+</tr>
+<tr>
+<td>分数</td>
+<td><strong>Additional file 3 / Data File 2 — Scores from the nonlinear DeepLOF model</strong>（figshare 24159504，CC BY 4.0）</td>
+</tr>
+<tr>
+<td>文件</td>
+<td><code>12859_2023_5481_MOESM3_ESM.csv</code>（19197 基因，<code>ensembl, gene_symbol, DeepLOF_score</code>）</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td><code>4f7a9c6520b840db677963cfe82d3e34</code>（与官方发布一致，脚本内校验）</td>
+</tr>
+<tr>
+<td>转换</td>
+<td><code>src/ai_scores.py deeplof</code>：gene_symbol → HGNC ID，输出 <code>outputs/ai_scores.csv</code>（hgnc_id, DeepLOF_score），审计写 <code>audit/ai_scores_deeplof_*.json</code></td>
+</tr>
+<tr>
+<td>映射率</td>
+<td>18126/19197 = 94.4% 映射到 HGNC ID（18060 唯一基因入表）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc7-复现命令">复现命令</h3>
+<div class="sourceCode" id="doc7-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc7-cb1-1"><a href="#doc7-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="doc7-cb1-2"><a href="#doc7-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sL</span> <span class="at">-o</span> data/DeepLOF_scores.csv https://ndownloader.figshare.com/files/42390159</span>
+<span id="doc7-cb1-3"><a href="#doc7-cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run <span class="at">--with</span> pandas python <span class="at">-m</span> src.ai_scores deeplof <span class="dt">\</span></span>
+<span id="doc7-cb1-4"><a href="#doc7-cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scores</span> data/DeepLOF_scores.csv <span class="at">--aliases</span> data/hgnc_aliases.tsv <span class="at">--out</span> outputs/ai_scores.csv</span>
+<span id="doc7-cb1-5"><a href="#doc7-cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run <span class="at">--with</span> pandas <span class="at">--with</span> numpy <span class="at">--with</span> pyyaml <span class="at">--with</span> pyarrow python <span class="at">-m</span> src.consensus_v2 <span class="dt">\</span></span>
+<span id="doc7-cb1-6"><a href="#doc7-cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evidence</span> outputs/evidence.parquet <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="dt">\</span></span>
+<span id="doc7-cb1-7"><a href="#doc7-cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--config</span> config/pipeline.yaml <span class="at">--out</span> outputs/candidates_ranked_v2_ai.csv <span class="at">--report</span> outputs/report_v2_ai.md</span></code></pre></div>
+<hr />
+<h2 id="doc7-二wbs-35-候选的-deeplof-覆盖">二、WBS 35 候选的 DeepLOF 覆盖</h2>
+<ul>
+<li>覆盖 <strong>28/35 = 80%</strong>；</li>
+<li><strong>缺失 7 个：GTF2I、TYW1B、SPDYE8/9/10/11、ENSG00000289346</strong>。</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>GTF2I 缺失是官方数据盲区</strong>：19197 行评分里没有 <code>ENSG00000263001</code>（GTF2I），比对 GENCODE v44 确认其 Ensembl ID 无误，判定为 DeepLOF 训练时该基因部分特征缺失被过滤。<strong>AI 工具也有盲区，正说明管线不能只依赖单一方法</strong>。GTF2I 在本管线仍由 gnomAD 强约束支撑（pLI 0.996 / LOEUF 0.270），不受影响。</p>
+</blockquote>
+<hr />
+<h2 id="doc7-三三个版本排名对比35-基因">三、三个版本排名对比（35 基因）</h2>
+<table>
+<thead>
+<tr>
+<th>基因</th>
+<th>无 AI (rank)</th>
+<th>有 AI (rank)</th>
+<th><strong>有 AI (raw) ✅</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BAZ1B</td>
+<td>#10</td>
+<td>#3</td>
+<td><strong>#1</strong></td>
+</tr>
+<tr>
+<td>CLIP2</td>
+<td>#11</td>
+<td>#4</td>
+<td><strong>#2</strong></td>
+</tr>
+<tr>
+<td>STX1A</td>
+<td>#12</td>
+<td>#6</td>
+<td><strong>#3</strong></td>
+</tr>
+<tr>
+<td>ELN</td>
+<td>#9</td>
+<td>#5</td>
+<td><strong>#4</strong></td>
+</tr>
+<tr>
+<td>VPS37D</td>
+<td>#7</td>
+<td>#13</td>
+<td><strong>#5</strong></td>
+</tr>
+<tr>
+<td>FZD9</td>
+<td>#1（伪影）</td>
+<td>#1（伪影）</td>
+<td>#6</td>
+</tr>
+<tr>
+<td>LIMK1</td>
+<td>#20</td>
+<td>#19</td>
+<td>#7</td>
+</tr>
+<tr>
+<td>FKBP6</td>
+<td>#2（伪影）</td>
+<td>#2（伪影）</td>
+<td>#8</td>
+</tr>
+<tr>
+<td>EIF4H</td>
+<td>#14</td>
+<td>#14</td>
+<td>#9</td>
+</tr>
+<tr>
+<td>GTF2IRD1</td>
+<td>#21</td>
+<td>#21</td>
+<td>#11</td>
+</tr>
+<tr>
+<td>GTF2I</td>
+<td>#21</td>
+<td>#25</td>
+<td>#14</td>
+</tr>
+<tr>
+<td>GTF2IRD2</td>
+<td>#35</td>
+<td>#35</td>
+<td>#35</td>
+</tr>
+<tr>
+<td>加性 vs Borda Spearman ρ</td>
+<td>0.23</td>
+<td>0.36</td>
+<td><strong>0.71</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>三列分别说明</strong>： 1. <strong>无 AI + rank</strong>：FZD9/FKBP6 因 pLI 极低被 rank 方向映射抬到第一（伪影）；GTF2I 被压到 21。 2. <strong>有 AI + rank</strong>：DeepLOF 把 BAZ1B(0.94)/CLIP2(0.88)/STX1A(0.89)/ELN 拉上来，但 FZD9/FKBP6 伪影仍在，GTF2I 因无 AI 分数反而微降。 3. <strong>有 AI + raw + HPA 降权</strong>：真实约束信号主导 —— BAZ1B&gt;&gt;CLIP2&gt;STX1A&gt;ELN&gt;VPS37D，FZD9/FKBP6 回落到 #6/#8，双排序一致性 ρ 0.71（显著改善）。</p>
+<hr />
+<h2 id="doc7-四deeplof-的实际贡献客观评估">四、DeepLOF 的实际贡献（客观评估）</h2>
+<p><strong>正面</strong>： - 与 gnomAD 约束<strong>高度一致、互为独立确认</strong>：BAZ1B(0.94)、STX1A(0.89)、LIMK1(0.88)、CLIP2(0.88) 均高；——之前证据层的”第一梯队”判断被第三个独立方法背书。 - 识别出 FZD9/FKBP6 的 DeepLOF 分数仅 0.51/0.50（中等），<strong>暴露 rank 排名第一是伪影</strong>——AI 分数提供了校正锚点。 - 为 gnomAD 缺数据的基因补充信号：BUD23（无 gnomAD，DeepLOF 0.52）、POM121（pLI 0.058，DeepLOF 0.51）。</p>
+<p><strong>局限</strong>： - 权重仅 1（&lt; ClinGen 3 / gnomAD 2）——按设计避免与其共享的 gnomAD 信号重复计权； - 80% 覆盖，GTL2I 等关键基因不在其中； - 对 WBS 这类”ClinGen + gnomAD 已强”的基因增益有限（其独立性价值在 ClinGen/gnomAD 都弱的基因上有待更多案例验证）。</p>
+<hr />
+<h2 id="doc7-五结论与后续">五、结论与后续</h2>
+<ol type="1">
+<li><strong>DeepLOF 已正式接入 L1 管线 AI 层</strong>，整个链路变为：CNV 工作流 → normalize → merge_evidence（+DeepLOF）→ consensus_v2。</li>
+<li>配置建议收敛到 <strong>normalize: raw、HPA per-organ -1/cap -2、AI 权重 1</strong>（报告附 <code>report_v2_ai_raw.md</code> 为最终基线）。</li>
+<li>遗留可优化项：
+<ul>
+<li>ClinGen score=0 目前被当作负分（-0.5w）；0 语义是”无证据”，与”未评审”更接近，可考虑按缺失处理（避免误罚 GTF2I/LIMK1 等）；</li>
+<li>补 HPA 脑表达列；</li>
+<li>DosaCNV/DeepGenePrior 接口已预留，需时同样走 <code>src/ai_scores.py</code> 接入流。</li>
+</ul></li>
+</ol>
+<p><em>产物：<code>outputs/ai_scores.csv</code> · <code>outputs/candidates_ranked_v2_ai_raw.csv</code>（最终）· <code>outputs/report_v2_ai_raw.md</code> · <code>outputs/report_v2_ai.md</code>（rank 对照）· <code>outputs/audit/ai_scores_deeplof_*.json</code></em></p>
+</details><details id="file8"><summary>8. 架构设计_v2_通用微缺失主效基因筛选管线.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc8-染色体微缺失主效基因筛选管线-v2-架构设计">染色体微缺失主效基因筛选管线 — v2 架构设计</h1>
+<blockquote>
+<p><strong>2026-09-25 整理注记：</strong> 本文中的旧架构、<code>config/sources.json</code> 与 uv 命令只用于历史参考。数据来源已整合至 <a href="../../03_pipeline/README.md#data-sources">README 数据来源</a>，旧登记的占位校验和不表示完成核验；当前环境只按 <a href="../../03_pipeline/README.md">README 唯一安装入口</a>建立，旧锁文件已删除。</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>本文已被取代（2026-09-14）</strong>：本文是<strong>设计意图</strong>文档，其中约 9 项设计<strong>从未实现</strong>（<code>extract_genes.py</code>、<code>intervals.yaml</code>、<code>phenotype_grouper.py</code>、五维证据面板、HPA 双重角色标签等），而 v2.1/v2.2 实际做的改动也<strong>未记录于此</strong>。 实施现状请看 <strong><code>架构设计_v2.2_通用微缺失主效基因筛选管线.md</code></strong>（逐节标注 ✅已实现 / ⚠️部分实现 / ❌未实现，含未实现清单与待办）。 本文保留作设计史记录，不删除。</p>
+</blockquote>
+<blockquote>
+<p>版本：v2.0 · 日期：2026-09-07 替代：<code>工程化指导书_微缺失主效基因筛选管线.md</code> (v1.0, 2025-09-01) 设计动机：v1 架构的隐含假设（scRNA-seq 数据存在 + 多基因多表型需要排序）被 WHS 案例证伪。v2 面向微缺失疾病的完整谱系，从”主效基因已确定”到”全新 CNV/未知区间”均能工作。 关联项目日志：<code>PROJECT_LOG.md</code> 条目 #4、#5</p>
+</blockquote>
+<hr />
+<h2 id="doc8-设计原则变更">1. 设计原则变更</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>v1 (2025-09) 隐含假设</th>
+<th>v2 (2026-09) 设计原则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>scRNA-seq 是前提条件</td>
+<td>scRNA-seq 是<strong>可选增强层</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>所有基因混排一个排名</td>
+<td><strong>按表型分组</strong>，组内排序</td>
+</tr>
+<tr>
+<td>3</td>
+<td>管线输出”唯一的正确排序”</td>
+<td>输出<strong>证据分层</strong>：确认 → 推测 → 探索性</td>
+</tr>
+<tr>
+<td>4</td>
+<td>管线只处理 WS 一种病</td>
+<td>通用架构，适应从 WHS 到全新 CNV 的全谱系</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CNV 工作流单独存在</td>
+<td>基因提取独立化：缺失区间坐标 + GTF → 基因列表（<strong>无 scRNA-seq 依赖</strong>）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc8-疾病谱系与管线模式">2. 疾病谱系与管线模式</h2>
+<pre><code>数据丰富度 →
+
+极低                      中等                      高
+│                         │                         │
+WHS                       22q11.2                    WS / 16p11.2
+(NSD2 已确认)             (TBX1 为主但有争议)       (多基因/多表型/有 scRNA-seq)
+│                         │                         │
+▼                         ▼                         ▼
+Mode A: 验证模式          Mode B: 增强筛选          Mode C: 全栈筛选
+输入: 区间 + 已知基因     输入: 区间 + 正对照       输入: 区间 + scRNA-seq
+输出: 验证报告            输出: 排序 + 验证         输出: 分层排序 + 表型分组</code></pre>
+<hr />
+<h2 id="doc8-总体架构">3. 总体架构</h2>
+<pre><code>                          ┌─────────────────────────┐
+                          │  输入（唯一必需）         │
+                          │  缺失区间坐标 + 基因组版本 │
+                          └───────────┬─────────────┘
+                                      │
+                    ┌─────────────────┼─────────────────┐
+                    ▼                 ▼                  ▼
+          ┌─────────────────┐  ┌─────────────┐  ┌──────────────────┐
+          │ MODULE A        │  │ 已知主效基因 │  │ scRNA-seq 数据    │
+          │ 区间基因提取     │  │ (可选)       │  │ (可选增强层)      │
+          │ GTF+坐标→基因列表│  │ →作为正对照  │  │ →表达QC+组织特异性 │
+          └────────┬────────┘  └──────┬──────┘  └────────┬─────────┘
+                   │                 │                   │
+                   └────────┬────────┘                   │
+                            ▼                            │
+                   ┌─────────────────────────────────────┤
+                   │  输出: candidates.csv                │
+                   │  列: hgnc_id, symbol, source,        │
+                   │  deletion_id, mode (known/auto)      │
+                   └────────────────┬────────────────────┘
+                                    │
+                    ┌───────────────┼───────────────┐
+                    ▼               ▼               ▼
+          ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+          │ L0: 归一化    │  │ L1: 证据层    │  │ 可选: scRNA-  │
+          │ symbol→HGNC   │  │ ClinGen       │  │ seq 增强      │
+          │ ID            │  │ gnomAD pLI/   │  │ pct_expr      │
+          │               │  │ LOEUF         │  │ log2FC        │
+          │               │  │ HPA 多组织    │  │ cell-type QCs │
+          └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
+                 │                 │                  │
+                 └─────────┬───────┘──────────────────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │ L2: AI层     │
+                    │ (可选插件)    │
+                    │ DeepLOF      │
+                    │ DosaCNV      │
+                    │ DeepGenePrior│
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌──────────────────────────────┐
+                    │ L3: 多维度证据整合            │
+                    │                              │
+                    │ ┌──────────────────────────┐ │
+                    │ │ 维度1: 遗传学剂量敏感性   │ │
+                    │ │ ClinGen HI + gnomAD 约束  │ │
+                    │ ├──────────────────────────┤ │
+                    │ │ 维度2: 表达可行性         │ │
+                    │ │ HPA 靶组织表达 + scRNA-seq│ │
+                    │ │ QC (若有)                 │ │
+                    │ ├──────────────────────────┤ │
+                    │ │ 维度3: 安全性            │ │
+                    │ │ HPA 非靶器官表达警示      │ │
+                    │ ├──────────────────────────┤ │
+                    │ │ 维度4: AI 预测           │ │
+                    │ │ DeepLOF 等 (若有)         │ │
+                    │ ├──────────────────────────┤ │
+                    │ │ 维度5: 文献/表型关联     │ │
+                    │ │ HPO / OMIM / ClinGen     │ │
+                    │ │ 已知表型映射             │ │
+                    │ └──────────────────────────┘ │
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────┼──────────────┐
+                    ▼              ▼              ▼
+          ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐
+          │ Mode A 输出   │ │ Mode B 输出   │ │ Mode C 输出       │
+          │ 验证报告      │ │ 排序+验证     │ │ 分层排序+表型分组 │
+          │ 置信度: 高    │ │ 置信度: 中    │ │ 置信度: 标注      │
+          └──────────────┘ └──────────────┘ └──────────────────┘</code></pre>
+<hr />
+<h2 id="doc8-核心模块设计">4. 核心模块设计</h2>
+<h3 id="doc8-module-a-区间基因提取独立入口不依赖-scrna-seq">4.1 Module A: 区间基因提取（独立入口，不依赖 scRNA-seq）</h3>
+<p><strong>职责</strong>：从缺失区间坐标直接产出基因列表</p>
+<pre><code>输入: 缺失区间坐标 (chr, start, end, genome_build)
+      + GENCODE GTF 注释文件
+      + 已知主效基因列表（可选）
+      + 已知表型映射（可选，HPO/OMIM ID）
+
+输出: candidates.csv
+  列: hgnc_id, symbol, source (known_interval|known_driver|auto_segment),
+       deletion_id, associated_phenotype (若有)
+
+验证: 区间坐标与 GTF 基因组版本一致
+      区间基因数 ≥ 1
+      已知主效基因都在区间内（若有）</code></pre>
+<p><strong>入口</strong>（新增 CLI 子命令）：</p>
+<div class="sourceCode" id="doc8-cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc8-cb4-1"><a href="#doc8-cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode A: 仅区间坐标</span></span>
+<span id="doc8-cb4-2"><a href="#doc8-cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.extract_genes <span class="dt">\</span></span>
+<span id="doc8-cb4-3"><a href="#doc8-cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intervals</span> config/intervals.yaml <span class="dt">\</span></span>
+<span id="doc8-cb4-4"><a href="#doc8-cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--gtf</span> data/gencode.v44.basic.annotation.gtf.gz <span class="dt">\</span></span>
+<span id="doc8-cb4-5"><a href="#doc8-cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> input/candidates.csv</span>
+<span id="doc8-cb4-6"><a href="#doc8-cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb4-7"><a href="#doc8-cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode A + 已知主效基因</span></span>
+<span id="doc8-cb4-8"><a href="#doc8-cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.extract_genes <span class="dt">\</span></span>
+<span id="doc8-cb4-9"><a href="#doc8-cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intervals</span> config/intervals.yaml <span class="dt">\</span></span>
+<span id="doc8-cb4-10"><a href="#doc8-cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--gtf</span> data/gencode.v44.basic.annotation.gtf.gz <span class="dt">\</span></span>
+<span id="doc8-cb4-11"><a href="#doc8-cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-drivers</span> config/known_drivers.yaml <span class="dt">\</span></span>
+<span id="doc8-cb4-12"><a href="#doc8-cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> input/candidates.csv</span>
+<span id="doc8-cb4-13"><a href="#doc8-cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb4-14"><a href="#doc8-cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Mode C: 区间坐标 + scRNA-seq 增强（现有 extract-genes 的升级版）</span></span>
+<span id="doc8-cb4-15"><a href="#doc8-cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.extract_genes <span class="dt">\</span></span>
+<span id="doc8-cb4-16"><a href="#doc8-cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intervals</span> config/intervals.yaml <span class="dt">\</span></span>
+<span id="doc8-cb4-17"><a href="#doc8-cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--gtf</span> data/gencode.v44.basic.annotation.gtf.gz <span class="dt">\</span></span>
+<span id="doc8-cb4-18"><a href="#doc8-cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scrna-h5ad</span> outputs/cnv/cnv_input.h5ad <span class="dt">\</span></span>
+<span id="doc8-cb4-19"><a href="#doc8-cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> input/candidates.csv</span></code></pre></div>
+<p><strong>配置文件示例</strong>（<code>config/intervals.yaml</code>）：</p>
+<div class="sourceCode" id="doc8-cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc8-cb5-1"><a href="#doc8-cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 缺失区间注册表</span></span>
+<span id="doc8-cb5-2"><a href="#doc8-cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">intervals</span><span class="kw">:</span></span>
+<span id="doc8-cb5-3"><a href="#doc8-cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">whs_4p16.3</span><span class="kw">:</span></span>
+<span id="doc8-cb5-4"><a href="#doc8-cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">chr</span><span class="kw">:</span><span class="at"> chr4</span></span>
+<span id="doc8-cb5-5"><a href="#doc8-cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">start</span><span class="kw">:</span><span class="at"> </span><span class="dv">1800000</span></span>
+<span id="doc8-cb5-6"><a href="#doc8-cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">end</span><span class="kw">:</span><span class="at"> </span><span class="dv">3000000</span></span>
+<span id="doc8-cb5-7"><a href="#doc8-cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">genome_build</span><span class="kw">:</span><span class="at"> GRCh38</span></span>
+<span id="doc8-cb5-8"><a href="#doc8-cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">known_drivers</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">NSD2</span><span class="kw">]</span><span class="co">      # 已知主效基因（可选）</span></span>
+<span id="doc8-cb5-9"><a href="#doc8-cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">phenotypes</span><span class="kw">:</span><span class="co">                 # 已知表型关联（可选）</span></span>
+<span id="doc8-cb5-10"><a href="#doc8-cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001249</span><span class="co">     # 智力障碍</span></span>
+<span id="doc8-cb5-11"><a href="#doc8-cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001510</span><span class="co">     # 生长迟缓</span></span>
+<span id="doc8-cb5-12"><a href="#doc8-cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001250</span><span class="co">     # 癫痫</span></span>
+<span id="doc8-cb5-13"><a href="#doc8-cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">note</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;WHS 核心区域 (4p16.3); 约 165-200 kb WHSCR&quot;</span></span>
+<span id="doc8-cb5-14"><a href="#doc8-cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">source</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;DECIPHER/ClinGen/OMIM&quot;</span></span>
+<span id="doc8-cb5-15"><a href="#doc8-cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb5-16"><a href="#doc8-cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">williams_7q11.23</span><span class="kw">:</span></span>
+<span id="doc8-cb5-17"><a href="#doc8-cb5-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">chr</span><span class="kw">:</span><span class="at"> chr7</span></span>
+<span id="doc8-cb5-18"><a href="#doc8-cb5-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">start</span><span class="kw">:</span><span class="at"> </span><span class="dv">72700000</span></span>
+<span id="doc8-cb5-19"><a href="#doc8-cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">end</span><span class="kw">:</span><span class="at"> </span><span class="dv">74800000</span></span>
+<span id="doc8-cb5-20"><a href="#doc8-cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">genome_build</span><span class="kw">:</span><span class="at"> GRCh38</span></span>
+<span id="doc8-cb5-21"><a href="#doc8-cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">known_drivers</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">ELN</span><span class="kw">,</span><span class="at"> GTF2I</span><span class="kw">,</span><span class="at"> LIMK1</span><span class="kw">,</span><span class="at"> BAZ1B</span><span class="kw">]</span></span>
+<span id="doc8-cb5-22"><a href="#doc8-cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">phenotypes</span><span class="kw">:</span></span>
+<span id="doc8-cb5-23"><a href="#doc8-cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001635</span><span class="co">     # 主动脉瓣上狭窄 (ELN)</span></span>
+<span id="doc8-cb5-24"><a href="#doc8-cb5-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0000752</span><span class="co">     # 过度社交行为 (GTF2I)</span></span>
+<span id="doc8-cb5-25"><a href="#doc8-cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001328</span><span class="co">     # 特定学习障碍</span></span>
+<span id="doc8-cb5-26"><a href="#doc8-cb5-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">note</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;WBS 经典 ~1.55Mb 缺失&quot;</span></span>
+<span id="doc8-cb5-27"><a href="#doc8-cb5-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">source</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;DECIPHER/ClinGen&quot;</span></span>
+<span id="doc8-cb5-28"><a href="#doc8-cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb5-29"><a href="#doc8-cb5-29" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">22q11.2</span><span class="kw">:</span></span>
+<span id="doc8-cb5-30"><a href="#doc8-cb5-30" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">chr</span><span class="kw">:</span><span class="at"> chr22</span></span>
+<span id="doc8-cb5-31"><a href="#doc8-cb5-31" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">start</span><span class="kw">:</span><span class="at"> </span><span class="dv">18600000</span></span>
+<span id="doc8-cb5-32"><a href="#doc8-cb5-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">end</span><span class="kw">:</span><span class="at"> </span><span class="dv">21800000</span></span>
+<span id="doc8-cb5-33"><a href="#doc8-cb5-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">genome_build</span><span class="kw">:</span><span class="at"> GRCh38</span></span>
+<span id="doc8-cb5-34"><a href="#doc8-cb5-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">known_drivers</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">TBX1</span><span class="kw">]</span></span>
+<span id="doc8-cb5-35"><a href="#doc8-cb5-35" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">phenotypes</span><span class="kw">:</span></span>
+<span id="doc8-cb5-36"><a href="#doc8-cb5-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001635</span><span class="co">     # 心脏畸形 (TBX1)</span></span>
+<span id="doc8-cb5-37"><a href="#doc8-cb5-37" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0000729</span><span class="co">     # 腭裂</span></span>
+<span id="doc8-cb5-38"><a href="#doc8-cb5-38" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">hpo_id</span><span class="kw">:</span><span class="at"> HP:0001249</span><span class="co">     # 智力障碍</span></span>
+<span id="doc8-cb5-39"><a href="#doc8-cb5-39" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">note</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;22q11.2DS 典型 ~3Mb 缺失&quot;</span></span>
+<span id="doc8-cb5-40"><a href="#doc8-cb5-40" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">source</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;DECIPHER/ClinGen&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="doc8-l1-证据层保持增强-hpa-多组织逻辑">4.2 L1: 证据层（保持，增强 HPA 多组织逻辑）</h3>
+<p><strong>职责</strong>：ClinGen + gnomAD + HPA 多组织表达 → evidence.parquet</p>
+<p><strong>v2 增强</strong>：HPA 从”惩罚层”改为”双重角色”</p>
+<div class="sourceCode" id="doc8-cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc8-cb6-1"><a href="#doc8-cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hpa_config</span><span class="kw">:</span></span>
+<span id="doc8-cb6-2"><a href="#doc8-cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">  # 角色1: 靶组织可行性 (正向信号)</span></span>
+<span id="doc8-cb6-3"><a href="#doc8-cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">target_tissues</span><span class="kw">:</span></span>
+<span id="doc8-cb6-4"><a href="#doc8-cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">brain</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">weight</span><span class="kw">:</span><span class="at"> </span><span class="dv">+1</span><span class="kw">,</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;脑表型可行性&quot;</span><span class="kw">}</span></span>
+<span id="doc8-cb6-5"><a href="#doc8-cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cardiovascular</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">weight</span><span class="kw">:</span><span class="at"> </span><span class="dv">+1</span><span class="kw">,</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;心血管表型可行性&quot;</span><span class="kw">}</span></span>
+<span id="doc8-cb6-6"><a href="#doc8-cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">neuromuscular</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">weight</span><span class="kw">:</span><span class="at"> </span><span class="dv">+1</span><span class="kw">,</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;神经肌肉表型可行性&quot;</span><span class="kw">}</span></span>
+<span id="doc8-cb6-7"><a href="#doc8-cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb6-8"><a href="#doc8-cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">  # 角色2: 非靶器官安全性警告 (负向标记，不扣分)</span></span>
+<span id="doc8-cb6-9"><a href="#doc8-cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">safety_organs</span><span class="kw">:</span></span>
+<span id="doc8-cb6-10"><a href="#doc8-cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">liver</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">threshold_log</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.0</span><span class="kw">,</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;⚠️ 肝脏表达: AAV 脱靶风险&quot;</span><span class="kw">}</span></span>
+<span id="doc8-cb6-11"><a href="#doc8-cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">kidney</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">threshold_log</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.0</span><span class="kw">,</span><span class="at"> </span><span class="fu">label</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;⚠️ 肾脏表达: AAV 脱靶风险&quot;</span><span class="kw">}</span></span>
+<span id="doc8-cb6-12"><a href="#doc8-cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb6-13"><a href="#doc8-cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">  # 全局安全门: 基因在 ALL 组织中都不表达 → 直接标记 &quot;no_expression&quot;</span></span>
+<span id="doc8-cb6-14"><a href="#doc8-cb6-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">global_min_expr_threshold</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span></code></pre></div>
+<p><strong>改动</strong>：HPA 不再在 L3 consensus 中扣分。改为在 L1 阶段为每个基因标注： - <code>hpa_target_support</code>: 在靶组织中有表达 → “supported” / “not_detected” / “unknown” - <code>hpa_safety_flag</code>: 在安全性器官中高表达 → “clean” / “warning” / “critical”</p>
+<hr />
+<h3 id="doc8-l2-ai-层保持不变">4.3 L2: AI 层（保持不变）</h3>
+<p>DeepLOF 已接入；DosaCNV/DeepGenePrior 留接口。</p>
+<hr />
+<h3 id="doc8-l3-多维度证据整合重新设计">4.4 L3: 多维度证据整合（重新设计）</h3>
+<p><strong>v2 不再产出单一的 consensus_score 排名。</strong> 改为<strong>五维证据面板</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>内容</th>
+<th>数据来源</th>
+<th>对最终输出的贡献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>遗传学剂量敏感性</strong></td>
+<td>ClinGen HI 评级 + gnomAD pLI/LOEUF</td>
+<td>内置</td>
+<td>核心排序依据</td>
+</tr>
+<tr>
+<td><strong>表达可行性</strong></td>
+<td>HPA 靶组织表达 + scRNA-seq QC（若有）</td>
+<td>内置 + 可选</td>
+<td>硬过滤（不表达=排除）</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>HPA 非靶器官表达 + 基因长度 + 已知毒性</td>
+<td>内置 + 文献</td>
+<td>安全标记（不扣分，但必须有）</td>
+</tr>
+<tr>
+<td><strong>AI 预测</strong></td>
+<td>DeepLOF 等 LOF 不耐受评分</td>
+<td>可选</td>
+<td>软加权（低权重，仅在遗传学证据弱时加成）</td>
+</tr>
+<tr>
+<td><strong>文献/表型关联</strong></td>
+<td>HPO/OMIM/ClinGen 已知表型映射</td>
+<td>内置</td>
+<td>表型分组依据，不直接加权</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出格式变更</strong>：</p>
+<p><strong>v1 输出</strong>：</p>
+<pre><code>rank | gene   | consensus_score | pLI   | ...
+1    | FZD9   | 2.34            | 0.002 | ...</code></pre>
+<p><strong>v2 输出</strong>：</p>
+<pre><code>### 神经发育表型
+| rank | gene   | 剂量敏感性 | 表达可行性 | 安全性 | AI 支持 | 证据等级 |
+|------|--------|-----------|-----------|--------|---------|---------|
+| 1    | NSD2   | 🟢 HI=3, pLI=1.0 | 🟢 brain=15 TPM | clean | na | ★★★ 确认 |
+| 2    | NELFA  | 🟡 pLI=0.7 | 🟡 brain=8 TPM | clean | na | ★★☆ 推测 |
+
+### 心血管表型
+| rank | gene   | 剂量敏感性 | 表达可行性 | 安全性 | AI 支持 | 证据等级 |
+|------|--------|-----------|-----------|--------|---------|---------|
+| 1    | ELN    | 🟢 ClinGen HI=3 | 🟡 cardio=5 TPM | ⚠️ liver | na | ★★★ 确认 |
+
+### 未知/探索性
+| rank | gene   | ... |
+|------|--------|-----|
+| ...</code></pre>
+<p><strong>证据等级定义</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>等级</th>
+<th>含义</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★ 确认</td>
+<td>高置信主效基因</td>
+<td>≥1 人工金标准确认（ClinGen HI ≥ 2 或文献共识）+ gnomAD 强约束 + 靶组织表达</td>
+</tr>
+<tr>
+<td>★★☆ 推测</td>
+<td>有证据但未确认</td>
+<td>gnomAD 强约束 + 靶组织表达，但无人工确认</td>
+</tr>
+<tr>
+<td>★☆☆ 探索性</td>
+<td>弱证据</td>
+<td>仅一项证据或纯 AI 预测</td>
+</tr>
+<tr>
+<td>⚠️ 需验证</td>
+<td>有争议</td>
+<td>文献矛盾或无 gnomAD 覆盖</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="doc8-表型分组新增维度">4.5 表型分组（新增维度）</h3>
+<p><strong>职责</strong>：根据 HPO/ClinGen/OMIM 关联，将基因按疾病表型分组，组内独立排序</p>
+<p><strong>实现</strong>：<code>config/intervals.yaml</code> 中每区间注册已知 HPO 表型 → 基因层面从 ClinGen/HPO 映射补充</p>
+<p><strong>意义</strong>： - ELN（心血管）和 GTF2I（神经）不在同一框架下比较 - NSD2（多系统多效）会出现在”神经发育”和”生长”两个表型组中，标记为”多效基因” - 用户根据自己关注的具体表型，选择对应的组阅读</p>
+<hr />
+<h2 id="doc8-目录结构v2">5. 目录结构（v2）</h2>
+<pre><code>igem_gene_pipeline/
+├── README.md
+├── PROJECT_LOG.md                # 项目日志（设计决策/转折点/里程碑）
+├── config/
+│   ├── pipeline.yaml              # 证据层阈值/权重
+│   ├── intervals.yaml             # 🆕 缺失区间注册表
+│   ├── known_drivers.yaml         # 🆕 已知主效基因（可选）
+│   ├── sources.json               # 数据源 URL/checksum
+│   └── cnv.yaml                   # CNV 工作流配置（仅 Mode C 使用）
+├── data/                          # 数据本体（git 不收录）
+│   ├── clinGen_gene_curation_list_GRCh38.tsv
+│   ├── gnomad_constraint.tsv
+│   ├── hpa_rna_expression_consensus.tsv
+│   ├── hgnc_aliases.tsv
+│   ├── gencode.v44.basic.annotation.gtf.gz
+│   └── scrna/                     # scRNA-seq 原始数据（如有）
+├── input/
+│   └── candidates.csv              # 标准输入
+├── src/
+│   ├── extract_genes.py            # 🆕 Module A：区间→基因（无 scRNA-seq 依赖）
+│   ├── normalize.py                # L0：符号→HGNC ID
+│   ├── merge_evidence.py           # L1：ClinGen + gnomAD + HPA
+│   ├── ai_scores.py                # L2：AI 预计算
+│   ├── consensus_v2.py             # L3：多维度证据整合
+│   ├── report.py                   # 输出报告生成
+│   ├── phenotype_grouper.py        # 🆕 表型分组逻辑
+│   ├── cnv/                        # CNV 工作流（仅 Mode C）
+│   │   ├── workflow.py
+│   │   ├── infercnv.py
+│   │   ├── segments.py
+│   │   ├── gene_order.py
+│   │   └── expression_qc.py
+│   └── utils/
+│       ├── io.py
+│       └── validation.py
+├── tests/
+│   ├── test_extract_genes.py       # 🆕
+│   ├── test_normalize.py
+│   ├── test_consensus.py
+│   ├── test_phenotype_grouper.py   # 🆕
+│   └── test_cnv/
+├── outputs/
+│   ├── candidates.csv
+│   ├── evidence.parquet
+│   ├── candidates_ranked.csv       # 全基因排序（保留兼容）
+│   ├── candidates_by_phenotype/    # 🆕 按表型分组的排序
+│   ├── report.md
+│   └── audit/
+└── docs/
+    ├── decisions/
+    ├── api/
+    └── architecture_v2.md          # 本文档</code></pre>
+<hr />
+<h2 id="doc8-四种模式的使用路径">6. 四种模式的使用路径</h2>
+<h3 id="doc8-mode-a-验证模式whsnsd2-型">Mode A: 验证模式（WHS/NSD2 型）</h3>
+<div class="sourceCode" id="doc8-cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc8-cb10-1"><a href="#doc8-cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 输入: 区间 + 已知主效基因</span></span>
+<span id="doc8-cb10-2"><a href="#doc8-cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.extract_genes <span class="dt">\</span></span>
+<span id="doc8-cb10-3"><a href="#doc8-cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intervals</span> config/intervals.yaml <span class="at">--disease</span> whs_4p16.3 <span class="dt">\</span></span>
+<span id="doc8-cb10-4"><a href="#doc8-cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--gtf</span> data/gencode.v44.basic.annotation.gtf.gz <span class="dt">\</span></span>
+<span id="doc8-cb10-5"><a href="#doc8-cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> input/candidates.csv</span>
+<span id="doc8-cb10-6"><a href="#doc8-cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc8-cb10-7"><a href="#doc8-cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv ...</span>
+<span id="doc8-cb10-8"><a href="#doc8-cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> data/normalized.csv ...</span>
+<span id="doc8-cb10-9"><a href="#doc8-cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc8-cb10-10"><a href="#doc8-cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> validate <span class="at">--known-drivers</span> NSD2 ...</span></code></pre></div>
+<p><strong>输出</strong>：验证报告（非排名） - NSD2 的 ClinGen HI 评级、gnomAD 约束、HPA 脑表达、安全性、文献引用 - 区间其他基因的一览表（为何 NSD2 优于其他） - 结论：NSD2 满足 SINEUP 靶向条件 ✓</p>
+<h3 id="doc8-mode-b-增强筛选模式22q11.2-型">Mode B: 增强筛选模式（22q11.2 型）</h3>
+<div class="sourceCode" id="doc8-cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc8-cb11-1"><a href="#doc8-cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc8-cb11-2"><a href="#doc8-cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> rank <span class="at">--positive-controls</span> TBX1,COMT,PRODH ...</span></code></pre></div>
+<p><strong>输出</strong>：排序 + 正对照验证 - TBX1 在排序中的位置 + 是否在 top-N - 候选基因列表，标注证据来源</p>
+<h3 id="doc8-mode-c-全栈筛选模式ws-型">Mode C: 全栈筛选模式（WS 型）</h3>
+<div class="sourceCode" id="doc8-cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc8-cb12-1"><a href="#doc8-cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 完整流程：CNV + 表达QC + 排序</span></span>
+<span id="doc8-cb12-2"><a href="#doc8-cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.cnv.workflow all <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc8-cb12-3"><a href="#doc8-cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc8-cb12-4"><a href="#doc8-cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> full <span class="at">--scrna-qc</span> outputs/cnv/interval_gene_expression_qc.csv <span class="dt">\</span></span>
+<span id="doc8-cb12-5"><a href="#doc8-cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--positive-controls</span> ELN,GTF2I,LIMK1,BAZ1B</span></code></pre></div>
+<p><strong>输出</strong>：分层排序 + 表型分组</p>
+<h3 id="doc8-mode-d-探索模式全新-cnv未知区间">Mode D: 探索模式（全新 CNV/未知区间）</h3>
+<div class="sourceCode" id="doc8-cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc8-cb13-1"><a href="#doc8-cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.extract_genes <span class="dt">\</span></span>
+<span id="doc8-cb13-2"><a href="#doc8-cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intervals</span> config/intervals.yaml <span class="at">--disease</span> novel_cnv <span class="dt">\</span></span>
+<span id="doc8-cb13-3"><a href="#doc8-cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--gtf</span> data/gencode.v44.basic.annotation.gtf.gz <span class="dt">\</span></span>
+<span id="doc8-cb13-4"><a href="#doc8-cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> input/candidates.csv</span>
+<span id="doc8-cb13-5"><a href="#doc8-cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/evidence.parquet <span class="dt">\</span></span>
+<span id="doc8-cb13-6"><a href="#doc8-cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> exploratory</span></code></pre></div>
+<p><strong>输出</strong>：粗筛 - 所有基因行的 gnomAD 约束分数 + HPA 组织表达 - 标注：“置信度低——以下为最可能候选，建议补充文献/实验验证” - 不产出确定排名</p>
+<hr />
+<h2 id="doc8-里程碑v2-实施路径">7. 里程碑（v2 实施路径）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>内容</th>
+<th>依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M0</strong></td>
+<td><code>extract_genes.py</code> 独立入口 + <code>intervals.yaml</code> 创建</td>
+<td>GENCODE GTF</td>
+</tr>
+<tr>
+<td><strong>M1</strong></td>
+<td>WHS Mode A 验证报告生成</td>
+<td>M0 + ClinGen/gnomAD/HPA 数据</td>
+</tr>
+<tr>
+<td><strong>M2</strong></td>
+<td>表型分组逻辑 (<code>phenotype_grouper.py</code>) + HPO 映射</td>
+<td>HPO/ClinGen 表型数据</td>
+</tr>
+<tr>
+<td><strong>M3</strong></td>
+<td>多模式统一 CLI 入口 + 报告生成器重构</td>
+<td>M1 + M2</td>
+</tr>
+<tr>
+<td><strong>M4</strong></td>
+<td>scRNA-seq 增强层可插拔（Mode C）</td>
+<td>现有 CNV 工作流</td>
+</tr>
+<tr>
+<td><strong>M5</strong></td>
+<td>8 病区间注册表完成 + 跨病验证</td>
+<td>M3</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc8-与-v1-的兼容性">8. 与 v1 的兼容性</h2>
+<ul>
+<li><code>consensus_v2.py</code> 保留 <code>--mode rank</code>（行为 ≈ v1 行为），但默认 <code>--mode auto</code>（自动检测数据丰富度）</li>
+<li><code>config/pipeline.yaml</code> 保持向后兼容；新增字段 <code>consensus_v2.mode.*</code></li>
+<li>现有 WS 管线 (WBS 35 基因) 可无缝运行</li>
+<li>v1 CNV 工作流不变，作为 Mode C 的可选增强层</li>
+</ul>
+<hr />
+<h2 id="doc8-附录-a-区间配置文件完整示例">附录 A: 区间配置文件完整示例</h2>
+<p>见 <code>config/intervals.yaml</code>（待创建，模板见 §4.1）</p>
+<h2 id="doc8-附录-b-已知主效基因配置文件示例">附录 B: 已知主效基因配置文件示例</h2>
+<p>```yaml # config/known_drivers.yaml # 按疾病/区间组织的已知主效基因，用于 Mode A 验证和 Mode B/C 正对照</p>
+<p>whs_4p16.3: drivers: - symbol: NSD2 hgnc_id: HGNC:12766 evidence: - “单基因功能缺失变异产生整体 WHS 核心表型 (Italian J Pediatrics, 2022)” - “gnomAD pLI=1.0, LOEUF 极低” - “Rauch-Steindl 综合征 (OMIM#619695) 由 NSD2 变异独立引起” phenotypes: [neurodevelopmental, growth] confidence: confirmed</p>
+<p>williams_7q11.23: drivers: - symbol: ELN hgnc_id: HGNC:3327 phenotypes: [cardiovascular] confidence: confirmed - symbol: GTF2I hgnc_id: HGNC:4659 phenotypes: [neurodevelopmental, cognitive] confidence: confirmed - symbol: LIMK1 hgnc_id: HGNC:6613 phenotypes: [neurodevelopmental, visuospatial] confidence: probable - symbol: BAZ1B hgnc_id: HGNC:961 phenotypes: [craniofacial, neurodevelopmental] confidence: probable</p>
+<p>22q11.2: drivers: - symbol: TBX1 hgnc_id: HGNC:11592 phenotypes: [cardiovascular, craniofacial] confidence: confirmed</p>
+</details><details id="file10"><summary>10. 筛选逻辑复核与修复_2026-09-19.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc10-筛选逻辑复核与修复2026-09-19">筛选逻辑复核与修复（2026-09-19）</h1>
+<p>本记录优先于 2026-09-14 的 v2.2 实施文档以及更早结论。范围是已有 <code>03_pipeline</code> 的数据连接、评分、报告与验证边界；未合并 SINEB2-ChromDel，未宣称完成治疗靶点验证。修改位于本次 Codex 工作树，未覆盖桌面保存项目的历史输出。历史文档保留，仅加纠错入口。</p>
+<h2 id="doc10-空格丢失究竟是什么">1. “空格丢失”究竟是什么？</h2>
+<p>实际是 <strong>HGNC 表头和 ID 值带前后空格，模块清洗不一致导致证据连接丢失</strong>，不是给文本补空格。例如 <code>HGNC:4659</code> 与 <code>HGNC:4659</code> 在 pandas join 中不同。旧 DeepLOF 导出器还未清理表头，在当前 HGNC 文件上可得到空映射。</p>
+<p>修复：normalize、DeepLOF、隐性关联模块复用同一映射函数，清理表头、符号和 ID 两端空白，兼容历史符号/别名的逗号、分号和竖线分隔。正式符号优先；指向多个基因的别名不擅自择一。排序入口也清理已有 CSV/Parquet 的 ID，防止旧文件继续失配。空 DeepLOF 映射直接报错；重复外部 join 键直接报错，不扩增候选行数。</p>
+<p>重跑：WBS 的 DeepLOF 覆盖从审查时 16/35 恢复为 <strong>28/35</strong>；WHS 从 15/19 恢复为 <strong>19/19</strong>。这不是模型性能提升，而是数据连接修复。未覆盖基因仍需区分“源数据没有”与“映射失败”。</p>
+<h2 id="doc10-clingen-更新评分与输出时又丢弃">2. ClinGen 更新、评分与“输出时又丢弃”</h2>
+<p>官方 GRCh38 快照从 09-05 更新为 <strong>09-19</strong>，1,528→1,532 行。新增 6 个符号，下载中不再包含 CDKL5、CLCN4；共同符号的内容未变。下载缺席不等于疾病关联被否定。详细来源、差异和 SHA-256 见 <code>03_pipeline/data/clingen_snapshot.json</code>。WBS/WHS 本次名次变化主要来自 ID 修复和评分修复，不是新 ClinGen 病种证据。</p>
+<p>旧合并函数先创建 <code>haploinsufficiency_raw</code>、<code>triplosensitivity_raw</code>，最后却只选择 <code>[hgnc_id] + 标准评分列</code> 输出。因而 raw 两列在写 Parquet <strong>之前</strong>就被列选择丢掉了；数据源本身没有被删除。现在原始类别、原文、语义状态、评估日期、疾病 ID、PMID 一并保留到证据表和排名 CSV。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>HI 原始类别</th>
+<th>含义</th>
+<th>本次评分策略（默认 HI 权重 3）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>尚无支持证据</td>
+<td>0；不是负证据</td>
+</tr>
+<tr>
+<td>1</td>
+<td>少量支持证据</td>
+<td>1；不再额外扣 1.5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>逐渐积累的支持证据</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>充分支持证据</td>
+<td>3</td>
+</tr>
+<tr>
+<td>30</td>
+<td>与常染色体隐性表型关联</td>
+<td>不转换为 HI 强度，贡献 0，单独注释</td>
+</tr>
+<tr>
+<td>40</td>
+<td>剂量敏感性不太可能</td>
+<td>贡献 0，标记 <code>dosage_conflict</code>，不能通过自动遗传学支持判定，也不生成该第一候选的自动验证建议</td>
+</tr>
+<tr>
+<td>-1 / Not yet evaluated</td>
+<td>未评估</td>
+<td>贡献 0，保留原文与未评估状态</td>
+</tr>
+<tr>
+<td>无记录</td>
+<td>未收录于此快照</td>
+<td>贡献 0，<code>not_curated</code>，不同于 0/40</td>
+</tr>
+</tbody>
+</table>
+<p>0–3 的 <code>HI/3 × 权重</code> 是项目的可解释线性加权策略，<strong>不是 ClinGen 发布的治疗效果模型</strong>。40 有反向含义，但没有可靠依据赋予它一个跨证据通用的负分，所以使用明确冲突标记而非发明惩罚大小；它不会被自动从排名删掉，用户仍可审查其余证据。原先对 HI≤1 额外扣分的设置已禁用，旧配置若继续启用会明确报错。</p>
+<p>官方依据：<a href="https://search.clinicalgenome.org/kb/downloads">ClinGen 下载说明</a>。</p>
+<h2 id="doc10-隐性基因降权从哪里来旧机制和新机制是什么">3. 隐性基因降权从哪里来，旧机制和新机制是什么？</h2>
+<p>来源是 09-07《管线架构预审_质询回答与管线优化》的质询 #2，随后 PROJECT_LOG #6/#7 实施：为了避免把双等位基因致病的基因直接当作杂合缺失主效基因，提出把 pLI 贡献减半。<strong>0.5 是项目自定启发式，没有经过标定，也不是 OMIM、ClinVar、ClinGen 或 gnomAD 的评分要求。</strong></p>
+<p>旧实现还有四层问题：</p>
+<ol type="1">
+<li>OMIM 按错误位置取列：把第 9 列当遗传方式、第 11 列当基因符号，实际应读取具名 <code>Phenotypes</code> 和 <code>Approved Gene Symbol</code> 等列。</li>
+<li>merge_evidence 丢弃 <code>recessive</code> 字段，默认路径往往根本没有启动此逻辑。</li>
+<li>一旦该字段保留并有 True，代码会先把<strong>所有行</strong>的 gnomAD 贡献乘 0.5，再把标记行乘 0.5，导致未标记者剩 50%、标记者剩 25%。</li>
+<li>降权发生在最终输出之后，LOO/敏感性分析仍基于未降权的矩阵；配置里的倍率也没有正确传入。</li>
+</ol>
+<p>现在：默认倍率改成 <strong>1.0，只注释不自动扣分</strong>；手动设为 0.5 时，只将被标记行的 pLI、LOEUF 贡献各乘一次，且在 LOO、加权评分、敏感性、Borda 之前统一处理。报告显示实际倍率。字符串 <code>False</code> 不再误判成 True。</p>
+<p>OMIM 改按具名表头解析；同一记录同时有显性/隐性表型时不作纯隐性标记；X 连锁不按常染色体隐性处理。ClinVar 输入明确限定为预先整理的 <code>GeneSymbol/ModeOfInheritance</code> 表，不能误用普通变异汇总。来源标记不再全部写成 OMIM，没给来源时写 <code>not_assessed</code>。这些仍不是“全数据库已经证明纯隐性”的完备分类，跨数据库/变异机制冲突须人工审查。</p>
+<p>“隐性致病基因因为缺少纯合敲除，所以 pLI 必然很高”的旧解释不成立。pLI 模型本身区分杂合 LoF 耐受而纯合不耐受的 recessive 状态；高 pLI 表示强 LoF 约束，不能据此直接判定遗传方式。<a href="https://broadinstitute.github.io/gnomad_methods/api_reference/utils/constraint.html">gnomAD 方法说明</a></p>
+<h2 id="doc10-mrna-补偿原来怎样推断为什么证据不够">4. mRNA 补偿原来怎样推断，为什么证据不够？</h2>
+<p>原始路径：GTF2I 的模型归因变化接近 0 → 推测表达被补偿 → 两份 WBS DE 脚本从 <code>processed.h5ad/layers['counts']</code> 计算患者/对照平均单细胞 counts 比值 → PROJECT_LOG #6 把约 <strong>0.995</strong> 写成“直接测量确认完美补偿”。</p>
+<p>原脚本 <code>wbs_interval_de.py</code> 确实另做了按样本汇总的 pseudobulk，并非完全没有考虑重复；但报告据以断言补偿的 0.995 是<strong>逐细胞未校正测序深度的均值比</strong>，不是供体分层的因果效应。保存的 GTF2I pseudobulk 结果为 log2FC=-0.0548、p=0.737625：这表示未检出差异，不是证明表达等价，更不是证明某种补偿机制。</p>
+<p>还发现上游 <code>preprocess.py</code> 将数据裁剪为 HVG + 强制保留基因；实物 <code>processed.h5ad</code> 为 <strong>96,969 个细胞 × 3,016 个基因</strong>。在此子集求总 counts 再称为“全转录组库大小”同样不可靠。</p>
+<p>需要区分：</p>
+<ul>
+<li>归因值≈0：模型输出对某因素不敏感，不等于转录机制。</li>
+<li>RNA 均值相近：可能是测序深度、细胞组成、样本差异、低统计效力，也可能有补偿；当前分析不能区分。</li>
+<li>RNA 相近不能证明蛋白不足；蛋白也可能正常，因此不能推出“理想 SINEUP 靶点”。</li>
+<li>某些癌症/其他 CNV 存在缓冲机制，只能支持生物学可能性，不能替代 WBS、具体基因及组织的证据。</li>
+</ul>
+<p>本次修补：<code>compensation.py</code> 验证非负 counts，拒绝 log/变换值和零库细胞；使用库大小归一化的患者/对照描述性比值。必须提供 <code>--library-size-col</code>（裁剪前保存的全基因总 counts），或明确声明 <code>--full-gene-matrix</code>，防止把 HVG 子集直接当完整输入。旧类名 <code>full/partial/overcompensated</code> 为兼容文件保留，新增 <code>mechanism_status=not_established</code>；报告不再据此输出“理想 SINEUP”。CNV 报告也不再自动把 log2FC≈0 归因于补偿。</p>
+<p><strong>尚未完成</strong>：用原始全基因矩阵、核实供体/样本关系、按相同细胞类型进行样本级 pseudobulk/合适模型、置信区间及独立 DNA/蛋白证据。没有重跑这套生物学分析，不将新的技术修复包装成补偿结论。生物学重复不能被大量细胞替代，参见 <a href="https://www.nature.com/articles/s41467-021-25960-2">Squair 等的单细胞 DE 基准研究</a>。</p>
+<h2 id="doc10-正对照检验与-loo-各有什么用">5. 正对照检验与 LOO 各有什么用？</h2>
+<p><strong>正对照检验</strong>是管线的 sanity check：提前指定已知相关基因，检查它们是否在候选表、处于哪一名、能否进入前十。能抓出 ID 丢失、评分方向错误等明显故障；不能证明榜单其余基因因果有效。WBS 的四个正对照也是项目选择的检查集，并非所有基因都同等程度地获得 ClinGen HI=3。</p>
+<p><strong>LOO（leave-one-out，留一法）</strong>：每轮留出一个正对照，只用其余正对照在权重网格中择优，再看留出者的名次；最终权重另在所有正对照上选择。它评估调权对未参与该轮拟合的正对照的回收能力，不是“留出一种证据源”，也不是独立临床验证。若标签和 ClinGen/约束信息共享知识来源，LOO 不会自动消除信息重叠。</p>
+<p>旧程序在全部分数并列时，把每个留出者算成第 1 名，但真实榜单只取前十，可能同时给出“LOO 100%、实际 recall 0%”。现在 LOO、recall、最终排名和敏感性统一采用“分数降序 + HGNC ID 字典序”打破并列，测试覆盖 13 基因全并列场景。少于 3 个在表正对照时跳过调权；3 只是防止过小训练集的工程下限，不代表统计充分。默认仍不调权。</p>
+<p>配置中的正对照在未传 <code>--controls</code> 时也生效；所有模式显示检验；分母包含请求但缺席的对照，并另记 present 数量，避免隐去缺失者提高命中率。</p>
+<h2 id="doc10-raw-指哪种数据缺失值和旧排名解释错在哪里">6. raw 指哪种数据？缺失值和旧排名解释错在哪里？</h2>
+<p>这里的 <code>normalize: raw</code> <strong>不是 FASTQ，也不是单细胞 raw counts</strong>，只是函数里某种评分预处理模式的历史命名：</p>
+<p><code>(x - 候选集内最小值) / (候选集内最大值 - 最小值)</code>；LOEUF 再做 <code>1 - 结果</code>。ClinGen 0–3 走固定量程，不做候选集 min–max。</p>
+<p>它其实是 min–max 缩放，仍依赖候选集及极端值，不是“完全没归一化”，也没有因此消除小样本不稳定性。当前 zscore 模式随后再 min–max，在非退化列上与 raw 得到同一结果。</p>
+<p>旧常数列分支直接为<strong>全列</strong>构造 0.5，连 NaN 也变成了可用证据。现在只对已有观测赋 0.5，NaN 保留到评分阶段再贡献 0；全缺失列不进入有效评分矩阵。raw/zscore、两个方向都有回归测试，缺失不是低评分，更不能自动当反向证据。</p>
+<p>09-05 报告 §3.3 把 FZD9/FKBP6 的高名次解释成“低 pLI 更不耐受”和“rank 把低值变高值”，有两处逻辑错误：</p>
+<ol type="1">
+<li><strong>方向写反</strong>：高 pLI、低 LOEUF 才表示更强 LoF 约束。</li>
+<li><strong>归因跳跃</strong>：rank 是单调变换，方向配置正确时不会把低 pLI 自动变成高 pLI。综合名次异常需查看实际权重、HPA 惩罚、HI 的旧负分、join 覆盖、缺失和调权/并列处理，不能仅凭换 raw 后榜单更像预期就认定原因。</li>
+</ol>
+<p>同理，两种排名 Spearman 更高只说明算法一致，不说明生物学更正确。旧报告的归因结论已加修订入口，历史运行数据没有被改写。gnomAD 官方也明确高 pLI 的约束解释，并提醒不同版本 LOEUF 阈值不同：<a href="https://gnomad.broadinstitute.org/news/2024-03-gnomad-v4-0-gene-constraint/">官方说明</a>。本地仍是 legacy v2.1.1 格式，已纠正误导性的 <code>use_LOEUF_v4: true</code>，没有假装升级数据库。</p>
+<h2 id="doc10-v2.2-的哪些承诺可以并且值得实现">7. v2.2 的哪些承诺可以并且值得实现？</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>承诺/设计</th>
+<th>判断</th>
+<th>本次状态与边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HGNC 唯一、可靠 join、缺失不伪造证据</td>
+<td>最优先，是排序前提</td>
+<td>已补：去空白、拒绝重复候选、many-to-one join；可用证据为空的候选比例超过 max_missing_rate 则报错</td>
+</tr>
+<tr>
+<td>不静默降级</td>
+<td>最优先</td>
+<td>显式传入的 AI/表达 CSV 读入或连接失败即报错；报告列出完全缺失证据；稀疏性阈值读取配置</td>
+</tr>
+<tr>
+<td>保留证据原义</td>
+<td>最优先</td>
+<td>ClinGen 原始类别/PMID/日期/疾病 ID，隐性来源和状态、缺证据标记、HI=40 冲突均保留</td>
+</tr>
+<tr>
+<td>每次运行可审计</td>
+<td>值得且可实现</td>
+<td>merge 的 run.json/校验和；评分的 <code>&lt;out&gt;.audit.json</code> 记录输入 hash、解析后配置、参数、实际权重、代码 hash、运行版本和输出 hash；不是已完成跨机器环境封装</td>
+</tr>
+<tr>
+<td>所有模式都有正对照检查、LOO 结果可信</td>
+<td>值得</td>
+<td>已补控制列表回退、缺席分母、exploratory 报告、并列名次一致性；不能保证预测命中</td>
+</tr>
+<tr>
+<td>HPA 脑/GI 映射</td>
+<td>值得</td>
+<td>已补显式组织集合，取数值最大 nTPM；不是平均脑表达，也不是安全性评价</td>
+</tr>
+<tr>
+<td>隐性降权与敏感性同一评分逻辑</td>
+<td>值得</td>
+<td>已补；默认只注释，避免把未经标定的 0.5 当生物学真理</td>
+</tr>
+<tr>
+<td>RNA 可选增强、机制层不偷偷回补评分</td>
+<td>应坚持</td>
+<td>表达仍仅作为注释，代码拒绝明显错误输入；不从 RNA 推断蛋白状态</td>
+</tr>
+<tr>
+<td>区间+GTF 独立提取</td>
+<td>可以且值得下一步做</td>
+<td>复用现有 cnv 基因提取函数即可；需要明确组装版本、坐标约定、边界重叠、转录本策略，不必重建大型框架</td>
+</tr>
+<tr>
+<td>表型分组/证据分层</td>
+<td>可以且值得，但需先定义</td>
+<td>应选择明确的疾病-表型-基因证据及冲突规则；不能按总分分箱就称“确认/推测”</td>
+</tr>
+<tr>
+<td>HPA 靶组织支持/安全标记</td>
+<td>部分能做</td>
+<td>表达标签可以；需要目标组织/阈值，且表达广不等于不安全，低表达不等于安全</td>
+</tr>
+<tr>
+<td>排名第一是真因果基因；mRNA 相近就是补偿；适合 SINEUP</td>
+<td>不应承诺</td>
+<td>这些不是软件通过测试就能保证的结果，须独立机制/蛋白/功能与安全证据</td>
+</tr>
+</tbody>
+</table>
+<p><code>validation.max_missing_rate=0.5</code> 本次明确为“完全没有可用正权重证据的候选比例上限”，<strong>不是要求每个来源都覆盖 50%</strong>（否则 ClinGen 在 WBS 会被不合理地拒绝）。重复 HGNC 一律拒绝，保留单个未解析行作缺口展示。现有 <code>compensation.enabled/thresholds</code> 属旧管线配置，独立表达 CLI 不由该开关自动运行；不能把配置文件所有键都当成已经接线的功能。</p>
+<h2 id="doc10-验证及重跑结果">验证及重跑结果</h2>
+<p>完整测试：<strong>40 passed</strong>。新增回归覆盖空白与别名歧义、ClinGen 类别和字段、常数列 NaN、隐性单次降权、并列 LOO、重复键、空证据、遗传方式解析、测序深度/HVG 防误用、CLI 配置/审计/错误路径、报告治疗结论边界。合并路径测试改为小型独立数据夹具，不再要求先下载 188 MB HGNC LFS 文件。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>复核项目</th>
+<th>WBS</th>
+<th>WHS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>候选数 / HGNC 已解析</td>
+<td>35 / 34</td>
+<td>19 / 19</td>
+</tr>
+<tr>
+<td>DeepLOF 覆盖</td>
+<td>28 / 35</td>
+<td>19 / 19</td>
+</tr>
+<tr>
+<td>前三名</td>
+<td>BAZ1B、CLIP2、LIMK1</td>
+<td>NSD2、FAM193A、ADD1</td>
+</tr>
+<tr>
+<td>指定正对照前十</td>
+<td>ELN #5、GTF2I #8、BAZ1B #1、LIMK1 #3（4/4）</td>
+<td>NSD2 #1（1/1）</td>
+</tr>
+<tr>
+<td>±1 权重扰动导致 Top-3 集合变化</td>
+<td>4/8</td>
+<td>0/8</td>
+</tr>
+</tbody>
+</table>
+<p>本次排名未启用 LOO；未使用 RNA 补偿结果改变排名。WBS 仍对权重敏感，不能只交付第一名；WHS 的 1/1 也不能当独立泛化性能。ClinGen 0–3 的 WBS 评分覆盖仍只有 5/35，不能用映射修复掩盖真实证据缺口。</p>
+<p>输出保存于 <code>03_pipeline/outputs/review_20260919/</code>，包含 WBS/WHS 排名 CSV、证据 Parquet、报告、运行审计与 summary.json。原始快照和候选列表均以 hash 记录，没有覆盖旧结果。</p>
+<p>重现顺序（在 <code>03_pipeline</code> 内）：</p>
+<div class="sourceCode" id="doc10-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc10-cb1-1"><a href="#doc10-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-B</span> <span class="at">-m</span> pytest tests/ <span class="at">-q</span> <span class="at">-p</span> no:cacheprovider</span>
+<span id="doc10-cb1-2"><a href="#doc10-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.ai_scores deeplof <span class="at">--scores</span> data/DeepLOF_scores.csv <span class="at">--aliases</span> data/hgnc_aliases.tsv <span class="at">--out</span> outputs/recheck/ai_scores.csv</span>
+<span id="doc10-cb1-3"><a href="#doc10-cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv <span class="at">--out</span> outputs/recheck/normalized.csv</span>
+<span id="doc10-cb1-4"><a href="#doc10-cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> outputs/recheck/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--data-dir</span> data <span class="at">--out</span> outputs/recheck/evidence.parquet <span class="at">--audit</span> outputs/recheck/audit</span>
+<span id="doc10-cb1-5"><a href="#doc10-cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/recheck/evidence.parquet <span class="at">--ai-scores</span> outputs/recheck/ai_scores.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--controls</span> input/controls_wbs.txt <span class="at">--mode</span> rank <span class="at">--sensitivity</span> <span class="at">--out</span> outputs/recheck/ranked.csv <span class="at">--report</span> outputs/recheck/report.md</span></code></pre></div>
+<p>需先取得真正的 HGNC LFS 数据，而非 LFS 指针。本次工作树通过独立 sources 目录只读复用了桌面项目的大文件；源数据未修改。WHS 换用 <code>candidates_whs.csv</code> 和 <code>controls_whs.txt</code> 并换输出目录。</p>
+</details><details id="file11"><summary>11. 管线架构预审_质询回答与管线优化_2026-09-07.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc11-v2-管线架构预审-质询回答与管线优化dbtl-cycle-4">v2 管线架构预审 — 质询回答与管线优化（DBTL Cycle 4）</h1>
+<blockquote>
+<p>日期：2026-09-07 Cycle：DBTL Cycle 4 — Learn（从实验数据和文献调研中学习）→ Design（重新设计管线） 关联：<code>PROJECT_LOG.md</code> 条目 #6 · <code>架构设计_v2.md</code> 前序 Cycles：Cycle 1 (归因找靶点) → Cycle 2 (GEARS 退场) → Cycle 3 (证据金字塔 v1) → <strong>Cycle 4 (通用管线 v2)</strong></p>
+</blockquote>
+<hr />
+<h2 id="doc11-质询回答">质询回答</h2>
+<h3 id="doc11-质询-0-scrna-seq-思路的根本可行性">质询 #0 — scRNA-seq 思路的根本可行性</h3>
+<p><strong>回答</strong>：scRNA-seq 在筛选管线中的正确角色是<strong>辅助验证层</strong>，不是核心发现引擎。</p>
+<p>理由来自四层证据：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>证据层</th>
+<th>发现</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目内部 (E3/E4/E6/E8)</td>
+<td>归因≈DE、GEARS 域外、mRNA 补偿</td>
+<td>scRNA-seq 不能独立发现靶点</td>
+</tr>
+<tr>
+<td>文献 benchmark (Schmid 2025)</td>
+<td>所有 CNV caller 对 &lt;3Mb 不可用</td>
+<td>scRNA-seq 不能自动发现缺失区间</td>
+</tr>
+<tr>
+<td>文献综述 (NRDD 2023)</td>
+<td>Perturb-seq 全部分类为癌症/免疫</td>
+<td>没有面向发育神经基因的因果工具</td>
+</tr>
+<tr>
+<td>本次 DE 分析</td>
+<td>mRNA 补偿状态可测量、逐基因可变</td>
+<td>scRNA-seq 可辅助验证但不能独立排序</td>
+</tr>
+</tbody>
+</table>
+<p><strong>但本次 DE 分析揭示了一个之前被低估的价值</strong>：scRNA-seq 可以定量测量缺失区间内<strong>每个基因的 mRNA 补偿状态</strong>（WS/CTRL ratio）。这是一个 HPA/gnomAD/ClinGen 都无法提供的信息维度。补偿状态与你管线的 SINEUP 治疗逻辑直接相关：</p>
+<ul>
+<li><strong>完全补偿</strong>（ratio ≈ 1.0，如 GTF2I）→ mRNA 正常但蛋白质可能仍不足 → <strong>SINEUP 的理想靶标</strong></li>
+<li><strong>部分补偿</strong>（ratio ≈ 0.7–0.9）→ mRNA 部分下降 → 蛋白质可能也下降 → 需要 SINEUP 但可能需要更大的上调幅度</li>
+<li><strong>无补偿</strong>（ratio ≈ 0.5）→ mRNA 直接反映半剂量 → 翻译可能也减半 → 也可能需要 SINEUP</li>
+</ul>
+<p><strong>Mode C 的重新定位</strong>：从”全栈筛选模式”改为”数据库筛选 + scRNA-seq 补偿验证”。核心排序不依赖 scRNA-seq；scRNA-seq 作为增强层，在候选基因已通过 L1-L3 排序后，提供”该基因是否适合 SINEUP 靶向”的额外信息。</p>
+<hr />
+<h3 id="doc11-质询-1-逐基因排序的核心假设是否成立">质询 #1 — 逐基因排序的核心假设是否成立？</h3>
+<p><strong>回答</strong>：部分成立，需要加两个保护机制。</p>
+<ol type="1">
+<li><p><strong>表型分组</strong>（已在 v2 架构中设计）：按 HPO/ClinGen 表型维度分组，组内排序。这样 ELN（心血管#1）不会和 GTF2I（神经#1）在同一框架下竞争。</p></li>
+<li><p><strong>新增——“主效基因稀疏性警告”</strong>：当以下条件同时满足时，在报告顶部标注 ⚠️ 警告：</p>
+<ul>
+<li>区间基因数 &gt; 20</li>
+<li>排名 #1 的基因与其他前 N 个基因的证据分数差距不大（&lt; 1 个标准差）</li>
+<li>ClinGen 仅覆盖 &lt; 20% 的区间基因</li>
+</ul>
+<p>警告措辞：“该区间可能存在多个表型贡献基因，单一排名不应被解译为’唯一的因果基因’。建议对前 N 个候选进行正交验证。”</p></li>
+</ol>
+<p><strong>管线不掩盖多基因协同效应的可能性</strong>。Mode D 输出中增加一个独立章节”多基因协同假设”——如果多个基因同时满足高约束 + 相关表型 + 表达可行性，建议考虑组合靶向的实验设计。</p>
+<hr />
+<h3 id="doc11-质询-2-证据金字塔是否在筛正确的目标">质询 #2 — 证据金字塔是否在筛”正确的目标”？</h3>
+<p><strong>回答</strong>：两个目标有时分离，管线需要识别这种情况并相应降权。</p>
+<p><strong>对”隐性致病基因悖论”的具体处理</strong>（结合质询 #4）：</p>
+<p>新增一个<strong>隐性致病基因过滤器</strong>（在 L0 和 L1 之间）： - 从 OMIM/ClinVar 获取已知隐性致病基因列表 - 如果一个基因被标记为<strong>纯隐性</strong>（biallelic pathogenic variants cause disease）且 gnomAD pLI &gt; 0.9 → 标记为”⚠️ 隐性致病——杂合缺失可能无表型效应” - 在 L3 排序中将其权重降低（pLI 贡献减半），但保留其在证据面板中的原始值供用户审查</p>
+<p><strong>对”组织特异性低约束 TF”的补充</strong>： - HPA 组织表达可行性（v2 中已设计）部分解决了这个——如果一个基因在疾病相关组织中完全不表达，它不可能在那些组织中产生表型后果 - 结合 mRNA 补偿状态：如果某个组织特异性 TF 在脑类器官中 mRNA ratio ≈ 0.5（无补偿），它在脑中更可能不是主效基因（因为你期望主效基因的机制在该组织中发挥作用）</p>
+<hr />
+<h3 id="doc11-质询-3-权重设定的依据">质询 #3 — 权重设定的依据？</h3>
+<p><strong>回答</strong>：承认主观性，采用 LOO 调权作为客观校准，但标注限制。</p>
+<p><strong>三层策略</strong>：</p>
+<ol type="1">
+<li><strong>默认权重</strong>（主观但基于文献优先级）：
+<ul>
+<li>ClinGen HI（人工金标准）: 3</li>
+<li>gnomAD LOEUF（机制正交于 ClinGen）: 2</li>
+<li>gnomAD pLI（与 LOEUF 部分冗余）: 1</li>
+<li>DeepLOF（与 gnomAD 信息源重叠）: 1（仅在 gnomAD 覆盖弱时激活至 2）</li>
+</ul></li>
+<li><strong>LOO 调权</strong>（客观校准）：
+<ul>
+<li>当正对照基因 ≥ 3 个时，运行 LOO 调权</li>
+<li>当正对照基因 &lt; 3 个时，标记”⚠️ 权重未经充分校准，排序结果对参数敏感”</li>
+<li>WBS 实验中 LOO 失败（2 个对照 = 0% hit rate）→ 这个阈值在 v2 中将作为硬性条件</li>
+</ul></li>
+<li><strong>权重敏感性分析</strong>（新增输出）：
+<ul>
+<li>在最终报告中增加一节：“如果 ClinGen:gnomAD 权重从 3:2 变为 1:1，排名前 3 的基因为 [X, Y, Z]，排名变化为 [Δ]”</li>
+<li>给用户一个量化的”排名稳健性”指标</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="doc11-质询-4-gnomad-系统性偏倚">质询 #4 — gnomAD 系统性偏倚</h3>
+<p><strong>回答</strong>：承认三个偏倚，逐一处理。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>偏倚</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基因长度偏倚</strong></td>
+<td>在 L1 证据面板中新增”pLI 置信度”字段——短基因（CDS &lt; 1000 bp）的 pLI 标注 ⚠️ “低统计效力”</td>
+</tr>
+<tr>
+<td><strong>隐性致病基因悖论</strong></td>
+<td>如质询 #2 所述，OMIM/ClinVar 隐性致病基因过滤器，降权</td>
+</tr>
+<tr>
+<td><strong>人群结构偏倚</strong></td>
+<td>管线默认使用 gnomAD v4（含非洲/东亚人群代表性改善），输出中标注 gnomAD 版本号和主要人群组成</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="doc11-质询-5-clingen-覆盖盲区">质询 #5 — ClinGen 覆盖盲区</h3>
+<p><strong>回答</strong>：这是管线当前最严重的弱点。区分”无证据”和”证据表明不敏感”。</p>
+<p><strong>三值标注</strong>（替代当前的 NaN → 0）：</p>
+<table>
+<thead>
+<tr>
+<th>ClinGen 值</th>
+<th>含义</th>
+<th>在排序中的处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0, 1, 2, 3</td>
+<td>已评级</td>
+<td>按原权重处理</td>
+</tr>
+<tr>
+<td><strong>null</strong></td>
+<td>未评级——无人研究过</td>
+<td>贡献 0（中性——不扣分），标记”未知”</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td>“基因与隐性表型相关”</td>
+<td>贡献 0（中性），标记”隐性”</td>
+</tr>
+<tr>
+<td><strong>40</strong></td>
+<td>“无证据”</td>
+<td>贡献 0（中性），标记”无评级”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键</strong>：null/30/40 全部为中性（0 贡献），不扣分。v1 中将 null 视为 0 分（=no signal），这错误地惩罚了”研究不足”的基因。</p>
+<p><strong>当 ClinGen 覆盖率 &lt; 20% 时，管线在输出中标注</strong>：“ClinGen 仅覆盖该区间 N% 的基因。以下排序主要依赖 gnomAD 约束分数——这偏向’群体遗传学上不耐受’的基因，可能漏掉’组织特异性、未被 Curators 研究过但表型重要的’基因。”</p>
+<hr />
+<h3 id="doc11-质询-6-deeplof-循环推理风险">质询 #6 — DeepLOF 循环推理风险</h3>
+<p><strong>回答</strong>：确认风险。DeepLOF 仅在以下条件下激活：</p>
+<ol type="1">
+<li><strong>L1 证据弱</strong>：基因在 gnomAD 中覆盖弱（pLI 缺失或短基因）</li>
+<li><strong>DeepLOF 的信息增量 &gt; 0</strong>：该基因的 DeepLOF 分数与 gnomAD pLI 的相关性 &lt; 0.7（即不是完美共线——意味着有独立信息）</li>
+<li><strong>权重上限</strong>：DeepLOF 权重不超过 1，即使 LOO 调权也不会让其权重超过 gnomAD 权重的一半</li>
+</ol>
+<p><strong>另一个实验性想法</strong>（给 iGEM 评委展示前瞻性思维）：未来的版本中，可以训练一个新的深度学习模型，使用<strong>与 ClinGen/gnomAD 独立的信息源</strong>（如蛋白质结构预测、跨物种保守性、蛋白质互作网络），避免循环推理。但这不是当前 Cycle 的目标。</p>
+<hr />
+<h3 id="doc11-质询-7-从排名到实验决策">质询 #7 — 从排名到实验决策</h3>
+<p><strong>回答</strong>：管线输出中新增”实验验证建议”章节。</p>
+<p><strong>实验建议的三部分</strong>：</p>
+<p><strong>Part A: 第一候选的验证路径</strong></p>
+<pre><code>基因 X 排名 #1
+├─ 证据: ClinGen HI=3, gnomAD pLI=1.0, pct_expr=82%, mRNA ratio=0.995
+├─ 建议验证:
+│ 1. qPCR 确认缺失断点是否确实包含 X（在患者 gDNA 上）
+│ 2. Western blot 确认蛋白质是否不足（翻译层未补偿）
+│ 3. 如果蛋白不足 → 设计 SINEUP-X → 细胞模型测试蛋白恢复
+└─ 预期: 如果蛋白不足被 SINEUP 恢复 → 验证成功</code></pre>
+<p><strong>Part B: 第一候选失败时的切换策略</strong></p>
+<pre><code>如果基因 X 的蛋白质正常（即翻译也补偿了）→ 切换到备选
+├─ 备选 1: 基因 Y（排名 #2，证据等级 ★★☆）
+├─ 备选 2: 基因 Z（排名 #3，证据等级 ★★☆）
+└─ 切换标准: ≥ 1 项正交证据（pLI/ClinGen/表达）INDEPENDENT OF 基因 X</code></pre>
+<p><strong>Part C: 排名不确定时的建议</strong></p>
+<pre><code>如果前 3 个候选的证据等级相同（★★☆），且排名受权重选择敏感：
+├─ 不推荐直接靶向
+├─ 建议先做: 在患者细胞系中做单个基因的 shRNA rescue 实验
+│  （恢复每个候选基因的表达 → 看哪个恢复表型最好）
+└─ 用这个正对照结果更新管线的权重</code></pre>
+<hr />
+<h2 id="doc11-由此导出的管线-v2.1-优化">由此导出的管线 v2.1 优化</h2>
+<p>基于以上八个问题的回答，提出以下具体改动：</p>
+<h3 id="doc11-优化-1-新增mrna-补偿状态维度源自质询-0">优化 1: 新增”mRNA 补偿状态”维度（源自质询 #0）</h3>
+<p>当 scRNA-seq 数据可用时，在 L1 后、L3 前新增： - 计算每个缺失区间基因的 WS/CTRL mRNA ratio - 标注补偿状态：完全补偿 (0.95-1.05) / 部分补偿 (0.7-0.95) / 无补偿 (0.5-0.7) / 无法判断（低表达） - 在 L3 证据面板中作为单独一列：“mRNA 补偿状态” - 不参与加权排序（避免和 DE 偏倚重叠），但标注 SINEUP 靶向潜力</p>
+<h3 id="doc11-优化-2-隐性致病基因过滤器源自质询-2-4">优化 2: 隐性致病基因过滤器（源自质询 #2, #4）</h3>
+<ul>
+<li>L0.5: 隐性致病基因过滤器（新增模块 <code>filter_recessive.py</code>）</li>
+<li>读取 OMIM/ClinVar 隐性致病基因列表</li>
+<li>对重叠的候选基因标记 <code>recessive_disease: true</code></li>
+<li>在 L3 中降权（gnomAD pLI 贡献 ×0.5）</li>
+</ul>
+<h3 id="doc11-优化-3-clingen-三值标注源自质询-5">优化 3: ClinGen 三值标注（源自质询 #5）</h3>
+<ul>
+<li><code>merge_evidence.py</code> 中 ClinGen 字段改为三值标注</li>
+<li>null/30/40 → 中性（不扣分），明确的 0 → 视为”有证据表明不敏感”</li>
+<li>输出中显式区分</li>
+</ul>
+<h3 id="doc11-优化-4-权重敏感性分析源自质询-3">优化 4: 权重敏感性分析（源自质询 #3）</h3>
+<ul>
+<li><code>consensus_v2.py</code> 新增 <code>--sensitivity</code> 模式</li>
+<li>输出”权重稳健性”矩阵：默认权重 vs ±1 变化后的排名变化</li>
+</ul>
+<h3 id="doc11-优化-5-实验验证建议生成器源自质询-7">优化 5: 实验验证建议生成器（源自质询 #7）</h3>
+<ul>
+<li>新增 <code>report.py</code> 的”实验建议”章节</li>
+<li>包含 Part A/B/C（如上）</li>
+</ul>
+<h3 id="doc11-优化-6-mode-d-主效基因稀疏性警告源自质询-1">优化 6: Mode D “主效基因稀疏性警告”（源自质询 #1）</h3>
+<ul>
+<li>当满足条件时自动生成警告</li>
+<li>当 ClinGen 覆盖率 &lt; 20% 时自动生成覆盖警告</li>
+</ul>
+<hr />
+<h2 id="doc11-dbtl-循环记录">DBTL 循环记录</h2>
+<pre><code>Cycle 1 (Design):  归因找靶点 + SCimilarity + CellOracle
+Cycle 1 (Test):    r=0.02 (归因≠因果), GEARS 41/4 覆盖, TBX1 0.16%
+Cycle 1 (Learn):   归因只能生成候选，不能证明因果；GEARS 域外
+
+Cycle 2 (Design):  证据金字塔 v1 (ClinGen+gnomAD+HPA)
+Cycle 2 (Test):    WBS 35 基因全流程 → rank 归一化伪影 (ρ=0.23)
+Cycle 2 (Learn):   raw 归一化修正 (ρ→0.71)；ClinGen 仅 14% 覆盖
+
+Cycle 3 (Design):  改进的 v1 管线 + DeepLOF 接入
+Cycle 3 (Test):    BAZ1B/CLIP2/STX1A/ELN 正确排序
+Cycle 3 (Learn):   管线能正确识别已知主效基因；但仍假设了 scRNA-seq 存在
+
+Cycle 4 (Learn):   ← 当前
+  - WHS 无 scRNA-seq 数据 → 管线需要通用化
+  - &quot;剂量补偿&quot;只是推断 (N=1) → 直接测量 DE 验证了 GTF2I 确实被补偿
+  - 文献确认翻译后缓冲广泛存在 → mRNA 正常 ≠ 蛋白质正常
+  - 八个质询暴露了权重/偏倚/覆盖/循环推理等弱点 → 需系统处理
+
+Cycle 4 (Design):  通用管线 v2.1（本次输出）
+  - 四种模式适应不同数据丰富度
+  - scRNA-seq 作为补偿状态验证层
+  - 隐性致病基因过滤 + ClinGen 三值 + 权重敏感性 + 实验建议</code></pre>
+</details><details><summary>Word 方法汇报完整正文与表格</summary><p><strong>AI 与传统方法在染色体微缺失病主效基因筛选中的研究进展</strong></p>
+<p>文献检索与汇报文档</p>
+<p>检索日期：2025-09-01</p>
+<p><strong>检索来源汇总</strong></p>
+<p>数据库与渠道：web 学术聚合检索（PubMed/PMC、Springer、ScienceDirect、Wiley、PLOS、Frontiers、bioRxiv），并以 Crossref、PubMed E-utilities、Europe PMC 逐条 DOI 验证；共收录 30 篇文献。Web of Science 与 Google Scholar 因无 API 访问，通过聚合检索间接覆盖。</p>
+<p><strong>一、研究背景与概念界定</strong></p>
+<p>染色体微缺失病（chromosomal microdeletion syndromes）是由基因组中数 kb 至数 Mb 级亚显微结构缺失导致的一类遗传疾病。其典型特征包括发育迟缓、先天性心脏缺陷、面部畸形及神经精神表型等，经典代表有 22q11.2 缺失综合征（DiGeorge/VCFS）、Williams-Beuren 综合征（7q11.23）、16p11.2 缺失/重复综合征等。由于微缺失区间往往包含多个基因，如何在多个候选基因中识别真正驱动表型的”主效基因”（dosage-sensitive driver genes，即单倍剂量不足即可致病的 haploinsufficient genes），是该领域的核心科学问题。</p>
+<p>本报告基于对 30 篇代表性文献的检索与验证，系统梳理两大类方法学路径：（1）非 AI 的经典方法——最小重叠区（SRO）定位、同源动物模型功能验证、群体遗传约束评分（pLI/LOEUF）、专家证据评级（ClinGen dosage curation）；（2）AI/机器学习方法——haploinsufficiency (HI) 预测、CNV 致病性分类、网络基因优先级排序，及大语言模型辅助的文献筛查。检索日期为 2025-09-01，所有 DOI 均经 Crossref / PubMed 逐条核验。</p>
+<p><strong>二、主效基因筛选的方法学体系</strong></p>
+<p><strong>2.1 非 AI（经典）方法</strong></p>
+<ol type="1">
+<li><p><strong>Smallest Region of Overlap (SRO)：</strong>对多个患者缺失区间做重叠交集，锁定最小共有区间，并优先关注其中候选基因（如 Ewart et al. 1993 确认 ELN 为 Williams 综合征致病基因；Bagheri et al. 2016 在 2p15p16.1 中进一步整合基因组与功能数据）。这是人类遗传学数十年确立的基准策略。</p></li>
+<li><p><strong>动物模型功能验证：</strong>用同源区域的小鼠敲除或时序过表达验证候选基因的剂量效应。代表作：Merscher et al. (2001, Cell) 与 Jerome &amp; Papaioannou (2001, Nat Genet) 以小鼠遗传学锁定 TBX1 为 22q11.2 主效基因；Lindsay et al. (2001, Nature) 进一步证实 Tbx1 单倍不足足以导致主动脉弓缺陷。</p></li>
+<li><p><strong>高通量体内筛选：</strong>对整个缺失区间的全部基因进行系统性过表达/敲低。Golzio et al. (2012, Nature) 对 16p11.2 区间 29 个基因在斑马鱼胚胎逐一测试，唯一重现镜像头颅表型的是 KCTD13，为全区间无偏筛选的范式。</p></li>
+<li><p><strong>群体遗传约束评分：</strong>通过观察/期望变异数模型推断基因对 LOF 的耐受性。Samocha et al. (2014) 提出 de novo 突变框架，ExAC 的 pLI（Lek et al. 2016）与 gnomAD 的 LOEUF（Karczewski et al. 2020）成为通用的非 AI 基线；Collins et al. (2022, Cell) 以近百万个体的罕见 CNV 集成 ML 构建全基因组剂量敏感图谱，识别 3,635 个高剂量敏感基因。</p></li>
+<li><p><strong>专家证据评级：</strong>ClinGen Dosage Sensitivity 工作组建立的人工证据评分（haploinsufficiency score 0–3）是公认的人工金标准，也是计算预测的验证基准。</p></li>
+</ol>
+<p><strong>2.2 AI / 机器学习方法</strong></p>
+<ol start="6" type="1">
+<li><p><strong>Haploinsufficiency (HI) 预测：</strong>Huang et al. (2010, PLoS Genet) 是奠基之作，用逻辑回归整合基因组、进化与功能特征；HIPred（Shihab et al. 2017）刻意去除 PPI 网络特征以降低研究充分度偏倚；DosaCNV（Liu &amp; Huang 2023，bioRxiv 预印本）采用深度多实例学习联合预测基因 HI 与缺失致病性；DeepLOF（LaPolice &amp; Huang 2023）为无监督贝叶斯深度框架，尤其擅长短基因与小区间缺失。</p></li>
+<li><p><strong>深度基因优先级排序：</strong>DeepGenePrior（Rahaie et al. 2023, PLoS Comput Biol）针对脑疾病相关 CNV 做深度学习排序；Middelkamp et al. (2019, Genome Med) 将 HPO 表型匹配 + 染色质互作 + 功能预测联合用于 de novo 结构变异主效基因筛选（16/39 = 41%）。</p></li>
+<li><p><strong>CNV 级致病性分类：</strong>CNVoyant（Schuetz et al. 2024）、MarCNV（Sládeček et al. 2023，指南+ML 混合）、dbCNV（Lv et al. 2023）等将 ACMG 指南与机器学习结合；PathoSV（Liu et al. 2026 ahead-of-print）引入转录组组织特异性剂量效应。</p></li>
+<li><p><strong>大语言模型辅助文献筛查：</strong>GETgene-AI（Gu &amp; Chen 2025，癌症领域）展示了”网络优先级 + GPT-4o 文献筛查”模式，为微缺失主效基因筛选提供了可迁移的范式（目前仅概念验证，无直接证据）。</p></li>
+</ol>
+<p><strong>三、代表方法及主要结果对比</strong></p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 71%" />
+<col style="width: 12%" />
+<col style="width: 6%" />
+</colgroup>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>文献编号</strong></td>
+<td style="text-align: left;"><strong>核心发现 / 代表结论</strong></td>
+<td style="text-align: left;"><strong>方法类别</strong></td>
+<td style="text-align: left;"><strong>年份</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Ewart 1993 (Nat Genet) — ELN 定位；Williams 综合征首个主效基因</td>
+<td style="text-align: left;">经典 SRO/定位克隆</td>
+<td style="text-align: left;">1993</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Merscher 2001 (Cell)；Jerome &amp; Papaioannou 2001 (Nat Genet)；Lindsay 2001 (Nature) — 三篇小鼠研究共同确立 TBX1 为 22q11.2 主效基因</td>
+<td style="text-align: left;">动物模型功能验证</td>
+<td style="text-align: left;">2001</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Golzio 2012 (Nature) — 斑马鱼系统筛选 16p11.2 全部 29 个基因 → KCTD13</td>
+<td style="text-align: left;">高通量体内筛选</td>
+<td style="text-align: left;">2012</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Lek 2016 (Nature, ExAC pLI)；Karczewski 2020 (Nature, LOEUF)</td>
+<td style="text-align: left;">群体遗传约束评分</td>
+<td style="text-align: left;">2016/2020</td>
+</tr>
+<tr>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">Collins 2022 (Cell) — 近百万个体罕见 CNV 集成 ML 图谱；3,635 个敏感基因</td>
+<td style="text-align: left;">经验图谱 + 集成 ML</td>
+<td style="text-align: left;">2022</td>
+</tr>
+<tr>
+<td style="text-align: left;">16–18, 20</td>
+<td style="text-align: left;">Huang 2010；HIPred 2017；DosaCNV 2023（预印本）；DeepLOF 2023</td>
+<td style="text-align: left;">ML / 深度学习 HI 预测</td>
+<td style="text-align: left;">2010–2023</td>
+</tr>
+<tr>
+<td style="text-align: left;">19, 25</td>
+<td style="text-align: left;">DeepGenePrior 2023；Middelkamp 2019（表型+HPO+染色质）</td>
+<td style="text-align: left;">深度排名 / 表型整合</td>
+<td style="text-align: left;">2019–2023</td>
+</tr>
+<tr>
+<td style="text-align: left;">22–24, 26</td>
+<td style="text-align: left;">CNVoyant 2024；MarCNV 2023；dbCNV 2023；PathoSV 2026</td>
+<td style="text-align: left;">CNV 致病性 ML 分类</td>
+<td style="text-align: left;">2023–2026</td>
+</tr>
+</tbody>
+</table>
+<p><strong>四、里程碑式的主效基因判定案例</strong></p>
+<ol start="10" type="1">
+<li><p><strong>22q11.2 / TBX1：</strong>三项 2001 年的小鼠研究（Merscher Cell、Jerome &amp; Papaioannou Nat Genet、Lindsay Nature）以同源缺失与单基因敲除确认 TBX1 为心血管表型主效基因。后续 Motahari et al. (2019) 综述提醒：区间约 40 个蛋白编码基因对全表型均有贡献，TBX1 是必要但非充分条件。</p></li>
+<li><p><strong>7q11.23 / ELN：</strong>Ewart et al. (1993) 通过 SRO 与荧光原位杂交证明衰老蛋白基因 ELN 半合子缺失导致 Williams 综合征的主动脉上瓣狭窄，是 SRO 策略的经典案例。</p></li>
+<li><p><strong>16p11.2 / KCTD13：</strong>Golzio et al. (2012) 对 29 个区间基因的系统性斑马鱼筛选，为 CNV 区间的全基因功能筛查范式。</p></li>
+<li><p><strong>2p15p16.1 / 多候选者：</strong>Bagheri et al. (2016) 与 Miceli et al. (2023) 指出 BCL11A、REL、USP34、XPO1 四个强候选基因，但存在不完全外显和基因互作，提示单主效假设并不总适用。</p></li>
+</ol>
+<p><strong>五、主要共识</strong></p>
+<ol start="14" type="1">
+<li><p>微缺失病多数不是单基因病：通常有一个主效基因（TBX1、ELN、KCTD13）加区间内修饰基因；全区间功能化往往揭示多候选者。</p></li>
+<li><p>群体遗传约束（pLI/LOEUF）与 ClinGen 人工评级构成非 AI 基准；Collins 2022 等大规模经验图谱补充了经验性基因级验证。</p></li>
+<li><p>AI/ML 预测（HI、CNV、网络排名）与上述基准大体一致，并在短基因、小区间、以及规模化上提供增益。</p></li>
+<li><p>指南+ML 混合策略（MarCNV）优于单一纯 ML 或纯指南路径，提示临床级 CNV 判定应向可解释的混合系统收敛。</p></li>
+</ol>
+<p><strong>六、争议与冲突</strong></p>
+<ol start="18" type="1">
+<li><p>单主效 vs 寡基因（oligogenic）争论：TBX1 对 22q11.2 的必要性被广泛认可，但 Motahari 2019 与 Miceli 2023 等均表明区间内非主效基因贡献不可忽视。</p></li>
+<li><p>研究充分度 / 标签偏倚：HIPred、DeepGenePrior、DeepLOF 均提醒监督模型继承训练标签中的确证偏倚（ascertainment bias），且 PPI 网络特征进一步放大该偏倚；报告的高 AUC 往往依赖与训练数据来源重叠的验证集。</p></li>
+<li><p>AI 工具的自我评估循环：多数 CNV 分类工具用与公开数据库重叠的基准自评；MarCNV 表明混合策略更优，挑战纯深度学习的优越性。</p></li>
+<li><p>预印本成熟度：DosaCNV 在检索日时仅存于 bioRxiv；其 claimed improvement 尚缺同行评议。</p></li>
+</ol>
+<p><strong>七、研究空白与展望</strong></p>
+<ol start="22" type="1">
+<li><p>机制桥梁缺失：计算评分可以提名剂量敏感基因，但将其与特定表型关联仍需动物/功能实验（zebrafish/mouse）；无端到端自动管线。</p></li>
+<li><p>组织特异性刚起步：PathoSV 引入转录组组织特异性剂量效应，但主流 HI 预测仍组织无关，而微缺失表型具组织特异性。</p></li>
+<li><p>非编码/调控元件的驱动作用欠模型化：区间内 enhancer、拓扑结构域影响尚未纳入常规筛选。</p></li>
+<li><p>评价标准缺位：尚无独立、去重叠的基准用于微缺失主效基因预测；多数工具自评来自公开重叠集。</p></li>
+<li><p>LLM 辅助筛查尚未验证：在癌症靶点优先级中已有示范（GETgene-AI），但针对微缺失主效基因的系统性验证仍属空白。</p></li>
+</ol>
+<p><strong>八、方法选择建议</strong></p>
+<ol start="27" type="1">
+<li><p>对”个例级缺失区间”优先使用 SRO + ClinGen dosage + pLI/LOEUF 的组合判定（经典路径）。</p></li>
+<li><p>对全基因组排序或短基因/小区间，结合 DeepLOF / DosaCNV 等无监督深度方法，辅以功能注释排序（DeepGenePrior）。</p></li>
+<li><p>临床 CNV 报告建议采用指南+ML 混合（MarCNV 范式），并用可解释性方法（CNVoyant）提高可审查性。</p></li>
+<li><p>对候选主效基因，最终仍需功能验证（斑马鱼/小鼠）来落地。</p></li>
+</ol>
+<p><strong>九、本检索的局限声明</strong></p>
+<p>本报告为 scoping 式文献检索，而非完整 PRISMA 系统综述；未采用双筛双审，不记录每库返回数。Web of Science 与 Google Scholar 因无直接 API 访问，改用聚合学术 web 检索间接覆盖。所有 30 篇文献的 DOI 均已通过 Crossref/PubMed 验证；常见误引已更正（Cell 2001 的 TBX1 论文之首作者为 Merscher 而非 Lindsay；Wright 2015 的 DDD 论文发表于 The Lancet 而非 Nature Genetics）。</p>
+<p><strong>十、参考文献</strong></p>
+<p><strong>[1]</strong> Ewart AK, Morris CA, Atkinson D, et al. (1993). Hemizygosity at the elastin locus in a developmental disorder, Williams syndrome. Nat Genet 5:11–16. DOI:10.1038/ng0993-11</p>
+<p><strong>[2]</strong> Osborne LR et al. (1996). Identification of genes from a 500-kb region at 7q11.23. Genomics 35:328–337. DOI:10.1006/geno.1996.0469</p>
+<p><strong>[3]</strong> Merscher S et al. (2001). TBX1 is responsible for cardiovascular defects in VCFS/DG. Cell 104:619–629. DOI:10.1016/S0092-8674(01)00247-1</p>
+<p><strong>[4]</strong> Jerome LA, Papaioannou VE (2001). DiGeorge syndrome phenotype in mice mutant for Tbx1. Nat Genet 27:286–291. DOI:10.1038/85845</p>
+<p><strong>[5]</strong> Lindsay EA et al. (2001). Tbx1 haploinsufficiency in the DiGeorge syndrome region. Nature 410:97–101. DOI:10.1038/35065105</p>
+<p><strong>[6]</strong> Golzio C et al. (2012). KCTD13 is a major driver of mirrored neuroanatomical phenotypes of the 16p11.2 CNV. Nature 485:363–367. DOI:10.1038/nature11091</p>
+<p><strong>[7]</strong> Bagheri H et al. (2016). Identifying candidate genes for 2p15p16.1 microdeletion. JCI Insight 1:e85461. DOI:10.1172/jci.insight.85461</p>
+<p><strong>[8]</strong> Miceli M et al. (2023). Trait-driven analysis of 2p15p16.1 microdeletion. Genes &amp; Genomics 45:495–508. DOI:10.1007/s13258-023-01369-7</p>
+<p><strong>[9]</strong> Samocha KE et al. (2014). A framework for the interpretation of de novo mutation. Nat Genet 46:944–950. DOI:10.1038/ng.3050</p>
+<p><strong>[10]</strong> Lek M et al. (ExAC, 2016). Analysis of protein-coding genetic variation in 60,706 humans. Nature 536:285–291. DOI:10.1038/nature19057</p>
+<p><strong>[11]</strong> Karczewski KJ et al. (2020). The mutational constraint spectrum quantified from variation in 141,456 humans. Nature 581:434–443. DOI:10.1038/s41586-020-2308-7</p>
+<p><strong>[12]</strong> Wright CF et al. (DDD, 2015). Genetic diagnosis of developmental disorders in the DDD study. Lancet 385:1305–1314. DOI:10.1016/S0140-6736(14)61705-0</p>
+<p><strong>[13]</strong> Deciphering Developmental Disorders Study (2017). Prevalence and architecture of de novo mutations in developmental disorders. Nature 542:433–438. DOI:10.1038/nature21062</p>
+<p><strong>[14]</strong> ClinGen Dosage Sensitivity SOP v2 (URL): https://clinicalgenome.org/docs/dosage-sensitivity-curation-sop-v2/</p>
+<p><strong>[15]</strong> McDonald-McGinn DM et al. (1993–). 22q11.2 Deletion Syndrome. GeneReviews. https://www.ncbi.nlm.nih.gov/books/NBK1523/</p>
+<p><strong>[16]</strong> Huang N, Lee I, Marcotte EM, Hurles ME (2010). Characterising and predicting haploinsufficiency. PLoS Genet 6:e1001154. DOI:10.1371/journal.pgen.1001154</p>
+<p><strong>[17]</strong> Shihab HA, Rogers MF, Campbell C, Gaunt TR (2017). HIPred. Bioinformatics 33:1751–1757. DOI:10.1093/bioinformatics/btx028</p>
+<p><strong>[18]</strong> Liu Z, Huang YF (2023). Deep multiple-instance learning (DosaCNV). bioRxiv. DOI:10.1101/2023.08.29.555384</p>
+<p><strong>[19]</strong> Rahaie M, Rabiee R, Alinejad-Rokny H (2023). DeepGenePrior. PLoS Comput Biol 19:e1011249. DOI:10.1371/journal.pcbi.1011249</p>
+<p><strong>[20]</strong> LaPolice TM, Huang YF (2023). DeepLOF. BMC Bioinformatics 24:347. DOI:10.1186/s12859-023-05481-z</p>
+<p><strong>[21]</strong> Collins RL et al. (2022). A cross-disorder dosage sensitivity map of the human genome. Cell 185:3041–3055. DOI:10.1016/j.cell.2022.06.036</p>
+<p><strong>[22]</strong> Schuetz M et al. (2024). CNVoyant. Sci Rep 14:22038. DOI:10.1038/s41598-024-72470-4</p>
+<p><strong>[23]</strong> Sládeček T et al. (2023). MarCNV. Sci Rep 13:9753. DOI:10.1038/s41598-023-37352-1</p>
+<p><strong>[24]</strong> Lv H et al. (2023). dbCNV. BMC Genomics 24:126. DOI:10.1186/s12864-023-09225-4</p>
+<p><strong>[25]</strong> Middelkamp S et al. (2019). Prioritization of genes driving congenital phenotypes. Genome Med 11:74. DOI:10.1186/s13073-019-0692-0</p>
+<p><strong>[26]</strong> Liu C et al. (2026, ahead-of-print). PathoSV. Genome Med. DOI:10.1186/s13073-026-01653-7</p>
+<p><strong>[27]</strong> Gu A, Chen JY (2025). GETgene-AI. Front Syst Biol 5:1649758. DOI:10.3389/fsysb.2025.1649758</p>
+<p><strong>[28]</strong> Watson CT et al. (2014). Genetics of microdeletion and microduplication syndromes. Annu Rev Genomics Hum Genet 15:215–244. DOI:10.1146/annurev-genom-091212-153408</p>
+<p><strong>[29]</strong> Motahari Z, Moody SA, Maynard TM, LaMantia AS (2019). In the line-up: deleted genes associated with DiGeorge/22q11.2. J Neurodev Disord 11:7. DOI:10.1186/s11689-019-9267-z</p>
+<p><strong>[30]</strong> Goldenberg P (2018). An update on common chromosome microdeletion and microduplication syndromes. Pediatr Ann 47:e198–e203. DOI:10.3928/19382359-20180419-01</p>
+</details></main></body></html>

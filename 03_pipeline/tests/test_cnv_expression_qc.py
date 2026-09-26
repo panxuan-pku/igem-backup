@@ -1,9 +1,8 @@
 """Tests for interval gene expression QC (needs anndata)."""
 import numpy as np
 import pandas as pd
+import anndata
 import pytest
-
-anndata = pytest.importorskip("anndata")
 
 from src.cnv.expression_qc import interval_gene_qc
 

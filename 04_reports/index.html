@@ -1,0 +1,1560 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>04_reports 文档盘点</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>04_reports 文档盘点</h1><p class="lead">从项目历史、筛选方法、虚拟细胞、文献、Wiki 与集成设想六类入口阅读。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>所有原文、数字、引文和历史建议均保留；本次整理不等同重新核实文献，也不把旧建议当成实施授权。</li><li>正文按需展开；当前代码使用方式以 03_pipeline/docs/index.html 和工具现行 README 为准。</li><li>流行病学 3.60/万与 2.94/万的来源口径问题仍未解决；不能自动选一个值用于正式发布。</li><li>Notebook 不能替代逐次审计；PROJECT_LOG 全部条目可展开查看。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-data-local-only-href="iGEM_Notebook_%E6%95%B4%E5%90%88%E7%89%88.txt" title="本地保留的来源文件，不随公开仓库发布">iGEM_Notebook_整合版.txt</span></td><td>实验 Notebook 时间线、人员与事件记录；待核实日期不擅自补齐</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>2</td><td><a data-local-only-href="PROJECT_LOG.md" title="本地保留的来源文件，不随公开仓库发布">PROJECT_LOG.md</a></td><td>项目决策与修复时间线，56 个条目完整保留</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>3</td><td><a data-local-only-href="microdeletion_prevalence_report.md" title="本地保留的来源文件，不随公开仓库发布">microdeletion_prevalence_report.md</a></td><td>流行病学统计口径与图表对应说明；与 06 数据及交付包绑定</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. iGEM_Notebook_整合版.txt</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><pre>日期：2026年7月27日
+部门：drylab
+参与人员：潘炫
+事件描述：
+调研SIGnature单细胞分析方法，下载代码并了解运行流程。初步确定使用SCimilarity和基因归因分析，建立从疾病数据分析、候选基因筛选到扰动模拟的计算路线。
+
+日期：2026年8月13日
+部门：drylab
+参与人员：潘炫
+事件描述：
+搭建VirtualCellTool初版，实现细胞展示、基因归因和表达扰动等功能。在PBMC数据上完成基础测试，并使用多发性硬化数据开展疾病与对照比较，生成分析结果和图表。
+
+日期：2026年8月13日至17日（具体日期待核实）
+部门：drylab
+参与人员：潘炫
+事件描述：
+接入GEARS模型，完成“归因分析—扰动预测—结果比较”的计算流程。在已有扰动数据上完成初步验证，预测结果与实测数据较为一致，后续继续检查其对微缺失病的适用性。
+
+日期：2026年8月16日
+部门：drylab
+参与人员：潘炫
+事件描述：
+检查SCimilarity对微缺失病候选基因的覆盖情况，发现大部分关键基因已包含在模型中，因此决定继续使用该模型。选取22q11.2缺失综合征数据，准备进一步检验其在脑类器官中的适用性。
+
+日期：2026年8月17日
+部门：drylab
+参与人员：潘炫
+事件描述：
+使用真实扰动数据检验归因方法，发现归因结果能够反映部分表达变化，但不能可靠预测干预效果。同时发现GEARS缺少多个微缺失病关键基因，决定不将其用于本项目的直接药效预测。
+
+日期：2026年8月18日
+部门：drylab
+参与人员：潘炫
+事件描述：
+发现TBX1在所用脑类器官数据中表达较少，将主线验证对象由22q11.2缺失综合征调整为Williams综合征。完成患者与对照数据的预处理和归因分析，主要观察到神经元分化相关变化。
+
+日期：2026年8月18日
+部门：drylab
+参与人员：潘炫
+事件描述：
+使用CellOracle模拟GTF2I表达降低与上调。部分神经相关基因出现预期方向的变化，但整体恢复信号不明显。整理方法复盘报告，记录归因和扰动模拟的结果及局限。
+
+日期：2026年8月19日
+部门：drylab
+参与人员：潘炫
+事件描述：
+整理阶段汇报，按照设计、构建、测试和学习的过程梳理工作。重点说明各项测试结果如何推动技术路线调整，并明确计算结果与实际治疗效果之间的区别。
+
+日期：2026年8月26日
+部门：drylab
+参与人员：潘炫
+事件描述：
+根据团队讨论，调整为以遗传学证据为基础的基因优先级排序方案，并计划使用已知相关基因作为正对照。明确靶点选择需要结合表型和组织背景，虚拟扰动主要用于提出机制假设。
+
+日期：2026年9月1日
+部门：drylab
+参与人员：潘炫
+事件描述：
+统一整理疾病数据、分析脚本、结果和报告，修正文件路径并检查运行环境。补充工作日志、成果索引和项目架构图，方便后续复现与汇报。
+
+日期：2026年9月1日前后（原日志估计日期）
+部门：drylab
+参与人员：潘炫
+事件描述：
+启动微缺失主效基因筛选管线建设，搭建基因名称标准化、证据合并、可选AI评分和综合排序的基础流程。建立配置文件、测试框架及工程说明，准备开展真实数据验证。
+
+日期：2026年9月5日
+部门：drylab
+参与人员：潘炫
+事件描述：
+使用Williams综合征的35个候选基因完成首次全流程运行，修复数据读取和证据合并问题。发现部分基因排名受到归一化方式影响，提出调整排序方法和补充证据的改进方案。
+
+日期：2026年9月6日
+部门：drylab
+参与人员：潘炫
+事件描述：
+调整归一化方式，改善不同排序方法之间的一致性。接入DeepLOF辅助评分，覆盖大部分Williams候选基因，并记录GTF2I等基因缺少外部评分的情况。
+
+日期：2026年9月7日
+部门：drylab
+参与人员：潘炫
+事件描述：
+调研从单细胞数据识别微缺失区间的方法，决定继续以已知临床区间作为候选基因来源。同时调查WHS的数据资源，在当时检索范围内未找到合适的患者单细胞数据，因此考虑让管线适应不同数据条件。
+
+日期：2026年9月7日
+部门：drylab
+参与人员：潘炫
+事件描述：
+设计验证、增强筛选、全流程分析和探索四类运行模式，并提出表型分组等后续开发方向。分析Williams基因的mRNA变化，发现部分基因表达接近对照；新增补偿状态分析、隐性基因过滤和结果提示等功能。
+
+日期：2026年9月12日
+部门：drylab
+参与人员：潘炫
+事件描述：
+整理NSD2与WHS相关的患者、功能和动物模型证据，并核对文献引用。明确NSD2是重要主效基因之一，但不能单独解释WHS的全部表型，为后续选靶和实验设计提供依据。
+
+日期：2026年9月12日
+部门：drylab
+参与人员：潘炫
+事件描述：
+使用WHS候选基因测试排序管线，发现NSD2的旧基因名称导致部分证据未被正确合并。修复别名映射后，NSD2升至首位；不使用AI评分时也得到相同结果。
+
+日期：2026年9月12日
+部门：drylab
+参与人员：潘炫
+事件描述：
+调研虚拟细胞工具，明确VirtualCellTool主要用于机制假设和交互展示。提出结合CellOracle、CIPHER和线性模型对照的方案，记录各工具的适用范围与后续接入计划。
+
+日期：2026年9月13日
+部门：drylab
+参与人员：潘炫
+事件描述：
+完成Williams和WHS的六组运行模式测试，修正归一化和组织表达惩罚配置。修复后，已知相关基因能够排在前列。补充mRNA状态分析，并按主题整理结果文件。
+
+日期：2026年9月13日
+部门：drylab
+参与人员：潘炫
+事件描述：
+修复VirtualCellTool启动卡死、缓存失效和数据集切换异常等问题，改善加载速度和前端布局。调整分组响应评分，提高标志基因测试的识别效果，并区分细胞类型与患者、对照分组。
+
+日期：2026年9月13日
+部门：drylab
+参与人员：潘炫
+事件描述：
+修复扰动前后位置变化无法显示的问题，增加全景与局部放大视图。补充表达分布、归因和扰动结果图，完善解释提示，并通过浏览器功能测试。
+
+日期：2026年9月13日
+部门：drylab
+参与人员：潘炫
+事件描述：
+将筛选结果与VirtualCellTool衔接，测试候选基因上调后的模拟响应。发现基因排名与模型响应强弱并不完全一致，且结果受组织背景影响；将这些观察保留为后续实验设计的线索。
+
+日期：2026年9月14日
+部门：drylab
+参与人员：潘炫
+事件描述：
+核对代码、文档和日志，修正版本、功能说明、输出路径及测试数量等不一致记录。管线测试和浏览器测试通过，并整理仍需处理的配置问题。
+
+日期：2026年9月14日
+部门：drylab
+参与人员：潘炫
+事件描述：
+完成iGEM Wiki的Model和Document页面大纲，梳理研究原理、开发过程、验证结果及工具使用说明。标注已有材料和待补内容，为后续正文、图表和英文版本制作做准备。
+
+日期：2026年9月14日
+部门：drylab
+参与人员：潘炫
+事件描述：
+根据实际代码更新v2.2架构文档，区分已实现功能与后续计划。核对运行模式、配置和示例结果，说明当前功能边界，并整理组织表达映射等后续待办。
+</pre></details><details id="file2"><summary>2. PROJECT_LOG.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc2-项目日志-染色体微缺失主效基因筛选管线">项目日志 — 染色体微缺失主效基因筛选管线</h1>
+<blockquote>
+<p>项目代号：iGEM SINEUP Microdeletion Gene Prioritization Pipeline 关联文档：<code>架构设计_v2.md</code> · <code>工程化指导书 v1.md</code> · <code>管线现状与Williams主效基因筛选实验总结_2026-09-05.md</code> · <code>derived/tools/VirtualCellTool/docs/HANDOFF_v3.md</code> 维护规则：每次重大决策/转折/里程碑追加一条目。时间倒序。不删除历史条目。</p>
+</blockquote>
+<hr />
+<h2 id="doc2-条目-56-2026-09-25按编号匹配注释探索表扩展与核心目标收尾">条目 #56 — 2026-09-25（按编号匹配注释、探索表扩展与核心目标收尾）</h2>
+<ul>
+<li>用户决定：原始符号及每行计数保留，按唯一编号匹配注释/位置；无法确定的情况明确报告。真实自动区间出现两个 NOX5 编号后，用户批准探索表增加 gene_id，正式入口保留符号唯一性检查。</li>
+<li>修复：加载、定位、窗口、表达 QC 使用编号；全输入定位清单可追溯，重复编号/歧义坐标仍拒绝。探索表按编号分行并保留区间来源；区间验证限定本区间编号，修复借用区间外同名表达的问题。新增失败用例分别复现后修复；不改科学阈值、评分和权重。</li>
+<li>验证：本地与新建独立环境标准各 <strong>445 passed / 0 skipped</strong>，环境与发布检查通过；WBS/WHS 排名/报告、WBS 已知区间完整链及重复与基线一致。真实六样本 48,000 细胞两轮推断，逐样本核对定位后的原始计数/符号/barcode/分组精确一致；最终提取重复一致。CTRL3/WS3 独立 16,000 细胞输出隔离通过。n_jobs=1 限制并发内存，原 chunksize 和科学参数不变。</li>
+<li>真实结果：正式候选 35 行，探索表 2,350 编号/2,349 符号；NOX5 两编号分别保留。37,458 输入行中 19,851 定位，17,468 非蛋白编码及 13 非主染色体按原规则排除，126 个在当前完整 GTF 中未找到，单列清单，不按符号猜测或改名。工程通过不等于自动 CNV 科学检验通过；原始比对参考版本尚待核实。</li>
+<li>交接：CR-057 工程关闭；58 项台账为 53 关闭、1 待科学评估、1 接受风险、3 延期。其余边界不变；未提交/推送、未替换正式产物。<a data-local-only-href="../00_docs/04_acceptance/2026-09-25_gene_identity/GENE_ID_REPAIR_2026-09-25.md" title="本地保留的来源文件，不随公开仓库发布">最终验收</a>、<a data-local-only-href="../00_docs/04_acceptance/2026-09-25_gene_identity/CORE_ROBUSTNESS_EVIDENCE_2026-09-25.json" title="本地保留的来源文件，不随公开仓库发布">持久化证据</a>、<a data-local-only-href="../00_docs/CNV_UNRESOLVED_IDS_2026-09-25.csv" title="本地保留的来源文件，不随公开仓库发布">未匹配编号</a>；详细本机日志在 test_artifacts/gene-id-repair-20260925/。</li>
+</ul>
+<h2 id="doc2-条目-55-2026-09-24核心目标阶段验收矩阵qccnv-状态与新环境">条目 #55 — 2026-09-24（核心目标阶段验收：矩阵/QC、CNV 状态与新环境）</h2>
+<ul>
+<li>目标与授权：用户设定持续目标，明确纳入矩阵/身份/QC、重开 CR-012、多样本隔离和独立环境核心复现。从 <code>main / 3af3d98</code> 叠加 #54 等既有修改，不提交/推送，不改科学评分、权重、QC 阈值和正式产物。</li>
+<li>修复：新增 CR-057 输入/身份契约（进行中），验证压缩文件、维度、有限非负整数计数及标识，拒绝自动改名/补零和跨样本错位，保留 barcode 与 JSON 复合细胞身份；扩展非压缩源文件输出冲突保护。CR-058 工程关闭：必要组、QC 后空样本、无定位基因/窗口明确报告不足。CR-012 工程关闭：NOT_EVALUATED、INSUFFICIENT_DATA、ERROR 与实际 PASS/FAIL 分开，已记录产物丢失报错，染色体 chr 前缀等价比较，原科学判定公式/阈值不变。</li>
+<li>失败证据与验证：首批 23 项输入失败，QC 批次 7 failed/23 passed，初始状态 6 failed/2 passed；追加复现丢失 h5ad、染色体别名和非压缩路径保护。共新增 46 项，本地与新环境标准各 <strong>425 passed / 0 skipped</strong>，两套环境检查通过，发布 <strong>45 required files</strong> 通过。合成场景使用真实依赖运行两研究、各四样本、各两轮完整推断/分段/提取，身份/计数精确，核心表及报告重复一致、研究间输出不变。</li>
+<li>独立环境：在 <code>test_artifacts/core-robustness-goal-20260924/independent/</code> 建立必要源码/数据副本，用 <code>setup_envs.sh --pipeline-only</code> 新建独立 venv（同一 macOS 主机，非新机器/远端克隆），现用环境未重建；首次沙箱 DNS 失败后联网安装成功。独立解释器与模块路径已核对，输入/源码哈希与当前版本一致。WBS 35 行、WHS 19 行候选三步链各重复两次，normalized/evidence/ranked/report 均与前批基线字节一致；WBS 区间提取也接完整三步，候选及下游与候选入口一致。</li>
+<li>真实输入：原项目 Williams 的 CTRL1/2/3、WS1/2/3 六份 matrix/features/barcodes 已完整读取，数值/维度、无重复矩阵坐标、唯一基因编号和样本内 barcode、跨样本基因顺序通过；每份均有 27 个重复符号涉及 54 行。12 个正式核心输入和 18 个真实原始文件哈希不变。没有把原始矩阵检查写成真实 CNV 通过。</li>
+<li>剩余决定：已询问是否按唯一编号对应注释、保留符号和逐行计数，下游仍歧义则明确拒绝；尚无答复，当前重复符号明确报错。<strong>CR-057 和总目标未完成</strong>，完整真实 CNV/QC 后计数、重复运行和隔离仍待此决定。CR-046/051/049、CellOracle 及外部合并范围不变。</li>
+<li>已改文件：本轮为 <code>src/cnv/{infercnv,workflow,artifacts,expression_qc,segments}.py</code>、三份新增 CNV 测试及 workflow 夹具/状态测试；同步 README、CNV 文档、台账、最小核心和交接导航。源码/测试列表及证据见 <a data-local-only-href="../00_docs/04_acceptance/2026-09-24_input_qc/CORE_ROBUSTNESS_GOAL_2026-09-24.md" title="本地保留的来源文件，不随公开仓库发布">阶段验收</a> 与 <a data-local-only-href="../00_docs/04_acceptance/2026-09-24_input_qc/CORE_ROBUSTNESS_EVIDENCE_2026-09-24.json" title="本地保留的来源文件，不随公开仓库发布">持久化证据 JSON</a>。详细本机日志在 <code>test_artifacts/core-robustness-goal-20260924/</code>，按仓库规则忽略。</li>
+<li>下一步：收到身份政策选择后先复现、最小修改、隔离真实六样本验收，再重跑受影响回归并更新记录；不能仅凭已有 425 项通过宣布目标完成。本批未执行 Git 提交或推送。</li>
+<li>收尾复核：当前与独立副本共 45 份源码/测试/脚本、12 个核心输入和核心输出哈希与验收证据一致，8 处新增证据链接有效；结果已追加到持久化证据 <code>final_evidence_audit</code>。仅校准矩阵表中 nnz 为“存储条目数”的表述，未再修改业务代码；真实 CNV 仍待身份政策决定。</li>
+</ul>
+<h2 id="doc2-条目-54-2026-09-24cr-055056样本身份预检与显式控制基因">条目 #54 — 2026-09-24（CR-055/056：样本身份预检与显式控制基因）</h2>
+<ul>
+<li>目标与基线：用户要求继续处理后续鲁棒性问题；从干净 <code>main / 3af3d98</code> 开始，上一批 CR-053/054 已提交。保持科学评分、正式数据及既有有效输入的行为，不自动提交/推送。</li>
+<li>关键决定：用户明确选择“采用显式配置；允许 [] 表示未设置控制基因”。删除内置五基因回退，要求 <code>consensus_v2.tuning.positive_controls</code> 列表或 <code>--controls</code> 文件；文件优先级保留。缺失或无效时在写出排名/报告/审计前报错；[]/空文件在报告中记未设置、未评估，验证模式审计 <code>validation_pass</code> 为 null。示例 YAML 的显式列表保留，跨疾病仍须核对适用性。</li>
+<li>样本修复：<code>infercnv.py</code> 共用身份预检，<code>workflow.py</code> 的整理与推断阶段接入；要求非空样本列表、唯一且有效的 ID、有效分组字符串/路径和唯一实际目录（含符号链接解析）。无效配置在读取矩阵、创建样本目录、改动旧计算产物前失败；仅区间入口不受影响。不改变患者/对照含义、过滤阈值或 CNV 算法。</li>
+<li>复现与测试：新增样本测试首批 25 failed / 3 passed；缺失控制配置四项、空控制报告八项修改前均失败。共新增 41 项（样本 29、控制 12），原控制类型八项及整理 36 项保留。四个既有测试文件按新契约显式声明测试控制列表；完整验收 <strong>379 passed / 0 skipped（54.76s）</strong>，环境声明/版本/导入/pip check 通过，发布检查 <strong>45 required files</strong> 通过，diff whitespace 检查通过。</li>
+<li>真实及合成验证：WBS/WHS 复用既有 evidence，以各自控制文件重跑含 AI/敏感性的排名，<code>ranked.csv</code>、<code>report.md</code> 与前批逐字节一致；12 项正式输入哈希前后不变。四份合成 10x（两患者、两对照）经真实 Scanpy/AnnData 加载，样本/分组标签、4×2 维度和原始计数逐项正确；这不是实际疾病多样本 CNV 验收。</li>
+<li>已改文件：三份生产代码 <code>src/cnv/infercnv.py</code>、<code>src/cnv/workflow.py</code>、<code>src/consensus_v2.py</code>；新增 <code>tests/test_sample_identity.py</code>，扩展 <code>test_control_contract.py</code>，适配 <code>test_consensus_v2.py</code>、<code>test_consensus_numeric_config.py</code>、<code>test_optional_evidence_sources.py</code>、<code>test_phenotype_panels.py</code>；README、CNV 文档、最小核心清单、台账及交接导航同步。</li>
+<li>验证记录：<code>test_artifacts/robustness-batch3-20260924/</code> 包含修改前日志、首次完整回归与修正后的 <code>final/summary.json</code>/<code>pytest.log</code>、<code>release.log</code>、<code>verify_real.py</code>/<code>real-summary.json</code> 及隔离排名产物。该目录按仓库规则忽略，不作为正式结果替换。</li>
+<li>下一步与边界：矩阵维度/数值、细胞和基因标识、患者/对照组齐全及 QC 后空组仍待定向复现；本次只关闭 CR-055/056，不提前关闭矩阵问题或重开四项延期。原六项未关闭事项保持。建议单独提交本批，尚未执行 Git 提交或推送。</li>
+</ul>
+<h2 id="doc2-条目-53-2026-09-24cr-054重复区间候选合并与来源保留">条目 #53 — 2026-09-24（CR-054：重复区间候选合并与来源保留）</h2>
+<ul>
+<li>用户理解重复提取含义后，明确批准“同研究每个基因只排名一次、完整保留来源、身份/坐标冲突时报错”；控制基因默认策略仍未决定，保留现状。叠加 #52 未提交修改，不扩展到科学算法、跨研究合并或手工输入的别名自动归并。</li>
+<li>修改 <code>src/cnv/workflow.py</code>：提取记录保留基因编号/链/参考基因组和输入区间坐标；唯一候选生成前核对身份一致性，同一编号对应多个符号、重复身份缺失或坐标冲突明确失败。三个候选表均每基因一行，单次提取保持六列；有重复时增加 <code>candidate_provenance</code> JSON，多来源不保留误导性的首个 deletion_id，混合类型 source=multiple。已知/自动区间即使同名也分别追溯；两种提取模式均校验已知区间坐标/参考版本。</li>
+<li>新增 <code>candidate_provenance.csv</code>，逐条来源附 <code>in_candidates</code> 标记，包含默认排除的自动来源；纳入输出清单，因此审计、空表、归档、失败和上游失效规则一致。<code>normalize.py</code> 透传 JSON，已有 merge/rank 自然保留，不改变评分逻辑。文档详见 <a data-local-only-href="../03_pipeline/docs/cnv_workflow.md" title="本地保留的来源文件，不随公开仓库发布">CNV 来源契约</a>，同步最小核心清单与台账。</li>
+<li>新增 10 项回归，修改前全部失败；验证重叠区间全链路/特殊字符区间名、编号/坐标/链冲突、缺失身份、同编号多符号、完全重复注释、空来源表、已知与自动来源同名及自动候选开关。修改后标准入口 <strong>338 passed / 0 skipped</strong>、环境 PASS；发布 45 项与 diff 检查通过。测试覆盖来源明细的失败归档、空表和输出哈希。</li>
+<li>真实核对：重跑 WBS/WHS normalize→merge→rank+sensitivity，normalized.csv、evidence.parquet、ranked.csv、report.md 均与上一批逐字节一致。复用上一批 GENCODE gene-order，WBS 单区间 35 行六列与当前输入逐值一致；另人工复制该区间做工程测试，70 条来源合为 35 个排名候选，每行两条来源，除 provenance/deletion_id 外全部排名列精确不变。12 个正式输入/配置/证据/AI 文件 SHA-256 保持；这不是新增临床区间或科学认证。</li>
+<li>证据：<code>test_artifacts/robustness-batch2-20260924/interval-fix/</code> 含失败复现、真实验证脚本/命令/摘要；完整验收在 <code>test_artifacts/pipeline/robustness-batch2-intervals-20260924/</code>。原六项延期/风险/待核对状态不变，WBS 未解析 ENSG00000289346 仍保留。</li>
+<li>下一步：显式控制基因策略等待决定（要求配置列表/文件并允许 []，或保留默认并警告）。本项和 #52 输入校验已完成，可考虑一并 Git 提交；未提交、推送或覆盖正式产物。</li>
+</ul>
+<h2 id="doc2-条目-52-2026-09-24下一批控制输入校验与多区间契约复现">条目 #52 — 2026-09-24（下一批：控制输入校验与多区间契约复现）</h2>
+<ul>
+<li>目标与约束：用户要求处理下一批问题；从干净 <code>main / 5bcd923</code> 开始，聚焦重复候选来源与控制基因，不改科学算法、正式数据或历史产物。</li>
+<li>CR-053：将 <code>positive_controls: NSD2</code> 拆为四个字符、将空值/数字变成假符号属于明确输入错误。新增测试先得到 7 failed / 1 passed，再校验实际生效列表必须由非空字符串组成，允许 []；文件优先级、空文件、去重和大小写归一化保持。异常 CLI 退出 2，排名/报告/审计原样保留。修改 consensus_v2.py、新增 test_control_contract.py，并更新 README 与审查台账。</li>
+<li>CR-054：人工区间 synthetic_a（chr1:100–400）与 synthetic_b（chr1:150–250）都选中 TEST_A（100–200）；提取保留来源、标准化后同 HGNC 出现两行，证据合并失败。默认 CNV 配置仅有 WBS 单区间；这不是 WBS/WHS 混合，也不证明当前真实排名错误。已经向用户说明并询问合并/拒绝策略，用户要求先解释含义；该契约尚未修改。</li>
+<li>另一个待决策项：未指定控制基因时，是否要求显式文件/列表（允许 []）或保留默认并警告。尚未得到答复，内置默认行为保留。</li>
+<li>验证：专项 8 passed；标准入口 <strong>328 passed / 0 skipped</strong>、环境 PASS；发布 45 项通过。用上一批 evidence.parquet、当前正式 AI/配置和各疾病控制文件重跑 rank+sensitivity，WBS/WHS 的 ranked.csv 与 report.md 均与上一批逐字节一致；没有重新执行区间提取或证据合并的真实全流程。详细证据在 <code>test_artifacts/robustness-batch2-20260924/</code>，完整验收在 <code>test_artifacts/pipeline/robustness-batch2-20260924/</code>。</li>
+<li>下一步：用户明确多区间候选与默认控制策略后，再补对应失败用例及最小修复。本批阶段性记录，不宣称整批完成；未提交或推送，已完成的校验可独立审阅提交。</li>
+</ul>
+<h2 id="doc2-条目-51-2026-09-24核心运行验收与-cr-052-路径冲突修复">条目 #51 — 2026-09-24（核心运行验收与 CR-052 路径冲突修复）</h2>
+<ul>
+<li>负责人要求开始处理剩余问题和鲁棒性；从干净 <code>main / 8cd0dab</code> 开始，先运行标准验收：303 passed / 0 skipped，环境与发布 45 项通过。核心范围为候选列表和仅区间入口，保留六项科学/功能延期及接受风险状态，不改科学算法或正式数据。</li>
+<li>在独立目录实际重算 WBS/WHS，两次运行及修复后的 normalized/evidence/ranked/report 均逐字节一致；与 2026-09-19 审查排名各 46 个共有列全表精确一致，新增五个来源/区间列。WBS 35 行、未解析 1；WHS 19 行、未解析 0，NSD2 #1、分数 8（ClinGen 3、两项 gnomAD 各 2、DeepLOF 1）；显式使用各自控制文件、不调权，不作为新的科学认证。</li>
+<li>使用本地 GENCODE v44 GTF 在新目录生成 gene-order，再走 WBS 仅区间提取；35 行六列与当前候选一致，示例区间本轮不作临床来源认证。12 个正式输入/证据/配置/AI 文件在运行前后 SHA-256 一致。</li>
+<li>CR-052：首批 13 个路径冲突用例修改前全部失败（10 个错误覆盖仍退出 0，3 个目录错误退出 1）；为三个公共 CLI 增加一个共用预检，拒绝同文件、链接别名、文件/目录与父子输出冲突。最终新增 17 项，扩展已有双研究原目录重复运行验证；标准套件 <strong>320 passed / 0 skipped</strong>、环境 PASS、发布 45 项通过。无新依赖，不引入评分或输出目录架构改造。</li>
+<li>关键命令、输入和产物哈希、范围及后续工作写入 <a data-local-only-href="../00_docs/04_acceptance/2026-09-24_path_safety/CORE_ACCEPTANCE_2026-09-24.md" title="本地保留的来源文件，不随公开仓库发布">核心鲁棒性验收</a>；详细本机证据在 <code>test_artifacts/robustness-20260924/</code> 和 <code>test_artifacts/pipeline/robustness-20260924-{baseline,fixed}/</code>，不依赖临时目录作为可移植输入。同步台账、最小核心、README 和测试说明。</li>
+<li>下一步：核对跨区间重复候选的身份/来源契约及新疾病显式控制基因；真实多样本矩阵/QC、全新环境复现和 VCT 在线验收仍未做。本批结束可考虑 Git 提交；未提交、推送、重启服务或恢复科学延期工作。</li>
+</ul>
+<h2 id="doc2-条目-50-2026-09-24交接基线校准与下一阶段建议">条目 #50 — 2026-09-24（交接基线校准与下一阶段建议）</h2>
+<ul>
+<li>按负责人要求新增 <a data-local-only-href="../00_docs/03_history/SESSION_HANDOFF_2026-09-24.md" title="本地保留的来源文件，不随公开仓库发布">会话交接文档</a>，包括实际代码基线、未提交修改、六项剩余台账、批准/暂缓边界、六项工作的建议顺序、下一阶段验收目标与可复制的接手指令。建议不是对整套实施的新授权。</li>
+<li>实际 Git 核对：<code>main / daf6872285cf2c0724a817a4a53bfdedb539ed6f</code> 已包含 R11、R03 获批工程修复和 CR-046 身份映射工程修复；旧日志“未提交”保留当时状态。交接开始时仅审查进度与 CR-046 清单两份文档未提交（19 行新增/5 行删除），无暂存或未跟踪文件；本轮保留这些修改，仅新增交接并校准进度/追加本日志。未 fetch，缓存远端比较 ahead 18 / behind 0 不代表实时远端状态。</li>
+<li>汇入前轮待提交决定：CR-046 的官方 HGNC 对照仅完成初核，29 组未获历史身份科学认证；相同输入/配置的隔离比较 WBS 35 名不变，WHS 前 17 名不变、CFAP99/POLN 第 18/19 名对调。负责人优先其他事项，科学核对和正式表替换暂缓；正式 AI 表和排名保持原样，不能外推其他疾病无影响。</li>
+<li>下一阶段建议先冻结最小核心输入/配置/输出基线并做数据流验收，再选择性合并另一个项目、补必要功能、最终归档文档、独立环境复现和 Wiki 定稿；另一个项目路径及合并范围尚待提供。历史档案与 SIGnature 上游边界保留，科学选择仍须批准。</li>
+<li>本轮验证限定为 Git 状态/差异、交接本地链接及文档一致性检查；历史 pipeline 303、VCT 67、Node 27、发布 45 等结果均标明为此前记录，不宣称本轮重跑或独立复现完成。未改代码/配置/正式数据，未重启、提交或推送；交接四份文档核对后可考虑单独提交。</li>
+</ul>
+<h2 id="doc2-条目-49-2026-09-24cr-046deeplof-身份映射工程修复">条目 #49 — 2026-09-24（CR-046：DeepLOF 身份映射工程修复）</h2>
+<ul>
+<li>用户在了解 Ensembl 与 HGNC 编号的差异后批准修复。先为未匹配 Ensembl、Ensembl/符号矛盾及缺少对照列补测试，修改前 3 项失败；随后将转换改为只接受本地 HGNC 表中唯一的 Ensembl→HGNC 对应，不用符号为缺失对应回退。两种身份都可映射但指向不同 HGNC 时排除，审计 JSON 逐行保留源标识、候选 ID 和行号；同一 HGNC 不同分数的报错保护保留。不修改原始数据、算法权重或上游 SIGnature。</li>
+<li>隔离运行真实 DeepLOF 输入：19,197 条源记录输出 18,439 个唯一 HGNC 分数，无重复；735 条 Ensembl 未匹配、23 条 Ensembl/符号不一致，均排除并审计。原先按符号合并导致的 29 组冲突，在新规则下各有一个唯一输出；这仅是可追溯工程规则，不表示 29 组生物学身份已核准。</li>
+<li>新旧表比较：新增 459 个 ID、缺少 80 个 ID，共有 ID 中 32 个分数变化。WBS 候选评分覆盖与分数不变；WHS 候选 <code>HGNC:51180</code>（CFAP99）旧分数失去覆盖，源记录 <code>ENSG00000249428</code> 未在本地 HGNC 对照表中匹配。因此正式 <code>03_pipeline/outputs/ai_scores.csv</code> 和既有排名没有替换，科学身份核对与正式替换仍待负责人确认。</li>
+<li>验证：AI 专项 <strong>22 passed</strong>；标准 pipeline <strong>303 passed / 0 skipped</strong>，环境检查通过，汇总见 <code>test_artifacts/pipeline/20260924-201002-z5i02rw_/summary.json</code>；隔离表及审计位于 <code>/tmp/igem-cr046-verified/</code>。本项相关源码、测试、README、契约、清单和进度文档已更新；工作区仍叠加未提交 R11/R03 改动，本轮未提交或推送。工程修复可提交，正式数据替换不可视为已获批准。</li>
+</ul>
+<h2 id="doc2-条目-48-2026-09-24cr-04629-组冲突核对清单">条目 #48 — 2026-09-24（CR-046：29 组冲突核对清单）</h2>
+<ul>
+<li>按用户要求建立 <a data-local-only-href="../00_docs/03_history/CR046_DEEPLOF_CONFLICT_CHECKLIST.md" title="本地保留的来源文件，不随公开仓库发布">逐组核对清单</a>：列出 29 个 HGNC ID、58 条 DeepLOF 原始记录的行号/符号/Ensembl/完整分数、本地 HGNC 参考、核对步骤、证据字段与批准/隔离重跑记录模板。</li>
+<li>只读复核源文件 SHA-256 与前条目一致；仓库 DeepLOF 文件 MD5 与代码记录的官方 MD5 一致。<code>outputs/review_20260919/</code> 的 WBS/WHS 标准化候选表与这 29 个 ID 均无直接交集；这不解决全量转换阻断，也不外推其他疾病输入。</li>
+<li>清单状态均为“待核”，本次未判定应采用哪条记录；未改映射、评分、正式输出或历史结果。CR-046 继续待负责人核实并批准具体修订。现有 R11 与 R03 工作树改动仍未提交/推送；清单可与后续修订分开提交。</li>
+</ul>
+<h2 id="doc2-条目-47-2026-09-24r03可选入口失败保护与-deeplof-冲突检测">条目 #47 — 2026-09-24（R03：可选入口失败保护与 DeepLOF 冲突检测）</h2>
+<ul>
+<li>目标/授权：用户批准 CR-044/045/048，以及 CR-046 的冲突检测部分，限定“正常运行、数据流清楚、不产生误导性输出”。叠加于 R11 未提交修改，HEAD 仍为 <code>4afb5f9</code>；不改科学算法、阈值、模型、依赖、正式输入、历史结果或服务，不提交/推送。</li>
+<li>实现：compensation 空列表/零匹配在函数和 CLI 明确失败，空文件/仅表头同样退出 2，写出前停止；部分匹配仍警告并按原公式计算。ai_scores 在映射/统计/写出前检查非空和有限 [0,1] 数值（沿用 consensus_v2 已有输入约定），拒绝非数值/NaN/Inf/布尔/越界；统计及审计内容准备后才写文件。v1 对显式 AI 文件的读取/连接错误退出 2，不再警告后继续“成功”；未指定 AI 的合法调用不变。</li>
+<li>CR-046 仅工程部分：映射到同一 HGNC 的不同分数明确拒绝，提示数量及前 10 条源记录，包含数据行号、Ensembl、符号、HGNC 和完整浮点分数；不取均值/最大值/首条，不修改映射规则。相同分数仍去重，新增审计字段记录规则和去重数量。不实现通用清洗框架或新增运行依赖。</li>
+<li>真实全量核对：19,197 条源记录中 18,435 条映射到 HGNC；发现 <strong>29 个 HGNC ID / 58 条源记录</strong>有不同分数，原台账的 HGNC:9165、HGNC:31666 只是两个例子。真实 CLI 退出 2，指定临时输出目录未创建；正式 <code>outputs/ai_scores.csv</code>、数据和历史排名未改写。已有历史表不能因本次检测通过而被认为来源冲突已解决。</li>
+<li>源快照 SHA-256：<code>data/DeepLOF_scores.csv</code> = <code>725152d577277ce644bf4e35c6bcce57aa3ecda2738861c79181c90d5634a4c8</code>；<code>data/hgnc_aliases.tsv</code> = <code>b0e18be4d7a6e6a9711d0cb94eba426b8251317798d164c8ba7f3c783c14682f</code>。</li>
+<li>待核对 ID：HGNC:10452、10874、10980、12542、12716、13449、14047、16932、18432、20629、20667、20772、21019、24578、24693、26786、28436、28716、29503、30327、31666、3167、33829、40043、40044、44667、5389、777、9165（全部使用 HGNC 前缀）。完整 58 条记录见验证目录 <code>conflict-inventory.log</code>；不擅自确定来源或回写数据。</li>
+<li>测试先行：<code>tests/test_optional_cli_safety.py</code> 初版 39 项在旧代码 <strong>36 failed / 3 passed</strong>；补测整列 True/False 在修复前 <strong>2 failed</strong>。最终专项 <strong>41 passed</strong>，含真实 CLI、新旧产物保护、正常有/无 AI、部分基因匹配、相同重复、正反输入顺序冲突和分数边界。标准 <code>scripts/test_pipeline.py</code> 环境/依赖检查通过、完整 <strong>301 passed / 0 skipped</strong>；发布 <strong>45 项通过</strong>。</li>
+<li>改动文件：三个原源码模块、一个新增定向测试、管线 README、AI 数据契约、TESTING、最小核心清单、本台账和日志；保留 R11 修改。日志 <code>/tmp/igem-cr044-048.BflmFO/</code>：<code>before.log</code>、<code>boolean-before.log</code>、<code>after-final.log</code>、<code>full/summary.json</code> 与完整 pytest/JUnit、<code>real-conflicts.log</code>、<code>conflict-inventory.log</code>、<code>release.log</code>。</li>
+<li>边界：没有对所有旧入口增加完整输入规范，不升级 v1 方法；本次保护针对写出前可检查的输入问题，不保证磁盘故障/中断时多文件事务回滚；未重跑真实患者补偿分析、CNV、WBS/WHS 科学结论、VCT 在线或浏览器 E2E。CR-015 补充了三个辅助入口的定向 CLI 测试，但完整覆盖余项仍延期。</li>
+<li>交接：CR-044/045/048 关闭；CR-046 检测完成但来源选择未批准，不整体关闭。<strong>51 项：45 关闭、2 待处理、1 接受风险、3 延期</strong>。本批授权完成，提醒考虑 Git 提交；未提交/推送，R11 仍未提交。下一步建议只读核对 29 组冲突的原始基因身份/来源并提出处理意见，再由负责人决定是否改表；CR-051、WHS 对应关系、Tier 0 来源标签和 ENSG00000289346 等仍保留。</li>
+</ul>
+<h2 id="doc2-条目-46-2026-09-24r11模型输入契约与历史操作说明分界">条目 #46 — 2026-09-24（R11：模型输入契约与历史操作说明分界）</h2>
+<ul>
+<li>目标/授权：用户批准 CR-041 补基本数据检查并在 README 说明结构；CR-042 保留历史实验与设计，标明错误/过时安装启动说明的版本、时间及使用范围。从干净 <code>main / 4afb5f9</code> 开始，用户已提交 R10；不改上游 SIGnature、算法、依赖、模型、正式数据或历史结果，不提交/推送。</li>
+<li>CR-041：复用现有 <code>src/input_checks.py</code>，为 <code>perturb.py</code> / <code>attribute.py</code> 增加稠密 NumPy 数组维度/非空/实际 gene_order 宽度、实数、有限性与 float32 范围校验；三个扰动入口统一未知基因 ValueError 和有限标量检查。按原模型 float32 精度计算，拒绝会溢出的输入；整数数组先转换，修正小数替换被截断的同一输入边界问题，不修改调用者数组。未新增配置层、依赖或通用模型框架。</li>
+<li>README 新增单细胞/批次/归因输入输出表、列序与 lognorm 尺度要求、PBMC/MS/WS 文件对应和行序责任。明确 WS 不是 WHS，28,231 以模型 gene_order 为准；网页 CSR 存储与稠密单细胞推理不同，基本数值检查不能发现错误基因列标签、样本身份或历史来源，不自动整理、归一化或稠密化输入，也不等于科学验证。</li>
+<li>CR-042：13 份 MD/HTML 加历史操作提示：VCT ARCHITECTURE/HANDOFF；旧根 README、旧沙盒约定、独立验证委托书及 HTML；Wiki Document/Model 页面大纲及各自 HTML；工程化 v1、架构 v2.2、DeepLOF 接入报告。标注本次日期 2026-09-24、原版本/日期（无记录就注明未知）、使用范围和当前 README/测试入口。工程化指导书原文 2025-09-01 不擅自改为 2026，说明未核实。其他历史记录/设计原文不动，无删除、搬迁或批量重写。</li>
+<li>测试先行：新增 <code>tests/test_signature_contract.py</code> 6 组测试，旧代码 <strong>64 failures / 32 errors</strong>（含子用例）；修复后 6 组通过，完整 VCT <strong>67 OK</strong>。使用小型确定性线性编码器验证真实本地封装和 Captum IG，覆盖模型前拒绝、未知基因、非法替换、动态宽度、输入不变、整数小数扰动、513 行分批及有效结果；不下载/加载正式权重进行此离线回归。</li>
+<li>额外只读真实模型冒烟通过：28,231 gene order 与交付文件一致；合成 1 行向量编码为有限 1×128，embedding/单基因扰动逐项等于直接 float32 推理；错误宽度/未知基因/非法归因输入明确拒绝。Node <strong>27 passed</strong>，发布 <strong>45 项通过</strong>。13 份历史文档非空正文保留核对通过（仅更新一条旧操作提示），44 个提示本地链接有效；HTML 为结构检查，未声称实际浏览器视觉验收。</li>
+<li>验证日志 <code>/tmp/igem-r11.kSiByQ/</code>：<code>before.log</code>、<code>after.log</code>、<code>vct.log</code>、<code>model-smoke.log</code>、<code>node.log</code>、<code>release.log</code>、<code>docs.log</code>。未重跑完整 pipeline、在线 API、完整浏览器 E2E、数据准备或历史实验，未重启正在运行的网页服务；后端生效需按 README 核对进程后重启，不能拿旧进程当最新代码验收。</li>
+<li>台账 CR-041/042 关闭，<strong>51 项：42 关闭、5 待处理、1 接受风险、3 延期</strong>。本批完成，提醒考虑单独 Git 提交，未提交/推送。下一项 CR-044：compensation 零匹配时先写坏表再崩溃，建议无候选/无匹配先明确失败且不覆盖既有输出；等待用户批准，科学来源 CR-051 等未擅自处理。ENSG00000289346、WHS 表型关系、Tier 0 来源标签继续保留未确认状态。</li>
+</ul>
+<h2 id="doc2-条目-45-2026-09-24r10输出规范图表纠错与数据交付包同步">条目 #45 — 2026-09-24（R10：输出规范、图表纠错与数据/交付包同步）</h2>
+<ul>
+<li>目标/授权：用户逐项批准 CR-038 输出到现有 <code>06_epidemiology/data</code>、<code>figures</code>，CR-039 修复显示，CR-040 完整导出并管理图/表。从干净 main / <code>8d4c4a8</code> 开始；本次不改统计数值/公式、筛选或扰动算法，不安装依赖、不操作上游 SIGnature、不重启服务、不提交/推送。</li>
+<li>CR-038：以脚本自身位置确定模块目录并创建 data/figures，默认行为不依赖工作目录；仅增加一个 –output-dir 参数用于独立预览，不增加配置层。交付 <code>build.py</code> 同步修正旧 outputs 路径，四表/八图复制后重建内嵌图 HTML 与同级 ZIP，不再留下旧交付包。</li>
+<li>CR-039：森林图所有元素共享行号，整体反转 y 轴，纠正四项研究的标签错位。逐图预览发现说明框遮住森林图点/对比图柱形，将说明移到图外；de novo 两处数值与误差线重叠，移到误差线右侧。原点估计、置信区间、科学叙述保持不变。</li>
+<li>CR-040：新增与图同名的 <code>22q11_2_forest.csv</code>、<code>microdeletion_birth_vs_adult.csv</code>，记录实际绘图值、已有计数/分母/区间/单位/来源。图与表共用同一数据，不重复维护数值。补模块索引、交付说明、网页四表下载链接；ZIP 包含最新图、表、HTML 与说明。原两份 CSV 字节不变，既有 <code>wbs_interval_de_analysis.csv</code> 保留不动。</li>
+<li>CR-051 新登记：16p11.2 在汇总图为 3/8329×10000≈3.60（原来源标为 Cooper 2011 成人对照），出生—成人图的出生值为 2.94、无明确来源。询问后用户明确“保留原值并登记待核对”；CSV 来源留空且标 unverified，对比图、README、报告顶部与交付页显示提示。未查询原文，不判断哪个数值正确，不伪造缺失来源或统一人群口径；此项未关闭。</li>
+<li>测试先行：初版 8 方法在旧代码下 <strong>8 failures / 3 errors</strong>（含四项标签子用例）；修复后补图外说明与百分比位置断言，R10 <strong>10 OK</strong>、原 R09 <strong>11 OK</strong>，合计 <strong>21 OK</strong>，发布 <strong>45 项通过</strong>。覆盖不同 cwd 的干净/重复运行、临时预览、四表/十二图、源表与绘图点/误差线/柱形一致、缺失来源、交付 HTML 和 ZIP 同步；正式结果另做包内容与原表字节核对，四组 PNG 已查看。日志 <code>/tmp/igem-r10-fixes.ReGvTh/</code>。未重跑全量 pipeline/VCT 或浏览器 E2E，未做新的科学/文献验收。</li>
+<li>已改文件：流行病学生成脚本、交付构建脚本、两份索引/说明及原报告顶部提示、独立 <code>scripts/tests/test_epidemiology.py</code>、本日志和审查进度；生成四表/四组三格式图并重建交付产物。旧版本保留在 Git <code>8d4c4a8</code>，同名产物按授权更新，不删除其他档案。源码/Markdown diff 检查通过；不手工格式化 Matplotlib 生成的 SVG 尾随空白。</li>
+<li>交接：CR-038～040 关闭，CR-051 待核对；台账 <strong>51 项：40 关闭、7 待处理、1 接受风险、3 延期</strong>。本批授权修复完成，提醒考虑独立 Git 提交，未提交/推送。下一批 R11：CR-041 仅本项目模型封装补输入维度/有限值与未知基因检查；CR-042 旧技术文档的环境/路径指引消歧；等待批准，保持上游第三方只读。</li>
+</ul>
+<h2 id="doc2-条目-44-2026-09-23cr-050历史面板本地文件打开提示">条目 #44 — 2026-09-23（CR-050：历史面板本地文件打开提示）</h2>
+<ul>
+<li>原因/授权：用户从 <code>file://…/web/history.html</code> 打开页面，误以为历史图片丢失。页面依赖 <code>/api/history</code> 读取材料，原本在本地文件模式也请求接口，失败后笼统提示旧服务/重启。只读诊断确认 8377 服务就绪、三图文件仍在、网页及三图接口均 HTTP 200；用户随后批准修复此体验问题。</li>
+<li>最小修改：<code>history.html</code> 在请求前识别 <code>file:</code>，显示“本地文件方式打开，不代表图片丢失”和默认 8377 服务入口；补未启动/自定义 <code>VCT_PORT</code> 指引，禁用本地模式下的无效重试，图片标为未核对而非丢失。服务模式继续使用当前来源的相对接口，不硬改端口；无自动跳转、端口探测、服务启动或依赖安装。README 同步说明。</li>
+<li>测试先行：在现有 Node 测试中补本地模式零请求/重复调用/指标与三图占位、默认入口与自定义端口提示、HTTP/HTTPS 原有错误及重试契约；修改前 <strong>24 passed / 3 failed</strong>，修改后 <strong>27 passed</strong>。历史后端专项 <strong>5 OK</strong>、发布 <strong>45 项通过</strong>、diff 检查通过；日志 <code>/tmp/igem-history-file.2Mu6Nz/</code>。</li>
+<li>浏览器验证：刷新用户当前 8377 历史页，确认读取成功、三张原图均显示已加载、在线模式不显示本地文件提示。<code>file:</code> 分支由实际内联脚本的离线 DOM/location 替身验证；浏览器工具不允许打开本地文件，未宣称真实 file:// 浏览器验收或完整 E2E 通过。</li>
+<li>交接：本次仅修改历史 HTML、已有前端测试、VCT README 和两份日志；保留前轮 R09 未提交改动，不改历史数据/图片、算法、后端或服务进程。新增 CR-050 已关闭，台账 <strong>50 项：37 关闭、9 待处理、1 接受风险、3 延期</strong>。本修复可随 R09 整理 Git 提交，未提交/推送。下一批 R10 CR-038～040 仍待批准，方案见进度文档，不自动实施。</li>
+</ul>
+<h2 id="doc2-条目-43-2026-09-23r09-历史脚本工程修复与档案索引按历史档案交付">条目 #43 — 2026-09-23（R09 历史脚本工程修复与档案索引；按历史档案交付）</h2>
+<ul>
+<li>目标/授权：用户已提交 R08 为 <code>86480ae</code>，要求继续修复后续问题；从干净 main 开始，先处理下一批 R09 的运行/环境边界和数据流问题。科学方法、历史结果、上游 SIGnature 不动；正式服务不重启、不改后端，仅同步历史网页提示，不自动 Git 提交/推送。</li>
+<li>CR-034：Williams 预处理输出前创建 <code>03_intermediate</code> 父目录，仅加一行，不改 QC/基因筛选/聚类。CR-035：两个 22q 辅助脚本移除本机固定代理及由此无用的 os 导入，保留调用者网络环境，不新增配置层或网络回退框架。</li>
+<li>CR-037：HTML→PDF 使用 argparse 与 <code>Path.resolve().as_uri()</code>，支持相对/绝对、中文、空格和 #；输入检查先于可选依赖，拒绝输入输出同路径，自动创建输出父目录。缺依赖、浏览器或导出失败返回 2 并提示原因；已启动浏览器通过 finally 关闭。安装说明复用现有 VCT <code>requirements-e2e.txt</code> 与独立浏览器下载目录，不增加依赖清单，不执行安装。已有目标 PDF 仍会被覆盖，文档要求新输出名保护历史档案；不声明原子写盘。</li>
+<li>CR-036：新建 22q README、重写 Williams README 的活跃导览、在根 README 明确默认安装边界。十脚本全部列出输入/产物/副作用，区分原始六样本归因、中间矩阵 CellOracle、两份 interval 旁支与独立排版工具；补已有指标、关键参数、随机性和来源缺口。现存 NPZ 不含完整原始元数据，新增 SHA-256 仅为本次文件快照，不能冒充生成时日志；不重写历史 MD/DOCX/PDF 或生成缺失图。</li>
+<li>只读证据：22q 矩阵 9,293×3,012，TBX1 非零细胞 15；Williams NPZ 的 KO/OE ρ −0.045604/+0.071878，差异归因与 DE 带符号/绝对值 ρ −0.022386/+0.948614。读取现存产物复算，不加载 CellOracle 或重跑科学实验。四份文件校验和记入两目录 README；当前两目录原始数据、Williams 中间 h5ad、22q results.npz 均缺失，明确保留缺口。</li>
+<li>测试先行：新增独立标准库 <code>scripts/tests/test_historical_scripts.py</code>；首版 9 方法在旧代码下 8 failures/6 errors（含子用例），修复并补目录失败/十脚本索引后 <strong>11 OK</strong>。另跑 VCT <strong>61 OK</strong>、Node <strong>24 passed</strong>、发布 <strong>45 项通过</strong>、README 本地链接与 diff 检查通过。日志 <code>/tmp/igem-r09.cvk0vV/</code>（最终回归 <code>final.log</code>、<code>vct-final.log</code>、<code>node.log</code>、<code>release.log</code>）。测试使用实际输出片段/入口、临时目录、环境及浏览器替身，非全量科学或真实 Chromium 验收；未重跑管线、在线 API/完整 E2E。</li>
+<li>CR-033：重新核对 pipeline/vct 均无 CellOracle 和 Playwright。用户明确选择“先作为历史档案，明确重跑条件与未验证项”，记为接受风险；两目录 README、根 README 和历史网页提示同步，不安装依赖、不承诺一键重跑。后续若承诺复现需重开此项，补原始输入、依赖/模型/GRN 版本、参数与运行记录，再独立验证兼容性和完整计算；不以安装最新版冒充当年环境。</li>
+<li>已改文件：四个历史 Python 脚本（Williams preprocess/html2pdf、22q geo_search/inspect_grn），两个疾病 README、根 README、历史网页提示、独立测试及两份审查日志；无正式输入/输出、模型、缓存、科学公式、上游或依赖改动。CR-034～037 关闭、CR-033 接受风险，台账 <strong>49 项：36 关闭、9 待处理、1 接受风险、3 延期</strong>；CR-036 只关闭文档问题，不代表完整谱系已恢复。R09 本批处理决定与工程验证完成，提醒考虑 Git 提交。</li>
+<li>下一步：R10 CR-038 输出目录、CR-039 森林图标签错配、CR-040 图表源表缺失；原因、后果、建议与影响已追加到审查进度文档，尚未改动流行病学脚本或图。统计方法和来源解释仍另行报批。本轮未提交/推送。</li>
+</ul>
+<h2 id="doc2-条目-42-2026-09-23获准重启正式服务补齐在线-api-与历史面板验收">条目 #42 — 2026-09-23（获准重启正式服务；补齐在线 API 与历史面板验收）</h2>
+<ul>
+<li>用户明确允许重启。核对 8377 监听 PID 63337 的命令为本仓库 <code>.venv/vct/bin/python web/app.py</code>，工作目录为当前 VirtualCellTool；只向此进程发送 TERM。调用现有 <code>web_launcher.launch</code> 启动当前代码，健康接口核对 service、ready、root、PID 全部通过，新进程 PID 72241。PID 仅为此次记录，后续停止仍须重新核对身份。</li>
+<li>在线验收：执行现有 <code>tests_api.py</code> 完整流程，<strong>19/19 API 路由与首页通过、4 类错误契约通过、3 个数据集契约通过</strong>，包含 GEARS，无跳过。PBMC 2700、MS 17799、Williams 96969 个细胞；加载其他疾病前后的 PBMC CIPHER 输出一致。日志 <code>/tmp/igem-r08-restart-api.log</code>。</li>
+<li>历史接口：正式 8377 服务返回 14 份材料与 4 组可读报告，三张图 HTTP 成功且类型/nosniff 正确。真实浏览器刷新 MS 主页面，核对 17799 细胞就绪；点击顶栏打开历史标签，Williams 指标与缺图说明可见，滚动后确认三张图均实际加载；实验性编码器入口仍默认折叠。</li>
+<li>交付与清理：用户正在看的历史预览页已切到 <code>http://127.0.0.1:8377/web/history.html</code>；主工具内的历史入口也已生效。核对并停止本任务创建的 8378 临时预览 PID 71402，不再依赖临时服务。无历史数据/输出改动，既有三份 CIPHER 缓存的时间和大小未变，不重跑历史探索脚本、不安装依赖。</li>
+<li>验证边界：本轮完成最新完整后端的 API 验收与历史面板真实浏览器专项检查；没有重跑独立 <code>tests_e2e_playwright.py</code> 全流程，因此不宣称最新后端的完整浏览器回归已通过。61 项 Python、24 项 Node、45 项发布检查与 260 项 pipeline 均为此前轮次结果，本轮未重复运行。</li>
+<li>交接：CR-031 与 R08 代码关闭状态不变，CR-033/036 及科学/缺图待办继续保留。仅追加日志和更新进度，不改业务代码；R08 与历史面板改动仍未提交/推送，提醒可考虑整理 Git 提交。</li>
+</ul>
+<h2 id="doc2-条目-41-2026-09-23只读历史实验面板与-cr-031-衔接复核">条目 #41 — 2026-09-23（只读历史实验面板与 CR-031 衔接复核）</h2>
+<ul>
+<li>目标/授权：用户要求网页新增独立“历史实验与方法迭代”只读面板，有历史图片展示原图、仅有数据则标待补，完成后继续处理 CR-031。基于 main / <code>939cd55</code>，保留全部 R08 未提交修改；不安装依赖、不重跑科学实验、不改历史数据/公式/阈值、不提交或推送。</li>
+<li>实施：新增 <code>src/history_panel.py</code> 与 <code>web/history.html</code>；主页面顶栏和实验性探索区均可打开独立历史标签。新增两个只读 API，固定公开清单 14 份材料，校验路径不逃逸仓库；历史材料读取不依赖实时疾病/细胞/基因选择，不加载患者矩阵、CellOracle 或模型。缺失/损坏/非有限材料不伪装成零值；前端接口失败清空旧指标。提供源文件和当前 SHA-256，不把校验和冒称历史运行来源。</li>
+<li>展示：疾病 CellOracle 支线、v1 编码归因、v2 GEARS/Tier 0、v3 CIPHER/基线。保留三张已有图（MS 归因、CEBPA/GEARS、PBMC/MS4A1 基线）；图前明确旧“34 倍、互相印证”的解释不作为当前结论。Williams 3016 个基因的保存向量复算 KO ρ=-0.0456039、OE ρ=0.0718783；PBMC/GEARS/Tier 0 指标只读历史报告，不宣称重新验证科学有效性或模型优劣。</li>
+<li>待补材料：Williams、PBMC 编码探索、Tier 0 对应图；22q/TBX1 结果 NPZ/图；Williams 原始/中间输入及历史复现环境。Tier 0 <code>cell_type=A549</code> 与其他 Norman/K562 记录的关系需人工核对，本次只记录提示，未修改历史标签或科学解释标准。不能用汇总向量补造逐细胞轨迹，后续补绘须注明来源和补绘身份。</li>
+<li>CR-031：上一轮已按批准方案关闭，本轮补充历史证据入口并复核默认折叠、探索用途、正常计算与科学结论区分、异常报告失败；没有再次改变算法或新增强制科学门槛。CR-033 复现环境仍待处理；面板也不代替 CR-036 完整档案谱系整理，不自动关闭 R09 项目。</li>
+<li>测试：历史后端新测试先因缺模块失败，历史入口新测试先在旧页面失败。实现后 VCT Python <strong>61 tests OK（11.530s）</strong>，Node <strong>24 passed</strong>，发布检查 <strong>45 项通过</strong>，diff 检查通过。新增覆盖真实保存向量复算/读前后哈希、缺材料、损坏/对象 NPZ、非有限与重复基因、JSON 异常隔离、路径白名单/符号链接逃逸、不同 ds 下历史 API 相同、旧服务/网络失败清空前端。日志 <code>/tmp/igem-history-vct-tests.log</code>、<code>/tmp/igem-history-node-tests.log</code>、<code>/tmp/igem-history-release.log</code>。本轮未重复执行完整 pipeline，260 passed 为上一轮结果。</li>
+<li>浏览器与边界：从当前源码提取两个实际历史路由，在 127.0.0.1:8378 启动无模型临时预览，浏览器真实点击打开独立面板、核对指标、存档图和修正提示，并检查桌面截图。它不提供实时数据/扰动 API，不等于最新完整后端集成验收。8377 旧服务未重启，已询问用户重启授权；完整 API/浏览器验收仍待最新主服务。扩展了 <code>tests_e2e_playwright.py</code> 的历史检查，但本轮未执行完整 E2E。</li>
+<li>已改文件：两个新模块/页面、web/app 与 index、历史后端测试、API/前端/E2E 测试、README、本日志和审查进度。台账仍 <strong>49 项：32 关闭、14 待处理、3 延期</strong>。下一步经批准重启主服务，验证真实集成；按需核对 Tier 0 来源、补图和制定独立历史复现环境。R08 与本面板修改尚未提交，提醒可考虑 Git 提交，本次不执行。</li>
+</ul>
+<h2 id="doc2-条目-40-2026-09-23cr-031-批准改为实验性入口与探索报告r08-代码处理结束">条目 #40 — 2026-09-23（CR-031 批准改为实验性入口与探索报告；R08 代码处理结束）</h2>
+<ul>
+<li>目标/授权：用户批准“保留代码和历史记录、页面降为实验性入口、科学脚本明确探索定位”。基于 main / <code>939cd55</code>，保留并叠加 CR-029/030/032 未提交修改；不改变科学指标/公式/阈值，不删除历史记录，不重启用户服务或执行 Git 操作。</li>
+<li>网页：使用原生 details，将第五张卡改为默认折叠的「编码器敏感性探索（实验性）」。单/多基因功能不删；说明仅修改指定输入并重新编码，不模拟其他基因响应。单/多基因状态区都提示不代表真实细胞响应、细胞类型转化或疗效；原“细胞类型重判/身份归属”改为“最近参考质心/编码空间距离”，保留原数值和计算，去掉无条件的“单基因约 0.02”参考文案。</li>
+<li>报告：新增小型标准库模块 <code>src/exploration_report.py</code>，供 <code>src/validate.py</code>、<code>src/tier0_validate.py</code>、<code>predictive_test.py</code>、<code>validate_attribution_vs_perturb.py</code> 复用。增加 exploration 类型、completed 计算状态和解释边界，不代表科学认证。原两份 JSON 保留根字段及历史 pass；另两份终端脚本增加独立 JSON 输出。历史 pass=false/负相关正常保存；空顶层报告、非有限/不可序列化指标在打开输出前拒绝，计算/输入读取/写入错误保持非零退出。没有新增科学通过阈值；NaN 代表报告无法完整计算，不等于假设被证伪。</li>
+<li>已改文件：四份历史脚本、输出 helper、网页、E2E、<code>tests/test_exploration_reports.py</code>、<code>tests/test_web_state.cjs</code>、VCT README 和两份审查日志。未改扰动引擎、上游 SIGnature、模型、正式输入、历史结果、依赖或主流程。README 明确这些脚本不是轻量工程验收；手动重跑会写报告，应先备份。</li>
+<li>验证：报告测试先因缺模块失败，Node 新增默认折叠/用途提示检查先在旧页面失败。最终 VCT <strong>55 tests OK（12.269s）</strong>，Node <strong>21 passed</strong>；新增报告回归 5 项，含真实子进程退出语义和抽取四脚本实际末尾报告调用、注入合成指标执行。标准管线 <strong>260 passed/0 skipped</strong>、环境检查和发布 <strong>45 项</strong>通过，diff 检查通过。日志 <code>/tmp/igem-cr031.ozhXar/</code>。</li>
+<li>真实浏览器：复用临时 Playwright 环境与系统 Chrome；默认折叠、真实 summary 展开、按钮计算、结果警告及既有数据流通过，截图布局已查看。只连接既有旧后端+当前 HTML，没有操作用户标签或重启旧进程。最新 Python 后端在线集成仍待批准重启；本轮未执行四份历史脚本的全量科学计算，没有覆盖历史结果。</li>
+<li>决策与交接：CR-031 以用户批准的探索定位关闭，不按未批准的“强制科学 pass”方案实施。R08 四项授权代码处理完毕，台账 <strong>49 项：32 关闭、14 待处理、3 延期</strong>；提醒考虑 Git 提交，本次未提交/推送。后端在线验收边界继续保留。</li>
+<li>下一项说明：R09/CR-033 两个疾病档案依赖 CellOracle，但当前 pipeline/vct 环境均无该包，标准安装后不能直接重跑历史扰动脚本。建议需要可复现承诺时提供独立历史环境及验证；如果当前仅作迭代展示，可明确保留档案而不承诺重跑。两条路径都不向主环境直接堆入历史依赖，待用户批准后执行。</li>
+</ul>
+<h2 id="doc2-条目-39-2026-09-23r08-三项工程修复反事实功能定位待决定">条目 #39 — 2026-09-23（R08 三项工程修复；反事实功能定位待决定）</h2>
+<ul>
+<li>目标/授权：用户批准 CR-032/029/030，另询问 CR-031 所涉反事实扰动是否值得保留。本轮基于干净的 main / <code>939cd55</code>（R07 已由用户提交）。不自动删除功能、不改科学公式/阈值、不提交或推送。</li>
+<li>CR-032：新增标准库 <code>src/web_launcher.py</code> 与 <code>/api/health</code>；校验 HTTP 成功、服务名、当前工作区、ready 和 PID，只复用符合身份的服务。自己启动的进程就绪后记录端口/PID，失败只清理该子进程；追加日志、拒绝不明占用，移除宽泛 pkill 提示。README 明确停止前重新核对，PID 记录不是永久身份凭据；启动器/API/E2E 统一读取 VCT_PORT。</li>
+<li>CR-029：在线 API 测试增加 health、非法数据集/负 cell/非法方向及基线方法的预期 4xx；核对 PBMC/MS/WS 的行数、二维坐标/标签/表达长度、有限值、数据来源、表达统计与首末细胞取值。PBMC 隔离 before 移至 MS/WS 加载前。全量 19 条 API，skip-gears 为 17/19 明确标注，保留原科学数值判断。</li>
+<li>CR-030：浏览器验收改为真实 UMAP 鼠标点击、归因行、搜索/选基因、按钮和数据集切换，等待明确状态/HTTP 响应而非固定休眠，不调用 selectCell/pickGene。失败非零退出并尽力保存截图；缺 Playwright 明确未执行并退出 2。只证明链路和渲染，不验证生物学结论。</li>
+<li>已改文件：VCT 启动 command、<code>src/web_launcher.py</code>、<code>web/app.py</code>、<code>tests_api.py</code>、<code>tests_e2e_playwright.py</code>、<code>tests/test_runtime_workflow.py</code>、<code>tests/test_web_safety.py</code>、README，以及两份审查记录。未修改 SIGnature、正式数据/模型/缓存、科学脚本或项目依赖声明。</li>
+<li>验证：测试先在缺模块和旧 helper 下失败，再补齐实现。最终 VCT <strong>50 tests OK（11.275s）</strong>、Node <strong>20 passed</strong>；标准管线 <strong>260 passed、0 skipped</strong>，环境与发布 <strong>45 项</strong>检查通过。永久测试覆盖身份/端口/错误响应/超时/仅清理自己子进程、API helper 故障注入及实际 ASGI 路由合成数据契约。临时真实服务验证子进程启动、非默认端口、health/PID、记录和复用，已安全关闭该临时子进程。</li>
+<li>浏览器实测：仅在临时 venv 安装已有可选声明的 Playwright，使用系统 Chrome；独立 headless 浏览器执行真实点选、归因、搜索、表达/CIPHER/基线/位移及 MS 切换，通过并保存截图。未更改原 <code>.venv/vct</code>，也未操作用户现有页。临时日志 <code>/tmp/igem-r08.FTr1u7/</code>，截图为忽略的 VCT <code>test_artifacts/vct_verify.png</code>。</li>
+<li>重要验收边界：8377 上为 9 月 18 日启动的旧后端 PID 63337，health 404，尚无 R07 后端修复；当前 HTML 则会从磁盘更新。新版 API 脚本正确在 health 处失败，真实 E2E 通过仅覆盖旧后端+新 HTML，不能代表新后端集成通过。已询问是否允许重启，尚未获答复，未停止该服务；最新后端在线 API/E2E 待重启补验。未全量重建数据或开展科学验证。</li>
+<li>CR-031 建议/未实施：当前反事实代码仅改变指定输入并重新编码，不能直接给出真实细胞响应、主效基因或治疗结论。建议保留为编码器敏感性探索及迭代档案，弱化正式页面入口；探索脚本输出指标，工程错误非零退出，科学验收另定明确标准。功能去留、界面变更和验收门槛待用户决定，当前保持原样。</li>
+<li>交接：台账 <strong>49 项：31 代码关闭、15 待处理、3 延期</strong>。三项工程修复可独立考虑 Git 提交；CR-031 与新版在线验收未完成，R08 整批未最终签收。本轮未提交/推送。</li>
+</ul>
+<h2 id="doc2-条目-38-2026-09-23r07-五项批准修复运行数据流优先科学判断另行批准">条目 #38 — 2026-09-23（R07 五项批准修复；运行/数据流优先，科学判断另行批准）</h2>
+<ul>
+<li>目标/授权：用户批准处理 CR-024～028，要求精简鲁棒，后续运行和数据流问题提醒优先处理，科学算法和框架问题仍需批准。基于 main / <code>b85ce09</code>，保留前轮两份文档改动；不自动实施下一批或 Git 提交/推送。</li>
+<li>CR-024：五个 cell 端点使用非负 Query 与共享取行上界校验，在推理前拒绝；归因 k 1～100、搜索 limit 1～200。非法范围 422，页面展示 FastAPI detail；默认数量、原矩阵和基因筛选不变。</li>
+<li>CR-025/026：未知 ds 统一 400，不再静默回退 PBMC；省略参数默认值保留。direction 用 ko/oe 枚举，baseline method 用 ctrl_mean/additive/both；非法模式在加载前 422，正常 KO/OE 及显式目标值不变。</li>
+<li>CR-027：一个轻量请求上下文 helper 绑定操作序号、DATA 快照和选择版本；数据集/细胞/基因变化后旧成功和旧失败不更新状态。覆盖滑块、搜索、覆盖性检查及各类结果；加载期清空活动数据并禁用依赖操作，表达请求失败说明原因并禁用滑块。已完成图表保留自己的坐标和来源标签，不引入新框架，也不声称取消后端已在执行的请求。</li>
+<li>CR-028：每数据集一把进程内锁，数据读取与发布分离，CIPHER/基线先局部构造完成再发布，fitted 最后标记；失败不保留半就绪缓存，下一次请求可重试。不加后台无限重试，不改缓存格式、HVG 或公式，也不承诺跨进程锁/全局内存预算。磁盘缓存不可写仍可使用已完整初始化的内存引擎，保留原语义。</li>
+<li>测试先行：原代码下首版后端 10 方法得到 29 failures/15 errors（含子用例），前端首版 10 项全失败；修复中对过期错误、表达读取失败和搜索覆盖手选基因追加失败用例后修复。最终新增后端 12 方法、前端 20 项。VCT 完整 <strong>37 tests OK（10.396s）</strong>，Node <strong>20 passed</strong>；缓存测试包括六线程只读/拟合一次、不同数据集独立初始化、失败恢复、真实小矩阵磁盘往返和写失败可用。</li>
+<li>回归结果：标准 pipeline full <strong>260 passed，0 skipped</strong>，声明/版本/导入/pip check 通过；发布检查 45 个必需文件、git diff –check 通过。日志 <code>/tmp/igem-r07-fix.mnFgkm/</code>（backend-before、frontend-before、追加先失败记录、vct-full、frontend-final、pipeline/summary.json、release）。VCT README 加入两种独立离线测试入口和 API/缓存/界面行为约定，不增加 Python 或 npm 依赖，Node 仅前端测试需要。</li>
+<li>已改文件：VCT <code>web/app.py</code>、<code>web/index.html</code>、README；新增 <code>tests/test_web_safety.py</code>、<code>tests/test_web_state.cjs</code>；审查进度及本日志。未改正式输入、数据缓存、模型、历史结果、科学算法、依赖或上游 SIGnature。API 用实际函数和 FastAPI 但绕开启动模型，前端是模拟 DOM/fetch/Plotly；不是完整服务/真实浏览器/全量模型验收。</li>
+<li>交接：CR-024～028 关闭；49 项共 <strong>28 关闭、18 待处理、3 延期</strong>。本批结束提醒考虑 Git 提交，尚未提交/推送。只读复核 R08 并在进度文档列出四项方案：CR-032/029/030 为运行和数据流优先；CR-029 已由 R07 补部分离线异常覆盖，在线来源/形状仍缺；CR-031 区分探索报告与强制科学验收，不擅自增加指标阈值，等待批准。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-37-2026-09-22r07-webapi-与前端复核五项问题待批准">条目 #37 — 2026-09-22（R07 Web/API 与前端复核，五项问题待批准）</h2>
+<ul>
+<li>目标与基线：用户要求继续后续批次。确认 main / <code>b85ce09</code>（R06 批次及其他问题修复），本轮开始时工作区干净，上一轮 R06/CR-043/047 已由用户提交。继续先说明原因、后果、建议和影响，批准后再修改；本轮不改源码、科学算法、正式数据、模型、缓存或依赖，不提交/推送。</li>
+<li>范围：复核 Web/API 参数、输入与数据集归属、前端异步状态及懒加载并发，Plotly 压缩库与 SIGnature 内部仍排除。CR-024～028 均仍成立，无新增重复编号，详细审批表见审查进度 R07 小节。</li>
+<li>后端证据：从当前 app AST 提取原函数/路由，跳过导入时模型初始化，用 FastAPI ASGI、3×4 合成矩阵及引擎替身完成 7 个参数探针。负 cell 成功读取末行，越界 cell 返回 500；负 limit 返回接近全部集合；非法 ds 返回带错误标签的 PBMC 内容或表达图 500；错误 direction 按过表达执行，错误 method 返回成功空结果。没有安装缺失的 httpx 或启动真实服务。</li>
+<li>加载证据：替换读取与拟合、注入一次失败，第一次 500、第二次 503 且仅拟合一次，确认缓存阻断重试；双线程屏障确认同一数据集首次加载/拟合两次。拟合为替身，不据此量化真实内存或算时。</li>
+<li>前端证据：Node 执行当前原函数，用模拟 DOM/fetch/Plotly 控制旧请求晚到，4 个探针分别复现数据集、细胞、基因按钮状态错配，以及 MS 标签页/两坐标混入 PBMC 三表达值。表达图错误归入 CR-027，建议修复覆盖数据快照与在途请求归属，不只处理数据集切换按钮；非真实浏览器 E2E。</li>
+<li>待批准方案：CR-024 细胞范围与结果数量限额；CR-025 非法数据集一致拒绝、保留省略参数默认值；CR-026 模式枚举；CR-027 轻量请求序号、选择上下文、加载期禁用及来源明确的绘图快照；CR-028 同数据集初始化互斥、完整就绪后发布缓存、失败允许下次请求重试。正常科学计算与输入矩阵不变，不引入通用框架或后台自动重试。</li>
+<li>验证与交接：9 个后端和 4 个前端问题探针均确认，脚本与日志 <code>/tmp/igem-r07-review.2evd84/</code>（临时材料，不是已交付的永久回归）。只修改 <code>00_docs/03_history/CODE_REVIEW_PROGRESS.md</code> 与本日志；台账仍 49 项，23 关闭、23 待处理、3 延期。本轮没有重跑全量管线/模型、真实数据重建或浏览器；上一轮 260 passed/25 tests OK 只是历史基线。建议五项均处理，CR-024/027 优先，待用户批准；本批修复/验证完成后提醒 Git 提交，再进入 R08。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-36-2026-09-22cr-018021pbmc-测试数据安全重建与最大值格式r06-收尾">条目 #36 — 2026-09-22（CR-018/021：PBMC 测试数据安全重建与最大值格式；R06 收尾）</h2>
+<ul>
+<li>目标/授权：用户说明 PBMC 是早期 VirtualCellTool 可行性测试数据，批准前述 CR-018/021 最小修复，两项完成后由用户 Git 提交。基于 main / <code>5f9ff0a</code>，保留前轮 CR-043/047、R06 其他项和文档未提交修改；不自动提交/推送，不改上游 SIGnature、科学公式、正式数据、历史结果或依赖。</li>
+<li>CR-018 输入：移除隐含读取不存在 louvain 并当作细胞类型的路径。脚本安全导入；CLI 显式要求 –metadata，校验 cell/cell_type 非空、ID 唯一且与原始 PBMC 完整对应，按 ID 重排，cluster 可选并保留。缺字段/空值在数据读取前失败，ID 错误在模型加载前失败；不自动读取旧 meta、不生成聚类或标签，也不自动认可现有标签的科学来源。</li>
+<li>CR-018 输出：完整计算与检查后，先写临时目录，再发布七件套到独立新 –output（默认时间戳）。已有目标提前拒绝，不覆盖 Web data；保存未被归一化改写的 raw 副本、表达、embedding、meta、UMAP、gene_order 和 pbmc_info，后者记录测试用途及注释来源路径。正常异常清理临时文件，强制中断可能残留；未增加跨进程锁或宣称缓存自动更新。</li>
+<li>CR-021：MS/WS 仅将稀疏逐基因最大值的一行转换成一维数值向量，检查长度和有限性，np.save 禁用 pickle。归一化、基因空间、上游数据及其余计算不变。已有两个 object 文件未修改/重建，当前 Web 无读取点；本项关闭指生成代码修复，不代表历史文件已转格式。未顺手重构这两个脚本的其他输出步骤。</li>
+<li>测试：新增 test_preparation_safety；首版 9 方法在旧源码下 11 failures/2 errors（PBMC 7 项是安全导入门禁失败，避免实际执行旧重建脚本；最大值 4 子用例失败/2 错误）。最终新增 11 方法，VCT 共 <strong>25 tests OK</strong>，覆盖注释乱序/缺少/重复、缺字段 CLI、既有目标拒绝、数组异常/写盘失败不发布、原始计数保护、模型/UMAP 替身数据流和两个脚本真实最大值写入块。最大值测试禁止整张 CSR toarray，并用 allow_pickle=False 回读结果。</li>
+<li>补充错误提示：核验发现空文本 MemoryError 对象自身仍为真，前轮回退文案没有生效；本轮 PBMC 及此前未提交的 MS/可视化异常消息改用 str(exc) 后判断空文本，已有资源回归增加明确“内存不足”文案断言。只修报错文本，不改变前轮预算、计算或输出策略。</li>
+<li>验证：标准管线入口环境声明/版本/导入/pip check PASS，<strong>260 passed/0 skipped</strong>；git diff –check、45 项必需文件发布检查通过。日志 <code>/tmp/igem-r06-close.LhRuzK/</code>。全部使用已安装环境；未运行真实 PBMC/MS/WS 重建、全量模型、API/浏览器或新机器安装，不把替身数据流当作真实编码器验收。</li>
+<li>已改文件：prepare_data、prepare_ms_web、prepare_ws_web；新增 test_preparation_safety，补强 test_core_safety；viz_perturbation/compute_ms_attribution 仅补空异常文本回退；VCT README、最小核心清单、审查进度及本日志。无新增运行依赖或通用配置层，VCT 仍独立于最小管线集合。</li>
+<li>交接：CR-018/021 关闭，R06 六项运行代码问题修复完成；台账 49 项共 <strong>23 关闭、23 待评估处理、3 延期</strong>。正式数据/旧最大值文件和全量验收边界保留。提醒用户现在可以 Git 提交；前轮 CR-043/047 及 R06 改动仍在工作区，本次未提交/推送，不自动修改下一批 R07。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-35-2026-09-22cr-043-与-r06-授权修复cr-018021-调查待批">条目 #35 — 2026-09-22（CR-043 与 R06 授权修复；CR-018/021 调查待批）</h2>
+<ul>
+<li>目标/授权：用户批准 CR-043 显式来源选择、CR-019/020/022 修复和 CR-023 资源保护；CR-018 进一步解释、CR-021 检查特殊对象是否用于归一化，均先不修改。基于 main / <code>5f9ff0a</code>，保留前轮 CR-047 未提交修改；不改科学算法、上游 SIGnature、依赖、正式输入/历史结果，不提交/推送。</li>
+<li>CR-043：可选 AI/compensation 表与已有证据出现非键同名列时，在连接前报路径/列并要求用户确定来源，不自动覆盖或改名。用户选择保留已有列就不再重复传表，选择新来源需先明确整理输入；新旧排名/报告/审计在冲突失败时均受保护。</li>
+<li>CR-019：旧过滤发生在预测结束、构造返回基因子集时，为了跳过索引表不存在的名字，不是疾病基因筛选或数据清洗。索引过滤而名称未同步使数值错配；现在未知子集基因明确报错，已知名称直接映射同一索引，不改预测公式。</li>
+<li>CR-020：新增仅两个小型共享输入检查函数，检查维度、有限值、非空、基因名唯一与数量匹配；CIPHER 至少两个细胞，baseline 保留单细胞/稀疏均值支持。拟合失败不污染已有实例，不新增配置/处理框架。</li>
+<li>CR-022：修正 effect_size 排序，保留差异效应量公式。必要标签/分组先检查，全部计算完后先写临时目录再发布新 –output，默认时间戳目录；拒绝覆盖已有目录，不再提前写 Web data。输出包含归因、embedding、meta、差异表及矩阵 gene_order；支持离线导入测试。正常异常清理临时文件，强制终止可能残留，未声明并发写盘事务保证。</li>
+<li>CR-023：CLI 仅先读 NPZ shape，按表达副本及协方差保守估算内存，默认 2 GiB 预算；超预算明确报错退出 2，捕获 MemoryError 提示资源不足。真实 WS 预检估算 111.27 GiB，未加载矩阵主体或创建输出目录。允许显式提高预算，不自动抽样/删基因；不是系统硬限额，也不保证其他进程或所有入口的内存安全，归因全量脚本并未获得此预算保护。</li>
+<li>CR-018 调查：raw PBMC obs 仅 index；现有 meta 为 cell/cluster/cell_type 并有 NK/B/T/Dendritic/Monocyte 等标签，但当前脚本不生成这些注释。它先覆盖 raw/表达/embedding，再读取不存在的 louvain，留下半套产物；聚类编号不等于细胞类型。建议先做入口标签/细胞对应检查及独立完整输出，缺认可标签提前失败，完整重建另确认标签来源；源码/数据未改，等待批准。</li>
+<li>CR-021 调查：两脚本先 lognorm_counts，再计算注释为“滑块范围”的最大值；np.asarray(稀疏最大值矩阵) 导致单元素 object，不是正常数值向量。只读 NPY 文件头确认两份 (1,) object，无 pickle 读取。当前仓库未发现消费者，Web /api/gene_expr 直接从表达矩阵求 max；没有证据支持保留特殊对象是归一化所需。建议只转换一行最大值、校验长度/有限性；源码和旧文件均未修改，待批准，不自动重建。</li>
+<li>验证：新增 CR-043 4 项，修改前 3 failed/1 passed，后全部通过；VCT 首批 8 方法修改前 19 子用例失败/6 错误，最终 14 方法通过（未知名称、异常拟合状态、稀疏 baseline、预算、CLI 失败、排序公式、完整发布/写盘失败/旧目录保护）。标准入口环境声明/版本/导入/pip check PASS，管线 <strong>260 passed/0 skipped</strong>；两引擎原有自测通过，git diff –check 通过。日志 <code>/tmp/igem-r06.H9QiSW/</code>。未跑全量 MS 归因、真实 CNV、API/浏览器、新机器重装，不覆盖正式数据。</li>
+<li>补充正常输入检查：使用固定随机种子的 20×5 小矩阵，分别加载 HEAD 旧引擎与当前引擎；CIPHER predict 与 baseline control-mean 的 delta、perturbed_mean 均逐值完全一致。不等于真实疾病效果验证。</li>
+<li>已改文件：consensus_v2 和新增可选来源测试；VCT cipher_engine、linear_baseline、viz_perturbation、compute_ms_attribution，新增 input_checks 和 tests/test_core_safety；两个 README、最小核心清单、审查进度和本日志。VCT 测试用标准库 unittest，无新增测试依赖，仍独立于最小管线。</li>
+<li>交接：CR-043/019/020/022/023 关闭，49 项共 <strong>21 关闭、25 待评估处理、3 延期</strong>。CR-018/021 等待批准；R06 本次已授权项完成但整批未关闭。提醒可考虑 Git 提交，本次不自动提交/推送；前轮 CR-047 修改仍未提交。未识别编号、CNV 余项、排除模块测试和独立表型排名继续按原台账保留。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-34-2026-09-22cr-047拒绝非有限评分配置后续批次待批准">条目 #34 — 2026-09-22（CR-047：拒绝非有限评分配置；后续批次待批准）</h2>
+<ul>
+<li>授权与基线：用户要求继续后续批次并优先改动 CR-047；基于干净的 <code>main</code> / <code>5f9ff0a</code>。R04/R05 已分别提交为 <code>d7b9204</code> / <code>5f9ff0a</code>；本轮不自动提交或推送。筛选/扰动科学逻辑、正式数据、历史产物和上游 SIGnature 不动。</li>
+<li>修复：在有效 v2 配置加载和直接评分入口校验权重、序数尺度/低分惩罚、HPA 数值、调权网格/目标数量、隐性倍率和缺失率阈值，拒绝 NaN/Inf 并提示字段路径。检查实际生效的 v1 继承值，允许明确的有限 v2 值覆盖旧默认；合法零值、负惩罚及证据缺失规则不变。</li>
+<li>计算与输出保护：共享评分函数覆盖普通排名、调权与敏感性路径；Borda 在整数排名前检查结果。有限参数导致的浮点溢出同样停止。配置/评分 ValueError 在 CLI 以状态码 2 明确返回，在写排名、报告和审计前失败，不创建或替换这些输出；不是所有写盘异常的事务机制。</li>
+<li>验证：新增 68 项定向用例，修复前 <strong>67 failed / 1 passed</strong>，修复后 <strong>68 passed</strong>；标准完整验收 <strong>256 passed（19.15s），0 skipped</strong>，声明/版本/导入/pip check 通过。WBS/WHS 已有证据（35/19 行）在调权关闭/开启、敏感性开启的四组运行中，与 HEAD 旧实现的全部结果列及报告精确一致。未重建上游证据或真实 CNV。日志 <code>/tmp/igem-cr047.x7rbLp/</code>。</li>
+<li>已改文件：<code>03_pipeline/src/consensus_v2.py</code>、新增 <code>03_pipeline/tests/test_consensus_numeric_config.py</code>、pipeline README、最小核心清单、审查进度和本日志。CR-047 关闭，台账 16 关闭、30 待评估处理、3 延期；R03 其余项仍未关闭。</li>
+<li>后续交接：R06 六项源码只读复核，其中 CR-019/020/021 用小矩阵再次复现，其余按明确控制流确认，不重跑全量数据/模型。各项原因、后果、建议及影响已列入审查进度 R06 小节，等待逐项/批次批准后修改。核心链路下一项仍建议 CR-043：可选表重名列使证据列被改名而失效，优先拒绝冲突并明确提示，不擅自决定覆盖来源。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-33-2026-09-22r04r05-分批本地提交">条目 #33 — 2026-09-22（R04/R05 分批本地提交）</h2>
+<ul>
+<li>用户授权：将 R04 和 R05 分成两次提交，暂不推送；不继续其他问题修复。</li>
+<li>R04 已提交为 <code>d7b9204</code>：CR-010/011/013 修复、CR-012 仅区间入口及延期记录，包含对应测试、最小核心清单和该批文档/日志。共享文档按批次拆分，未提前加入 R05 的测试入口或依赖改动。</li>
+<li>R05 与本条记录一并提交：CR-014/016/017 关闭，CR-015 核心标准验收完成、排除模块 CLI 覆盖延期；包含依赖声明、安装/测试入口、测试和文档，不修改业务算法或正式数据。</li>
+<li>提交前复核：从 R04 暂存树单独导出源码、测试和配置，使用当前已安装解释器运行 <strong>171 passed（22.82s）</strong>；R05 标准完整验收 <strong>188 passed，0 skipped</strong>，环境检查通过。发布检查 45 个必需文件、安装脚本语法及差异检查通过。验证记录位于 <code>/tmp/igem-split-commits.53nDl0/</code>；不是新机器或重新安装验收。</li>
+<li>交接：本次仅创建本地提交，不推送；历史条目中的“未提交”描述保留为当时状态。CR-012、CR-015 的剩余范围及 CR-049 仍延期，CR-047 等待后续批准。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-32-2026-09-22r05单一依赖来源与用户可复现的标准测试">条目 #32 — 2026-09-22（R05：单一依赖来源与用户可复现的标准测试）</h2>
+<ul>
+<li>授权与约束：用户批准 CR-014 只用一个管线环境文件、依赖声明和安装保持一致；CR-015/017 建立用户与开发者共用的独立测试体系；CR-016 正常关闭。延续最小核心范围，可选/历史模块先排除但不删除；保留 CR-010～013 及文档未提交改动，不改科学算法、正式配置、输入或历史产物，不提交/推送。</li>
+<li>CR-014：<code>03_pipeline/requirements.txt</code> 仍是唯一清单，11 项包及其版本约束未改变；pyproject 改为 setuptools 动态读取它，移除平行 dependencies/dev 列表并明确包发现。必需 CNV 包改为直接导入；缺包/版本不符/导入失败不再以 skip 获得绿色验收。安装脚本新增 <code>--pipeline-only</code>，只重建 pipeline 并调用环境检查；默认仍安装两个项目环境，VCT 清单不属于本次合并范围。未重建当前工作环境。</li>
+<li>CR-015 核心交付：新增标准库主入口 <code>scripts/test_pipeline.py</code>，依次检查声明/版本/导入/pip check，运行 smoke 或默认 full，再核对 JUnit；零用例、失败或跳过均不能通过。独立新目录保留 summary（解释器、平台、版本、requirements 哈希、阶段状态）、测试日志/JUnit、合成输入和产物；已有目录拒绝覆盖。图形/JIT 缓存放入运行目录，屏蔽本机 pytest 选项/自动插件干扰。默认产物由 Git 忽略。</li>
+<li>新增 17 项测试：13 项环境/入口契约，4 项真实 subprocess 数据流。合成区间和证据逐步经过 extract-genes（仅区间）→normalize→merge→rank，核对两研究的候选、五字段、审计哈希、报告及输出隔离；空候选、必需证据缺失/坏格式明确停止。没有引入第二套业务管线、真实疾病表型假设或疾病专属配置层。</li>
+<li>CR-016/017：引号 HGNC 和空输入用例随全量复核通过，本项按授权关闭；新增 <code>03_pipeline/docs/TESTING.md</code>，更新两个 README、CNV/ARCHIFY 和独立验证委托书的活跃操作说明，保留带日期的历史数字，不再用固定旧计数作验收门槛。发布检查增加新入口/文档/测试文件要求，原项目范围保留。</li>
+<li>验证：首版新增用例修改前 11 failed / 4 passed；第一次完整运行捕获本次误删仍使用的 pytest 导入，恢复后完整 <strong>188 passed（17.60s），0 skipped</strong>。另建不含真实数据、历史输出或缓存的源码副本，同一已安装解释器运行完整 <strong>188 passed（17.73s），0 skipped</strong>。实际生成包安装元数据与清单 11 项完全相符；全新空 venv 预检按预期退出 1、写 failed 摘要。Shell 语法、45 个必需文件发布检查和 diff 检查通过。测试/构建日志与隔离目录：<code>/tmp/igem-r05.bLaBGU/</code>。</li>
+<li>补充交付检查：默认目录的 smoke <strong>17 passed/0 skipped</strong>，摘要位于 <code>test_artifacts/pipeline/20260922-162417-050vw12j/summary.json</code>，已确认 Git 忽略；临时最小包的源码发行包构建包含 requirements.txt，防止动态声明丢失依赖文件。未生成或发布正式软件包。</li>
+<li>边界与状态：上述源码隔离不是重新联网安装/新平台验收；本轮未重跑真实 GEO/多患者 CNV、VCT API 或浏览器 E2E。CR-014/016/017 关闭；CR-015 的四个排除模块（ai_scores、compensation、filter_recessive、consensus v1）专门 CLI 覆盖继续延期，不能宣称八入口全覆盖；CR-043～048 已识别业务缺陷仍未修复。CR-012 CNV 模式与 CR-049 独立表型排名仍延期。</li>
+<li>交接：台账 49 项，15 关闭、31 待评估处理、3 延期。R05 当前授权完成，应考虑将尚未提交的 R04/R05 修复及最小核心文档进行 Git 提交；本次未提交/推送。按核心优先下一项建议 CR-047 非有限权重校验，先解释原因、后果、建议和影响，等待批准；R06/VCT 暂不展开。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-31-2026-09-22r04cr-011013-修复cr-012-仅区间入口与延期边界">条目 #31 — 2026-09-22（R04：CR-011/013 修复，CR-012 仅区间入口与延期边界）</h2>
+<ul>
+<li>用户授权：CR-011 空候选固定表头并完善不同错误情形的管理；CR-012 先保证临床确认或无需 CNV 的区间输入正常，CNV 模式判定暂不修复、登记后续改进；CR-013 关联记录输入、上游产物、输出和参数。保留此前未提交修改，不修改算法、阈值、依赖、正式配置/数据或历史产物。</li>
+<li>CR-011：候选/全候选/自动基因/表达 QC/验证表即使为空也写固定表头。四计算阶段重跑前归档自有旧文件；必需步骤失败归档本次半成品，最新审计 failed；可选热图失败记录原因、隔离旧图及部分新图，主结果可成功。上游重跑将已有相关下游产物归档并标 invalidated；独立仅区间结果不因 CNV 重跑失效，废弃分辨率产物不残留为当前结果。只移动约定输出到 history，不删除未知文件或输入。</li>
+<li>CR-012：新增显式 <code>extract-genes --mode intervals-only</code>（也可配置 extract.mode），不需要 samples，不读取目录旧 segments/h5ad/热图；要求声明匹配的基因组版本及合法 1-based 两端包含区间，禁止同时要求自动候选。原区间相交规则不变，两项 CNV/表达验证为 NOT_EVALUATED 并附原因。仅区间任务完成；<strong>CNV 模式仍可能把未执行/不足写成 FAIL，按用户要求延期，CR-012 不整体关闭</strong>，未来在同编号继续处理。程序不验证临床真实性或自动转换组装版本。</li>
+<li>CR-013：新增 <code>src/cnv/artifacts.py</code>，四阶段记录 execution_id、状态、完整配置/阶段有效参数、实际输入和本次输出的真实路径/SHA-256，以及上游执行编号/记录哈希；最新状态与独立历史记录分离。消费上游前核验研究、参数、文件和执行链，拒绝混用轮次、被替换文件或无来源链旧审计；允许兼容的下游参数调整。基因注释支持可验证 prepare-order 产物或标为 supplied_table 的外部表，不伪造上游来源；最小核心相应由 9 个业务模块更新为 10 个，暂排除模块仍不删除。</li>
+<li>验证：初版测试修复前 <strong>15 failed / 1 passed</strong>；最终新增 <strong>29 项</strong>，全套 <strong>171 passed（22.11s）</strong>，含空表、重复运行、输入输出重叠、非法区间、失败归档、可选热图、旧分辨率、下游失效、跨研究/参数/文件/执行链校验及 CLI。真实现有 WBS 区间与 GENCODE 注释，无 samples 提取 <strong>35 行，与已有候选逐列完全一致</strong>，CNV/表达未执行状态正确；输出全部在 <code>/tmp/igem-r04-fixes.u21hC7/</code>，日志 <code>pytest-final.log</code>、<code>real-interval.log</code>。未重跑真实多样本 CNV（原始 GEO 文件仍缺失），未重建 AI 或覆盖正式输出。</li>
+<li>影响与边界：旧版 CNV 中间表需配套新审计或重跑相关上游才能复用；校验增加文件读取 I/O，history 保留可能较大的 h5ad。空候选仍由下游 normalize 明确拒绝，不允许用旧表代替。无并发写入锁，不保证磁盘故障或进程中断下事务回滚；中断留下 running 不能当成功。CNV 科学逻辑和 PASS/FAIL 判定未擅改。</li>
+<li>已改文件与交接：workflow、新增 artifacts 和 workflow 测试、CNV 文档、pipeline README、最小核心清单、审查台账及本日志；前项 CR-010/清单修改均保留。共 49 项：<strong>12 关闭、35 待评估处理、2 延期</strong>（CR-012 部分完成、CR-049）。R04 本轮授权事项结束，提醒考虑 Git 提交，未提交/推送；下一项 CR-014 环境与测试依赖一致性，解释原因/后果/建议/影响后等待批准，不自动修复。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-30-2026-09-22cr-010全部样本暂存预检与旧输入冲突保护">条目 #30 — 2026-09-22（CR-010：全部样本暂存预检与旧输入冲突保护）</h2>
+<ul>
+<li>目标与授权：用户要求继续处理 CR-010。成功标准为首次/正确重复整理可运行，任何样本存在输入或目标冲突时先报错且不改动其他样本，不混用旧矩阵与新标签；保留上一轮最小核心文档改动，不扩大到其他台账项、疾病推断或筛选算法。</li>
+<li>修复：现有 <code>cmd_stage_samples</code> 改为全部预检后写入；三件套只复用指向当前原始文件的链接，旧普通文件/错误或断裂链接/目录冲突报错。features 普通文件按解压全文核对基因内容和顺序，链接必须指向可直接使用的当前 genes；缺失时才生成或链接，正确已有文件保持不变。源文件缺失、不可读/空/列数不一致或不足两列的 genes、共享实际整理目录及目录与预定输出文件重叠均在写入前拒绝；CLI 返回明确错误及非零状态，不自动清理历史文件。</li>
+<li>验证：新增初版 29 项测试，修复前 <strong>26 failed / 3 passed</strong>；后续扩展复现目录嵌套预定文件造成部分写入并一并修复。最终新增 <strong>36 项</strong>，完整 pipeline <strong>142 passed（21.47s）</strong>。合成两个样本验证整体预检与重复运行；Scanpy 实际读取两列转换/三列直连输入，基因/细胞标签与计数均正确。测试、复现及日志位于 <code>/tmp/igem-cr010.ME2T9R/</code>，永久回归在 <code>03_pipeline/tests/test_cnv_staging.py</code>。</li>
+<li>影响与边界：过去默默接受的旧普通三件套现在会报错，需换独立整理目录或人工核对保留后处理；不自动迁移或删除。没有更改源数据、正式产物、配置、依赖、CNV/筛选逻辑。不检查矩阵维度/数值/分组，也不识别同一路径源矩阵原地改写的历史版本；预检非事务，不承诺并发改写或磁盘故障回滚。真实六个 GEO 原始文件缺失，未运行真实多样本 CNV。</li>
+<li>已改文件与交接：CNV workflow、新增 staging 测试、CNV 运行文档、最小核心清单、审查进度和本日志。台账共 49 项：<strong>10 关闭、38 待评估处理、1 延期</strong>。CR-010 关闭，R04 剩 CR-011～013；CR-011 新临时探针证实第二次报告/审计为 0 候选，旧 candidates.csv 仍有 1 行且哈希不变，仅补证据并解释方案，未改本项源码，等用户批准。R04 全部处理结束后提醒考虑 Git 提交；本次未提交或推送。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-29-2026-09-22多疾病多样本最小核心范围与鲁棒性验收">条目 #29 — 2026-09-22（多疾病/多样本：最小核心范围与鲁棒性验收）</h2>
+<ul>
+<li>用户要求：面向不同疾病输入和样本，先排除非必需或冗余配置/代码但不删除，列出保证运行可靠性所需的最小集合，记录日志。当前基线 <code>main</code> / <code>964925b</code>，R02 修复已提交，本轮开始工作区干净。</li>
+<li>交付：新增 <code>00_docs/03_history/MINIMAL_ROBUST_CORE.md</code>，列明 4 个公共业务模块（normalize、merge_evidence、consensus_v2、phenotype_panels）及单细胞输入另需的 5 个 CNV 模块（workflow、infercnv、gene_order、segments、expression_qc）；保留包文件、公共证据、唯一 requirements、必要配置和现有完整测试。依据实际导入关系确认，未把 workflow 顶层依赖误列为可移除文件。</li>
+<li>范围决定：旧 consensus v1、AI 预处理/补偿/遗传方式注释等可选入口、两个疾病实验档案、VCT、上游 SIGnature、未被核心读取的 sources.json 暂不属于最小必需运行集合；不是删除、移动或禁用，也不等于相关 CR 已解决。AI 文件仍可按原运行条件接入，现有算法、得分和配置不变。全项目安装/发布检查仍覆盖原范围，未为“核心精简”改动它们。</li>
+<li>配置核实：v2 仍从旧 consensus 构造默认值，不能直接认定旧段冗余。在内存中移除当前 pipeline.yaml 的 clinGen/compensation/consensus/external/gene_constraints，并将 hpa_filter 仅保留 organs/organ_tissues，<code>load_v2_config</code> 结果逐项完全相等，组织映射不变。当前显式 v2 覆盖足够，其他配置不保证等价；未生成或写入精简生产 YAML。保留公共算法配置与疾病/样本配置的职责区分，不创建多层继承体系或第二套安装清单。</li>
+<li>鲁棒性定义：同一代码处理不同研究的独立运行，同研究支持多个患者/对照；明确运行/样本身份、输入格式与矩阵维度、文件一致性、基因与坐标契约、疾病正对照及组织配置、输出隔离和阶段追溯。不自动猜疾病、不混合疾病患者组、不用默认 Williams 区间或正对照代替新疾病配置，也不承诺任意疾病/跨物种/FASTQ 输入通用支持。</li>
+<li>未完成项：CR-010～013 仍是样本和产物可靠性的核心缺口；另列多样本 ID/路径/分组冲突、矩阵与标签吻合、QC 后空数据和跨疾病独立运行的必要验收。核心配置数值和外部连接仍需 CR-047/043；测试依赖与 CLI 覆盖仍需 CR-014/015。清单不是“系统已鲁棒”的结论，新增契约先验证再按实际问题登记。台账保持 49 项（9 关闭、39 待评估处理、1 延期）。</li>
+<li>验证与交接：复核模块依赖/配置消费点；内存精简断言通过；完整 pipeline <strong>106 passed（22.35s）</strong>，日志 <code>/tmp/igem-minimal-core.RXAPGt/pytest.log</code>。这是已有回归，本次未重新跑真实多样本 CNV 或四组面板链路。仅修改清单、pipeline README 导航、审查进度及本日志，未改源码/测试/运行配置/环境/数据，未提交或推送。下一项仍为 CR-010，按最小核心范围提出具体修复后等待批准；独立表型排名 CR-049 继续延期。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-28-2026-09-22cr-009分表型证据面板独立排名延期">条目 #28 — 2026-09-22（CR-009：分表型证据面板；独立排名延期）</h2>
+<ul>
+<li>用户授权：按不同表型查看组织证据，先做面板，后续独立排名不改并重新登记；完成后继续逐项代码审查。首批选择 WHS，用户进一步确认对应关系尚未确定，因此只交付可配置功能，默认空配置，不擅自指定疾病表型关系。</li>
+<li>实施：新增 phenotype_panels 模块、配置验证和报告渲染；merge 保留请求的具体组织 nTPM，审计记录器官/面板覆盖。组织部分缺失警告/列缺项，全缺标记无法评估，不阻断其他组；HPA 必需字段缺失明确报错。面板列出全部候选、总排名与总分参考、可用 ClinGen/gnomAD 证据和各组织值，展示逐基因覆盖；零值不当缺失，缺失不补零，旧证据提示按配置重新合并。</li>
+<li>边界：不更改评分、权重、总排名、Borda、敏感性分析或原器官聚合；不按表达排除基因，不推断表型因果。分表型独立排名新登记 CR-049（功能规划/已延期），需另行批准。WHS 真实面板待“表型—组织”关系确认后启用，测试面板不作为研究结论。</li>
+<li>验证：先写面板用例，修改前 11 项失败；新增 21 项后全套 <strong>106 passed（21.91s）</strong>。真实 WBS/WHS 使用已有标准化输入重跑 merge→rank，面板开关四组均与 CR-007 基线原有证据/排名列精确一致（35/19 行），开启面板保留全部候选；未解析 ENSG00000289346 仍保留。未重建 AI、未覆盖正式数据/历史输出。临时验证脚本、日志、产物位于 <code>/tmp/igem-cr009.8LK8Md/</code>。</li>
+<li>已改文件：合并和评分报告入口、新面板模块、pipeline.yaml 空配置项、相关测试、README、审查台账及本日志；前项未提交修改保留。台账共 49 项：9 关闭、39 待评估处理、1 延期。R02 完成，提醒考虑 Git 提交；本次不提交或推送。</li>
+<li>继续审查：CR-010 已在临时目录重新复现：旧 matrix（计数 1）未替换，本次源 matrix（计数 9）未用，新 barcodes/genes 却接入，命令仍成功。CNV 源码未改；下一步解释后果及“先核对已有文件、冲突时失败且不覆盖”的建议，等待用户决定。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-27-2026-09-22cr-008审计清单统一使用文件名">条目 #27 — 2026-09-22（CR-008：审计清单统一使用文件名）</h2>
+<ul>
+<li>用户授权：统一用文件名记录证据输入，保留单独的数据目录。</li>
+<li>实施：HPA 的 checks 键改为 p.name，data_checksums.txt 和 run.json.data_checksums 同步统一；data_directory 仍保存实际读取目录。仅一行生产代码改动，README、测试和审查台账同步更新，保留之前未提交改动；不重写历史审计，不改数据与评分。</li>
+<li>回归：新增跨目录测试，修改前 <strong>1 failed / 25 deselected</strong>，修复后完整 pipeline <strong>85 passed（18.81s）</strong>。原目录与含空格的新目录分别运行，两份审计清单均正确记录四源文件名及实际 SHA-256；数据目录各自保留，证据表一致；<code>git diff --check</code> 通过。</li>
+<li>真实验证：WBS/WHS 合并前后证据文件逐字节一致、输入校验和不变；审计除 HPA 键、源码 hash 和时间戳外其余字段一致。此次只重跑 merge，未重跑标准化和评分 CLI，未覆盖正式输出；临时脚本及产物在 <code>/tmp/igem-cr008.hZZ7ji/</code>。</li>
+<li>下一项复核：CR-009 使用仅脑皮层/小脑/肝的 HPA 合成数据，当前四器官配置仍退出 0，仅输出 liver/brain，没有 kidney/GI 或脑组缺失组织清单。当前 HPA 不参与 rank 扣分，但注释完整性需要明确；建议整体缺器官时停止、部分组织缺失时警告并记录覆盖，等待用户批准，尚未修改。</li>
+<li>交接：CR-008 关闭，总台账 8 项关闭/40 项待评估处理，R02 只剩 CR-009。该项决定落实并完成验证后提醒考虑 Git 提交；本次未提交或推送。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-26-2026-09-22cr-007证据表必需字段检查">条目 #26 — 2026-09-22（CR-007：证据表必需字段检查）</h2>
+<ul>
+<li>用户授权：按数据源区分必需字段和可选字段，在合并前明确拒绝缺列输入；后续解读稍详细，以直观例子说明重要程度，仍逐项批准后修复。</li>
+<li>修改：ClinGen 必需基因符号及 HI/TS 评分列，gnomAD 必需 gene/gene_symbol、pli、oe_lof_upper；错误包含源名、文件路径与缺失字段，CLI 状态码 2。删除无效 src_cols 参数并同步全部仓库调用处；通用连接不再接受仅含标识列的无证据表。ClinGen 单列表头仍能识别；gnomAD 不再因缺少可选 gene_id 而误处理其符号列。</li>
+<li>影响边界：PMID/日期等注释可选；合法的逐基因缺失及未匹配保留，不补零、不删候选，不改评分和映射规则。缺列失败不写证据或审计文件，已有文件原样保留（可能创建空审计目录）；已有文件不代表本次成功。内部 join 函数移除未生效参数，CLI 用法不变。HPA 组织覆盖和审计路径格式未改，未新增通用清洗脚本。</li>
+<li>验证：新增 22 项测试，修改前定向 <strong>19 failed / 6 passed</strong>；修复后完整 pipeline <strong>84 passed（19.32s）</strong>。覆盖逐列缺失/全部评分缺失、无证据表、可选字段缺失、正常值/空值/无映射及失败时新旧输出保护；<code>git diff --check</code> 通过。</li>
+<li>真实链路：WBS/WHS 修改前后运行 normalize→merge→rank（现有 AI、controls、sensitivity），标准化、证据、排名表所有列及顺序精确一致，分别 35/19 行。ENSG00000289346 仍未解析；未重建全基因 AI、未覆盖正式输入和历史输出。临时脚本、日志及产物：<code>/tmp/igem-cr007.ivp3Je/</code>。</li>
+<li>记录与交接：修改 merge_evidence 源码、两处相关测试文件、README、审查台账及本日志，保留此前未提交修改。CR-007 关闭，总台账 7 项关闭/41 项待评估处理；R02 还剩 CR-008、CR-009，下一项解释 CR-008 并等待批准。未提交或推送 Git，批次结束提醒考虑提交。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-25-2026-09-22cr-006空候选输入明确失败盘点数据预处理">条目 #25 — 2026-09-22（CR-006：空候选输入明确失败，盘点数据预处理）</h2>
+<ul>
+<li>用户授权：先修复空候选输入处理，再评估是否有必要新增清洗脚本；本次不创建通用清洗流程。</li>
+<li>修改：normalize CLI 对空文件、仅空白、仅表头零行输入明确提示 <code>candidate input is empty; check input or upstream filtering results</code>，返回状态码 2，在加载 HGNC 和创建输出目录前停止。<code>resolve</code> 对直接传入的空表抛 ValueError；非空行中的空符号仍按 unresolved 处理。失败时不覆盖已有文件，旧文件不能视为本次成功结果。</li>
+<li>回归：新增 12 项用例，修改前定向 10 failed / 12 passed；修改后完整 pipeline 为 <strong>62 passed（17.91s）</strong>。覆盖空输入类型、已有输出字节保持不变、不创建输出目录、函数直接空表及正常输入/空符号对照。</li>
+<li>真实输入：WBS/WHS 的修改前后标准化输出所有列及行顺序精确一致（35/19 行）；ENSG00000289346 仍 unresolved。未改变评分模块，本次未重跑完整评分 CLI；前项完整链路验证保留。脚本及临时输出位于 <code>/tmp/igem-cr006.IEfmD1/</code>，正式输入及历史输出不变。</li>
+<li>预处理评估：项目已有 normalize、merge_evidence、CNV 的 10x/GTF/表达 QC、VirtualCellTool 的 prepare 系列，以及两个疾病目录的历史 preprocess 脚本；它们面向不同数据类型，不是统一清洗入口。目前更需要补齐现有读取入口的校验和记录，不建议立刻写重复的“万能清洗脚本”。若后续频繁导入外部多格式数据，再评估复用已有规则的轻量导入检查/报告入口；不能自动删除未识别基因、把缺失证据补零或替用户选择冲突分数。</li>
+<li>记录与交接：更新 normalize 源码和测试、README、问题台账及本日志，保留前项未提交改动。CR-006 关闭；CR-016 的空表测试缺口已补，仍等待该项单独签收。下一项 CR-007 已复核字段校验缺口，尚未修改；R02 剩三项。未提交或推送 Git，批次结束时提醒考虑提交。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-24-2026-09-22cr-005修复别名外层引号解析">条目 #24 — 2026-09-22（CR-005：修复别名外层引号解析）</h2>
+<ul>
+<li>用户授权：按已解释方案修复别名字段的首尾空白和成对包围引号，保留正式符号优先、歧义别名不匹配的规则；不修改原始 HGNC 数据、评分逻辑或 Ensembl 转换行为。</li>
+<li>实施：仅在 <code>normalize.load_alias_map</code> 拆分别名前清理字段首尾空白和成对外层双引号。增加 7 项回归用例，覆盖实际 HGNC 的带空白引号格式、正常引号格式、三种分隔符、历史符号、正式符号优先及歧义别名。定向测试修改前 4 failed / 6 passed，修复后完整 pipeline 为 <strong>50 passed（15.91s）</strong>。</li>
+<li>实际映射验证：ACF/APOBEC1CF 从未命中恢复为 HGNC:24086；映射中带双引号的键从 26,363 降为 0。原有非空映射未改指向另一个非空 HGNC。</li>
+<li>WBS/WHS 验证：在包含 CR-004 未提交修改的基线上，修改前后分别运行标准化、证据合并、rank+sensitivity；分别使用仓库现有 AI 表与当次重新生成 AI 表。两组候选的 normalized、evidence 和两种 ranked CSV 所有列与顺序均精确一致。WBS 35 行，ENSG00000289346 仍 unresolved（约 2.9%）；WHS 19 行全部解析，来源与区间字段完整保留。</li>
+<li>全基因变化：AI 重建输出 18,108 → 18,406 个 HGNC，新增 300、减少 2、另有 2 个原有 HGNC 分数变化。DEC1 对应 BHLHE40/DELEC1、LOR 对应 LORICRIN/LOXL2，恢复完整别名后按已有歧义规则拒绝匹配，因此减少 HGNC:23658、HGNC:6663。</li>
+<li>已知风险 CR-046：新识别的 SEPT4/C10orf131 与旧记录 C17orf47/CC2D2B 分别映射同一 HGNC，且在输入中更靠前；现有保留第一行的规则使 HGNC:9165 的分数 0.313186 → 0.582846，HGNC:31666 为 0.221313 → 0.146831（六位小数）。只记录真实冲突证据，不修改重复映射选择规则；现有正式 AI 文件和历史输出均未覆盖。</li>
+<li>产物与交接：源码、normalize 测试、README、台账及本日志更新；临时前后对比脚本、CLI 日志、映射快照和产物位于 <code>/tmp/igem-cr005.Ercwkn/</code>，不纳入 Git。CR-005 关闭；CR-016 的引号测试缺口已改善但不自动关闭；CR-046 待单独处理。R02 剩 CR-006～CR-009 四项，下一项 CR-006 已重新复现空表 <code>KeyError: status</code>，待用户确认后才修改。本次未提交或推送，批次结束时提醒考虑 Git 提交。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-23-2026-09-22cr-004保留候选上下文字段登记未解析编号">条目 #23 — 2026-09-22（CR-004：保留候选上下文字段，登记未解析编号）</h2>
+<ul>
+<li>用户决定：批准标准化保留 <code>source</code>、<code>deletion_id</code>、<code>chrom</code>、<code>start</code>、<code>end</code>，并传递到证据表和最终排名；不改变评分、排序、HGNC 映射或未解析比例的失败阈值，不自动转换 Ensembl ID。</li>
+<li>原因与修改：原 <code>normalize.resolve</code> 只构造 HGNC、原始符号和状态三列，输入中的来源/区间因此丢失。本次仅在该函数中按输入行位置附加已有的五字段；merge 和 consensus 已能透传，无需修改。缺少可选字段时保持原三列输出，任意自定义列不自动透传。</li>
+<li>未解析编号：WBS <code>03_pipeline/input/candidates.csv</code> 的 <code>ENSG00000289346</code> 仍未映射到 HGNC，保留 <code>status=unresolved</code> 和空 <code>hgnc_id</code>。来源为 <code>known_interval</code>，区间为 <code>williams_7q11.23</code>，坐标为输入中的 <code>chr7:74796150–74890585</code>。原因是当前标准化匹配 HGNC 正式/历史/别名符号，并未自动转换 Ensembl ID；不能据此认定编号无效，映射核实留待单独决定。WBS 共 35 行，未解析 1 行（约 2.9%）；WHS 19 行全部解析。</li>
+<li>回归验证：先增加 3 项用例，修改前均因字段丢失失败；修改后完整 pipeline 测试为 <strong>43 passed（16.61s）</strong>。覆盖字段缺省与部分存在、非默认行索引、空字段、未解析行、额外列隔离，以及来源字段经合并和排序后仍与对应候选一致。</li>
+<li>真实数据验证：在修复基线 <code>main</code> / <code>9600843</code> 的源码修改前后分别跑 WBS/WHS normalize→merge→consensus，使用相同当前证据、<code>outputs/ai_scores.csv</code>、rank 模式、对应 controls 和 sensitivity。三个阶段均保留五字段；去掉新增列后，所有原有列（包括得分、排名）及行顺序逐值精确一致。脚本、日志与产物位于 <code>/tmp/igem-cr004.NHLkjK/</code>，不覆盖正式输入或历史输出。</li>
+<li>记录与影响：更新 pipeline README、两个关联测试文件及 <code>00_docs/03_history/CODE_REVIEW_PROGRESS.md</code>；CR-004 关闭，编号映射仍待核实。现有主链路按列名读取，无需调整；外部若硬编码列数，需接受附加列。未改环境、配置、证据数据和其他 CR。</li>
+<li>受控流程：后续每项先解释原因、后果、方案与影响，用户确认后再修改、验证和记日志。本次不提交或推送 Git；R02 尚有 CR-005～CR-009 五项，批次结束时提醒考虑 Git 提交，下一项为 CR-005。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-22-2026-09-21本地保留-csv清理未推送历史以避免上传">条目 #22 — 2026-09-21（本地保留 CSV，清理未推送历史以避免上传）</h2>
+<ul>
+<li>用户确认目标是本地 main 目录保留 <code>03_pipeline/outputs/review_20260919/ai_scores.csv</code>，但远端及其历史不包含此文件。#21 的取消跟踪不足以实现此目标，本条补充清理未推送的历史；旧日志中的提交 ID 作为历史记录保留。</li>
+<li>只读核实 GitHub main 为 <code>4562356</code>，远端尚无冻结分支。仓库外备份：<code>/Users/leobranch/Desktop/iGEM-2026/git-history-backups/before-csv-history-cleanup-384884c.bundle</code>，已通过 bundle verify，可恢复改写前历史。</li>
+<li>从冻结分支及本地 main 的相关历史中移除该文件，保持原提交信息、作者、父子关系及其余内容：<code>13bce4f → 5d3834f</code>、<code>a31caed → 547d062</code>、<code>4d8e403 → 98e1e9d</code>、<code>384884c → 0561aca</code>。原 main 的代码审查和 Notebook 提交不变；两个分支改写前后的最终文件树完全相同。</li>
+<li>CSV 已复制到桌面 main 工作目录，同时保留 Codex 工作树副本；SHA-256 均为 <code>74eedf8f7bedb5f6a4ce45f711af481898e5c0989886dfef00d27b1338834d55</code>。精确忽略规则继续生效，CSV 不纳入新提交。</li>
+<li>本条在当前冻结分支新增提交后再合并到本地 main。不推送、不强推、不删除恢复用 reflog 或 Codex 内部引用；以后仅正常推送 main/清理后的业务分支，不使用 <code>git push --mirror</code> 推送内部引用，也不要重新合入旧历史。仓库外 bundle 仍含旧文件，属于本地恢复备份。</li>
+<li>历史改写不改变运行代码；改写前合并结果已通过 40 项测试。此次另核验分支历史中目标路径和文件对象不可达、双方本地副本完整及忽略规则有效。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-21-2026-09-21忽略全基因评分生成文件准备合入本地-main">条目 #21 — 2026-09-21（忽略全基因评分生成文件，准备合入本地 main）</h2>
+<ul>
+<li>按用户要求，仅将 <code>03_pipeline/outputs/review_20260919/ai_scores.csv</code> 加入精确路径忽略规则，并从 Git 索引移除；当前工作树的本地文件保留。其他 CSV、评分审计 JSON、证据快照和候选排名输出不变。</li>
+<li>此文件为可重新生成的全基因评分表；新克隆不再自带此归档文件，复现实验前需依照 2026-09-19 复核说明重新生成。保留历史提交，不重写历史，因此旧提交中的文件仍可恢复，历史仓库体积不会因此缩小。</li>
+<li>本次不修改评分代码、不整合新项目、不推送远端。完成独立提交后，将冻结分支合入桌面本地 <code>main</code>，保留其已有代码审查及 Notebook 提交；合并后的验证结果另记。</li>
+<li>移除跟踪前文件 SHA-256：<code>74eedf8f7bedb5f6a4ce45f711af481898e5c0989886dfef00d27b1338834d55</code>。</li>
+<li>合并验证：忽略文件提交为 <code>4d8e403</code>；以 <code>cc980f4</code> 为本地 main 起点无冲突合并，原 main 的代码审查、依赖/脚本及 Notebook 文件与合并前逐字节一致。合并工作目录运行 <code>03_pipeline</code> 完整测试，<strong>40 passed in 18.31s</strong>。CSV 已不在索引中，忽略规则命中，Codex 工作树本地副本 SHA-256 不变；除保留原始字节的 ClinGen 官方 TSV 外，合并差异通过 <code>git diff --cached --check</code>。此验证用于进入最终代码审查，不等于全量发布或生物学验收。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-20-2026-09-21按用户确认撤销冻结收尾保留上一轮筛选修复">条目 #20 — 2026-09-21（按用户确认撤销冻结收尾，保留上一轮筛选修复）</h2>
+<p>用户明确选择回到本轮冻结之前，而不是回退到 <code>1ec4b64</code>。因此仅撤销 #19 的收尾变更，保留 #18 的全部筛选源码、配置、ClinGen 快照、回归测试、复核报告及 WBS/WHS 输出；上一轮已有的 sources 忽略规则也保留。</p>
+<ul>
+<li><code>.gitignore</code> 移除本轮新增的 <code>/SINEB2-ChromDel/</code>；<code>scripts/export_github.sh</code>、根 README、<code>03_pipeline/README.md</code> 恢复为冻结前内容。</li>
+<li>删除本轮新增的 <code>tests/test_export_boundaries.py</code> 与 <code>管线文档/冻结基线_2026-09-21.md</code>；二者可从提交 <code>13bce4f</code> 恢复，没有删除任何独立项目或实验数据。</li>
+<li>回退同时撤销 Bash 3 库外导出的空数组修复、导出排除和 README 纠错；这些已知限制重新存在。科学解释和可靠重现命令仍以 <a data-local-only-href="%E7%AE%A1%E7%BA%BF%E6%96%87%E6%A1%A3/%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">2026-09-19 复核说明</a> 为准，不以旧 README 的模式描述为准。</li>
+<li>采用新提交记录回退，不重写 Git 历史；<code>13bce4f</code> 保留可恢复。桌面 main 及仓库外 SINEB2-ChromDel 不变，不推送远端。</li>
+<li>本条是回退审计记录；#19 保留为已撤销的历史，不再表示当前冻结状态。</li>
+<li>验证：回退后完整测试 <strong>40 passed</strong>；README 与导出脚本逐字节匹配冻结前版本；#18 的源码、配置、数据、归档输出及测试没有改动；<code>git diff --check</code> 通过。测试数从 42 回到 40 是删除本轮两项导出测试所致。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-19-2026-09-21独立筛选项目隔离原有筛选基线冻结已由-20-撤销">条目 #19 — 2026-09-21（独立筛选项目隔离、原有筛选基线冻结；已由 #20 撤销）</h2>
+<h3 id="doc2-请求与范围">请求与范围</h3>
+<p>用户要求先忽略待合并项目，集中完善、冻结并提交原有项目。待合并项目确认为桌面 <code>SINEB2-ChromDel</code>，在本 Git 仓库外且未被跟踪。本次将 #18 的修复、测试、证据与复核输出一并纳入本地冻结分支 <code>codex/freeze-original-20260921</code>；不整合新项目，不推送远端。</p>
+<p>桌面 <code>main</code> 已有独立提交 <code>4562356</code> / <code>adaf770</code>，本工作树从 <code>1ec4b64</code> 开始。本次不改写或覆盖 <code>main</code>，不纳入桌面未跟踪 Notebook；未来合并时保留双方改动并重测。</p>
+<h3 id="doc2-本次改动">本次改动</h3>
+<ul>
+<li><code>.gitignore</code>：新增根目录 <code>/SINEB2-ChromDel/</code> 排除；仓库外现有独立项目保持不变。</li>
+<li><code>scripts/export_github.sh</code>：明确排除新项目及 <code>review_20260919/sources/</code> 本机证据软链接，避免仅有 gitignore、导出仍误带入。新增测试先复现 macOS Bash 3 在库外导出时空数组与 <code>set -u</code> 冲突；改用含 <code>-a</code> 的非空 rsync 参数数组修复，保留库内目的目录自排除。</li>
+<li><code>03_pipeline/tests/test_export_boundaries.py</code>：两种目的路径的真实导出夹具测试，验证 Git 忽略、导出排除、保留复核结果、不删除原项目文件。</li>
+<li>根 README / <code>03_pipeline/README.md</code>：示例先重新生成 DeepLOF 评分；不再默认读旧映射输出；修正 full/validate 模式的补偿与治疗推断边界，加入最新冻结入口。</li>
+<li>当时新增 <code>管线文档/冻结基线_2026-09-21.md</code>（#20 已删除，可从 <code>13bce4f</code> 恢复），明确已验收范围、归档数据、分支边界和未完成事项。#18 所列代码与数据修改继续保留。</li>
+</ul>
+<h3 id="doc2-验证与交接">验证与交接</h3>
+<ul>
+<li>完整测试 <strong>42 passed</strong>（40 项原有/上一轮回归 + 2 项导出边界测试）；<code>bash -n</code> 通过；忽略规则命中。</li>
+<li>WBS/WHS 归档输入、配置、合并/评分代码、证据快照和输出的 SHA-256 全部复核一致；从归档证据再次评分，两个 ranked CSV 与归档逐字节一致。</li>
+<li>ClinGen 官方 TSV 保留原始字节和空字段；其他修改通过 <code>git diff --check</code>。证据 Parquet 按已有 Git LFS 规则提交，sources 软链接不提交。</li>
+<li>此次冻结不等于完成全量发布验收：未重做干净环境安装、远端克隆、VirtualCellTool/真实单细胞全流程或生物学验证；工作树的其他 LFS 指针仍需拉取。下一步如要合入桌面 main，先处理其独立提交并重跑验证，再决定发布；SINEB2-ChromDel 整合继续暂停。</li>
+</ul>
+<hr />
+<h2 id="doc2-条目-18-2026-09-19合并前筛选逻辑复核证据连接评分与验证边界修复">条目 #18 — 2026-09-19（合并前筛选逻辑复核：证据连接、评分与验证边界修复）</h2>
+<h3 id="doc2-请求与范围-1">请求与范围</h3>
+<p>回应用户七个问题：空白导致的连接丢失、ClinGen 证据/评分、隐性降权来源、mRNA 补偿推断、正对照/LOO、raw 与缺失值、v2.2 承诺。只修复现有管线，尚未整合 SINEB2-ChromDel。修改在当前 Codex 工作树；没有覆盖桌面保存项目或历史实验输出。</p>
+<p><strong>阅读优先级</strong>：本条及 <a data-local-only-href="%E7%AE%A1%E7%BA%BF%E6%96%87%E6%A1%A3/%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">筛选逻辑复核与修复_2026-09-19.md</a> 优先于 #17/v2.2、#6/#7 与 09-05 报告。历史原文保留，不再把其中过度结论当当前事实。</p>
+<h3 id="doc2-代码与数据变更">代码与数据变更</h3>
+<ol type="1">
+<li><code>03_pipeline/src/normalize.py</code>、<code>ai_scores.py</code>：统一清理 HGNC 表头/符号/ID 两端空白，共享正式符号及历史别名解析；正式符号优先、歧义别名不猜测。DeepLOF 空映射报错，并审计源文件和别名表 hash。</li>
+<li><code>merge_evidence.py</code>：保留 normalized 中的隐性/解析注释，拒绝重复候选及多对多连接；ClinGen 原始分值、原文、语义、PMID、疾病 ID、评估日期不再在输出列选择时丢弃；识别 -1/未评估；HPA 脑及胃肠组织显式映射、数值 max nTPM 汇总；写 run.json（来源、配置、输入/输出/代码校验和、覆盖率）。</li>
+<li><code>data/clinGen_gene_curation_list_GRCh38.tsv</code>：官方快照 09-05→09-19，1,528→1,532 条。新增 AGO1/CAPN5/IRF4/MTOR/PPP1R12A/VCAN，下载不再包含 CDKL5/CLCN4；共同记录未变，不把下载缺席解释成疾病关联否定。来源、差异与 SHA-256 存入 <code>data/clingen_snapshot.json</code>。</li>
+<li><code>consensus_v2.py</code>、<code>config/pipeline.yaml</code>：HI 0–3 固定量程评分，移除 HI≤1 的额外负分；30 单列隐性关联，40 为反向证据并标 <code>dosage_conflict</code>，不是“无证据”。40 不自动删除候选，也不通过遗传学支持面板/第一候选自动建议。常数列 raw/zscore 保留 NaN，缺证据贡献 0；默认 raw 明确为 min–max。</li>
+<li><code>filter_recessive.py</code>：OMIM 按具名列解析而非错误位置，ClinVar 限定具名遗传方式表；混合显隐性记录不作纯隐性判定，X 连锁不套用常染色体规则；保留真实来源和 not_assessed 状态。默认 gnomAD 倍率 <strong>1.0（只注释）</strong>；手动开启时只对标记行乘一次，在调权/排名/敏感性/Borda 之前统一处理，修复“未标记者减半、标记者剩四分之一”和字符串 False 问题。</li>
+<li><code>consensus_v2.py</code>：LOO、recall、敏感性、最终排名统一并列规则；少于 3 个在表对照跳过调权（工程下限，不是充分样本保证）。正对照读取配置回退，缺席者计入请求分母，所有模式显示；配置 mode、warnings、sensitivity、experiments 接线。显式提供但读入/join 失败的可选文件不再静默跳过。实现“无有效证据候选比例”校验，并输出 evidence_status。</li>
+<li><code>compensation.py</code>：非负 counts/零库/重复基因/对照组校验，按全基因库大小归一化；需要裁剪前 library_size_col 或显式 full_gene_matrix 声明，拒绝把未说明的 HVG 子集当完整矩阵。旧 class 名仅作兼容标签，新增 mechanism_status=not_established。<code>consensus_v2.py</code> 和 <code>cnv/workflow.py</code> 去除自动的“理想 SINEUP/已证明补偿”结论；Mode A 只表示初步遗传学支持。修复报告中 0 显示为缺失、NaN 直出、实验模板未展开等问题。</li>
+<li>评分 CLI 生成 <code>&lt;out&gt;.audit.json</code>（或 –audit 指定路径），包含实际参数、配置、输入/输出/report hash、代码 hash、Python/pandas/numpy 版本、权重、对照和敏感性结果。新临时 sources 软链接目录单独加入 <code>.gitignore</code>，不是新增外部依赖。</li>
+</ol>
+<h3 id="doc2-对历史结论的修正">对历史结论的修正</h3>
+<ul>
+<li>#6 的“GTF2I ratio=0.995 直接确认完美补偿”撤回为<strong>待验证假说</strong>。旧比值来自按细胞平均的未校正 counts；虽另有 pseudobulk，p=0.737625 不证明等价。上游实物是 96,969×3,016 的 HVG 子集，不应当作完整库大小。未完成样本/细胞类型分层及蛋白验证，不能据此推导 SINEUP 可行性。</li>
+<li>隐性基因 0.5 降权来自 09-07 项目质询回答，不是数据库标准；“高 pLI 因缺少纯合敲除”的解释不成立，不继续默认实施该假设。</li>
+<li>09-05 报告把 pLI 方向写反；rank 单调变换本身不会把低 pLI 变成高约束。不能因 raw 后排序更符合预期，就认定原来是“小样本 rank 伪影”。raw 仍是候选集 min–max；算法间相关更高不是生物学验证。</li>
+<li>本地 gnomAD 仍是 legacy v2.1.1 格式，配置不再写成 use_LOEUF_v4=true；没有冒充完成 v4 升级。</li>
+</ul>
+<h3 id="doc2-验证">验证</h3>
+<ul>
+<li>完整测试 <strong>40 passed</strong>（实际在本工作树运行，含 infercnv 合成测试）。新增 <code>tests/test_screening_regressions.py</code>；<code>test_merge_evidence_paths.py</code> 使用小型独立夹具，避免把 HGNC LFS 未展开当代码故障。</li>
+<li>回归覆盖：空白/别名、ClinGen 0/1/2/3/30/40/-1/无记录、NaN 常数列、隐性一次降权、全并列 LOO、重复 join 键、无证据、OMIM/ClinVar 表头、counts 深度与 HVG 防误用、CLI 配置/审计、报告边界。</li>
+<li>本地真实证据全链路重跑：WBS <strong>35 行，HGNC 34，DeepLOF 28/35</strong>（审查时 16/35）；WHS <strong>19 行，DeepLOF 19/19</strong>（审查时 15/19）。HPA 已补 brain/GI，不参与扣分。</li>
+<li>WBS 前三 <strong>BAZ1B/CLIP2/LIMK1</strong>；ELN #5、GTF2I #8、BAZ1B #1、LIMK1 #3，正对照 <strong>4/4</strong> 前十。WHS <strong>NSD2 #1</strong>，正对照 1/1；WHS 正对照不足以做 LOO。</li>
+<li>权重±1：WBS Top-3 集合变化 <strong>4/8</strong>，最大位移 4；WHS <strong>0/8</strong>，最大位移 3。没有调权去迎合这些结果，排名仍是候选优先级。</li>
+</ul>
+<p><strong>产出</strong>：<code>03_pipeline/outputs/review_20260919/{wbs,whs}/</code> 中证据、排名、报告和审计；<code>summary.json</code>；上述复核说明。测试及重跑命令见复核说明。旧运行文件未覆盖。</p>
+<h3 id="doc2-未完成与后续边界">未完成与后续边界</h3>
+<p>未重新证明补偿机制；未建立完整供体/细胞类型差异分析；未完成疾病-表型分组、经校准证据等级、SINEUP 的转录本/靶向/蛋白与安全验证。区间+GTF 独立提取、表型证据分组值得下一步设计；不能把它们或科学有效性列成已实现保证。具体取舍见复核说明第 7 节。</p>
+<hr />
+<h2 id="doc2-条目-17-2026-09-14管线-v2.2-架构文档-补上缺失的实施文档">条目 #17 — 2026-09-14（管线 v2.2 架构文档 — 补上缺失的实施文档）</h2>
+<h3 id="doc2-背景">背景</h3>
+<p>用户问「像 <code>架构设计_v2_通用微缺失主效基因筛选管线.md</code> 这样的管线文档，有没有更新后的版本」。核查结论：<strong>没有</strong>——最新架构文档停留在 v2.0（2026-09-07），而代码已到 v2.2，中间存在<strong>双向脱节</strong>。</p>
+<h3 id="doc2-脱节清单写作前逐项核对代码">脱节清单（写作前逐项核对代码）</h3>
+<p><strong>v2.0 描述了但从未实现（9 项）</strong> <code>src/extract_genes.py</code>（Module A 区间→基因）· <code>config/intervals.yaml</code> · <code>config/known_drivers.yaml</code> · <code>src/phenotype_grouper.py</code>（表型分组）· <code>src/report.py</code> · <code>outputs/candidates_by_phenotype/</code> · 五维证据面板与证据等级（★★★/★★☆/★☆☆/⚠️）· HPA 双重角色标签（<code>hpa_target_support</code>/<code>hpa_safety_flag</code>）· <code>tests/test_extract_genes.py</code>、<code>test_phenotype_grouper.py</code></p>
+<p><strong>关键冲突</strong>：v2.0 §4.4 声明「v2 不再产出单一的 <code>consensus_score</code> 排名」——实际 <code>ranked_wbs_modeC.csv</code> 中 <code>consensus_score</code> 列仍在，且无任何 phenotype 列。即核心设计变更未落地。</p>
+<p><strong>已实现但 v2.0 未记录（v2.1/v2.2）</strong> <code>compensation.py</code>（mRNA 补偿）· <code>filter_recessive.py</code>（隐性基因过滤）· ClinGen 三值标注 · 权重敏感性分析 <code>--sensitivity</code> · 四 mode 真实行为化 · 正对照检验表 · 稀疏性警告 <code>--warnings</code> · HPA 惩罚权重置 0 · normalize 改 raw · 实验建议生成器</p>
+<h3 id="doc2-新文档">新文档</h3>
+<p><strong><code>outputs/reports/管线文档/架构设计_v2.2_通用微缺失主效基因筛选管线.md</code></strong>（513 行）</p>
+<p>结构：0 与 v2.0 的关系（先读）· 1 设计原则（9 条，逐条附实现状态）· 2 实际数据流架构图 · 3 模块详解（L0/L1/L2/L3 + 补偿 + 隐性过滤 + CNV）· 4 配置参考（逐键表）· 5 输出与字段解读 · 6 运行模式（<strong>实际行为</strong>）· 7 版本变更记录 · 8 未实现清单（9 项，标注是否仍需）· 9 为什么机制层不能回补排序 · 10 已知限制与待办 · 附录 ABC</p>
+<p><strong>每节标注实现状态</strong>：✅已实现 / ⚠️部分实现 / ❌未实现。</p>
+<h3 id="doc2-写作中澄清的两处实现真相v2.0-描述有误">写作中澄清的两处实现真相（v2.0 描述有误）</h3>
+<ol type="1">
+<li><strong><code>auto</code> 不会自动解析成 A/B/C/D</strong>。实际含义 = 「正对照检验 + 稀疏警告」，是一组独立行为，不是”数据丰富度自动检测”（v2.0 §2/§8 描述不符）。</li>
+<li><strong>Mode C（<code>full</code>）与 Mode B（<code>rank</code>）当前行为相同</strong>，仅报告标签不同。补偿集成靠 <code>--compensation</code> 参数启用，<strong>不由 mode 决定</strong>。</li>
+</ol>
+<h3 id="doc2-验证文档内命令全部实测">验证（文档内命令全部实测）</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文档 §6 示例</th>
+<th>实测结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mode B（<code>--mode rank --controls --sensitivity</code>）</td>
+<td>35 行；报告含正对照检验表（命中 <strong>4/4</strong>）+ 权重敏感性段落</td>
+</tr>
+<tr>
+<td>Mode C（<code>--mode full --compensation</code>）</td>
+<td>35 行；报告含补偿状态段</td>
+</tr>
+<tr>
+<td>Mode A（WHS <code>--mode validate</code>）</td>
+<td>19 行；<strong>NSD2 #1</strong>；验证结论「✓ 通过 — 已知主效基因满足 SINEUP 靶向条件」</td>
+</tr>
+</tbody>
+</table>
+<p>另核对：DeepLOF 覆盖 28/35、ClinGen 覆盖 14%（5/35）、测试 20 passed / 1 skipped、HPA 实际只 pivot 出 liver/kidney 两列（脑列未映射，列为<strong>高优先级待修</strong>）。</p>
+<h3 id="doc2-处置">处置</h3>
+<ul>
+<li>新文档写入 <code>管线文档/</code></li>
+<li>v2.0 文档<strong>保留不删</strong>，头部加”已被取代”说明指向新文档（遵循”不删除历史”惯例）</li>
+<li>§8 保留全部未实现设计待决策；§10.3 列出 7 项工程待办并标优先级</li>
+</ul>
+<p><strong>产出</strong>：新增 <code>outputs/reports/管线文档/架构设计_v2.2_通用微缺失主效基因筛选管线.md</code>；修改 <code>架构设计_v2_通用微缺失主效基因筛选管线.md</code>（加取代说明）</p>
+<hr />
+<h2 id="doc2-条目-16-2026-09-14igem-wiki-大纲model-页-document-页">条目 #16 — 2026-09-14（iGEM wiki 大纲：Model 页 + Document 页）</h2>
+<h3 id="doc2-背景-1">背景</h3>
+<p>用户在完成 #15 的一致性对齐后，要求起草 iGEM wiki 两页的<strong>大纲</strong>（正文后续填充），并明确项目仍处于未完全开发状态。</p>
+<h3 id="doc2-产出">产出</h3>
+<p><code>outputs/reports/wiki/</code>（.md + .html 成对落盘）：</p>
+<p><strong><code>wiki_Model_页面大纲.md</code></strong> — 筛选项目的<strong>原理与开发过程</strong>，10 节： 0. 页面定位 · 1. 问题定义 · 2. <strong>为什么必须建专用管线而不是跑现成 AI</strong>（用项目自身负结果论证）· 3. <strong>四层证据金字塔原理</strong> · 4. <strong>开发过程：DBTL 七轮循环</strong> · 5. 验证（正/负对照）· 6. 与湿实验/治疗设计的接口 · 7. 局限与未来工作 · 8. 可复现性 · 9. 图表清单 · 10. 待补清单</p>
+<p><strong><code>wiki_Document_页面大纲.md</code></strong> — 工具<strong>说明书</strong>（README 风格），15 节： 概览 · 系统要求与<strong>已知陷阱表</strong> · 安装启动 · 快速上手 · 输入准备 · <strong>配置参考表</strong> · 运行模式 · <strong>输出字段解读</strong> · <strong>VirtualCellTool 使用手册（含 8 类图表读法）</strong> · 端到端示例 · 故障排查 · 版本与变更 · 归属与引用 · 附录 · 待补清单</p>
+<h3 id="doc2-起草时的关键设计决定">起草时的关键设计决定</h3>
+<ol type="1">
+<li><strong>每节标注完成度</strong>（【✓可落笔】/【◐待整理】/【○待补】），使大纲同时充当进度表——用户明确要求”只需大纲”，因此把”哪些能直接写、哪些还缺素材”显式标出。</li>
+<li><strong>Model 页把负结果放在核心位置</strong>（§2）：r=0.02、GEARS 4/41 覆盖、Nature Methods 2025 基线——用这些论证”为什么自建管线”，而非作为需要隐藏的失败。这与项目一贯的<strong>负结果叙事</strong>一致。</li>
+<li><strong>Document 页重点写”最容易误读的地方”</strong>：LOEUF 低才对、ws/ms 的”细胞类型”实为病健分组、IG 归因正负号只表方向——这些是 #14/#15 实际踩过的解读陷阱。</li>
+<li><strong>两页都建议正文用英文</strong>（iGEM 评审为英文），中文作为草稿语言。</li>
+<li><strong>显式记录未完成项</strong>：对外发布方式（仓库/许可证/DOI）、截图、权重来源依据、英文翻译——列入各页”待补清单”。</li>
+</ol>
+<h3 id="doc2-状态">状态</h3>
+<p>大纲阶段，正文待填充。写作顺序建议已附在各文件末尾（先写素材最全的节）。</p>
+<p><strong>产出</strong>：<code>outputs/reports/wiki/wiki_Model_页面大纲.{md,html}</code>、<code>wiki_Document_页面大纲.{md,html}</code></p>
+<hr />
+<h2 id="doc2-条目-15-2026-09-14文档代码日志一致性审计-12-处不一致-修正">条目 #15 — 2026-09-14（文档/代码/日志一致性审计 — 12 处不一致 + 修正）</h2>
+<h3 id="doc2-背景-2">背景</h3>
+<p>用户观察到「项目中的文档、代码和日志不匹配」，要求对齐。逐文件核对 <code>derived/tools/VirtualCellTool/</code>（代码 853 行 app.py + 976 行 index.html）与 <code>outputs/igem_gene_pipeline/</code>（代码 + config + tests），并以<strong>实际运行</strong>验证日志中的数值声明。</p>
+<h3 id="doc2-审计发现的-12-处不一致">审计发现的 12 处不一致</h3>
+<p><strong>VirtualCellTool（8 处）</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>位置</th>
+<th>文档/日志说法</th>
+<th>代码实际</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td><code>web/app.py</code> docstring</td>
+<td>“v2.2 单服务多数据集”，只列 6 个端点</td>
+<td>v3.3，19 个端点</td>
+<td>✅ 已改：完整端点分组 + 版本锚点</td>
+</tr>
+<tr>
+<td>A2</td>
+<td><code>web/index.html</code></td>
+<td>版本标签 <code>v3</code>、注释 “v3.1 前端”</td>
+<td>v3.3</td>
+<td>✅ 已改为 v3.3</td>
+</tr>
+<tr>
+<td>A3</td>
+<td><code>README.md</code></td>
+<td>只描述 v1 三个功能；「升级路径：GEARS 两段式架构」；目录结构缺 4 个引擎文件；快速开始用 <code>pip install</code></td>
+<td>5 引擎 + 19 端点 + 8 处图表；GEARS 已是<strong>负对照</strong></td>
+<td>✅ 全量重写</td>
+</tr>
+<tr>
+<td>A4</td>
+<td><code>docs/ARCHITECTURE_v3.md</code></td>
+<td>“8 个端点”、“app.py 380 行 8 个路由组”、缓存 “192MB”</td>
+<td>19 端点、853 行、105/104/12MB</td>
+<td>✅ 全量重写为 v3.3</td>
+</tr>
+<tr>
+<td>A5</td>
+<td><code>docs/HANDOFF_v3.md</code> §4.4</td>
+<td>列 11 个端点</td>
+<td>19 个（缺 search_genes/cell_gene_expr/gene_expr/gene_in_cipher/gene_expr_map/attribution_map 等）</td>
+<td>✅ 补齐</td>
+</tr>
+<tr>
+<td>A6</td>
+<td><code>docs/HANDOFF_v3.md</code> §4.5</td>
+<td>描述 <code>renderHeatmap()</code>/<code>renderCellTypes()</code>/<code>renderSummary()</code></td>
+<td>这三个函数<strong>已不存在</strong>（v3.1 重写为 <code>renderPerturbFigure</code> + 标签页）</td>
+<td>✅ 改流程 + 加警示</td>
+</tr>
+<tr>
+<td>A7</td>
+<td><code>docs/HANDOFF_v3.md</code> §7 待完成</td>
+<td>3 项已完成仍列为待办</td>
+<td>GEARS 负对照标注、Williams 实测、图表持久化<strong>均已完成</strong></td>
+<td>✅ 移入已完成</td>
+</tr>
+<tr>
+<td>A8</td>
+<td><code>docs/HANDOFF_v3.md</code> §6.2</td>
+<td>缓存 “~138MB”、删除后重建 “0.3s”</td>
+<td>实测 105/104/12MB；字段数也少写</td>
+<td>✅ 更正</td>
+</tr>
+</tbody>
+</table>
+<p><strong>igem_gene_pipeline（4 处）</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>位置</th>
+<th>说法</th>
+<th>实际</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>本日志条目 #13</td>
+<td>「确认管线为 <strong>v2.1</strong>」</td>
+<td>代码自述 <strong>v2.2</strong>（<code>consensus_v2.py</code>）</td>
+<td>✅ 见下方更正</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>管线 <code>README.md</code> 快速开始</td>
+<td>产出写 <code>outputs/candidates_ranked.csv</code> + <code>outputs/report.md</code>（根目录）</td>
+<td>实际产物按主题归档到 <code>outputs/{wbs,whs,mode,cnv}/</code>，根目录无此文件</td>
+<td>✅ 改为归档路径 + 说明</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>本日志条目 #1</td>
+<td>“tests/（<strong>27+ 测试</strong>）”</td>
+<td>实际 pytest 收集 <strong>21</strong> 个（20 passed / 1 skipped）</td>
+<td>✅ 见下方更正</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>本日志条目 #2</td>
+<td>“CNV 工作流 <strong>22/22</strong> 测试通过”</td>
+<td>实际 <strong>20 passed, 1 skipped</strong>（21 收集）</td>
+<td>✅ 见下方更正</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-已实施的修正">已实施的修正</h3>
+<p><strong>代码（行为不变）</strong> - <code>web/app.py</code> docstring 更新为 v3.3 + 完整端点分组 - <code>web/index.html</code> 版本标签 → v3.3 - <code>src/consensus_v2.py</code> <code>--mode</code> 帮助文本补上漏掉的 <code>full</code>（Mode C）</p>
+<p><strong>文档</strong> - <code>VirtualCellTool/README.md</code>：全量重写（5 引擎矩阵、3 数据集与分组语义、8 类图表、局限声明、版本锚点表） - <code>docs/ARCHITECTURE_v3.md</code>：全量重写（19 端点全表、标签页渲染流程、缓存实测大小、<strong>九、关键约束</strong>章节汇总 6 条踩过的坑） - <code>docs/HANDOFF_v3.md</code>：标题→v3.3；新增「0.2 v3.2/v3.3 记录」；§4.4/4.5/6.2/7 全部对齐 - <code>igem_gene_pipeline/README.md</code>：版本声明 v2.2、产物归档路径、四 mode 表、<code>uv add --dev pytest</code>、注明本目录无独立 git tag</p>
+<p><strong>环境</strong> - <code>igem_gene_pipeline</code> 补装 <code>pytest</code>（dev 依赖）。此前 README 声称有 pytest 测试但环境里根本没装——<code>uv run pytest</code> 直接失败</p>
+<h3 id="doc2-日志自身更正本条生效历史条目不改写">日志自身更正（本条生效，历史条目不改写）</h3>
+<ul>
+<li>条目 #1 的「27+ 测试」→ <strong>21 个用例</strong>（20 passed / 1 skipped）</li>
+<li>条目 #2 的「22/22 测试通过」→ <strong>20 passed / 1 skipped</strong></li>
+<li>条目 #13 及 #14 中的「管线 v2.1」→ <strong>v2.2</strong>（config 注释仍写 v2.1，代码自述 v2.2；以代码为准）</li>
+</ul>
+<h3 id="doc2-待用户决策未擅自改动">待用户决策（未擅自改动）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>问题</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>consensus_v2.py</code> 回退默认值</td>
+<td>代码第 60 行硬编码 <code>"normalize": "rank"</code>，但 config 已按 #3/#13 决策改为 <code>raw</code></td>
+<td><strong>配置键缺失时会静默回退到有 bug 的 rank 归一化</strong>（正是 #2/#3 记录过的伪影来源）。建议改为 <code>raw</code>，但属科学默认值变更，等确认</td>
+</tr>
+<tr>
+<td>两个孤立端点</td>
+<td><code>/api/celltype_response</code>、<code>/api/perturb_baseline</code> 前端未调用（功能被 <code>perturb_summary</code>/<code>perturb_compare</code> 覆盖）</td>
+<td>保留供 CLI 使用已在文档标注；若确定不用可删</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc2-验证-1">验证</h3>
+<ul>
+<li><code>uv run pytest tests/ -q</code> → <strong>20 passed, 1 skipped</strong></li>
+<li>VirtualCellTool 端到端（Playwright 15 项断言）→ 全绿、零控制台错误</li>
+<li>端点实测：19 个端点中 17 个前端在用，2 个标注为 CLI 专用</li>
+</ul>
+<p><strong>产出</strong>：修改 <code>derived/tools/VirtualCellTool/{README.md, web/app.py, web/index.html, docs/ARCHITECTURE_v3.md, docs/HANDOFF_v3.md}</code>、<code>outputs/igem_gene_pipeline/{README.md, src/consensus_v2.py, pyproject.toml}</code></p>
+<hr />
+<h2 id="doc2-条目-14-2026-09-13virtualcelltool-修复-从不可启动到全结果可视化">条目 #14 — 2026-09-13（VirtualCellTool 修复 — 从不可启动到全结果可视化）</h2>
+<h3 id="doc2-背景-3">背景</h3>
+<p>用户要求打开 iGEM 项目的 VirtualCellTool，随后指出「用 kdense 改过这个工具，但最终前端没有很好的效果」，要求依据 <code>derived/tools/VirtualCellTool/docs/HANDOFF_v3.md</code> 修复。实测发现问题比「前端效果不好」严重得多：<strong>工具根本无法启动</strong>——进程加载默认数据集后无限卡死，前端看到的自然只有白屏。</p>
+<p>分三轮完成（v3.1 修复 → v3.2 位移可视化 → v3.3 全结果可视化），每轮均以 Playwright 真实浏览器端到端测试验证。</p>
+<h3 id="doc2-第一轮-v3.1-四个致命-bug工具不可用">第一轮 v3.1 — 四个致命 bug（工具不可用）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>根因</th>
+<th>修复</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td><strong>启动无限卡死</strong></td>
+<td><code>_load_dataset</code> 用 <code>X.toarray()</code> 稠密化；ws = 96969×28231 float64 ≈ <strong>21.9 GB</strong>，直接打爆内存进 swap</td>
+<td>全程保持 CSR 稀疏（float32），新增 <code>_sparse_col_var()</code> / <code>_row()</code> 稀疏工具函数；仅在 5000 HVG 子矩阵上稠密化（~2 GB）</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>CIPHER 缓存永远失效</td>
+<td>写盘只存 <code>gene_list/ctrl_mean/Sigma</code>，读取却访问 <code>c["hvg_idx"]</code> → KeyError → 每次启动全量重算</td>
+<td>缓存补存 <code>hvg_idx</code> + <code>full_mean</code>；识别旧格式自动重建</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>缓存加载后仍重算</td>
+<td>缓存分支末尾<strong>缺 <code>return</code></strong>，继续往下执行全量拟合</td>
+<td>加载成功立即返回</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>多数据集结果互相污染</td>
+<td><code>cipher_eng</code> / <code>baseline_eng</code> 是模块级<strong>全局单例</strong>，切数据集时后加载的覆盖先加载的协方差矩阵</td>
+<td>改为 <code>_CIPHER_ENGINES[ds]</code> / <code>_BASELINE_ENGINES[ds]</code> 按数据集独立实例</td>
+</tr>
+</tbody>
+</table>
+<p><strong>前端 bug（「效果不好」的直接原因）</strong>：所有 <code>fetch</code> 不带 <code>ds</code> 参数（切数据集后仍打默认库）；切数据集靠整页跳转导致状态全丢；图表容器运行时 <code>createElement</code> 插进 330px 侧边栏被挤成一条；每点新基因旧图被 <code>newPlot</code> 覆盖无法对比；基因不在 HVG 集时只回干巴巴的 400。→ 重构为「左控制栏 + 右工作区」+ 标签页系统，统一 <code>api(path, params)</code> 自动注入 <code>ds</code>。</p>
+<p><strong>方法学修复（让图表有判别力）</strong>：细胞类型响应排序原用「该类型 Top500 高表达基因的 |Δ| 均值」，但各类型高表达基因几乎都是核糖体/管家基因、高度重叠，导致所有类型得分几乎相同（MS4A1 敲低时 B 细胞只排第 3，与第 1 名差距 &lt;5%）。改为<strong>类型特异谱与扰动效应谱的余弦对齐度</strong>：</p>
+<pre><code>w_ct[g] = max(0, expr_ct[g] − mean_over_celltypes[g])       # 类型特异富集量
+response = Σ w_ct[g]·|Δ[g]| / (‖w_ct‖·‖|Δ|‖)                # 余弦对齐</code></pre>
+<p>两个关键细节：基准用<strong>各类型均值的均值</strong>而非全体细胞均值（否则最大细胞群——PBMC 里 T 细胞占 45%——会把基准拉向自己）；用<strong>余弦</strong>而非加权均值（否则本身高表达的类型如单核细胞 LYZ/S100A9 在任何扰动下都拿最高分）。</p>
+<p><strong>实测</strong>（PBMC 12 个标志物基因敲低，看最敏感类型是否命中已知归属）：Top1 命中率 <strong>~2/12 → 10/12</strong>，平均排名 ~3.0/5 → <strong>1.33/5</strong>。未命中的 CD3D/CD3E 是 CIPHER 线性响应的固有局限（PBMC 中表达稀疏、协方差信号弱），非代码 bug，已在文档标注。</p>
+<p><strong>数据语义修正</strong>：ws/ms 的 <code>meta.cell_type</code> 列装的其实是<strong>病健分组</strong>（WS vs CTRL / MS vs normal）而非细胞类型。新增 <code>DATASETS[ds]["group_label"]</code> 显式声明，前端图表标题与按钮文案自动跟随，避免把「病健分组响应」误标成「细胞类型响应」。</p>
+<p><strong>默认数据集</strong> <code>ws</code> → <code>pbmc</code>（2700 细胞秒开），ws/ms 懒加载。<strong>冷启动从无限卡死变 6.2 s；Williams 96,969 细胞加载 5 s。</strong></p>
+<h3 id="doc2-第二轮-v3.2-反事实位移可视化">第二轮 v3.2 — 反事实位移可视化</h3>
+<p>用户反馈「反事实扰动的前后对比不够明显」。初判为视觉问题，排查后发现是<strong>计算层 bug</strong>：<code>_FakeReducer</code> 用 <strong>k=1 最近邻</strong>反查 UMAP 坐标，坐标被「吸附」到某个已有细胞上——只要扰动后嵌入的最近邻没换人，输出坐标与扰动前<strong>完全相同</strong>。对照实验（人为施加不同量级位移）：</p>
+<table>
+<thead>
+<tr>
+<th>施加位移</th>
+<th>k=1 最近邻（旧）</th>
+<th>kNN 插值（新）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.01</td>
+<td>Δ=0.00000</td>
+<td>0.01057</td>
+</tr>
+<tr>
+<td>0.024</td>
+<td>Δ=0.00000</td>
+<td>0.05033</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>Δ=0.00000</td>
+<td>0.18683</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td><strong>Δ=0.00000</strong></td>
+<td>0.24272</td>
+</tr>
+</tbody>
+</table>
+<p>即使 0.3 量级位移仍纹丝不动。<strong>修复</strong>：改为 k=15 反距离加权插值，坐标连续可微。实测 MS4A1 敲低 UMAP 位移 0 → <strong>0.0451</strong>；Top5 联合 → <strong>0.1093</strong>；GTF2I(ws) 过表达 → <strong>0.2983</strong>。</p>
+<blockquote>
+<p>自我更正：v3.1 阶段我曾加过一句「扰动幅度不足以在 UMAP 上移动」的提示——那是在为 bug 辩解，不是物理限制。</p>
+</blockquote>
+<p><strong>可视化</strong>：新增 <code>_zoom_window()</code>（按位移长度自适应的局部视窗）与 <code>_local_neighbors()</code>（邻域背景细胞作参照系），前端 <code>showMove</code> 重写为<strong>全景 + 放大镜双视图</strong>——左侧全景定位并画取景框，右侧放大到视窗（单基因 0.70 单位 / 联合 1.31 / GTF2I 3.58），含「⚫扰动前 → ⭐扰动后」标注与迁移箭头。</p>
+<h3 id="doc2-第三轮-v3.3-把剩余文字结果全部可视化">第三轮 v3.3 — 把剩余文字结果全部可视化</h3>
+<p>用户问「能否把其他不是反事实扰动的结果也可视化」。盘点后发现四类结果只有文字：</p>
+<ol type="1">
+<li><strong>🎨 基因表达分布图</strong>（新增端点 <code>/api/gene_expr_map</code>）：左=UMAP 按表达量热力着色，右=各分组表达水平 + 表达细胞百分比。<strong>对全部 28231 个基因可用，不受 CIPHER 仅覆盖 5000 HVG 的限制</strong>——建议作为分析第一步先确认基因在该组织是否表达。</li>
+<li><strong>📊 归因结果图</strong>（新增端点 <code>/api/attribution_map</code>）：左=IG 归因强度，右=该细胞 vs 全体均值表达对比（蓝条远高于灰条 = 特异富集），替代侧栏挤不下的小表格。</li>
+<li><strong>🎯 质心距离图</strong>：联合扰动的细胞身份归属，扰动前/后分组对比条形，原为状态栏纯文本。</li>
+<li><strong>🧪 GEARS 因果预测图</strong>：上调/下调条形，图上直接标注「训练自 Norman/K562，对非造血细胞为域外推断」的负对照定位。</li>
+</ol>
+<p><strong>解读陷阱修正（重要）</strong>：归因图中 MS4A1（B 细胞标志物）显示为<strong>负值</strong>，而旧标注写「模型认为哪些基因<strong>定义了</strong>这个细胞」、红色表负值——这个组合几乎必然被误读成「MS4A1 是负面因素」。查证 <code>attribute.py</code> 确认：IG 归因目标是 <code>embedding.sum()</code>，<strong>正负号只表示把嵌入分量推高还是推低，与「是否标志基因」无关</strong>，排序用的是 <code>|IG|</code>。已改为橙/紫配色（红绿对色盲不友好且红=负易误读）+ 标注「重要性看条形长度，颜色仅表方向」+ 状态栏明示「B 细胞标志物出现负号是正常的」。此类符号误读若带进答辩会很被动。</p>
+<h3 id="doc2-与筛选管线的衔接实测验证">与筛选管线的衔接（实测验证）</h3>
+<p>管线 <code>outputs/mode/ranked_wbs_modeC.csv</code> 的 WBS Top12 中，<strong>10 个</strong>在 Williams 类器官数据集可被 CIPHER 预测（VPS37D、POM121 不在 HVG 集）。在 ws 上按 SINEUP 方向（<code>direction=oe</code>）实测：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>基因</th>
+<th>管线排名</th>
+<th>|Δ|max</th>
+<th>受影响最大的基因</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTF2I</td>
+<td>#9</td>
+<td><strong>10.08</strong></td>
+<td>SYT1, IGFBPL1, BCL11A, STMN2, NRXN1, CNTNAP2</td>
+<td>效应量远超排名且<strong>全打在神经发育/突触基因</strong>上；WS 核心表型正是神经认知障碍 → 优先级建议上调</td>
+</tr>
+<tr>
+<td>BAZ1B</td>
+<td>#4</td>
+<td>2.63</td>
+<td>HMGN2, GOLGA4, APP</td>
+<td>效应真实，方向偏染色质/细胞器</td>
+</tr>
+<tr>
+<td>STX1A</td>
+<td><strong>#1</strong></td>
+<td>1.00</td>
+<td>STMN2, GRIA2, SYT1</td>
+<td>排名第一但效应中等，靶向突触</td>
+</tr>
+<tr>
+<td>ELN</td>
+<td>#3</td>
+<td><strong>0.006</strong></td>
+<td>SOX2, ID4, TTYH1</td>
+<td>脑内对照表达仅 0.042，<strong>比 GTF2I 小三个数量级</strong>——ELN 负责主动脉瓣上狭窄（心血管表型），本就不在脑表达</td>
+</tr>
+</tbody>
+</table>
+<p><strong>两点可直接进 Model 页面的发现</strong>： - <strong>管线排名 ≠ 组织内效应量</strong>。GTF2I 的排名分歧（#9 vs 效应量第一）是两条互相独立的证据链（数据库遗传学证据 vs 单细胞共表达）产生的有意义不一致，值得单独论证。 - <strong>ELN 的负结果是工具诚实性的体现</strong>，不是失败：它正确识别出组织特异性，提示研究 ELN 必须换心血管/成纤维细胞数据集。暴露了「组织选择」这一常被忽略的实验设计维度。 - 补充：GTF2I 过表达时 <strong>CTRL 响应 0.45 vs WS 0.27</strong>，患者细胞对该信号的响应能力更弱，提示 SINEUP 干预可能存在<strong>时间窗</strong>（假设，未验证）。</p>
+<h3 id="doc2-验证与版本">验证与版本</h3>
+<p>Playwright 真实浏览器端到端测试 <strong>15 项断言全绿、零控制台错误</strong>（选细胞→归因→CIPHER 敲低/过表达→线性基线→反事实位移→切数据集）。测试脚本落库 <code>tests_e2e_playwright.py</code>，后续改动可直接回归。</p>
+<p>git tag：<code>v3.1-fixed</code>（可启动 + 前端可用 + 响应排序有判别力）、<code>v3.2-zoom</code>（位移双视图）、<code>v3.3-viz</code>（全结果可视化）。历史锚点 <code>v1.0-scimilarity</code> / <code>v2.0-gears</code> 保留。</p>
+<p><strong>性能对比</strong>：冷启动 无限卡死 → <strong>6.2 s</strong>；Williams 96,969 细胞 OOM → <strong>5 s</strong>；CIPHER 预测 0.02–0.1 s；二次启动从「每次全量重算协方差」→ 缓存真正生效。</p>
+<p><strong>产出</strong>：修改 <code>derived/tools/VirtualCellTool/web/app.py</code>（新增 <code>/api/gene_expr_map</code>、<code>/api/attribution_map</code>、<code>/api/gene_in_cipher</code>）、<code>web/index.html</code>（全量重写）、<code>src/linear_baseline.py</code>（新增 <code>fit_stats()</code> 免持有大矩阵）、<code>启动VirtualCellTool.command</code>；新增 <code>tests_e2e_playwright.py</code>；<code>docs/HANDOFF_v3.md</code> 新增第 0 节修复记录。</p>
+<p><strong>待办</strong>：CD3D/CD3E 未命中的方法学边界需在汇报中如实标注；CellOracle Web 集成、pertpy 可视化、decoupler 通路富集仍未接入（沿用 HANDOFF_v3 待办清单）。</p>
+<hr />
+<h2 id="doc2-条目-13-2026-09-13六-mode-实证-正对照全通过-config-修正-归档">条目 #13 — 2026-09-13（六 mode 实证 — 正对照全通过 + config 修正 + 归档）</h2>
+<h3 id="doc2-重新跑-wbswhs-验证四个-mode-是否都有用">重新跑 WBS/WHS 验证四个 mode 是否都有用</h3>
+<p><strong>背景</strong>：用户问「管线是否 v2.1？能否重跑 WBS+WHS 看三个 mode 是否都有用」。确认管线为 v2.1 后，用户批准：按架构四模式全测（WBS A/B/C、WHS A/B/D），且先实现 mode 差异再跑。</p>
+<p><strong>mode 差异实现</strong>（<code>consensus_v2.py</code>）：<code>--mode</code> 从纯元数据标记升级为真实行为差异——validate 输出验证报告面板（已知主效基因 ClinGen/pLI/SINEUP 靶向条件表）；rank 输出正对照检验表；exploratory 输出探索声明且不给实验建议；正对照检查（in_candidates/rank/top10/共识/证据）全 mode 通用。</p>
+<p><strong>WHS 结果（19 基因 chr4:1.8–3.0Mb）</strong>：A/B/D 三 mode 全部 NSD2 #1（score 3.889，领先第2名 1.91）——清晰通过。</p>
+<p><strong>WBS 初始失败（正对照 1/4）→ 定位到两个 config 未落实的设计修正</strong>： 1. <strong>HPA 器官惩罚错杀正对照</strong>：pipeline.yaml 仍保留 -2/organ 惩罚，STX1A/ELN/GTF2I 等因 liver/kidney 高表达被罚 -4，低表达噪声（FZD9/FKBP6）不罚 → v2.1 设计「HPA 从惩罚层改为双重角色」本已决定移除，config 未跟进 → <strong>修复</strong>：<code>consensus_v2.hpa_penalty</code> 权重置 0 2. <strong>rank 归一化伪影</strong>（FZD9 pLI=0.002→#1 再现）：PROJECT_LOG #3 已记录 rank→raw 修正，config 仍为 rank → <strong>修复</strong>：<code>consensus_v2.normalize = raw</code></p>
+<p><strong>修复后 WBS 三 mode 全部 6/6 正对照命中</strong>：STX1A #1、ELN #3、BAZ1B #4、CLIP2 #5、LIMK1 #8、GTF2I #9（Top5 仅 VPS37D 一个非正对照，pLI=0.92 合理次优非伪影）。</p>
+<p><strong>关键副产物</strong>： - <strong>ELN gnomAD pLI=2.14e-14 是数据原始值</strong>——经典单倍剂量不足基因 pLI 被低估（CNV 机制不敏感），ClinGen HI=3 才是主证据；Mode A 面板诚实并排「HI✓ pLI✗」双信号 - <strong>WBS 补偿状态实证</strong>：35 基因 17+ overcompensated、ELN ratio=3.138（此前仅测 GTF2I=0.995 等少数）——新观察，建议后续专项核对</p>
+<p><strong>归档</strong>：outputs/ 按主题重组为 <code>wbs/</code>（v2/v2.1 主实验）、<code>whs/</code>（WHS 实证）、<code>mode/</code>（六 mode 验证 + <code>diagnostics/</code> 中间产物，保留不删）、<code>cnv/</code>（config 引用路径不动）；新增 <code>outputs/README.md</code> 索引；<code>docs/ARCHIFY_流程讲解.md</code>、集成文档中的文件引用同步更新。</p>
+<p><strong>产出</strong>：<code>outputs/mode/report_{wbs,whs}_mode{...}.md</code>（六份）、<code>outputs/mode/compensation_wbs.csv</code>、<code>outputs/mode/evidence_wbs_modeA.parquet</code>；修改 <code>src/consensus_v2.py</code>、<code>config/pipeline.yaml</code>（备份 <code>/tmp/pipeline.yaml.bak</code>）</p>
+<hr />
+<h2 id="doc2-条目-12-2026-09-12虚拟细胞工具选型-决策">条目 #12 — 2026-09-12（虚拟细胞工具选型 — 决策）</h2>
+<h3 id="doc2-基于四份调研文档的工具组合推荐">基于四份调研文档的工具组合推荐</h3>
+<p><strong>背景</strong>：用户完成四份调研（AI 虚拟细胞扰动预测工具 / 单细胞扰动可视化 / 选型建议 / 知乎 scPerturBench 基线解读），要求据调研判断 iGEM 项目的最佳工具组合。</p>
+<p><strong>推荐组合</strong>： 1. <strong>预测/假设层（L3）</strong>：CellOracle（保留，VCT 资产）+ CIPHER（新增，仅需未扰动控制细胞、支持 CRISPRa 激活方向、AUROC 0.92）+ linearModel（强制对照，呼应 Ahlmann-Eltze 基准） 2. <strong>GEARS 转为负对照</strong>：项目已证明 4/41 疾病基因覆盖失败，保留为「我们测试过」的叙事证据 3. <strong>可视化层</strong>：pertpy（Mixscape/Augur/CINEMA-OT/扰动空间）+ Scanpy + CELLxGENE（全程 h5ad）+ decoupler（通路） 4. <strong>明确不选</strong>：State/Stack（2026 preprint 需 GPU）、CellFlow/PerturbNet（需配对扰动数据）、Geneformer（输出排序≈归因路线）、PerturbDiff（无代码）、Squidiff</p>
+<p><strong>选型三过滤器</strong>：F1 数据现实（无扰动训练集、WHS 零 scRNA-seq）→ 只选仅需未扰动数据的；F2 治疗方向（SINEUP=激活+翻译层）→ 优先 CRISPRa 支持；F3 领域铁律（深度未超线性基线）→ 强制对照 + 负对照叙事。</p>
+<p><strong>必须标注的风险</strong>：翻译层盲区（CIPHER 对补偿基因 GTF2I/NSD2 可能隐身）；激活预测 ≠ 蛋白恢复；定位 = L3 假设 + 演示，不进 L1 排序。</p>
+<p><strong>产出</strong>：<code>outputs/reports/虚拟细胞/虚拟细胞工具组合推荐_igem决策_2026-09-12.md</code>（note: user has not yet reviewed/confirmed this recommendation）</p>
+<hr />
+<h2 id="doc2-条目-11-2026-09-12whs-实证运行-正对照检验-管线修复">条目 #11 — 2026-09-12（WHS 实证运行 — 正对照检验 + 管线修复）</h2>
+<h3 id="doc2-whs-数据跑管线发现并修复符号别名缺口nsd2-升至-1">WHS 数据跑管线：发现并修复符号别名缺口，NSD2 升至 #1</h3>
+<p><strong>背景</strong>：用户要求用 WHS 数据实测管线能否输出文献主效基因 NSD2。</p>
+<p><strong>执行</strong>（用户批准参数：跑两次对比、v2 注册区间 chr4:1.8–3.0Mb 共 19 基因、rank 模式不告知 NSD2）： - <strong>Run A（原样）</strong>：NSD2 排 <strong>#5/19</strong>——发现管线 bug：gnomAD 表用旧符号 <em>WHSC1</em> 存 NSD2 数据（pLI=1.0、LOEUF=0.119），<code>merge_evidence.py</code> 的 gnomAD 分支按 input_symbol 精确匹配（NSD2#≠WHSC1）→ 最强约束证据被静默丢弃（匹配率 17/19，无人察觉） - <strong>修复</strong>：merge_evidence gnomAD 分支改为先用 hgnc_aliases（含 prev_symbol/alias）把符号解析为 HGNC ID 再按 hgnc_id 合并（18651/19704 解析成功）；另修复 normalize/merge 对带空白列名别名表的读取（项目重建后文件与代码脱节） - <strong>Run B（修复后）</strong>：NSD2 <strong>#1/19</strong>，consensus=3.889 vs 第2名 1.978（领先 1.91），Borda rank 一致；纯 L1 无 AI 亦 #1（2.889 vs 1.111）</p>
+<p><strong>发现</strong>： 1. 管线不会虚报——缺证据时 NSD2 只排第 5，修复后升顶； 2. 正对照检验真实有效——文献已知的 NSD2 成为管线标尺，这正是 Mode B 正对照设计（TBX1/ELN/KCTD13/RAI1）的实证； 3. 副产物：rank 归一化小样本伪影再现（FAM193A pLI=0.999 无 AI 时掉到第 5）；HPA 只用了 liver/kidney 两器官（脑组织列名未进器官清单）。</p>
+<p><strong>产出</strong>：<code>input/candidates_whs.csv</code>、<code>outputs/candidates_ranked_whs_{A,B,B_noai}.csv</code>、<code>outputs/report_whs_B.md</code>、修改 <code>src/merge_evidence.py</code>、<code>src/normalize.py</code></p>
+<hr />
+<h2 id="doc2-条目-10-2026-09-12whsnsd2-证据链核实-叙事支撑">条目 #10 — 2026-09-12（WHS/NSD2 证据链核实 — 叙事支撑）</h2>
+<h3 id="doc2-nsd2-主效基因确立过程-三处引文修正">NSD2 主效基因确立过程 + 三处引文修正</h3>
+<p><strong>背景</strong>：用户提问「文献如何确定 NSD2 是 WHS 主效基因」（WBS 开发管线、WHS 湿实验验证需要叙事一致性）。</p>
+<p><strong>证据链</strong>（6 步，DOI 全部核实）： 1. 历史临界区映射（WHSCR ~165kb / WHSCR-2 300–600kb）→ 候选基因缩到几个 2. Andersen et al. 2014：WHSC1(NSD2)+LETM1 缺失「必要不充分」（doi:10.1038/ejhg.2013.192） 3. Barrie et al. 2019：3 例 de novo LOF 单基因患者呈现 WHS 子集表型（doi:10.1101/mcs.a004044）——转折点 4. Genet Med 2021：18 新 + 10 既往患者，NSD2 变异→H3K36 甲基化活性降低（doi:10.1038/s41436-021-01158-1） 5. Cortellazzo Wiel et al. 2022：「shifting paradigm」综述（doi:10.1186/s13052-022-01267-w） 6. Kinoshita et al. 2024：Nsd2 KO 小鼠突触基因失调 + H3K36me2 重分布（doi:10.3389/fgene.2024.1308234）</p>
+<p><strong>重要修正（叙事严谨性）</strong>：NSD2 不是 WHS「唯一」主效基因，而是拿到「单基因变异+功能+小鼠模型」三重证据的主效基因；WHS 整体是连续基因综合征（Cortellazzo Wiel 2022 原文确认）。此前的「单基因功能缺失→完整核心表型」「唯一主效基因」表述过强。<strong>另更正三处引文作者错误</strong>：Tassano E→<strong>Cortellazzo Wiel L 等</strong>；Kimura S→<strong>Kinoshita S 等</strong>；Zanoni P→<strong>Barrie ES 等</strong>。</p>
+<p><strong>产出</strong>：<code>outputs/reports/管线文档/WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</code>（含 WBS 开发/WHS 湿实验分工叙事 + 答辩要点）</p>
+<hr />
+<h2 id="doc2-条目-9-2026-09-12虚拟细胞文献调研">条目 #9 — 2026-09-12（虚拟细胞文献调研）</h2>
+<h3 id="doc2-虚拟细胞能否承担药物效应模拟与基因扰动文献综述与可行性判定">虚拟细胞能否承担药物效应模拟与基因扰动——文献综述与可行性判定</h3>
+<p><strong>背景</strong>：用户问「这一块工作有没有可能用虚拟细胞做」，要求调研虚拟细胞在药物效应模拟与基因扰动方面的文献并生成报告。</p>
+<p><strong>核心结论</strong>： 1. 领域自我证伪：Nature Methods 2025 基准——5 个 foundation models + 2 DL 模型在基因扰动转录预测上均未超过简单线性基线，且存在 mean collapse（动脉本文 doi:10.1038/s41592-025-02772-6）——与项目 E3/E4 (r=0.02)、E11 (GEARS 4/41) 负结果同构，即「计算筛选不可靠」是领域级事实而非团队方法学失误 2. 药物效应：chemCPA/CPA 有剂量-响应能力但限训练分布内；AetherCell/TwinCell/StateXDiff 为 2026 preprint；ProteinTalks（蛋白层，Nature 2026）是唯一触及翻译层盲区的虚拟细胞 3. 机制全细胞模型（Karr 式）只适用于细菌/酵母，人类细胞不可操作 4. SINEUP 治疗场景（胚系杂合缺失 + RNA binder 翻译层上调）在公开 perturb-seq 数据中不存在 → OOD 最困难情形</p>
+<p><strong>判定</strong>：虚拟细胞定位 = L3 机制假设生成器 + iGEM 演示层 + 旁路毒理筛查（VCell/VCBA）；不上移进 L1 发现/排序。推荐低成本「基准对比小实验」把负结果转化为贡献叙事。</p>
+<p><strong>产出</strong>：<code>outputs/reports/管线文档/文献调研_虚拟细胞药物效应与基因扰动_2026-09-12.md</code>、<code>outputs/literature/bibliography/virtual_cell_review_bibliography.md</code>（24 条 DOI 状态标注）</p>
+<hr />
+<h2 id="doc2-条目-8-2026-09-12vct-定位-决策">条目 #8 — 2026-09-12（VCT 定位 — 决策）</h2>
+<h3 id="doc2-virtualcelltool-最终定位l3-机制假设-交互可视化交付层">VirtualCellTool 最终定位：L3 机制假设 + 交互可视化交付层</h3>
+<p><strong>背景</strong>：用户询问「先前的 VirtualCellTool 工具，最终在我们的管线中的定位怎样比较合适」。</p>
+<p><strong>定位结论</strong>：VCT = <strong>L3 机制假设 + 决策支持可视化/演示层</strong>，严格单向位于 L1（遗传学证据层）和 v2.1 新增的「mRNA 补偿状态」维度之下游。</p>
+<p><strong>排除的候选位置</strong>（依据项目自身实验证据）： - ❌ 发现引擎/候选生成器：E3/E4 (r=0.02)、E11 (GEARS 4/41) → VCT 永远不能回补候选 - ❌ L2 验证门/acceptance gate：E8 mRNA 隐身、归因≠因果 → VCT 裁决无效力 - ❌ 与 L1 并列的证据维度：信息源与转录组重叠，重新引入 E3/E8 偏倚 - ✅ L3 机制假设 + 可视化交付：遗传学先验 → 机制后果 what-if 反注，VCT 唯一不可替代的能力</p>
+<p><strong>四个落点</strong>：① 单向输入契约（L1 candidates_ranked.csv + compensation_status 作数据源，旧 Δattr/DE 路径废弃或 legacy）；② 机制反注输出（标注「未验证假设」）；③ SINEUP 靶向决策面板（补偿状态 × L1 证据 × 机制假设三列可视化）；④ iGEM 交付/演示层（7GB 交互 demo 重新定位为沟通工具）。</p>
+<p><strong>产出</strong>：定位建议已记录 notebook；尚未落档 ADR（用户后续在 #12 提供调研文档后推荐了具体工具组合）</p>
+<hr />
+<h2 id="doc2-条目-7-2026-09-07dbtl-cycle-4-build">条目 #7 — 2026-09-07（DBTL Cycle 4 — Build）</h2>
+<h3 id="doc2-管线-v2.1-代码实施">管线 v2.1 代码实施</h3>
+<p>基于质询回答中的六项优化，在现有代码基础上实施了管线 v2.1：</p>
+<ol type="1">
+<li><strong><code>src/filter_recessive.py</code></strong>（新模块）— OMIM 隐性致病基因过滤器</li>
+<li><strong><code>src/compensation.py</code></strong>（新模块）— mRNA 补偿状态分析</li>
+<li><strong><code>src/merge_evidence.py</code></strong> — ClinGen 三值标注（保留原始分数，30/40/null→中性不扣分）</li>
+<li><strong><code>src/consensus_v2.py</code></strong> — 权重敏感性 + 补偿集成 + 实验建议生成 + <code>--mode</code> 四种模式 + <code>--warnings</code></li>
+<li><strong><code>config/pipeline.yaml</code></strong> — v2.1 新增配置段</li>
+</ol>
+<p><strong>产出</strong>: <code>src/filter_recessive.py</code>, <code>src/compensation.py</code>; 修改 <code>merge_evidence.py</code>, <code>consensus_v2.py</code>, <code>pipeline.yaml</code></p>
+<hr />
+<h2 id="doc2-条目-6-2026-09-07dbtl-cycle-4-learn-design">条目 #6 — 2026-09-07（DBTL Cycle 4 — Learn → Design）</h2>
+<h3 id="doc2-质询回答-de-分析验证-管线-v2.1-优化">质询回答 + DE 分析验证 + 管线 v2.1 优化</h3>
+<p><strong>背景</strong>： 上午提出了八个质询问题（#0-#7），随后通过四个并行任务系统推进： 1. 重新审阅项目先前的”剂量补偿”结论——发现证据链薄弱（N=1, GTF2I Δattr≈0，DE≈0 是推断而非直接测量） 2. 在 GSE283473 脑类器官上直接跑 DE 分析——验证了 GTF2I mRNA ratio = 0.995（确实被补偿），并发现逐基因补偿状态可变 3. 文献调研确认了微缺失病中剂量补偿的存在性和翻译后缓冲的广泛性 4. 回答了全部八个质询，在此基础上提出了 v2.1 的六项优化</p>
+<p><strong>关键发现</strong>：</p>
+<ol type="1">
+<li><strong>GTF2I mRNA ratio WS/CTRL = 0.995</strong>——直接测量确认了转录层面的完美补偿。但这个”补偿”之前只是基于 Δattr≈0 的推断（而非直接测量）</li>
+<li><strong>补偿状态是逐基因可变的</strong>：GTF2I 0.995、EIF4H 0.994、BAZ1B 0.991、LIMK1 0.947、STX1A 0.976——不是一个全或无的现象</li>
+<li><strong>文献支持翻译后缓冲</strong>：肿瘤蛋白质组学数据 (CPTAC) 显示 23-33% 的蛋白质通过降解来缓冲 CNV 效应；蛋白质复合物亚基尤为突出</li>
+<li><strong>Down 综合征中几乎不存在转录补偿</strong>：补偿不是微缺失病的自然后果——在某些场景下是真实的，在某些场景下是工具偏倚</li>
+</ol>
+<p><strong>决策</strong>： - scRNA-seq 的角色从”发现引擎”明确降格为”辅助验证层”——提供 mRNA 补偿状态信息 - 六个管线优化：mRNA 补偿状态维度 + 隐性致病基因过滤器 + ClinGen 三值标注 + 权重敏感性分析 + 实验建议生成器 + Mode D 稀疏性警告 - DBTL Cycle 记录更新至 Cycle 4</p>
+<p><strong>产出</strong>： - <code>管线架构预审_质询回答与管线优化_2026-09-07.md</code>（含全部 8 个质询的回答 + 6 项优化 + Cycle 记录） - <code>scRNA-seq_drug_target_discovery_landscape.md</code> - <code>wbs_interval_de_analysis.csv</code>（完整 DE 结果）</p>
+<hr />
+<h2 id="doc2-条目-5-2026-09-07">条目 #5 — 2026-09-07</h2>
+<h3 id="doc2-从-ws-管线到通用管线架构重新设计">从 WS 管线到通用管线：架构重新设计</h3>
+<p><strong>背景</strong>： 用户提问”WHS 的 scRNA-seq 数据有哪些？“触发了一次系统调研。调研结果揭示：WHS 目前没有任何公开的 scRNA-seq 数据，且 WHS 的主效基因格局与 WS 截然不同——NSD2 已被确认为核心因果基因，不需要”多基因排序”。</p>
+<p><strong>发现</strong>： 1. WHS 无任何公开 scRNA-seq 数据集（仅有的公开数据是 Nsd2 KO 小鼠 bulk RNA-seq，GSE232564） 2. NSD2 单基因功能缺失即可产生整体 WHS 核心表型（Italian J Pediatrics, 2022——“shifting paradigm”） 3. WHS 在疾病模型构建阶段比 WS 晚了约 5 年 4. 当前管线（v1）的隐含假设——scRNA-seq 数据存在 + 多基因需要排序——在 WHS 上完全不成立</p>
+<p><strong>决策</strong>：重新设计管线架构为”通用模式”，根据输入数据丰富度自动选择运行模式：</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>场景</th>
+<th>输入</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A (验证)</td>
+<td>主效基因已确定</td>
+<td>区间 + 已知基因</td>
+<td>验证报告</td>
+</tr>
+<tr>
+<td>B (增强筛选)</td>
+<td>有争议候选</td>
+<td>区间 + 正对照</td>
+<td>排序+验证</td>
+</tr>
+<tr>
+<td>C (全栈筛选)</td>
+<td>多基因/多表型</td>
+<td>区间 + scRNA-seq</td>
+<td>分层排序+表型分组</td>
+</tr>
+<tr>
+<td>D (探索)</td>
+<td>全新 CNV/未知</td>
+<td>仅区间坐标</td>
+<td>粗筛+低置信警告</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键设计变更</strong>： 1. 基因提取独立化：缺失区间坐标 + GTF → 基因列表（无 scRNA-seq 依赖） 2. scRNA-seq 从”前提条件”降格为”可选增强层” 3. 输出从”唯一排名”改为”按表型分组 + 证据分层” 4. HPA 从”惩罚层”改为双重角色（靶组织可行性 + 安全性警告） 5. 新增<code>phenotype_grouper.py</code>按 HPO/ClinGen 表型分组</p>
+<p><strong>产出</strong>： - <code>架构设计_v2_通用微缺失主效基因筛选管线.md</code> - <code>WHS_scRNA-seq_data_survey.md</code></p>
+<p><strong>依据</strong>： - WHS 文献调研：NSD2 单基因功能缺失→完整核心表型 (Italian J Pediatrics, 2022; CSH Mol Case Studies, 2019) - Schmid et al. 2025 benchmark：所有 scRNA-seq CNV caller 对 &lt;3Mb focal CNV 灵敏度极低 - WS 项目自身负结果：E8 mRNA 隐身、E6 TBX1 0.16% 表达、GEARS 覆盖盲区</p>
+<hr />
+<h2 id="doc2-条目-4-2026-09-07">条目 #4 — 2026-09-07</h2>
+<h3 id="doc2-scrna-seq-cnv-方法调研确定从-scrna-seq-自动发现缺失区间在当前不可行">scRNA-seq CNV 方法调研：确定”从 scRNA-seq 自动发现缺失区间”在当前不可行</h3>
+<p><strong>背景</strong>： 用户问”除了 infercnvpy 还有没有其他从 scRNA-seq 提取缺失区间基因的方法？”</p>
+<p><strong>方法</strong>： 系统调研 3 篇主要 benchmark（Schmid et al. 2025 Nature Comms; Chen et al. 2025 Prec Clin Med; Hou et al. 2026 bioRxiv）+ 2 篇方法论文（Numbat Nature Biotech 2023; XClone Nature Comms 2024）</p>
+<p><strong>发现</strong>： 1. <strong>所有方法对 &lt;3Mb focal CNV 灵敏度极低</strong>：“all scRNA-seq callers are, in general, not suitable for identifying them”（Schmid et al.） 2. Allele-aware 方法（Numbat）总体最优但需要原始 BAM + 足够杂合 SNP 密度。10x 3’ 端测序 SNP 覆盖不足 3. 没有任何工具是专门为胚系杂合微缺失设计的 4. 表达型方法之间的相关性有时超过它们各自与 DNA 金标准的相关性——存在系统性转录组偏差 5. 最终建议：<strong>已知临床区间→基因提取（当前做法）是正确的策略</strong>。scRNA-seq 的角色应是验证层而非发现层</p>
+<p><strong>决策</strong>：不在 CNV 工作流中增加额外的自动发现方法（ASE/Numbat/CopyKAT）。接受”已知区间坐标 + 基因型”作为基因来源的金标准。</p>
+<p><strong>产出</strong>：<code>benchmark_scrnaseq_cnv_callers_2025.md</code></p>
+<hr />
+<h2 id="doc2-条目-3-2026-09-06">条目 #3 — 2026-09-06</h2>
+<h3 id="doc2-deeplof-ai-层接入-v2-consensus-排序修正">DeepLOF AI 层接入 + v2 consensus 排序修正</h3>
+<p><strong>背景</strong>： 前天（09-05）的 WBS 35 基因全流程实验中，consensus_v2 的 rank 归一化在小样本下产生严重伪影（FZD9/FKBP6 被错误排到 #1），加性排序 vs Borda 排序 Spearman ρ = 0.23。</p>
+<p><strong>修正</strong>： 1. <code>normalize</code> 从 <code>rank</code> 改为 <code>raw</code> → Spearman ρ 从 0.23 跃升至 0.71 2. DeepLOF 正式接入（19,197 基因官方分数，CC BY 4.0），覆盖 28/35 WBS 基因（80%） 3. <strong>发现 DeepLOF 官方数据盲区</strong>：GTF2I 在 19,197 行评分中缺失——不是管线 bug，是 DeepLOF 训练时部分特征缺失被过滤</p>
+<p><strong>结果</strong>（raw 归一化 + DeepLOF）： | # | 基因 | 剂量敏感性 | 说明 | |—|—|—|—| | 1 | BAZ1B | pLI=1.0, LOEUF=0.109 | 染色质重塑，WBS 颅面/神经候选 | | 2 | CLIP2 | pLI=1.0, LOEUF=0.196 | 微管结合，神经发育 | | 3 | STX1A | pLI=0.98, LOEUF=0.293 | 突触 SNARE 蛋白 | | 4 | ELN | ClinGen HI=3 | WBS 心血管经典主效基因 |</p>
+<p><strong>产出</strong>：<code>AI辅助层接入_DeepLOF_结果报告_2026-09-06.md</code></p>
+<hr />
+<h2 id="doc2-条目-2-2026-09-05">条目 #2 — 2026-09-05</h2>
+<h3 id="doc2-wbs-35-基因全流程端到端验证完成-管线现状总结">WBS 35 基因全流程端到端验证完成 + 管线现状总结</h3>
+<p><strong>背景</strong>： 这是管线搭建完成后首次在真实数据上运行完整流程。选择 WBS (Williams 综合征 7q11.23 区间) 作为验证案例。</p>
+<p><strong>流程</strong>： scRNA-seq (GSE283473) → CNV 工作流 → 35 基因 candidates.csv → L0 normalize → L1 merge_evidence → L3 consensus_v2 –tune</p>
+<p><strong>核心产出</strong>： 1. CNV 工作流 22/22 测试通过，GSE283473 端到端验证 2. L1 修复了 5 个真实数据格式问题（ClinGen 注释行/skiprows、列名 # 前缀、符号映射、重复列、30/40 分数→NaN） 3. 连接率诊断：ClinGen HI 14% (5/35)、gnomAD 77% (27/35)、HPA 97% (34/35) 4. WBS 区间内 ClinGen 覆盖极低——这是微缺失病的普遍问题 5. <strong>共识排序有严重配置问题</strong>：FZD9(pLI=0.002) 被 rank 归一化扭曲到 #1</p>
+<p><strong>诚实结论</strong>： &gt; 证据层（原始数据）比共识层（当前配置）更可信。90% 的有效信号来自”ClinGen ELN=3 + gnomAD 高 pLI/低 LOEUF 六个基因”这一小撮证据。</p>
+<p><strong>六条升级建议</strong>： 1. normalize 从 rank → raw（<strong>次日实施</strong>） 2. HPA 惩罚降权或高 pLI 基因豁免 3. LOO 调权在对照数&lt;3 时直接报”无效” 4. 补 HPA 全组织版本（含脑表达） 5. AI 层试点（<strong>次日实施</strong>） 6. 补全 8 病区间表</p>
+<p><strong>产出</strong>：<code>管线现状与Williams主效基因筛选实验总结_2026-09-05.md</code></p>
+<hr />
+<h2 id="doc2-条目-1-2026-09-01估计">条目 #1 — 2026-09-01（估计）</h2>
+<h3 id="doc2-管线骨架搭建完成">管线骨架搭建完成</h3>
+<p><strong>内容</strong>： 1. 四层架构：normalize.py → merge_evidence.py → (AI 层可选) → consensus.py 2. CNV 工作流 (src/cnv/)：infercnv → segments → extract-genes，还未在真实数据上验证 3. 配置驱动：pipeline.yaml + sources.json 4. 测试体系：tests/（27+ 测试）</p>
+<p><strong>产出</strong>：<code>工程化指导书_微缺失主效基因筛选管线.md</code></p>
+<p><strong>踩坑记录</strong>： - ClinGen TSV 解析：5 行 # 注释、列名前缀 #、重复 PMID 列——这些是在 L1 真实数据接入时才暴露的（见条目 #2） - <code>outputs/igem_gene_pipeline/</code> 曾丢失过一次，从存储内容重建（见 notebook:chatcmpl-tool-b7c0a6fa2a4b072c）</p>
+<hr />
+<h2 id="doc2-条目-0-2026-09-01估计">条目 #0 — 2026-09-01（估计）</h2>
+<h3 id="doc2-项目初始化从找靶点到建管线">项目初始化：从”找靶点”到”建管线”</h3>
+<p><strong>背景</strong>： 本项目起源于 iGEM 团队之前 5 个月的干实验工作（2026-07 → 2026-08），核心产出是 VirtualCellTool 和 Williams 综合征的五步计算通路。关键发现（<a href="../00_docs/06_project_history/PROJECT_PROGRESS_REPORT.html">PROJECT_PROGRESS_REPORT</a>）：</p>
+<ol type="1">
+<li><strong>SIGnature 归因 ≠ 因果预测</strong>：归因分数与真实扰动效应 r=0.02 (p=0.83)</li>
+<li><strong>GEARS 结构性不适用</strong>：Perturb-seq 数据集是癌细胞系，41 个微缺失主效基因只有 4 个在训练图中</li>
+<li><strong>E8: mRNA 隐身</strong>：删失基因稳态 mRNA 不能被归因检测到（Δattr≈0）</li>
+<li><strong>三个天花板</strong>：翻译层盲区、单基因 vs 多基因错配、mRNA 隐身</li>
+<li><strong>方向收敛</strong>：从”AI 筛选靶点”转向”证据金字塔+正对照验证”</li>
+</ol>
+<p><strong>本管线（v1）的设计逻辑</strong>： 接管”候选基因排序”这一步骤，用 ClinGen/gnomAD/HPA 作为 L1 基线证据，AI 作为可选增强层。不再依赖归因或扰动模型来”发现”靶点。</p>
+<hr />
+<h2 id="doc2-快速索引">快速索引</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>主题</th>
+<th>条目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VCT 定位</td>
+<td>#8 (L3 机制假设+演示层), #12 (工具组合推荐)</td>
+</tr>
+<tr>
+<td>VCT 工程修复</td>
+<td>#14 (不可启动→可用；稀疏化/缓存/单例三类 bug)</td>
+</tr>
+<tr>
+<td>VCT 可视化</td>
+<td>#14 (CIPHER 双子图、位移双视图、表达分布、归因图、质心图、GEARS 图)</td>
+</tr>
+<tr>
+<td>VCT↔︎管线衔接</td>
+<td>#14 (WBS Top12 有 10 个可预测；GTF2I 排名分歧、ELN 组织特异性负结果)</td>
+</tr>
+<tr>
+<td>虚拟细胞调研</td>
+<td>#9 (文献综述+可行性判定)</td>
+</tr>
+<tr>
+<td>WHS/NSD2 证据链</td>
+<td>#10 (叙事指南+引文修正)</td>
+</tr>
+<tr>
+<td>WHS 实证运行</td>
+<td>#11 (NSD2 #1/19 + 符号别名缺口修复)</td>
+</tr>
+<tr>
+<td>架构设计</td>
+<td>#5 (v2 通用架构), #1 (v1 四层架构), #0 (起源)</td>
+</tr>
+<tr>
+<td>scRNA-seq 方法</td>
+<td>#4 (CNV caller 调研结论)</td>
+</tr>
+<tr>
+<td>数据源覆盖</td>
+<td>#2 (ClinGen 14% 覆盖 WBS), #5 (WHS 无数据)</td>
+</tr>
+<tr>
+<td>排序算法问题</td>
+<td>#2 (rank 归一化伪影), #3 (raw 归一化修正), #14 (细胞类型响应无判别力→余弦对齐)</td>
+</tr>
+<tr>
+<td>AI 层</td>
+<td>#3 (DeepLOF 接入 + GTF2I 盲区)</td>
+</tr>
+<tr>
+<td>HPA 设计</td>
+<td>#5 (从惩罚到双重角色)</td>
+</tr>
+<tr>
+<td>表型分组</td>
+<td>#5 (HPO/ClinGen 表型映射)</td>
+</tr>
+<tr>
+<td>WHS 疾病</td>
+<td>#5 (核心因果基因 NSD2), #10 (证据链)</td>
+</tr>
+<tr>
+<td>WS 疾病</td>
+<td>#2, #3 (WBS 35 基因全流程)</td>
+</tr>
+<tr>
+<td>管线修复</td>
+<td>#11 (gnomAD 符号别名解析), #13 (HPA 惩罚移除 + raw 归一化落实)</td>
+</tr>
+<tr>
+<td>六 mode 实证</td>
+<td>#13 (WBS 正对照 6/6、WHS NSD2 全 mode #1；outputs/ 归档)</td>
+</tr>
+<tr>
+<td>解读陷阱</td>
+<td>#14 (IG 归因正负号只表方向不表重要性；ws/ms 的 cell_type 实为病健分组)</td>
+</tr>
+<tr>
+<td>负结果资产</td>
+<td>#0 (r=0.02 / GEARS 4/41), #9 (Nat Methods 2025 基准), #14 (ELN 脑内无效应)</td>
+</tr>
+<tr>
+<td>文档一致性</td>
+<td>#15 (12 处不一致审计：VCT 版本/端点/缓存大小；管线版本号与测试数更正)</td>
+</tr>
+<tr>
+<td>日志数值更正</td>
+<td>#15 (测试数 27+/22/22 → 21 用例；管线 v2.1 → v2.2)</td>
+</tr>
+<tr>
+<td>待决策项</td>
+<td>#15 (consensus_v2 回退默认 normalize=“rank” vs config 的 raw)</td>
+</tr>
+<tr>
+<td>iGEM wiki 大纲</td>
+<td>#16 (Model 页 10 节：原理+DBTL 七轮；Document 页 15 节：说明书+图表读法)</td>
+</tr>
+<tr>
+<td>管线架构文档</td>
+<td>#17 (v2.2 实施文档，替代 v2.0；9 项未实现清单 + auto/Mode C 行为澄清)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>最后更新：2026-09-14</em></p>
+</details><details id="file3"><summary>3. microdeletion_prevalence_report.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc3-染色体微缺失综合征-流行病学数据汇总">染色体微缺失综合征 — 流行病学数据汇总</h1>
+<blockquote>
+<p>单位：<strong>每 10,000 例活产</strong>（= 每万例活产）。 “计数来源”的置信区间为 Clopper-Pearson 精确 95% CI；“文献估计”给出的是已发表估计的最小–最大范围（<strong>不是</strong>统计置信区间）。 我<strong>没有</strong>内置疾病数据库/API，数据全部来自公开文献与人群队列，逐条标注来源。</p>
+</blockquote>
+<h2 id="doc3-指标一出生患病率birth-prevalence">指标一：出生患病率（birth prevalence）</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>综合征（区带）</th>
+<th>出生患病率 /万</th>
+<th>95% CI 或范围 /万</th>
+<th>相当于</th>
+<th>来源</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2q37 缺失</td>
+<td>0.10</td>
+<td>0.05–0.15</td>
+<td>1/100,000</td>
+<td>文献</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Wolf-Hirschhorn (4p)</td>
+<td>0.20</td>
+<td>0.10–0.30</td>
+<td>1/50,000</td>
+<td>Orphanet</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Phelan-McDermid (22q13)</td>
+<td>0.20</td>
+<td>0.10–0.30</td>
+<td>1/50,000</td>
+<td>Orphanet / 文献</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Koolen-de Vries (17q21.31)</td>
+<td>0.33</td>
+<td>0.18–0.63</td>
+<td>1/30,000</td>
+<td>GeneReviews</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>3q29 缺失</td>
+<td>0.33</td>
+<td>0.20–0.50</td>
+<td>1/30,000</td>
+<td>GeneReviews / 文献</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Cri-du-chat (5p)</td>
+<td>0.50</td>
+<td>0.20–0.67</td>
+<td>1/20,000</td>
+<td>Orphanet</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Smith-Magenis (17p11.2)</td>
+<td>0.50</td>
+<td>0.40–0.67</td>
+<td>1/20,000</td>
+<td>GeneReviews</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>Williams (7q11.23)</td>
+<td>1.00</td>
+<td>0.50–1.30</td>
+<td>1/10,000</td>
+<td>GeneReviews / Orphanet</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>1p36 缺失</td>
+<td>1.47</td>
+<td>0.04–8.18</td>
+<td>1/6,800</td>
+<td>Tucker 2014；Heilstedt 2003</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>15q13.3 缺失</td>
+<td>2.50</td>
+<td>1.80–3.30</td>
+<td>1/4,000</td>
+<td>Gillentine 2018</td>
+<td>文献</td>
+</tr>
+<tr>
+<td>15q11-q13 (PWS/Angelman)</td>
+<td>2.94</td>
+<td>0.36–10.60</td>
+<td>1/3,400</td>
+<td>Tucker 2014</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>16p11.2 (近端)</td>
+<td>3.60</td>
+<td>0.74–10.52</td>
+<td>1/2,800</td>
+<td>Cooper 2011</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>22q11.2 (DiGeorge/VCFS)</td>
+<td><strong>4.66</strong></td>
+<td><strong>2.55–7.81</strong></td>
+<td><strong>1/2,148</strong></td>
+<td>Blagojevic 2021 安大略新生儿筛查</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>1q21.1 缺失</td>
+<td>4.90</td>
+<td>1.80–10.66</td>
+<td>1/2,042</td>
+<td>Smajlagić 2020 MoBa</td>
+<td>计数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doc3-指标二22q11.2-发病率incidence">指标二：22q11.2 发病率（incidence）</h2>
+<ul>
+<li><strong>瑞典（Oskarsdóttir 2004）</strong>：年均发病率 <strong>14.1 / 10 万活产</strong>（= 1.41 / 万活产/年）。</li>
+</ul>
+<h2 id="doc3-指标三de-novo-比例新发突变占比">指标三：de novo 比例（新发突变占比）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>综合征</th>
+<th>de novo 比例</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Williams (7q11.23)</td>
+<td>~95%</td>
+<td>绝大多数新发</td>
+</tr>
+<tr>
+<td>22q11.2 (3 Mb)</td>
+<td>&gt;90%</td>
+<td>嵌套缺失约 60% 为遗传</td>
+</tr>
+<tr>
+<td>1p36 缺失</td>
+<td>~90%</td>
+<td>绝大多数新发</td>
+</tr>
+<tr>
+<td>Smith-Magenis (17p11.2)</td>
+<td>~90%</td>
+<td>绝大多数新发</td>
+</tr>
+<tr>
+<td>Cri-du-chat (5p)</td>
+<td>85–90%</td>
+<td></td>
+</tr>
+<tr>
+<td>Wolf-Hirschhorn (4p)</td>
+<td>~85%</td>
+<td></td>
+</tr>
+<tr>
+<td>PWS/Angelman (15q11-q13)</td>
+<td>~70%</td>
+<td>缺失本身为新发（PWS 约 70% 为父源缺失）</td>
+</tr>
+<tr>
+<td>16p11.2 (近端)</td>
+<td>60–76%</td>
+<td>重复反而多为遗传</td>
+</tr>
+<tr>
+<td>1q21.1 缺失</td>
+<td>~33%</td>
+<td>常为遗传（MoBa：2/6 新发）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doc3-指标四出生-vs-成人人群患病率选择效应-外显率">指标四：出生 vs 成人人群患病率（选择效应 &amp; 外显率）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>综合征</th>
+<th>出生患病率 /万</th>
+<th>成人人群患病率 /万（UK Biobank, Kendall 2017, n=151,659）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22q11.2</td>
+<td>4.66</td>
+<td>0.33（仅 5 例）→ 约 <strong>93% 减少</strong>（重症 + 早亡）</td>
+</tr>
+<tr>
+<td>16p11.2</td>
+<td>2.94</td>
+<td>2.90（44 例）→ 几乎不变（<strong>不完全外显</strong>）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>MoBa（挪威）</strong>：全部复发性 NDD-CNV（缺失+重复）在新生儿中 <strong>0.48%（1/200）</strong>，在父母（成人）中 <strong>0.35–0.36%</strong> → 约 1/3 负向选择。</li>
+</ul>
+<h2 id="doc3-重要注意事项">重要注意事项</h2>
+<ol type="1">
+<li><strong>不同研究差异很大</strong>：22q11.2 估计从 0.82 到 4.7/万，主要由<strong>采样方法</strong>（主动分子筛查 vs 临床确诊）决定。主动新生儿筛查（安大略 2021）的 1/2,148 最接近真实值。</li>
+<li><strong>成人人群患病率 ≠ 出生患病率</strong>：受影响个体生育力下降且部分早亡，成人率通常更低；降低幅度反映疾病严重度与外显率。</li>
+<li><strong>罕见综合征估计粗糙</strong>：Phelan-McDermid、2q37、3q29 等范围宽，仅作数量级参考。</li>
+<li><strong>de novo 比例是近似值</strong>：来自 GeneReviews / 文献，随位点与缺失大小变化（如 22q11.2 嵌套缺失多为遗传）。</li>
+</ol>
+<h2 id="doc3-文件全部有-png-pdf-svg-三种格式位于-outputsfigures">文件（全部有 PNG / PDF / SVG 三种格式，位于 <code>outputs/figures/</code>）</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>图</th>
+<th>文件（不含扩展名，<code>outputs/figures/</code> 下）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>出生患病率汇总柱状图（对数轴 + 误差线，标签已移出误差线）</td>
+<td><code>microdeletion_birth_prevalence</code></td>
+</tr>
+<tr>
+<td>22q11.2 多研究森林图（含发病率注释）</td>
+<td><code>22q11_2_forest</code></td>
+</tr>
+<tr>
+<td>de novo 比例图</td>
+<td><code>microdeletion_denovo_fraction</code></td>
+</tr>
+<tr>
+<td>出生 vs 成人患病率对比图</td>
+<td><code>microdeletion_birth_vs_adult</code></td>
+</tr>
+<tr>
+<td>数据表</td>
+<td><code>outputs/data/microdeletion_birth_prevalence.csv</code>、<code>outputs/data/microdeletion_denovo_fraction.csv</code></td>
+</tr>
+<tr>
+<td>复现脚本</td>
+<td><code>outputs/scripts/microdeletion_prevalence.py</code></td>
+</tr>
+</tbody>
+</table>
+</details><h2>4. 按主题继续阅读</h2><ul><li><a href="%E7%AE%A1%E7%BA%BF%E6%96%87%E6%A1%A3/index.html">筛选方法与设计</a></li><li><a href="%E8%99%9A%E6%8B%9F%E7%BB%86%E8%83%9E/index.html">虚拟细胞调研</a></li><li><a href="wiki/index.html">Wiki 工作稿</a></li><li><a href="%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3/index.html">整合设想</a></li><li><a href="literature/bibliography/index.html">文献书目</a></li><li><a href="literature/paper_summaries/index.html">文献解读</a></li><li><a href="../03_pipeline/outputs/index.html">实验数据与原始报告</a></li><li><a data-local-only-href="../00_docs/02_agent/PROJECT_STATE.yaml" title="本地保留的来源文件，不随公开仓库发布">当前状态与未关闭问题</a></li></ul></main></body></html>

@@ -1,2 +1,0 @@
-interval,n_genes,n_genes_in_expression,mean_log2fc_interval_genes,auto_overlap_frac,AC-CNV-1 (auto recovers known interval),markers,markers_in_expression,AC-CNV-2 (markers detected in data)
-williams_7q11.23,35,33,0.04555650541793383,0.0,FAIL,"ELN,GTF2I,LIMK1,CLIP2","ELN,GTF2I,LIMK1,CLIP2",PASS

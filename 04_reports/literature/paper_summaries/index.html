@@ -1,0 +1,1027 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>paper_summaries 文档盘点</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>paper_summaries 文档盘点</h1><p class="lead">单篇文献、数据调查和概念解释完整保留，调研结论有其时间边界。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>所有原文、数字、引文和历史建议均保留；本次整理不等同重新核实文献，也不把旧建议当成实施授权。</li><li>正文按需展开；当前代码使用方式以 03_pipeline/docs/index.html 和工具现行 README 为准。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a data-local-only-href="WHS_scRNA-seq_data_survey.md" title="本地保留的来源文件，不随公开仓库发布">WHS_scRNA-seq_data_survey.md</a></td><td>WHS scRNA-seq data survey；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>2</td><td><a data-local-only-href="DeepLOF_paper_summary_LaPolice_Huang_2023.md" title="本地保留的来源文件，不随公开仓库发布">DeepLOF_paper_summary_LaPolice_Huang_2023.md</a></td><td>DeepLOF paper summary LaPolice Huang 2023；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>3</td><td><a data-local-only-href="GETgene-AI_paper_summary_Gu_Chen_2025.md" title="本地保留的来源文件，不随公开仓库发布">GETgene-AI_paper_summary_Gu_Chen_2025.md</a></td><td>GETgene-AI paper summary Gu Chen 2025；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>4</td><td><a data-local-only-href="benchmark_scrnaseq_cnv_callers_2025.md" title="本地保留的来源文件，不随公开仓库发布">benchmark_scrnaseq_cnv_callers_2025.md</a></td><td>benchmark scrnaseq cnv callers 2025；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>5</td><td><a data-local-only-href="DeepLOF_%E6%A6%82%E5%BF%B5%E6%8B%86%E8%A7%A3.md" title="本地保留的来源文件，不随公开仓库发布">DeepLOF_概念拆解.md</a></td><td>DeepLOF 概念拆解；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>6</td><td><a data-local-only-href="scRNA-seq_drug_target_discovery_landscape.md" title="本地保留的来源文件，不随公开仓库发布">scRNA-seq_drug_target_discovery_landscape.md</a></td><td>scRNA-seq drug target discovery landscape；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. WHS_scRNA-seq_data_survey.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc1-wolf-hirschhorn-syndrome-whs-scrna-seq-数据调研">Wolf-Hirschhorn Syndrome (WHS) — scRNA-seq 数据调研</h1>
+<blockquote>
+<p>调研日期：2026-09-07 · 项目：iGEM SINEUP WHS 主效基因筛选</p>
+</blockquote>
+<hr />
+<h2 id="doc1-核心结论目前没有公开的-whs-scrna-seq-数据">核心结论：目前没有公开的 WHS scRNA-seq 数据</h2>
+<p>经过对 GEO、SRA、PubMed 的系统搜索，<strong>Wolf-Hirschhorn 综合征（4p16.3 缺失）目前没有任何公开的 scRNA-seq 数据集</strong>。这与 Williams 综合征（WS，GSE283473）形成鲜明对比——WS 已经有脑类器官 scRNA-seq 数据和相关的 Nature 级别论文，而 WHS 仍然停留在 hiPSC 细胞系构建阶段。</p>
+<hr />
+<h2 id="doc1-一whs-的转录组学研究现状">一、WHS 的转录组学研究现状</h2>
+<h3 id="doc1-唯一相关的公开-geo-数据">唯一相关的公开 GEO 数据</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据集</th>
+<th>类型</th>
+<th>组织</th>
+<th>物种</th>
+<th>年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GSE232564 / GSE232566</strong></td>
+<td>Bulk RNA-seq + ChIP-seq</td>
+<td>E15.5 全脑</td>
+<td>Nsd2 KO 小鼠</td>
+<td>2024</td>
+</tr>
+</tbody>
+</table>
+<p>这是 Frontier in Genetics (2024) 发表的 NSD2 敲除小鼠胚胎脑的 bulk RNA-seq 和 H3K36me2 ChIP-seq 数据。结论是 NSD2 缺失导致突触传递和形成相关基因失调——但这只是 NSD2 单基因敲除的表型，不是 WHS 区间全部基因的效应。</p>
+<h3 id="doc1-hipsc-细胞系无转录组数据">hiPSC 细胞系（无转录组数据）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>论文</th>
+<th>内容</th>
+<th>年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Human Cell (2025)</strong></td>
+<td>从 3 个 WHS 患者成纤维细胞建立了 hiPSC 系，CNV 分析确认了 4p15.1–p16.3 杂合缺失</td>
+<td>2025</td>
+</tr>
+<tr>
+<td><strong>Elucidata rare disease datasets</strong></td>
+<td>GSE84878 — WHS 小鼠 bulk RNA-seq（5 个样本，2017 年）</td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-二whs-已知关键基因与表型关联">二、WHS 已知关键基因与表型关联</h2>
+<p>WHS 的 4p16.3 缺失区间大小不一（从 &lt;400 kb 到 &gt;10 Mb），但有一个 <strong>WHSCR（WHS critical region，约 165–200 kb）</strong> 被划定为核心区域。</p>
+<h3 id="doc1-核心基因">核心基因</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>基因</th>
+<th>别名</th>
+<th>功能</th>
+<th>关联表型</th>
+<th>证据强度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NSD2</strong></td>
+<td>WHSC1</td>
+<td>组蛋白甲基转移酶 (H3K36me2)，调控突触基因表达</td>
+<td>🟢 被认为是 WHS 的<strong>最关键因果基因</strong>。单基因 NSD2 功能缺失变异（Rauch-Steindl 综合征）可独立产生整体 WHS 样表型（生长迟缓、DD/ID、小头畸形、面部特征），不依赖缺失其他基因</td>
+<td>🔴 极强——已从”缺失区间候选”升级为”主要的因果基因”</td>
+</tr>
+<tr>
+<td><strong>NELFA</strong></td>
+<td>WHSC2</td>
+<td>负延伸因子复合体亚基，转录调控</td>
+<td>🟡 NSD2 之后最可能与核心表型相关。功能缺失变异产生非典型 WHS 表型</td>
+<td>🟡 中等</td>
+</tr>
+<tr>
+<td><strong>LETM1</strong></td>
+<td>—</td>
+<td>线粒体 Ca²⁺/H⁺ 转运蛋白</td>
+<td>🟡 <strong>癫痫</strong>表型的主要候选基因。双等位基因变异导致的线粒体疾病以神经系统为主</td>
+<td>🟡 中等</td>
+</tr>
+<tr>
+<td><strong>TACC3</strong></td>
+<td>—</td>
+<td>神经嵴细胞迁移调控，颅面发育</td>
+<td>🟡 与<strong>颅面畸形</strong>相关。在 Xenopus 中敲低导致颅面缺陷</td>
+<td>🟡 中弱</td>
+</tr>
+<tr>
+<td><strong>SLBP</strong></td>
+<td>—</td>
+<td>组蛋白 mRNA 茎环结合蛋白</td>
+<td>🟡 可能与细胞增殖异常相关</td>
+<td>🟡 弱</td>
+</tr>
+<tr>
+<td><strong>CTBP1</strong></td>
+<td>—</td>
+<td>转录辅助抑制因子</td>
+<td>🟡 位于远端 4p16.3，部分缺失区间包含</td>
+<td>🟡 弱</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc1-关键发现2022-年后的范式转变">关键发现（2022 年后的范式转变）</h3>
+<blockquote>
+<p><strong>NSD2 单基因功能缺失即可产生整体 WHS 核心表型。</strong> (From Wolf-Hirschhorn syndrome to NSD2 haploinsufficiency: a shifting paradigm, Italian Journal of Pediatrics, 2022)</p>
+</blockquote>
+<p>这意味着 NSD2 不再只是”候选基因之一”，而可能是 WHS 的<strong>最主要甚至唯一的因果基因</strong>。其他区间基因修饰了表型的严重程度和额外特征（如癫痫 = LETM1，颅面 = TACC3 等）。</p>
+<hr />
+<h2 id="doc1-三与-ws-williams-综合征-的对比为什么-whs-落后这么多">三、与 WS (Williams 综合征) 的对比：为什么 WHS 落后这么多？</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>Williams 综合征 (7q11.23)</th>
+<th>Wolf-Hirschhorn 综合征 (4p16.3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>患病率</td>
+<td>~1/7,500</td>
+<td>~1/50,000（更罕见 ~7倍）</td>
+</tr>
+<tr>
+<td>scRNA-seq 数据</td>
+<td>GSE283473 脑类器官 + GSE67535 iPSC 神经元</td>
+<td><strong>无</strong></td>
+</tr>
+<tr>
+<td>iPSC 模型</td>
+<td>前脑类器官模型已发表 (eLife 2024)</td>
+<td>hiPSC 系刚建立 (Human Cell 2025)</td>
+</tr>
+<tr>
+<td>小鼠模型</td>
+<td>多种缺失小鼠模型</td>
+<td>Nsd2 KO 有，但无多基因缺失小鼠</td>
+</tr>
+<tr>
+<td>主效基因</td>
+<td>多基因争议（GTF2I vs GTF2IRD1 vs LIMK1）</td>
+<td><strong>NSD2 共识较强</strong></td>
+</tr>
+<tr>
+<td>“找到主效基因”的难度</td>
+<td>高（多个贡献大小相似的神经基因）</td>
+<td><strong>低（NSD2 占主导地位）</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-四对-igem-管线的意义">四、对 iGEM 管线的意义</h2>
+<h3 id="doc1-好消息基因筛选的任务可能比-ws-简单得多">好消息：基因筛选的任务可能比 WS 简单得多</h3>
+<p>WHS 的基因发现格局和 WS 完全不同：</p>
+<ul>
+<li><strong>WS</strong>：7q11.23 区间 25-27 个基因，多基因贡献，GTF2I/LIMK1/BAZ1B/CLIP2/ELN 各负责不同表型，筛选需要复杂的多证据排名</li>
+<li><strong>WHS</strong>：NSD2 已被确认为核心因果基因。其他基因（LETM1, NELFA, TACC3）对特异性表型有贡献，但不是”主效基因”争论的核心</li>
+</ul>
+<h3 id="doc1-坏消息没有单细胞数据">坏消息：没有单细胞数据</h3>
+<p>如果要走和 WS 管线完全相同的路径（scRNA-seq → CNV → 表达 QC → 证据层排序），在当前是无法实现的——因为根本没有公开的 WHS scRNA-seq 数据。</p>
+<h3 id="doc1-可行路径">可行路径</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>选项</th>
+<th>内容</th>
+<th>投入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: 直接以 NSD2 为主效基因</strong></td>
+<td>文献已经为 NSD2 提供了很强的证据。跳过 scRNA-seq 步骤，用 ClinGen/gnomAD/HPA 证据层直接验证 NSD2 的剂量敏感性和组织表达可行性</td>
+<td>低——现有管线直接可用</td>
+</tr>
+<tr>
+<td><strong>B: 用 Nsd2 KO 小鼠 bulk RNA-seq</strong></td>
+<td>GSE232564 有 NSD2 KO 小鼠 E15.5 脑 bulk RNA-seq，可以做差异表达分析来确认 NSD2 缺失的下游效应</td>
+<td>中——需要下载和分析 bulk RNA-seq</td>
+</tr>
+<tr>
+<td><strong>C: 用已发表的 WHS hiPSC 做自我验证</strong></td>
+<td>2025 年的 hiPSC 系刚建立，没有公开的转录组数据。可以联系作者获取细胞系，自行分化+scRNA-seq</td>
+<td>高——几周到几个月</td>
+</tr>
+<tr>
+<td><strong>D: 用 HPA/GTEx 正常组织数据模拟 WHS 区间基因表达</strong></td>
+<td>在正常脑组织中看 4p16.3 区间基因的表达模式，推理缺失的影响</td>
+<td>低——现有公共数据</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc1-参考文献">参考文献</h2>
+<ol type="1">
+<li>Kimura S et al. <em>Loss of NSD2 causes dysregulation of synaptic genes and altered H3K36 dimethylation in mice.</em> Frontiers in Genetics, 2024. GSE232564/GSE232566</li>
+<li>Takada M et al. <em>Generation of human induced pluripotent stem cell lines derived from Wolf-Hirschhorn syndrome patients.</em> Human Cell, 2025. PMID: 40971060</li>
+<li>Tassano E et al. <em>From Wolf-Hirschhorn syndrome to NSD2 haploinsufficiency: a shifting paradigm.</em> Italian Journal of Pediatrics, 2022. DOI: 10.1186/s13052-022-01267-w</li>
+<li>Zanoni P et al. <em>De novo loss-of-function variants in NSD2 associate with a subset of Wolf-Hirschhorn syndrome.</em> Cold Spring Harbor Molecular Case Studies, 2019. DOI: 10.1101/mcs.a004044</li>
+<li>Kerzendorfer C et al. <em>Characterizing the functional consequences of haploinsufficiency of NELF-A (WHSC2) and SLBP.</em> Human Molecular Genetics, 2012. DOI: 10.1093/hmg/dds033</li>
+<li>Andersen EF et al. <em>Deletions involving genes WHSC1 and LETM1 may be necessary but not sufficient to cause Wolf-Hirschhorn syndrome.</em> European Journal of Human Genetics, 2014. DOI: 10.1038/ejhg.2013.192</li>
+<li>Mills A et al. <em>Wolf-Hirschhorn Syndrome-Associated Genes Are Enriched in Motile Neural Crest Cells and Affect Craniofacial Development in Xenopus laevis.</em> Frontiers in Physiology, 2019.</li>
+<li>Kaiyrzhanov R et al. <em>Bi-allelic LETM1 variants perturb mitochondrial ion homeostasis.</em> American Journal of Human Genetics, 2022. DOI: 10.1016/j.ajhg.2022.07.007</li>
+</ol>
+</details><details id="file2"><summary>2. DeepLOF_paper_summary_LaPolice_Huang_2023.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc2-paper-summary-deeplof-an-unsupervised-deep-learning-framework-for-predicting-human-essential-genes">Paper Summary: DeepLOF — an unsupervised deep-learning framework for predicting human essential genes</h1>
+<p><strong>Paper:</strong> LaPolice TM &amp; Huang YF. “An unsupervised deep learning framework for predicting human essential genes from population and functional genomic data.” <em>BMC Bioinformatics</em> 24:347 (2023). DOI: 10.1186/s12859-023-05481-z</p>
+<p>The text extraction succeeded and the paper appears complete (21 content pages + publisher terms page), so this summary is based on the full paper.</p>
+<hr />
+<h2 id="doc2-research-objective-and-hypothesis">1. Research objective and hypothesis</h2>
+<p><strong>Objective:</strong> Improve the prediction of human genes that are intolerant to loss-of-function (LOF) mutations (“essential genes”), by integrating population genomic data (gnomAD) with functional genomic features.</p>
+<p><strong>Core hypothesis:</strong> Population-genetic methods (e.g., pLI, LOEUF) detect LOF depletion relative to a neutral mutation model, but are statistically underpowered for <strong>short genes</strong>, where few LOF variants are expected by chance. The authors hypothesize that functional genomic features (expression, epigenomics, conservation, PPI, etc.) provide complementary evidence, and that a Bayesian framework combining a neural-network prior with a population-genetics likelihood will: - match or beat population-only methods on long genes, and - gain power on short genes where population data alone is weak.</p>
+<p>A secondary hypothesis is that the Bayesian prior/posterior structure <strong>automatically upweights functional features in short genes</strong> and population data in long genes — they treat this as testable, and report supportive evidence (below).</p>
+<h2 id="doc2-study-design-and-methods">2. Study design and methods</h2>
+<ul>
+<li><strong>Model (DeepLOF):</strong> A Bayesian neural model. ηᵢ = relative rate of observed vs. expected LOF variants for gene <em>i</em> (lower η → stronger negative selection → more LOF-intolerant). A feedforward network maps 18 genomic features to the mean (μ) and concentration (κ) of a <strong>beta prior</strong> on η; a <strong>Poisson likelihood</strong> models observed LOF counts yᵢ given expected counts nᵢ (from gnomAD’s neutral model). Posterior mean gives the <strong>DeepLOF score = 1 − E[η]</strong> (interpreted as the fraction of LOF mutations purged by selection). Trained with Adam, early stopping, L2; integrals approximated by midpoint Riemann sums. Unsupervised: no labeled essential genes used in training.</li>
+<li><strong>Data:</strong> gnomAD v2.1.1 (125,748 exomes), 19,197 protein-coding genes; 80/20 random train/validation split; grid-searched hyperparameters.</li>
+<li><strong>18 features:</strong> 5 epigenomic (H3K9ac, H3K27me3, H3K4me3, H2A.Z ChIP-seq promoter signals; EpiTensor enhancer count), 4 developmental gene sets (GO embryo dev., GO CNS dev., Reactome nervous-system dev., Reactome developmental biology), transcription-factor and protein-complex membership, promoter CpG density, promoter &amp; exonic phastCons, mean expression, tissue specificity (tau), PPI degree, and the UNEECON-G missense-intolerance score. Log-transformed, standardized, missing values mean-imputed.</li>
+<li><strong>Comparison:</strong> DeepLOF (nonlinear variant, chosen by validation loss) vs. 8 published scores: LOEUF, pLI, mis-z, RVIS, GeVIR, CoNeS, VIRLOF, UNEECON-G.</li>
+<li><strong>Benchmarks:</strong> 311 ClinGen haploinsufficient genes; 397 human orthologs of mouse heterozygous-lethal knockouts; 683 cell-line-essential (vs 913 nonessential) genes; 364 OMIM dominant-negative genes. ROC/AUC with gene sets matched (MatchIt) on expected LOF counts; DeLong tests for AUC differences.</li>
+<li><strong>Short-gene analysis:</strong> Cutoffs chosen to give ≈2,800 LOF-intolerant genes per method (LOEUF cutoff 0.35; DeepLOF 0.835; CoNeS −1.11; VIRLOF 15 percentile). Focused on genes with ≤10 expected LOF variants. Uniqueness, enrichment (log odds ratio + SE-based CIs), and benign-deletion depletion (dbVar nstd102, 5,649 deletions; 10,000-permutation test) evaluated. GO enrichment via DAVID/PANTHER.</li>
+</ul>
+<h2 id="doc2-key-findings-and-results">3. Key findings and results</h2>
+<p><strong>Evidence-backed:</strong></p>
+<ul>
+<li><strong>Feature associations (linear model):</strong> UNEECON-G (missense intolerance) had the strongest positive contribution; developmental GO/Reactome categories, transcription factors, and protein-complex subunits were positively associated; H2A.Z signal and tissue specificity (tau) were <em>negatively</em> associated (authors interpret: housekeeping genes more LOF-intolerant; H2A.Z depletion marks lineage-resolved developmental genes).</li>
+<li><strong>Length-dependent weighting (hypothesis confirmed):</strong> the absolute DeepLOF-score difference between models with and without features decreased as expected LOF count rose (Fig. 3b) — consistent with Bayesian upweighting of features in short genes.</li>
+<li><strong>Benchmark AUCs (DeepLOF vs. best competitor):</strong>
+<ul>
+<li>ClinGen haploinsufficient: <strong>0.859</strong> vs CoNeS 0.823, UNEECON-G 0.803, LOEUF 0.811, pLI 0.800, VIRLOF 0.814, GeVIR 0.779, mis-z 0.706, RVIS 0.657.</li>
+<li>At FPR = 0.05, TPR ≈ <strong>0.50 vs 0.33 for LOEUF</strong> (the second-best) — the paper’s headline “50% more detections” claim.</li>
+<li>Mouse essential orthologs: <strong>0.780</strong> (next: CoNeS 0.755).</li>
+<li>Cell-line essential genes: <strong>0.891</strong> (next: VIRLOF 0.878).</li>
+<li>Dominant-negative genes: DeepLOF was <strong>not</strong> best — UNEECON-G won (consistent with authors’ hypothesis that LOF-intolerance scores shouldn’t dominate for a missense-driven mechanism). DeLong significance reported in supplement (Table S2, not shown in main text).</li>
+</ul></li>
+<li><strong>109 novel short LOF-intolerant genes:</strong> Among 452 genes (≤10 expected LOF variants) flagged by any of 4 methods, DeepLOF flagged 364 (most), and <strong>109 (24.1%) were unique to DeepLOF</strong>.</li>
+<li><strong>Validation of the 109 genes:</strong> significantly enriched (log-OR CIs exclude 1, per Fig. 5b) for ClinGen haploinsufficient, mouse-lethal, and cell-culture-essential genes; <strong>depleted in benign deletions — 0.27% observed overlap vs 1.46% permutation mean (5.4-fold; one-tailed permutation test, P = 0)</strong>.</li>
+<li><strong>Case examples:</strong> HAND2 (cardiac development, cited as haploinsufficient via literature), TSR2 and ribosomal proteins RPL27, RPL35, RPS27, RPS28 (Diamond–Blackfan anemia associations). GO enrichment: developmental/morphogenesis and ribosomal-protein terms.</li>
+</ul>
+<p><strong>Speculation/inference by the authors (clearly flagged as such in the paper):</strong> - The 109 genes “may play an underappreciated role in human disease” — plausibility argument, not demonstrated. - The mechanism of H2A.Z negative association (post-developmental H2A.Z depletion) is an interpretive hypothesis. - Missense-intolerance scores “may be beneficial” in LOF-variant pipelines — suggestion, not tested here. - “Unmatched performance” phrasing is the authors’ superlative; the mouse AUC margin over VIRLOF/GeVIR is modest, and cell-line results include VIRLOF close behind (0.878 vs 0.891).</p>
+<h2 id="doc2-limitations">4. Limitations</h2>
+<p><strong>Acknowledged by the authors:</strong> - DeepLOF (an LOF-intolerance score) is outperformed by UNEECON-G for dominant-negative disease genes — gene prioritization must account for disease mechanism. - Functional genomic data often derive from cell lines and “may not always be indicative of gene essentiality at the whole organism level.” - The unsupervised design avoids, but does not eliminate, biases; the authors explicitly note supervised methods’ label-leakage and ascertainment-bias pitfalls as motivations rather than solved problems. - “Nonessential” comparator sets are putative, not experimentally validated.</p>
+<p><strong>Additional limitations I notice (not raised in the paper):</strong> - <strong>Circularity risk in benchmarking:</strong> UNEECON-G is both an input feature <em>and</em> one of the 8 comparator methods; some benchmark advantage could reflect feature reuse. - <strong>Enrichment background choice:</strong> the 109-gene enrichment is computed against a background of genes called LOF-tolerant by <em>all</em> methods, which mechanically inflates odds ratios. - <strong>Benchmark labels are proxies:</strong> ClinGen haploinsufficiency, mouse lethality, and cell-line essentiality are related but imperfect surrogates for “essentiality”; the method’s own motivation acknowledges this. - <strong>Single random train/validation split</strong> with no external validation; small validation-set differences in AUC (e.g., mouse orthologs) may not be robust. - Mean-imputation of missing features is a crude choice that can distort weights. - The permutation test (P = 0 with 10,000 permutations, i.e., P &lt; 10⁻⁴) is fine, but counts of overlapping deletions are small (0.27% of 5,649 ≈ ~15 deletions), so the fold-depletion estimate is noisy. - The “109 <em>novel</em>” label is operational (missed by LOEUF/CoNeS/VIRLOF at matched cutoffs), not a biological novelty claim — a subtlety the paper’s abstract blurs.</p>
+<h2 id="doc2-conclusions-and-significance">5. Conclusions and significance</h2>
+<p>The authors conclude that DeepLOF is a compelling unsupervised framework that (a) integrates functional and population genomic evidence in a principled Bayesian way, (b) achieves the highest AUCs on three essential-gene benchmarks among compared methods (statistical significance deferred to the supplement), and (c) recovers 109 short LOF-intolerant genes missed by population-only scores, validated by enrichment and deletion-depletion analyses. Its interpretability (linear-variant contribution scores) and length-adaptive weighting are presented as methodological advantages. Practically, it offers a ranked gene-essentiality score that could improve variant interpretation and disease-gene discovery, especially for short genes.</p>
+<h2 id="doc2-fit-within-the-broader-field">6. Fit within the broader field</h2>
+<p>DeepLOF sits at the intersection of two literatures: population-genetic constraint scores (pLI → LOEUF → CoNeS/VIRLOF/GeVIR) and supervised functional genomics predictors (e.g., DEEPLYESSENTIAL in microbes, epigenomic/CpG-based human predictors). Its contribution is to combine one population-genetics likelihood with a learned functional prior <em>unsupervised</em>, addressing the well-known power drop in short genes (acknowledged in the LOEUF/gnomAD literature). The Bayesian prior–likelihood design mirrors empirical-Bayes shrinkage common in statistical genetics, here parameterized by a neural net. The finding that missense-intolerance (UNEECON-G) is the most informative feature, and better for dominant-negative genes, reinforces a growing theme that constraint is mechanism-specific (haploinsufficiency vs. dominant-negative). Practically, the score complements variant-interpretation pipelines (alongside gnomAD constraint metrics) and its flagged short genes are candidate additions to clinical genomics resources. The work is incremental rather than paradigm-shifting: it combines known ideas (Bayesian shrinkage + annotation features) with solid engineering, and its main empirical advance is the short-gene gains, which are validated within-protein-coding benchmarks but would still need independent clinical or experimental confirmation.</p>
+<hr />
+<p><em>Summary prepared from the full text of the uploaded PDF; all numbers and claims above refer to statements in the paper. Items flagged as authors’ speculation are labeled accordingly.</em></p>
+</details><details id="file3"><summary>3. GETgene-AI_paper_summary_Gu_Chen_2025.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc3-paper-summary-getgene-ai-a-framework-for-prioritizing-actionable-cancer-drug-targets">Paper Summary: GETgene-AI — a framework for prioritizing actionable cancer drug targets</h1>
+<p><strong>Paper:</strong> Gu A &amp; Chen JY. “GETgene-AI: a framework for prioritizing actionable cancer drug targets.” <em>Frontiers in Systems Biology</em> 5:1649758 (2025). DOI: 10.3389/fsysb.2025.1649758. Received 19 June 2025; accepted 15 Sep 2025; published 29 Sep 2025.</p>
+<p>The PDF extracted cleanly and appears complete (16 pages, ~2.5 of which are references), so this summary is based on the full paper.</p>
+<hr />
+<h2 id="doc3-research-objective-and-hypothesis">1. Research objective and hypothesis</h2>
+<p><strong>Objective:</strong> Build a computational framework that prioritizes actionable cancer drug targets by combining network-based prioritization, auxiliary genomic modalities, and LLM-assisted literature review — overcoming three identified limitations of existing practice: (a) manual/static curation that does not scale to multi-omics data, (b) PPI-centrality-only methods that ignore tissue-specific genomic features, and (c) single-metric thresholds (fold change, mutation frequency) that are arbitrary and sample-biased.</p>
+<p><strong>Hypothesis (the authors’):</strong> The <strong>G.E.T. strategy</strong> — integrating mutation/genotype–phenotype evidence (<strong>G List</strong>), differential expression (<strong>E List</strong>), and known drug-target status (<strong>T List</strong>), then iteratively re-ranking via PPI-network expansion and augmenting with GPT-4o literature review — will systematically prioritize actionable therapeutic targets better than single-modality baselines. Pancreatic cancer (PDAC) serves as the case study.</p>
+<h2 id="doc3-study-design-and-methods">2. Study design and methods</h2>
+<ul>
+<li><strong>Initial lists.</strong> G list: 2,493 genes from PAGER (nCoCo coherence 5–100, 844 genes), cBioPortal (CNA ≥ 8.2% or mutation ≥ 2.8%, 1,000 genes), and COSMIC (mutation ≥ 20%, 649 genes), unified. E list: top 2,504 genes with |logFC| &gt; 0.25 from a GEO microarray of 45 tumor vs. 45 non-tumor PDAC samples (dataset cited inconsistently as <strong>GSE29735 in §2.1.2 and GSE28735 in §3.2/Fig 2</strong>; same 45/45 design — likely a typo, but not clarified). T list: 131 genes from DrugBank queries for drugs indicated in pancreatic cancer (manually filtered to exclude supportive-care agents).</li>
+<li><strong>Network expansion.</strong> BEERE (Biological Entity Expansion and Ranking Engine; HAPPI-2.0 PPI nearest-neighbor expansion + PageRank/ant-colony ranking), run independently on the GET, GT (G∩T), and E lists, top 500 genes retained per iteration, 3 iterations, then merged into an Initial GET list and re-prioritized to a Final GET list. Independent expansion is justified as preventing dilution of modality-specific signal (example: MYC, TNF).</li>
+<li><strong>Figure 1 counts:</strong> Initial G 2,493 / E 2,000 / T 131 genes (note: Methods say E list = 2,504 genes — another internal inconsistency).</li>
+<li><strong>GPT-4o literature assessment.</strong> 5,091 PubMed abstracts (meta-analyses, clinical trials, systematic reviews only) uploaded to a custom GPT; a 400-point rubric (functional significance, research popularity, treatment effectiveness, protein structure; 100 each) yields a <strong>GPT-4 score</strong>. Citations manually verified; hallucination corrections re-prompted. <strong>GPT-4 scores are not in the final RP score.</strong></li>
+<li><strong>RP score (final ranking).</strong> Weighted sum of: GT list score (0.329), CNA TCGA (0.201), E list (0.088), GET list (0.085), mutation frequency TCGA (0.079), CNA UTSW (0.048), mutation frequency UTSW (−0.023), and organ-safety expression scores (brain −0.054, kidney −0.081, GI −0.095, liver −0.101). Weights were calibrated by Spearman correlation of each modality against two benchmarks on a separately compiled clinical-trial gene set (357 drugs / 253 genes): clinical-trial count (for genomic/network features) and adverse-event frequency (for tissue expression).</li>
+<li><strong>Benchmarking/diagnostics.</strong> Compared against <strong>GEO2R</strong> (logFC ranking alone on the same GEO dataset) and <strong>STRING</strong> (degree centrality in KEGG hsa0512); headline validation metric = fraction of each method’s top 50 genes <strong>“experimentally validated”</strong> (criteria not formally defined). Qualitative comparison to <strong>Open Targets</strong> (top-15 overlap). Sensitivity analysis with looser/tighter CNA/mutation cutoffs. Manual literature verification of the <strong>top 250 RP-ranked genes</strong>; authors report finding no false positives. RP-LIT and GPT-LIT = scores normalized by PubMed hit count for “Gene + Pancreatic Cancer.”</li>
+<li><strong>Statistics.</strong> Spearman correlations between GPT-4 and network rankings.</li>
+</ul>
+<h2 id="doc3-key-findings-and-results">3. Key findings and results</h2>
+<p><strong>Evidence-backed (as reported in the paper):</strong></p>
+<ul>
+<li><strong>Top ranking (Table 2, RP score):</strong> PIK3CA (34.8), MYC (30.1), SRC (20.0), EGFR (18.2), CDK1 (15.9), PRKCA (15.3), TNF, LCK, JAK2, MAPK1, AURKB, <strong>KRAS only 12th (8.7)</strong> — authors note KRAS’s demotion to its low Expression score despite &gt;90% PDAC mutation prevalence. GPT-4 score ordering differs (MYC #1, SRC #2, EGFR #3), and Spearman ρ between GPT-4 score and: weighted RP score = <strong>0.291</strong>; Expression list score = 0.478; combined BEERE scores = 0.457; GET list = 0.454; GT list = 0.444.</li>
+<li><strong>Benchmarking vs. alternatives (top-50 “experimental validation” rate):</strong> GETgene-AI 49/50 vs. GEO2R 30/50 (authors call this “<strong>38% improvement</strong>”) and vs. STRING 46/50 (“<strong>6% improvement</strong>”). Note: these are absolute percentage-point gains; the corresponding relative gains are ~63% and ~6.5%, so the “38%” headline mixes metrics. Top-15 validation: GETgene-AI 15/15, STRING 15/15, GEO2R 7/15 (Fig/Table 3).</li>
+<li><strong>Novelty claims (Table 5):</strong> PIK3CA flagged as having PDAC clinical-trial involvement; PRKCA, LCK, MAPK8 marked as preclinical (in vitro/in vivo); <strong>ITGA4, PRKCB, KCNA(1) marked “Novel and unstudied in PDAC”</strong> — e.g., KCNA ranked 34th with, per the authors, zero PDAC PubMed articles and three in cancer broadly. LCK (rank 9) cited as having only four PDAC papers. RP-LIT/GPT-LIT normalizations surface under-studied high scorers (e.g., PRKCA RP-LIT 1.702, ITGA4 2.298).</li>
+<li><strong>GPT-4o contribution:</strong> reported <strong>~80% reduction in literature-review time</strong> (self-reported, un-referenced); GPT-4 did not improve the experimental-validation rate; there are two <strong>inconsistent correlation reports</strong> for GPT-4 vs. weighted score (ρ = 0.291 in §2.7; the same table lists 0.457 as GPT-4 vs. <em>combined BEERE list scores</em> — and §3.3 restates GPT-4 vs. weighted score as +0.457).</li>
+<li><strong>Sensitivity analysis:</strong> top-250 membership stable under ±cutoff shifts; only 11 genes (all ranked outside top 150; e.g., PLOD1–3, PAM, C1QA/B) changed.</li>
+<li><strong>False-positive handling:</strong> genes without cancer functional relevance are systematically deprioritized; paper reports that none of the top 250 were judged false positives on manual review.</li>
+</ul>
+<p><strong>Speculation/aspiration by the authors (flagged as such in the paper):</strong> - “GETgene-AI provides a versatile and robust platform for accelerating cancer drug discovery” and improves “patient outcomes” — not demonstrated beyond the computational benchmark. - Adaptability to breast/lung cancer and non-cancer diseases (Alzheimer’s, Parkinson’s) — stated as future work/vision, not tested. - The prioritized “novel” targets (ITGA4, PRKCB, KCNA1) “warrant further investigation” — consistent with their absence in PDAC literature, but no wet-lab validation is performed. - Expectation that GPT-4o accuracy will improve with more training data — conjecture.</p>
+<h2 id="doc3-limitations">4. Limitations</h2>
+<p><strong>Acknowledged by the authors:</strong> - Top-ranked targets require experimental validation (none performed in this paper — named as the critical next step, e.g., CRISPR knockouts and in vitro drug-response assays). - Reliance on public datasets may introduce biases from incomplete/inconsistent annotation. - GPT-4o hallucination risk necessitated manual verification; the authors counsel cautious integration into automated pipelines. - Manual literature verification is limited to the top 250; beyond that, manual burden becomes infeasible (an operational rather than principled bound).</p>
+<p><strong>Additional limitations I notice (not raised in the paper):</strong> - <strong>Circular/soft validation metric:</strong> the headline “experimental validation of the top 50” is not operationalized (source/criteria unstated), and the validation set overlaps the very literature/databases (DrugBank, PubMed) used to construct the rankings. GEO2R is benchmarked on expression-only data — a comparison designed to be won by the richer framework. - <strong>KRAS at rank 12</strong> in a PDAC prioritization could equally be construed as a construct-validity failure as a strength; the paper only presents the charitable reading. - <strong>Weight calibration circularity:</strong> RP-score weights are tuned against clinical-trial counts/adverse events, which are themselves related to the T list and to the benchmark used for evaluation; no held-out validation. - <strong>Internal numerical inconsistencies</strong> (noted above): GSE29735 vs. GSE28735 for the E-list dataset; E list size 2,504 (methods) vs. 2,000 (Fig. 1); GPT-4–RP correlation 0.291 vs 0.457 across sections. None change the qualitative claims, but they suggest loose review. - <strong>Minor pipeline/responsibility issues:</strong> key cutoffs are explicitly heuristic (e.g., CNA 8.2% partly justified by “only 21 sets of CNA signatures in 97% of tumors”), and “empirically filtered to top 500” × 3 iterations is ad hoc; convergence rationale is post hoc. - The 80% literature-review efficiency gain and “no false positives in top 250” are self-assessed without a measured comparator (no timed manual baseline; no independent reviewer). - Comparison with Open Targets is qualitative (top-15 overlap narrative) rather than a controlled benchmark. - GPT-4o input was restricted to meta-analyses/clinical trials/systematic reviews on PubMed — curated-serious-literature bias; abstracts only, no full text.</p>
+<h2 id="doc3-conclusions-and-significance">5. Conclusions and significance</h2>
+<p>The authors conclude that the modular G.E.T. design plus BEERE network refinement yields a robust, cancer-type-specific target-prioritization scheme that outranks expression-only (GEO2R) and PPI-only (STRING) baselines on their validation metric, and that GPT-4o safely accelerates (but does not replace) literature triage. The proposed significance is a scalable workflow bridging computation and translation; concrete candidate outputs for PDAC — floor-level rankings (PIK3CA, MYC, SRC, EGFR, CDK1, PRKCA) plus “novel” calls (ITGA4, PRKCB, KCNA1) — are offered as testable hypotheses rather than validated biology. Claims of “improved patient outcomes” or disease-general robustness exceed what the paper demonstrates; the demonstrated scope is a pancreatic-cancer in silico case study.</p>
+<h2 id="doc3-fit-within-the-broader-field">6. Fit within the broader field</h2>
+<p>GETgene-AI sits squarely in the network-medicine/gene-prioritization lineage: PPI propagation and expansion (BEERE from the same group’s HAPPI/HAPPI-2.0 resources, kin to HotNet/network-propagation methods), multi-criteria integrative prioritization platforms (Open Targets), and single-dimension baselines (logFC/GEO2R; STRING degree centrality). Its incremental contributions are: (i) the explicit G/E/T three-stream design with <em>independent</em> modality expansion before merging (a sensible bias-control choice), (ii) an explicit <strong>safety/opportunity filter via negative weights on organ-essential expression</strong>, and (iii) early, bounded use of an LLM (GPT-4o) as a literature-triage front end with citation-verification — which keeps it outside the score, addressing hallucination concerns in a way most LLM-for-prioritization proposals do not. Against Open Targets, its claim is cancer-type specificity over general association breadth — plausible but demonstrated only qualitatively. The framework is best read as a well-organized <em>prioritization and triage workflow</em> (from a two-person group, one a mentored student club member) that consolidates known components, rather than a new algorithmic advance; its headline quantitative wins rest on a soft, circular validation metric and would need a controlled benchmark plus wet-lab follow-through (which the authors themselves identify as the next step) to substantiate.</p>
+<hr />
+<p><em>Summary prepared from the full text of the uploaded PDF; all numbers and claims refer to statements in the paper. Items flagged as authors’ aspiration/speculation are labeled accordingly. Inconsistencies noted are between statements inside the paper itself, not external facts.</em></p>
+</details><details id="file4"><summary>4. benchmark_scrnaseq_cnv_callers_2025.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc4-scrna-seq-推断-cnv微缺失方法全景与文献调研">scRNA-seq 推断 CNV/微缺失：方法全景与文献调研</h1>
+<blockquote>
+<p>调研日期：2026-09-07 · 项目：iGEM SINEUP 微缺失主效基因筛选 关联 notebook 条目：call_be77599d909e463289e19e0c</p>
+</blockquote>
+<hr />
+<h2 id="doc4-核心结论tldr">核心结论（TL;DR）</h2>
+<p><strong>对于你的 1–3 Mb 胚系杂合微缺失场景，当前的 scRNA-seq CNV 推断方法几乎没有可用的现成方案。</strong> 你的质疑是对的。</p>
+<hr />
+<h2 id="doc4-方法分类">1. 方法分类</h2>
+<p>所有方法分为两类：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th>原理</th>
+<th>代表工具</th>
+<th>能检测的 CNV 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>表达型 (expression-centric)</strong></td>
+<td>基因在缺失区表达降低、重复区表达升高</td>
+<td>inferCNV, CopyKAT, SCEVAN, Clonalscope</td>
+<td>gain / loss（只看拷贝数变化）</td>
+</tr>
+<tr>
+<td><strong>等位基因感知型 (allele-aware)</strong></td>
+<td>同时用表达信号 + 杂合 SNP 的 BAF（B-allele frequency）偏离</td>
+<td>Numbat, XClone, HoneyBADGER, CaSpER</td>
+<td>gain / loss / CN-LOH（拷贝中性杂合性丢失）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc4-三篇主要-benchmark-论文的关键结论">2. 三篇主要 Benchmark 论文的关键结论</h2>
+<h3 id="doc4-nature-communications-schmid-et-al.-2025-6-方法-21-数据集">Nature Communications (Schmid et al., 2025) — 6 方法 × 21 数据集</h3>
+<ul>
+<li><strong>Numbat (Expr)</strong> 和 <strong>CopyKAT</strong> 在 F1 分数上并列最高（≈0.57–0.59）</li>
+<li><strong>所有方法对 focal CNV（&lt;3 Mb）的灵敏度极低</strong>——“all scRNA-seq callers are, in general, not suitable for identifying them”</li>
+<li>性能与数据集特征强相关：癌细胞数多、基因数多 → 好；CNV 覆盖率高（&gt;75% 基因组） → 差（找不准基线）</li>
+<li>表达型方法之间的相关性有时超过它们各自与 DNA 金标准之间的相关性 → 存在系统性的转录组偏差</li>
+</ul>
+<h3 id="doc4-precision-clinical-medicine-chen-et-al.-2025-5-方法-4-平台">Precision Clinical Medicine (Chen et al., 2025) — 5 方法 × 4 平台</h3>
+<ul>
+<li><strong>CopyKAT</strong> 和 <strong>CaSpER</strong> 总体最优</li>
+<li>批次效应严重：跨平台混合数据集的亚克隆识别全部失败</li>
+<li>参考数据选择显著影响结果</li>
+</ul>
+<h3 id="doc4-biorxiv-hou-et-al.-2026-12-方法-28-数据集最大规模">bioRxiv (Hou et al., 2026?) — 12 方法 × 28 数据集（最大规模）</h3>
+<p><strong>最终建议树：两条路</strong></p>
+<pre><code>有原始 BAM/FASTQ 文件?
+  ├─ YES → Numbat (allele-aware, 总体最优)
+  └─ NO  → CopyKAT 或 inferCNV 或 SCEVAN (expression-centric)</code></pre>
+<ul>
+<li><strong>Numbat 是唯一能检测 CN-LOH 的同时维持高准确度的方法</strong></li>
+<li><strong>Numbat 不稳定</strong>：在某些数据集上表现极差（F1 骤降），原因多为 SNP 覆盖不足</li>
+<li>SCEVAN 对<strong>删除检测</strong>最优，Numbat 对扩增检测最优</li>
+<li>仿真实验：弱 CNV 信号下 Clonalscope &gt; CopyKAT &gt; inferCNV</li>
+</ul>
+<hr />
+<h2 id="doc4-为什么你的场景如此困难">3. 为什么你的场景如此困难？</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>挑战</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1–3 Mb 太小</strong></td>
+<td>这是 benchmark 定义的 “focal type 1” (&lt;3 Mb)，所有方法均报告灵敏度极低。100 基因窗口覆盖 1–3 Mb 区间仅有 ~5–20 个基因，信号被窗口内非缺失基因稀释</td>
+</tr>
+<tr>
+<td><strong>杂合缺失（2 copies → 1 copy）</strong></td>
+<td>表达变化理论上只有 ~50%（基因剂量效应），且有剂量补偿（你的 E8 已验证）进一步抹平</td>
+</tr>
+<tr>
+<td><strong>胚系（所有细胞都有）</strong></td>
+<td>没有正常参照细胞在同一组织内 → 所有表达型方法都依赖”正常 vs 肿瘤”对照，你没有这个二分对照</td>
+</tr>
+<tr>
+<td><strong>非癌组织</strong></td>
+<td>所有方法都是为肿瘤 CNV 设计的，默认 CNV 是体细胞事件且覆盖大片区域</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc4-四个可能方向的评估">4. 四个可能方向的评估</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>方向</th>
+<th>可行性</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Allele-aware 方法 (Numbat/XClone)</strong></td>
+<td>🟡 有理论优势但实际受限严重</td>
+<td>需要原始 BAM + 足够的杂合 SNP + 群体单倍型。10x 3’ 端测序覆盖基因 3’ 端附近，SNP 密度远低于 Smart-seq2 全长转录本。BAF 信号对杂合缺失（0.5→0.5 还是 0.5→1.0？不对——杂合缺失的 BAF 是 0.5→0 或 1.0，但这需要缺失区间内确实有杂合 SNP）</td>
+</tr>
+<tr>
+<td><strong>表达型方法的改进（更多方法对照）</strong></td>
+<td>🟡 能改进但有限</td>
+<td>CopyKAT 或 SCEVAN 可能比 infercnvpy 效果稍好，但根本性的表达×缺失信号弱问题无法绕过</td>
+</tr>
+<tr>
+<td><strong>ASE imbalance（等位基因特异性表达）</strong></td>
+<td>🟡 理论上最优但需要数据</td>
+<td>需要患者在缺失区间内有杂合 SNP + 这些 SNP 在 scRNA-seq 中有足够 read coverage。你的 GSE283473 是否满足？需要实测</td>
+</tr>
+<tr>
+<td><strong>放弃从 scRNA-seq 寻找缺失区间</strong></td>
+<td>🟢 最省力的路径</td>
+<td>已知临床区间坐标 + 基因型（CNV 芯片/WGS）永远是金标准。scRNA-seq 的角色应是验证层（该基因在脑组织中表达吗？缺失后表达变化了吗？），而不是发现层</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc4-对你当前管线的建议">5. 对你当前管线的建议</h2>
+<ol type="1">
+<li><strong>已知区间基因提取</strong>（当前做法）是正确的策略，不需要改成”自动发现缺失区间”</li>
+<li>如果一定要补自动发现，<strong>Numbat</strong> 是当前最佳选择（但需要原始 BAM + 足够的杂合 SNP 密度），且对 1–3 Mb 的检出率预期要设得很低</li>
+<li><strong>ASE imbalance 方向值得做一个快速的可行性评估</strong>：统计 GSE283473 WBS 区间内的已知杂合 SNP 覆盖情况。如果根本覆盖不到几个 SNP，就可以直接排除这条路</li>
+<li>scRNA-seq 的真正价值在管线里的位置应该是 <strong>L3 验证层</strong>（基因在脑组织中的表达 QC、患者 vs 对照的 log2FC），而不是 CNV 发现层</li>
+</ol>
+<hr />
+<h2 id="doc4-参考文献">参考文献</h2>
+<ol type="1">
+<li>Schmid KT et al. <em>Benchmarking scRNA-seq copy number variation callers.</em> Nature Communications, 2025. DOI: 10.1038/s41467-025-62359-9</li>
+<li>Chen X et al. <em>A benchmarking study of copy number variation inference methods using single-cell RNA-sequencing data.</em> Precision Clinical Medicine, 2025. DOI: 10.1093/pcmedi/pbaf011</li>
+<li>Hou W et al. <em>Benchmarking scRNA-seq Copy Number Inference.</em> bioRxiv, 2026. PMC13105003</li>
+<li>Gao T et al. <em>Haplotype-aware analysis of somatic copy number variations from single-cell transcriptomes.</em> Nature Biotechnology, 2023. DOI: 10.1038/s41587-022-01468-y (Numbat)</li>
+<li>Huang R et al. <em>Robust analysis of allele-specific copy number alterations from scRNA-seq data with XClone.</em> Nature Communications, 2024. DOI: 10.1038/s41467-024-51026-0 (XClone)</li>
+</ol>
+</details><details id="file5"><summary>5. DeepLOF_概念拆解.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc5-deeplof-摘要概念级拆解">DeepLOF 摘要「概念级」拆解</h1>
+<blockquote>
+<p>配套文件：<code>DeepLOF_paper_summary_LaPolice_Huang_2023.md</code>（原摘要总结） 本文件用通俗比喻 + 术语表，把你选中的部分逐块讲清楚，尽量不抠公式。</p>
+</blockquote>
+<hr />
+<h2 id="doc5-一句话概括这篇论文在干嘛">0. 一句话概括这篇论文在干嘛</h2>
+<p><strong>问题</strong>：人类基因组里有约 2 万个蛋白质编码基因，哪些基因是「少了/坏了就会出问题」的关键基因（必需基因）？怎么把它们排出来？</p>
+<p><strong>已有方法</strong>：看人群里自然发生的「功能丧失（LOF）突变」多不多。如果某个基因在正常人里几乎看不到 LOF 突变，说明这些突变被自然选择清掉了 → 这个基因大概率很重要。</p>
+<p><strong>已有方法的弱点</strong>：对<strong>短基因</strong>无能为力（下面第 3 节解释）。</p>
+<p><strong>DeepLOF 的贡献</strong>：把「人群突变数据」和「基因的功能特征（表达、表观、保守性等）」用<strong>贝叶斯</strong>的方式合起来。数据够的时候信数据；数据不够（短基因）的时候自动去信功能特征。结果是在几个基准上拿了最高分，并找出了 109 个别人漏掉的短基因。</p>
+<hr />
+<h2 id="doc5-核心生物学概念">1. 核心生物学概念</h2>
+<h3 id="doc5-lofloss-of-function功能丧失突变">1.1 LOF（loss-of-function，功能丧失）突变</h3>
+<p>把基因想象成工厂里的一台机器。突变是这台机器 DNA 上的「改动」：</p>
+<ul>
+<li><strong>错义突变（missense）</strong>：零件换了个型号，机器可能还能用，也可能性能打折。</li>
+<li><strong>LOF 突变</strong>：直接把机器砸了——提前终止（无义突变）、移码、剪接破坏、整个基因缺失等。机器完全停摆。</li>
+</ul>
+<p><strong>为什么科学家特别关心 LOF？</strong> 因为它的后果最「干净」、最容易解读：这台机器彻底没了。</p>
+<h3 id="doc5-必需基因essential-gene">1.2 必需基因（essential gene）</h3>
+<p>「没有它，细胞/生物体就活不好」的基因。注意这个「必需」是<strong>有条件的</strong>：</p>
+<ul>
+<li><strong>细胞系必需</strong>：在培养皿里的某种癌细胞/细胞系里必需。</li>
+<li><strong>生物体（organism）必需</strong>：在整个小鼠/人身上必需。</li>
+</ul>
+<p>同一个基因在不同背景下的「必需」程度不一样——这也是后文提到的局限（细胞系数据 ≠ 全身必需）。</p>
+<h3 id="doc5-单倍剂量不足haploinsufficiencyvs-显性负效应dominant-negative">1.3 单倍剂量不足（haploinsufficiency）vs 显性负效应（dominant negative）</h3>
+<p>人每个基因通常有<strong>两份</strong>（一份来自父，一份来自母）。</p>
+<p><strong>单倍剂量不足</strong>： - 类比：机器需要<strong>两套</strong>零件都正常才够用。坏掉一套后，只剩一套，<strong>剂量不够</strong> → 出问题。 - 换句话说：两份是「正常」，一份是「不够」。少了半量就不行。 - 这是 LOF 不耐受的典型机制。<strong>LOF 分数（含 DeepLOF）主要抓的是这一类。</strong></p>
+<p><strong>显性负效应</strong>： - 类比：坏掉的那套零件不但没用，还会<strong>捣乱</strong>，干扰正常那套工作（例如突变蛋白卡在复合物里，把正常蛋白也拖下水）。 - 这是「坏蛋白主动害人」，不是「量不够」。 - 关键点：<strong>这类基因，用 LOF 分数来抓会抓错方向</strong>。因为显性负效应通常由<strong>错义突变</strong>引起，而不是 LOF 突变。论文里 DeepLOF 在「显性负效应基因」这项基准上输给了 UNEECON-G（一个错义不耐受分数），正是这个道理——作者自己也承认。</p>
+<blockquote>
+<p>记住这句：<strong>LOF 分数擅长抓「少了不够用」的基因，不擅长抓「坏了还害人」的基因。</strong> 疾病机制不同，用的工具就该不同。</p>
+</blockquote>
+<hr />
+<h2 id="doc5-统计遗传概念gnomad-约束分数pliloeuf">2. 统计遗传概念：gnomAD 约束分数（pLI、LOEUF）</h2>
+<h3 id="doc5-gnomad-是什么">2.1 gnomAD 是什么</h3>
+<p>gnomAD 是一个<strong>超大人群基因数据库</strong>（这篇用的是 v2.1.1，约 12.6 万个外显子组）。里面有大量「普通人」的基因组序列。因为人多，我们能观察到每个基因上<strong>在人群中自然出现过多少种突变</strong>。</p>
+<p>它的关键作用：给你一个<strong>「中性演化下应该出现的突变数」的期望值</strong>。</p>
+<h3 id="doc5-核心逻辑实际-vs-期望">2.2 核心逻辑：实际 vs 期望</h3>
+<p>对每个基因，科学家问两个数：</p>
+<ul>
+<li><strong>期望值（expected，n）</strong>：如果这个基因上的突变是<strong>中性的</strong>（即突变既不有害也不有利，随机漂变），在这么多人里应该观察到多少个 LOF 突变？</li>
+<li><strong>实际值（observed，y）</strong>：真的观察到了多少个 LOF 突变？</li>
+</ul>
+<p><strong>直觉类比（设卡检查站）</strong>： - 一条高速公路，按车流量<strong>预期</strong>每天该有 1000 辆车通过。 - 结果你蹲守发现<strong>实际只过了 10 辆</strong>。 - 结论：这条路中间肯定有「关卡/障碍」——绝大多数车被拦掉了。</p>
+<p>对应到基因：<strong>预期该有很多 LOF 突变，实际却几乎没有</strong> → 说明这些突变一出现就被<strong>自然选择清除</strong>（人活不到被记录进数据库）→ 这个基因很重要。</p>
+<h3 id="doc5-pli-和-loeuf-就是这件事的两种打分方式">2.3 pLI 和 LOEUF 就是这件事的两种「打分方式」</h3>
+<ul>
+<li><strong>pLI</strong>（probability of being LOF-intolerant）：把上述「实际远少于期望」的程度，换算成一个「这个基因 LOF 不耐受的概率」，值在 0–1，越接近 1 越可能不耐受。</li>
+<li><strong>LOEUF</strong>（LOF observed/expected upper bound fraction）：直接看「实际/期望」这个<strong>比值</strong>（的上界）。比值<strong>越低</strong>，说明被清掉的越多 → 越不耐受。</li>
+</ul>
+<blockquote>
+<p>记忆点：pLI 是「概率」，越高越不耐受；LOEUF 是「比值」，越低越不耐受。方向相反，别搞混。</p>
+</blockquote>
+<p>它们本质都在做同一件事：<strong>用「实际 vs 期望」的差异来测选择压力。</strong> 这就是「种群遗传/约束分数」这一类方法（摘要里提到的 mis-z、RVIS、GeVIR、CoNeS、VIRLOF 都是这个家族的变体，各有各的修正方式）。</p>
+<hr />
+<h2 id="doc5-为什么短基因统计功效不足全文动机">3. 为什么短基因统计功效不足（全文动机）</h2>
+<p>这是全文最核心的动机，值得单独讲。</p>
+<h3 id="doc5-问题出在期望值太低">3.1 问题出在「期望值太低」</h3>
+<p>回顾上面「实际 vs 期望」的逻辑：它要能分辨「真有选择压力」和「纯属随机波动」，前提是<strong>期望的突变数足够多</strong>——就像抛硬币，抛得越多，越能看出这枚硬币是不是偏的。</p>
+<ul>
+<li><strong>长基因</strong>：碱基多，随机突变落到它身上的机会多 → 期望 LOF 突变数多 → 统计功效足 → pLI/LOEUF 好用。</li>
+<li><strong>短基因</strong>：碱基少，本来就<strong>碰巧</strong>很少会出 LOF 突变 → 期望值天生就低 → 即使真的被强选择清除，实际值也「看起来和期望差不多」（因为数字太小，随机波动就能解释）→ <strong>分不清是真清除了，还是只是样本少</strong>。</li>
+</ul>
+<h3 id="doc5-一个直白的类比">3.2 一个直白的类比</h3>
+<ul>
+<li>硬币 A：抛 10000 次，只有 10 次正面 → 可以很有把握说「这枚硬币有问题」。</li>
+<li>硬币 B：抛 10 次，只有 1 次正面 → 你<strong>不敢</strong>下结论，因为「抛得少」本身就很容易出现这种结果。</li>
+</ul>
+<p>短基因就像硬币 B：<strong>信号被「样本量太小」淹没了。</strong> 论文里用「≤10 个期望 LOF 突变」来界定这类短基因。</p>
+<h3 id="doc5-deeplof-的对策">3.3 DeepLOF 的对策</h3>
+<p>当人口数据「不够用」时，<strong>换一个证据来源</strong>：基因的功能特征（表达、表观修饰、保守性、蛋白互作等）。这些特征不依赖突变计数，所以短基因也有信息可用。这就是为什么 DeepLOF 能在短基因上「多找出 109 个」。</p>
+<hr />
+<h2 id="doc5-deeplof-的贝叶斯模型概念级">4. DeepLOF 的贝叶斯模型（概念级）</h2>
+<h3 id="doc5-先明确要估计的量η读作-eta">4.1 先明确要估计的量：η（读作 eta）</h3>
+<p>对每个基因 i，定义：</p>
+<ul>
+<li><strong>ηᵢ = 实际观察到的 LOF 数 / 期望的 LOF 数</strong>（relative rate）。</li>
+</ul>
+<p>它的意义和 LOEUF 一致：</p>
+<ul>
+<li><strong>η 越小</strong> → 实际远少于期望 → 被选择清除得多 → <strong>越 LOF 不耐受（越重要）</strong>。</li>
+<li>η ≈ 1 → 突变基本是中性，基因不紧要。</li>
+</ul>
+<h3 id="doc5-两个东西怎么合先验-似然">4.2 两个东西怎么「合」：先验 + 似然</h3>
+<p>贝叶斯的核心公式思想是：</p>
+<blockquote>
+<p><strong>最终判断（后验）∝ 事先的印象（先验）× 数据说话（似然）</strong></p>
+</blockquote>
+<p><strong>先验（prior）——「事先的印象」</strong>： - DeepLOF 用<strong>功能基因组特征</strong>（18 个，见摘要第 2 节）喂进一个神经网络，输出一个对 η 的「事前猜测」。 - 这个猜测不是单个数字，而是一个<strong>分布</strong>（beta 分布）：既给出「η 大概是多少」，也给出「我有多确定」。 - beta 分布很适合这里，因为它天然描述「0 到 1 之间的比例」，用两个参数控制位置和确定性。</p>
+<p><strong>似然（likelihood）——「数据说话」</strong>： - 实际观察到 yᵢ 个 LOF 突变，用 <strong>Poisson 分布</strong>建模。 - Poisson 是描述「在期望 n 次下，实际发生 y 次」这类<strong>计数</strong>数据的标准工具，正好对应突变计数。</p>
+<p><strong>后验（posterior）——「两者结合后的最终判断」</strong>： - 把先验和似然乘起来（再做归一化积分），得到对 η 的更新后分布。 - 论文用<strong>中点黎曼和</strong>来近似这个积分（因为神经网络给出的先验没有闭式解）。</p>
+<h3 id="doc5-关键直觉权重自动随数据量调整">4.3 关键直觉：权重自动随数据量调整</h3>
+<p>这是整篇论文最漂亮的地方：</p>
+<ul>
+<li><strong>数据多（长基因）</strong>：似然很强，后验<strong>更信数据</strong>，功能特征只起辅助作用。</li>
+<li><strong>数据少（短基因）</strong>：似然很弱，后验<strong>自动转向先验</strong>（功能特征），从特征里「借」信息。</li>
+</ul>
+<blockquote>
+<p>类比：老医生（先验=多年经验）看常见病（数据多）主要看检查报告，看罕见病（数据少）主要靠经验判断。DeepLOF 就是让这个「靠数据还是靠经验」的权衡<strong>自动、连续地</strong>随基因长度变化。</p>
+</blockquote>
+<h3 id="doc5-最终的分数1-eη">4.4 最终的分数：1 − E[η]</h3>
+<ul>
+<li>E[η] 是后验分布的<strong>均值</strong>（对 η 的最终估计）。</li>
+<li>论文把 DeepLOF 分数定义为 <strong>1 − E[η]</strong>。</li>
+</ul>
+<p><strong>含义</strong>：η 是「实际/期望」的比值，那么 <strong>1 − η</strong> 就是「被自然选择<strong>清除掉</strong>的那部分 LOF 突变的比例」。</p>
+<ul>
+<li>η = 0.2 → 只有 20% 的突变逃过选择 → 80% 被清除 → 分数 0.8，基因很「不耐受」。</li>
+<li>η = 0.9 → 90% 的突变是中性存在的 → 只有 10% 被清除 → 分数 0.1，基因不紧要。</li>
+</ul>
+<p>所以 <strong>DeepLOF 分数 ≈ 「这个基因的 LOF 突变有多大比例被选择消灭了」</strong>，0–1 之间，<strong>越高越重要</strong>。</p>
+<h3 id="doc5-无监督是什么意思重点">4.5 「无监督」是什么意思（重点）</h3>
+<p>训练时<strong>没有用任何「已知必需基因」的标签</strong>。模型不需要别人先告诉它「这些基因重要、那些不重要」，它只靠「人群突变计数 + 功能特征」自己学。</p>
+<p>为什么这重要？摘要里提到，监督方法（拿已知标签训练）有两大坑：<strong>标签泄漏</strong>（训练用的标签和测试基准重合，等于作弊）和<strong>确认偏倚/ascertainment bias</strong>（已知的重要基因本身就被研究得多，学出来的只是「热门基因」）。DeepLOF 绕开标签，学的是「突变被清除」这个更底层的信号。</p>
+<hr />
+<h2 id="doc5-评测指标auc-roc-tpr-fpr-delong">5. 评测指标：AUC / ROC / TPR / FPR / DeLong</h2>
+<h3 id="doc5-先说任务给基因排序">5.1 先说任务：给基因「排序」</h3>
+<p>所有方法输出的是每个基因的<strong>分数</strong>（排序依据），不是「是/否」的硬标签。要检验一个分数好不好，看它能不能把「真的重要基因」排在「不重要基因」前面。</p>
+<h3 id="doc5-roc-曲线和-auc">5.2 ROC 曲线和 AUC</h3>
+<ul>
+<li>拿一个分数阈值，把基因分成「预测重要 / 预测不重要」。</li>
+<li>每个阈值会同时得到一个<strong>真阳性率（TPR）</strong>和一个<strong>假阳性率（FPR）</strong>：
+<ul>
+<li><strong>TPR（灵敏度/sensitivity）</strong>：真的重要基因里，被正确挑出来的比例。</li>
+<li><strong>FPR</strong>：不重要基因里，被<strong>误</strong>挑成重要的比例。</li>
+</ul></li>
+<li>把阈值从高到低扫一遍，画 TPR（纵轴）对 FPR（横轴）的曲线，就是 <strong>ROC 曲线</strong>。</li>
+<li><strong>AUC = 曲线下面积</strong>：
+<ul>
+<li><strong>0.5</strong> = 乱猜（分数和真伪无关）。</li>
+<li><strong>1.0</strong> = 完美（重要基因全都排在前面）。</li>
+<li>0.859 的意思：随机抽一个真重要基因和一个不重要的，DeepLOF 把重要那个排在前面的概率是 85.9%。</li>
+</ul></li>
+</ul>
+<h3 id="doc5-论文里那句50-more-detections">5.3 论文里那句「50% more detections」</h3>
+<p>在<strong>固定假阳性率 FPR = 0.05</strong>（即允许 5% 的误报）的条件下： - LOEUF 的真阳性率 TPR ≈ 0.33（100 个真重要基因里只抓到 33 个）。 - DeepLOF 的 TPR ≈ 0.50（抓到 50 个）。 - 50 ÷ 33 ≈ 1.5，所以是「在同样的误报水平下，多抓出约 50% 的基因」。</p>
+<blockquote>
+<p>注意：这不是「准确率提升 50%」，而是在某个特定操作点上「检出率」的提升。理解这一点就不会被标题唬住。</p>
+</blockquote>
+<h3 id="doc5-delong-检验">5.4 DeLong 检验</h3>
+<p>比较<strong>两个 AUC 有没有统计学差异</strong>的方法（而不是只看数字谁大一点）。两个模型的 AUC 差一点，可能只是随机波动；DeLong 检验回答「这个差异显著吗」。摘要里提到显著性结果放在补充材料 Table S2，正文没细讲。</p>
+<hr />
+<h2 id="doc5-结果部分拆解">6. 结果部分拆解</h2>
+<h3 id="doc5-基准-auc-对比谁赢谁输">6.1 基准 AUC 对比（谁赢谁输）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>基准</th>
+<th>DeepLOF</th>
+<th>最强对手</th>
+<th>一句话解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen 单倍剂量不足基因（311 个）</td>
+<td><strong>0.859</strong></td>
+<td>CoNeS 0.823</td>
+<td>DeepLOF 赢，且优势最明显</td>
+</tr>
+<tr>
+<td>小鼠致死直系同源基因（397 个）</td>
+<td><strong>0.780</strong></td>
+<td>CoNeS 0.755</td>
+<td>赢，但优势不大</td>
+</tr>
+<tr>
+<td>细胞系必需基因（683 vs 913）</td>
+<td><strong>0.891</strong></td>
+<td>VIRLOF 0.878</td>
+<td>赢，但 VIRLOF 咬得很紧</td>
+</tr>
+<tr>
+<td>OMIM 显性负效应基因（364 个）</td>
+<td>输</td>
+<td><strong>UNEECON-G 赢</strong></td>
+<td>符合预期（见 1.3：LOF 分数不该赢显性负效应）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：DeepLOF 在三个「LOF 型」基准上拿了第一，但除了 ClinGen 那项外，领先幅度其实有限。显性负效应那项<strong>故意输</strong>，反而验证了作者的机制假设。</p>
+<h3 id="doc5-个新短基因">6.2 109 个「新」短基因</h3>
+<ul>
+<li>在「≤10 个期望 LOF 突变」的短基因里，有 <strong>452 个</strong>被 4 种方法（LOEUF/CoNeS/VIRLOF/DeepLOF 之类）中<strong>任意一种</strong>标记为 LOF 不耐受。</li>
+<li>DeepLOF 标记了其中 <strong>364 个</strong>（最多），其中有 <strong>109 个（24.1%）是只有 DeepLOF 认出来、其它方法都漏掉的</strong>。</li>
+<li>这就是「新颖性」的来源。</li>
+</ul>
+<h3 id="doc5-怎么验证这-109-个不是瞎报">6.3 怎么「验证」这 109 个不是瞎报</h3>
+<p>三道独立证据（都不是 DeepLOF 自己生成的）：</p>
+<ol type="1">
+<li><strong>富集检验</strong>：这 109 个基因显著富集于 ClinGen 单倍剂量不足基因、小鼠致死基因、细胞系必需基因（log odds ratio 的置信区间不含 1）。→ 说明它们「看起来确实重要」。</li>
+<li><strong>良性删除耗尽检验（关键）</strong>：
+<ul>
+<li>用 dbVar 里 <strong>5649 个已知「良性（无害）」的基因缺失片段</strong>（nstd102）做背景。</li>
+<li>问：这 109 个基因里，落在良性缺失片段里的比例，是不是<strong>明显低于</strong>随机期望？</li>
+<li>结果：实际重叠 <strong>0.27%</strong>，而 1 万次随机置换的平均值是 <strong>1.46%</strong> → 差约 <strong>5.4 倍</strong>，置换检验 <strong>P = 0</strong>（即 1 万次随机都比它高）。</li>
+<li>直觉：<strong>如果这 109 个基因真是「可以随便删掉」的无害基因，那它们应该经常出现在人群的良性缺失里；结果它们几乎从不出现在良性缺失里 → 间接说明「删掉它们会出事」。</strong></li>
+</ul></li>
+<li><strong>案例</strong>：HAND2（心脏发育）、TSR2 和核糖体蛋白 RPL27/RPL35/RPS27/RPS28（Diamond–Blackfan 贫血相关）等，文献层面也支持它们重要。</li>
+</ol>
+<h3 id="doc5-那5.4-倍p-0靠谱吗摘要里提醒的坑">6.4 那「5.4 倍、P = 0」靠谱吗（摘要里提醒的坑）</h3>
+<ul>
+<li>P = 0 是因为 1 万次置换里没有一次比实际更极端，严格说应写作 <strong>P &lt; 10⁻⁴</strong>（不是真的等于 0）。</li>
+<li>但<strong>绝对数字很小</strong>：0.27% × 5649 ≈ 只有 <strong>~15 个</strong>缺失片段重叠。数字小 → 「5.4 倍」这个倍数的<strong>估计噪声很大</strong>（分母分子都只有十几个，抖一下倍数就变）。所以「方向可信（确实被耗尽），精确倍数别太当真」。</li>
+</ul>
+<hr />
+<h2 id="doc5-局限性与新颖性标签的坑">7. 局限性与「新颖性」标签的坑</h2>
+<h3 id="doc5-作者自己承认的">7.1 作者自己承认的</h3>
+<ol type="1">
+<li><strong>赢不了显性负效应</strong>：LOF 分数天然不该赢这类，基因排序必须按疾病机制选工具。</li>
+<li><strong>功能特征多来自细胞系</strong>：细胞系里的「必需」不一定等于全身必需。</li>
+<li><strong>无监督 ≠ 无偏</strong>：只是绕开了标签泄漏，不保证没有别的偏倚。</li>
+<li><strong>「非必需」对照组是推定（putative）的</strong>：不是实验验证过的「真不需要」。</li>
+</ol>
+<h3 id="doc5-摘要作者额外指出的坑更值得注意">7.2 摘要作者额外指出的坑（更值得注意）</h3>
+<ol type="1">
+<li><strong>循环论证风险</strong>：UNEECON-G 既是 DeepLOF 的<strong>输入特征之一</strong>，又是<strong>8 个对比方法之一</strong>。自己吃自己再跟自己比，部分优势可能来自特征复用。</li>
+<li><strong>富集背景的选择</strong>：109 个基因的富集，是对照「被所有方法都判为 LOF 耐受」的背景基因来算的。这个背景本身就被「清理」过，会<strong>机械地抬高 odds ratio</strong>。</li>
+<li><strong>基准标签是「代理（proxy）」</strong>：ClinGen 单倍剂量不足、小鼠致死、细胞系必需，都只是「必需性」的近似，不是金标准。</li>
+<li><strong>只有一次随机 80/20 切分</strong>：没有外部独立验证集；小鼠那项 AUC 领先 0.025，换个切分可能就不稳了。</li>
+<li><strong>均值填充（mean-imputation）缺失特征</strong>：简单粗暴，可能扭曲权重。</li>
+<li><strong>「109 个 novel」是「操作性」说法，不是生物学新发现</strong>：意思是「在固定阈值下，别的 3 个方法没标出来」，<strong>不等于</strong>「生物学上前所未见」。这是摘要作者特别强调的、也是论文摘要容易被过度解读的点。</li>
+</ol>
+<hr />
+<h2 id="doc5-术语表速查">8. 术语表（速查）</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>术语</th>
+<th>全称/中文</th>
+<th>一句话含义</th>
+<th>方向/注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOF</td>
+<td>loss-of-function 功能丧失突变</td>
+<td>让基因彻底失效的突变（无义/移码/缺失…）</td>
+<td>后果最「干净」</td>
+</tr>
+<tr>
+<td>gnomAD</td>
+<td>Genome Aggregation Database</td>
+<td>超大人群基因组数据库</td>
+<td>提供「期望突变数」</td>
+</tr>
+<tr>
+<td>expected / observed</td>
+<td>期望 / 实际 LOF 突变数</td>
+<td>中性模型预测 vs 真观察到的</td>
+<td>实际≪期望 → 被选择清除</td>
+</tr>
+<tr>
+<td>pLI</td>
+<td>probability of LOF intolerance</td>
+<td>基因 LOF 不耐受的概率</td>
+<td>越高越不耐受</td>
+</tr>
+<tr>
+<td>LOEUF</td>
+<td>LOF observed/expected upper bound fraction</td>
+<td>实际/期望比值的上界</td>
+<td><strong>越低</strong>越不耐受（与 pLI 反向）</td>
+</tr>
+<tr>
+<td>单倍剂量不足</td>
+<td>haploinsufficiency</td>
+<td>少一份剂量就不够用</td>
+<td>LOF 分数擅长抓的</td>
+</tr>
+<tr>
+<td>显性负效应</td>
+<td>dominant negative</td>
+<td>坏蛋白主动捣乱</td>
+<td>LOF 分数抓不到，要错义分数</td>
+</tr>
+<tr>
+<td>η (eta)</td>
+<td>relative rate = observed/expected</td>
+<td>实际/期望比值</td>
+<td>越低越不耐受</td>
+</tr>
+<tr>
+<td>beta 先验</td>
+<td>beta prior</td>
+<td>描述 0–1 比例的「事前猜测」分布</td>
+<td>由 18 个特征经神经网络给出</td>
+</tr>
+<tr>
+<td>Poisson 似然</td>
+<td>Poisson likelihood</td>
+<td>描述「期望 n 次下实际发生 y 次」的计数分布</td>
+<td>建模突变计数</td>
+</tr>
+<tr>
+<td>后验</td>
+<td>posterior</td>
+<td>先验 × 似然 综合后的最终分布</td>
+<td>数据少时自动偏先验</td>
+</tr>
+<tr>
+<td>DeepLOF 分数</td>
+<td>1 − E[η]</td>
+<td>被选择清除的 LOF 比例</td>
+<td>0–1，越高越重要</td>
+</tr>
+<tr>
+<td>无监督</td>
+<td>unsupervised</td>
+<td>不用「已知必需基因」标签训练</td>
+<td>避免标签泄漏</td>
+</tr>
+<tr>
+<td>ROC / AUC</td>
+<td>受试者工作曲线 / 曲线下面积</td>
+<td>排序能力</td>
+<td>0.5 乱猜，1.0 完美</td>
+</tr>
+<tr>
+<td>TPR</td>
+<td>true positive rate 灵敏度</td>
+<td>真重要基因被挑出的比例</td>
+<td>与 FPR 一起读</td>
+</tr>
+<tr>
+<td>FPR</td>
+<td>false positive rate</td>
+<td>不重要基因被误报的比例</td>
+<td>论文固定 0.05 比较 TPR</td>
+</tr>
+<tr>
+<td>DeLong 检验</td>
+<td>—</td>
+<td>比较两个 AUC 差异是否显著</td>
+<td>结论在补充材料</td>
+</tr>
+<tr>
+<td>置换检验</td>
+<td>permutation test</td>
+<td>随机打乱标签重算，看实际值多极端</td>
+<td>P=0 应读作 P&lt;10⁻⁴</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc5-如果还想继续追问">9. 如果还想继续追问</h2>
+<ul>
+<li>「18 个特征各自是什么、为什么选它们」→ 对应摘要第 2 节的 5 类，可以单独展开。</li>
+<li>「为什么 H2A.Z 和 tau 是负相关」→ 涉及家管基因 vs 发育基因的解释，可细讲。</li>
+<li>「贝叶斯先验的 μ 和 κ 具体怎么算」→ 那就要上公式级讲解了（本次按你要求没展开）。</li>
+<li>「DeepLOF 和 LOEUF/CoNeS 的数学区别到底在哪」→ 可做一张方法对比表。 }</li>
+</ul>
+</details><details id="file6"><summary>6. scRNA-seq_drug_target_discovery_landscape.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc6-前沿单细胞测序数据在药物靶点筛选中的应用全景">前沿单细胞测序数据在药物靶点筛选中的应用全景</h1>
+<blockquote>
+<p>调研日期：2026-09-07 · 关联：管线架构预审质询 #0 来源：Nature Reviews Drug Discovery (2023), Frontiers Drug Discovery (2024), Nature Cell Biology (2025) 等</p>
+</blockquote>
+<hr />
+<h2 id="doc6-核心结论">核心结论</h2>
+<p><strong>scRNA-seq 在靶点发现中的主流应用全部集中在——肿瘤和免疫疾病——这两类疾病有共同特征：存在”疾病 vs 正常”的差异表达信号，且靶点通常是”抑制一个被疾病上调的基因”。这与你的 SINEUP 应用场景（胚系缺失→剂量减半→需要上调一个基因）在逻辑上是反向的。</strong></p>
+<hr />
+<h2 id="doc6-一scrna-seq-在药物发现中的六大应用方向">一、scRNA-seq 在药物发现中的六大应用方向</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>方向</th>
+<th>做什么</th>
+<th>典型案例</th>
+<th>与你的场景的相关性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. 细胞亚型发现</strong></td>
+<td>从疾病组织中识别新的细胞类型/状态，作为靶点来源</td>
+<td>Villani et al. (2017) 发现新树突状细胞亚群; Sade-Feldman et al. (2018) 发现免疫治疗响应相关 T 细胞状态</td>
+<td>🟡 间接相关——可帮你理解脑类器官中有哪些细胞类型表达你的候选基因</td>
+</tr>
+<tr>
+<td><strong>2. Perturb-seq</strong></td>
+<td>大规模 CRISPR 扰动 + scRNA-seq 读out，直接建立基因→表型的因果链接</td>
+<td>Ursu et al. (2022) 在癌细胞中大规模表型化编码变异; 2024-2025 年扩展到组合扰动</td>
+<td>🔴 <strong>不可用</strong>：所有 Perturb-seq 数据来自癌细胞系，你的发育/神经基因不在训练空间中</td>
+</tr>
+<tr>
+<td><strong>3. 耐药机制发现</strong></td>
+<td>比较耐药 vs 敏感细胞的转录组，找出驱动耐药的基因</td>
+<td>Cohen et al. (2021) 在多发性骨髓瘤中发现耐药通路和靶点; Tanaka et al. (2018) 发现铂类耐药基因 COX7B</td>
+<td>🔴 不适用——你的场景不存在”耐药”的概念</td>
+</tr>
+<tr>
+<td><strong>4. 配体-受体/细胞通讯</strong></td>
+<td>分析细胞间互作网络，找到可药物干预的信号轴</td>
+<td>多种 CellChat/NicheNet 分析肿瘤微环境中的免疫逃逸信号</td>
+<td>🟡 间接相关——可分析脑类器官中候选基因参与哪些细胞间通讯</td>
+</tr>
+<tr>
+<td><strong>5. GWAS-eQTL 共定位</strong></td>
+<td>将 GWAS 风险位点定位到特定细胞类型和基因</td>
+<td>scRNA-seq 数据 × GWAS 信号 → 细胞类型特异性因果基因</td>
+<td>🟡 间接相关——如果某个微缺失病有 GWAS 数据</td>
+</tr>
+<tr>
+<td><strong>6. 药物响应预测</strong></td>
+<td>用 scRNA-seq 特征预测细胞/患者对药物的敏感性</td>
+<td>scGSDR (2025) 深度学习框架预测抗癌药物在单细胞水平的响应</td>
+<td>🔴 不适用——需要大规模药筛数据，且逻辑是预测抑制而非激活</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc6-二perturb-seq靶点筛选的黄金标准为什么你无法使用">二、Perturb-seq：靶点筛选的黄金标准——为什么你无法使用</h2>
+<p>Perturb-seq 是目前唯一能从 scRNA-seq 中建立<strong>因果</strong>基因-表型关系的方法。原理：</p>
+<pre><code>CRISPR 文库（数千个基因）→ 每个细胞敲除/敲低一个基因
+→ scRNA-seq 读取每个细胞的转录组状态
+→ 比较&quot;敲了基因 X 的细胞&quot;vs&quot;未敲的细胞&quot;
+→ 如果敲了 X 导致表型逆转 → X 是因果靶点</code></pre>
+<p><strong>为什么对你不可用</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Perturb-seq 的需求</th>
+<th>你的场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>使用的细胞类型</td>
+<td>K562/A549/癌细胞系 → 不表达发育/神经基因</td>
+</tr>
+<tr>
+<td>测量的表型</td>
+<td>增殖、凋亡、耐药 → 不相关</td>
+</tr>
+<tr>
+<td>方向</td>
+<td>KO/KD → 抑制 → “敲了哪个基因让癌细胞死了？”</td>
+</tr>
+<tr>
+<td>基因空间</td>
+<td>~5000 个在癌细胞中表达的基因</td>
+</tr>
+</tbody>
+</table>
+<p><strong>在 Nature Cell Biology (2025) 和 Nature Biotechnology (2022) 中描述的 Perturb-seq 最新进展（组合扰动、多模态读out）——全部基于癌细胞系。</strong></p>
+<hr />
+<h2 id="doc6-三用-scrna-seq-发现靶点的成功故事全部在一个方向上">三、“用 scRNA-seq 发现靶点”的成功故事——全部在一个方向上</h2>
+<p>成功的靶点发现故事共同的特征：</p>
+<ol type="1">
+<li><strong>疾病 vs 正常有明确的差异表达信号</strong>：癌细胞 vs 正常细胞、耐药 vs 敏感、疾病组织 vs 健康组织</li>
+<li><strong>靶点是被疾病上调的基因</strong>：靶向 = 抑制 → 恢复 → 表型逆转</li>
+<li><strong>细胞类型是靶点发现的核心</strong>：不是”什么基因重要”，而是”什么基因在哪种细胞类型中驱动疾病”</li>
+</ol>
+<p><strong>你的场景在这三个维度上都有结构性不匹配</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>成功故事</th>
+<th>你的场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>差异表达</td>
+<td>有明显 DE 信号（癌 vs 正常）</td>
+<td>mRNA 隐身，Δattr≈0</td>
+</tr>
+<tr>
+<td>靶向方向</td>
+<td>抑制被上调的基因</td>
+<td>上调被剂量减半的基因</td>
+</tr>
+<tr>
+<td>细胞类型</td>
+<td>肿瘤细胞/免疫细胞</td>
+<td>脑类器官中的发育神经细胞</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="doc6-四一篇关键论文的结论medrxiv-2024">四、一篇关键论文的结论（medRxiv 2024）</h2>
+<p><strong>“Estimating the impact of single-cell RNA sequencing of human tissues on drug target validation”</strong></p>
+<p>这篇论文量化了一个问题：scRNA-seq 数据用于靶点验证（而非发现）有多大价值？</p>
+<p>结论：scRNA-seq 对靶点<strong>验证</strong>（确认靶点在相关组织中表达）有显著价值，但对靶点<strong>发现</strong>（从零找到新靶点）的独立增量有限。最大的贡献在于： - 确认靶点在目标组织的目标细胞类型中确实表达（降低脱靶风险） - 排除在关键安全器官（肝、心、肾）中高表达的靶点（安全性过滤）</p>
+<p><strong>这与你的管线当前状态完全一致——scRNA-seq 的合理角色就是验证和过滤，不是发现。</strong></p>
+<hr />
+<h2 id="doc6-五对你管线的启示">五、对你管线的启示</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>你能做的</th>
+<th>你不能做的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用 scRNA-seq 验证候选基因在靶组织中的表达</td>
+<td>用 scRNA-seq 从零发现缺失区间</td>
+</tr>
+<tr>
+<td>用 scRNA-seq 确定候选基因在哪些细胞类型中表达</td>
+<td>用 scRNA-seq 推断基因的因果性</td>
+</tr>
+<tr>
+<td>用 scRNA-seq 检查患者细胞中基因表达是否被补偿</td>
+<td>用 Perturb-seq 预测上调后的表型（域外）</td>
+</tr>
+<tr>
+<td>用 HPA 多组织数据做组织可行性 + 安全性过滤</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>这是一个诚实的限制，不是管线的失败。</strong> 整个前沿都在往同一个方向走——scRNA-seq 的靶点价值在于”细胞类型分辨率”和”人类组织原位验证”，而不是”从零发现因果靶点”。后者是遗传学（GWAS、家系研究、ClinGen）和 Perturb-seq（因果实验）的领地。</p>
+<hr />
+<h2 id="doc6-参考文献">参考文献</h2>
+<ol type="1">
+<li>Van de Sande B et al. <em>Applications of single-cell RNA sequencing in drug discovery and development.</em> Nature Reviews Drug Discovery, 2023. DOI: 10.1038/s41573-023-00688-4</li>
+<li><em>Single-cell technology for drug discovery and development.</em> Frontiers in Drug Discovery, 2024. DOI: 10.3389/fddsv.2024.1459962</li>
+<li><em>Decoding heterogeneous single-cell perturbation responses.</em> Nature Cell Biology, 2025. DOI: 10.1038/s41556-025-01626-9</li>
+<li>Ursu O et al. <em>Massively parallel phenotyping of coding variants in cancer with Perturb-seq.</em> Nature Biotechnology, 2022. DOI: 10.1038/s41587-021-01160-7</li>
+<li><em>Estimating the impact of single-cell RNA sequencing of human tissues on drug target validation.</em> medRxiv, 2024. DOI: 10.1101/2024.04.04.24305313</li>
+<li><em>SCTA: An Agentic Framework for Stable and Interpretable Target Gene Discovery from Single-Cell RNA Sequencing.</em> arXiv, 2025. 2607.23821</li>
+<li><em>Single-Cell Transcriptomics and Computational Frameworks for Target Discovery in Cancer.</em> Targets, 2025. DOI: 10.3390/targets4010006</li>
+</ol>
+</details></main></body></html>

@@ -1,10 +1,8 @@
 """End-to-end synthetic test of the infercnv step (needs scanpy + infercnvpy)."""
 import numpy as np
 import pandas as pd
-import pytest
-
-pytest.importorskip("scanpy")
-pytest.importorskip("infercnvpy")
+import scanpy
+import infercnvpy
 import anndata
 
 from src.cnv.infercnv import (normalize_for_cnv, order_by_position,

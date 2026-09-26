@@ -1,0 +1,413 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WHS：基因编号修复前后</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>WHS：基因编号修复前后</h1><p class="lead">保留 A、B、B_noai 三组对照，解释 NSD2 排名变化与数据匹配的关系。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>先读 A 与 B：两份 evidence 表唯一差异是 HGNC:12766（NSD2）的 gnomAD pLI/LOEUF 从缺失恢复为 1.0 / 0.119；A 排名第一 NAT8L，NSD2 第五；B 中 NSD2 第一。</li><li>再读 B_noai：移除 AI 列后 NSD2 仍第一；这是该组历史参数下的结果，不代表所有情境。</li><li>A/B 是本目录的实验版本标记，不等同于 mode 目录中的 Mode A / Mode B。</li><li>两份 checksum 相同并不等于 evidence 相同；上游匹配逻辑也会改变结果。排名数据、证据表、报告、审计全部绑定保留。</li><li>完整旧报告含模板占位符 {sym} 和旧实验建议；保留原文供追溯，勿直接用作现行操作指引。</li><li>Spearman 是两种排序的一致性，不是生物学准确率。本次没有重算科学结果。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-data-local-only-href="audit_whs_A/data_checksums.txt" title="本地保留的来源文件，不随公开仓库发布">audit_whs_A/data_checksums.txt</span></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>2</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-data-local-only-href="audit_whs_B/data_checksums.txt" title="本地保留的来源文件，不随公开仓库发布">audit_whs_B/data_checksums.txt</span></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>3</td><td><a data-local-only-href="candidates_ranked_whs_A.csv">candidates_ranked_whs_A.csv</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>4</td><td><a data-local-only-href="candidates_ranked_whs_B.csv">candidates_ranked_whs_B.csv</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>5</td><td><a data-local-only-href="candidates_ranked_whs_B_noai.csv">candidates_ranked_whs_B_noai.csv</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>6</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="evidence_whs_A.parquet">evidence_whs_A.parquet</span></td><td>评分前证据矩阵，保留缺失值和原始注释</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>7</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="evidence_whs_B.parquet">evidence_whs_B.parquet</span></td><td>评分前证据矩阵，保留缺失值和原始注释</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>8</td><td><a data-local-only-href="report_whs_A.md" title="本地保留的来源文件，不随公开仓库发布">report_whs_A.md</a></td><td>参数、排名及历史解释全文</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>9</td><td><a data-local-only-href="report_whs_B.md" title="本地保留的来源文件，不随公开仓库发布">report_whs_B.md</a></td><td>参数、排名及历史解释全文</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>10</td><td><a data-local-only-href="report_whs_B_noai.md" title="本地保留的来源文件，不随公开仓库发布">report_whs_B_noai.md</a></td><td>参数、排名及历史解释全文</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. data_checksums.txt</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><pre>clinGen_gene_curation_list_GRCh38.tsv  751dd6c7bd411198e3f06d053800916340c7b5e71dfe88923366fa48b33f6438
+gnomad_constraint.tsv  78f14346180de3fb552747099d9a34238ca535924418a3596d75f45654837d69
+data/rna_tissue_consensus.tsv  c49b5b33a076e3b9c1eb4f7d15d063ee936e07045e192ceccfeb9edcf1d90ddb</pre></details><details id="file2"><summary>2. data_checksums.txt</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><pre>clinGen_gene_curation_list_GRCh38.tsv  751dd6c7bd411198e3f06d053800916340c7b5e71dfe88923366fa48b33f6438
+gnomad_constraint.tsv  78f14346180de3fb552747099d9a34238ca535924418a3596d75f45654837d69
+data/rna_tissue_consensus.tsv  c49b5b33a076e3b9c1eb4f7d15d063ee936e07045e192ceccfeb9edcf1d90ddb</pre></details><details id="file8"><summary>8. report_whs_A.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc8-微缺失主效基因筛选-共识排名-consensus-v2">微缺失主效基因筛选 — 共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 19 genes</p>
+<h2 id="doc8-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>89%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>89%</td>
+</tr>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>79%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution): DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="doc8-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:26742</td>
+<td>NAT8L</td>
+<td>2.161</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:16822</td>
+<td>FAM193A</td>
+<td>0.816</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:51180</td>
+<td>CFAP99</td>
+<td>0.200</td>
+<td>14</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:18870</td>
+<td>POLN</td>
+<td>0.184</td>
+<td>19</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:12766</td>
+<td>NSD2</td>
+<td>0.000</td>
+<td>3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:10067</td>
+<td>RNF4</td>
+<td>-0.141</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:243</td>
+<td>ADD1</td>
+<td>-0.353</td>
+<td>5</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:13906</td>
+<td>MXD4</td>
+<td>-0.443</td>
+<td>7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:29334</td>
+<td>ZFYVE28</td>
+<td>-0.576</td>
+<td>9</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:19118</td>
+<td>TNIP2</td>
+<td>-1.651</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.395</strong> (&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="doc8-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+<h2 id="doc8-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="doc8-第一候选验证路径-nat8l">第一候选验证路径: NAT8L</h3>
+<p><strong>证据</strong>: gnomad_LOEUF=4.5700e-01, gnomad_pLI=8.6458e-01, DeepLOF_score=0.88</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤: 1. qPCR 确认缺失断点包含 {sym}（在患者 gDNA 上） 2. Western blot 确认蛋白质是否不足（翻译层未补偿） 3. 如果蛋白不足 → 设计 SINEUP-NAT8L → 细胞模型测试蛋白恢复 4. 如果蛋白正常 → 切换到备选基因（见下）</p>
+<h3 id="doc8-切换策略">切换策略</h3>
+<p>如果 NAT8L 的蛋白质正常（翻译也补偿了），切换到以下备选: - FAM193A - CFAP99 - POLN</p>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 NAT8L</p>
+<h3 id="doc8-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是先在患者细胞系中做 shRNA rescue 实验: - 恢复每个候选基因的表达 - 看哪个恢复表型最好 - 用这个正对照结果更新管线的权重</p>
+</details><details id="file9"><summary>9. report_whs_B.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc9-微缺失主效基因筛选-共识排名-consensus-v2">微缺失主效基因筛选 — 共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 19 genes</p>
+<h2 id="doc9-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>79%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution): DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="doc9-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:12766</td>
+<td>NSD2</td>
+<td>3.889</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:26742</td>
+<td>NAT8L</td>
+<td>1.978</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:16822</td>
+<td>FAM193A</td>
+<td>0.600</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:51180</td>
+<td>CFAP99</td>
+<td>0.200</td>
+<td>13</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:18870</td>
+<td>POLN</td>
+<td>0.178</td>
+<td>19</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:10067</td>
+<td>RNF4</td>
+<td>-0.311</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:243</td>
+<td>ADD1</td>
+<td>-0.556</td>
+<td>5</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:13906</td>
+<td>MXD4</td>
+<td>-0.600</td>
+<td>7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:29334</td>
+<td>ZFYVE28</td>
+<td>-0.733</td>
+<td>9</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:19118</td>
+<td>TNIP2</td>
+<td>-1.756</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.479</strong> (&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="doc9-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+<h2 id="doc9-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="doc9-第一候选验证路径-nsd2">第一候选验证路径: NSD2</h3>
+<p><strong>证据</strong>: clinGen_hi_score=3.00, gnomad_LOEUF=1.1900e-01, gnomad_pLI=1.0000e+00, DeepLOF_score=0.94</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤: 1. qPCR 确认缺失断点包含 {sym}（在患者 gDNA 上） 2. Western blot 确认蛋白质是否不足（翻译层未补偿） 3. 如果蛋白不足 → 设计 SINEUP-NSD2 → 细胞模型测试蛋白恢复 4. 如果蛋白正常 → 切换到备选基因（见下）</p>
+<h3 id="doc9-切换策略">切换策略</h3>
+<p>如果 NSD2 的蛋白质正常（翻译也补偿了），切换到以下备选: - NAT8L - FAM193A - CFAP99</p>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 NSD2</p>
+<h3 id="doc9-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是先在患者细胞系中做 shRNA rescue 实验: - 恢复每个候选基因的表达 - 看哪个恢复表型最好 - 用这个正对照结果更新管线的权重</p>
+</details><details id="file10"><summary>10. report_whs_B_noai.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc10-微缺失主效基因筛选-共识排名-consensus-v2">微缺失主效基因筛选 — 共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 19 genes</p>
+<h2 id="doc10-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution): DeepLOF_score, DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="doc10-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:12766</td>
+<td>NSD2</td>
+<td>2.889</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:26742</td>
+<td>NAT8L</td>
+<td>1.111</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:18870</td>
+<td>POLN</td>
+<td>0.111</td>
+<td>19</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:51180</td>
+<td>CFAP99</td>
+<td>0.000</td>
+<td>11</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:16822</td>
+<td>FAM193A</td>
+<td>-0.333</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:243</td>
+<td>ADD1</td>
+<td>-0.556</td>
+<td>4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:10067</td>
+<td>RNF4</td>
+<td>-1.111</td>
+<td>7</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:13906</td>
+<td>MXD4</td>
+<td>-1.333</td>
+<td>8</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:29334</td>
+<td>ZFYVE28</td>
+<td>-1.333</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:16821</td>
+<td>NOP14</td>
+<td>-2.222</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.391</strong> (&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="doc10-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+<h2 id="doc10-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="doc10-第一候选验证路径-nsd2">第一候选验证路径: NSD2</h3>
+<p><strong>证据</strong>: clinGen_hi_score=3.00, gnomad_LOEUF=1.1900e-01, gnomad_pLI=1.0000e+00</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤: 1. qPCR 确认缺失断点包含 {sym}（在患者 gDNA 上） 2. Western blot 确认蛋白质是否不足（翻译层未补偿） 3. 如果蛋白不足 → 设计 SINEUP-NSD2 → 细胞模型测试蛋白恢复 4. 如果蛋白正常 → 切换到备选基因（见下）</p>
+<h3 id="doc10-切换策略">切换策略</h3>
+<p>如果 NSD2 的蛋白质正常（翻译也补偿了），切换到以下备选: - NAT8L - POLN - CFAP99</p>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 NSD2</p>
+<h3 id="doc10-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是先在患者细胞系中做 shRNA rescue 实验: - 恢复每个候选基因的表达 - 看哪个恢复表型最好 - 用这个正对照结果更新管线的权重</p>
+</details></main></body></html>

@@ -1,0 +1,1974 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VirtualCellTool：使用入口与历史证据</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><p class="note"><strong>当前发布规则（2026-09-26）：</strong>所有数据与模型独立准备。下方盘点和历史全文中的“保留”指本地保留，旧 Git/LFS 交付说法已失效。安装和运行请先看 <a href="../../00_docs/01_guides/DATA_SETUP.html">数据准备指南</a> 与 <a href="../../00_docs/01_guides/VCT_SETUP.html">VCT 接入指南</a>。</p><nav><a data-local-only-href="../INVENTORY.yaml">Agent 完整盘点</a></nav><h1>VirtualCellTool：使用入口与历史证据</h1><p class="lead">当前运行资源和实验记录全部保留；无需阅读源码即可区分工具功能与历史探索。</p><h2 id="overview">1. 先看这些</h2><ul><li>当前工具与主效基因排名管线独立，尚未自动串联；WS 是 Williams/WBS，不是 WHS。</li><li>从仓库根运行 bash scripts/setup_envs.sh；随后 cd 05_virtual_cell，并用 ../.venv/vct/bin/python web/app.py 启动。浏览器打开 http://127.0.0.1:8377/。</li><li>PBMC 用于工具可行性测试；MS/WS 中患者与对照的标签不能当成已确认的细胞类型。CIPHER 是线性近似，嵌入位移不证明治疗效果。</li><li>运行资源位于 data/、gears_ckpt/ 和兄弟 SIGnature/model_files/；标签、编码、表达和基因顺序需要配套保留。</li><li>历史设计在 docs/，历史图表在 data/ 和 outputs/figures/；网页历史面板仍读取这些路径。</li><li>早期 check_gears_genes.py 有缺少 sys 导入和未定义 ROOT 的问题。当前 API 仅替代其中的训练图覆盖查询，不能完整替代直接扰动集合比较，因此标记陈旧保留，不作为操作入口。</li><li>prepare_ws_umap_v2.py 等历史准备脚本会覆盖既有结果，再运行前应核对输入和输出；本次没有运行或改写它们。</li><li>离线回归使用 ../.venv/vct/bin/python -m unittest discover -s tests -v；在线与浏览器验收前先读原 README 的端口和数据要求。</li></ul><h2 id="files">2. 逐文件盘点</h2><details><summary>展开 104 个文件的用途和保留理由</summary><table><thead><tr><th>文件</th><th>作用</th><th>现在怎么用</th><th>陈旧判断</th></tr></thead><tbody><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../.gitignore">.gitignore</span></td><td>工具缓存、日志和本地生成物忽略规则</td><td>Git 当前规则</td><td>不建议清理</td></tr><tr><td><a href="../ATTRIBUTIONS.md">ATTRIBUTIONS.md</a></td><td>当前运行说明与作者/第三方来源登记：ATTRIBUTIONS.md</td><td>人工使用及 agent 溯源</td><td>不建议清理</td></tr><tr><td><a href="../README.md">README.md</a></td><td>当前运行说明与作者/第三方来源登记：README.md</td><td>人工使用及 agent 溯源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../check_gears_genes.py">check_gears_genes.py</span></td><td>早期疾病基因面板的图节点覆盖与直接扰动集合检查</td><td>未发现运行入口引用；源码缺少 sys 导入、ROOT 未定义，当前不能直接运行</td><td>陈旧且有缺陷；保留历史参考，不能当运行指引</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/cipher_ms.npz">data/cipher_ms.npz</span></td><td>模型/历史实验配套数据：cipher_ms.npz</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/cipher_pbmc.npz">data/cipher_pbmc.npz</span></td><td>模型/历史实验配套数据：cipher_pbmc.npz</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/cipher_ws.npz">data/cipher_ws.npz</span></td><td>模型/历史实验配套数据：cipher_ws.npz</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/embeddings.npy">data/embeddings.npy</span></td><td>网页 PBMC 的 SCimilarity 编码</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/expr_aligned.npz">data/expr_aligned.npz</span></td><td>网页 PBMC 表达矩阵</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/gears_pert_list.pkl">data/gears_pert_list.pkl</span></td><td>GEARS 引擎覆盖查询读取；未反序列化检查</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/gears_test_pred.npy">data/gears_test_pred.npy</span></td><td>预测数组；保留原实验上下文</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/gene_order.txt">data/gene_order.txt</span></td><td>全部对齐表达列的基因顺序契约</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/meta.csv">data/meta.csv</span></td><td>网页 PBMC 标签；与表达行序配套</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/ms_analysis_report.png">data/ms_analysis_report.png</a></td><td>历史 MS 分析图；历史面板读取</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_differential_attribution.csv">data/ms_differential_attribution.csv</span></td><td>历史候选归因差异表；历史面板读取</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_embeddings.npy">data/ms_embeddings.npy</span></td><td>网页 MS 编码</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_expr.npz">data/ms_expr.npz</span></td><td>网页 MS 对齐表达矩阵</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_gene_max.npy">data/ms_gene_max.npy</span></td><td>MS 按基因表达最大值缓存</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_meta.csv">data/ms_meta.csv</span></td><td>MS 原始元数据，不能仅因另有 web 表就删除</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_meta_web.csv">data/ms_meta_web.csv</span></td><td>旧命名 MS 元数据；与现用表差异须保留追溯</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_oligodendrocytes.h5ad">data/ms_oligodendrocytes.h5ad</span></td><td>MS 准备及差异归因输入</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_umap.npy">data/ms_umap.npy</span></td><td>网页 MS 二维坐标</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ms_web_meta.csv">data/ms_web_meta.csv</span></td><td>网页 MS 标签；cell_type 实为患者/对照分组</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/pbmc3k_raw.h5ad">data/pbmc3k_raw.h5ad</span></td><td>PBMC 准备的原始输入</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/tier0_validation.json">data/tier0_validation.json</span></td><td>Tier 0 探索指标；历史面板读取，来源标签仍需科学核对</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/umap.npy">data/umap.npy</span></td><td>网页 PBMC 二维坐标</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/v2_closed_loop.json">data/v2_closed_loop.json</span></td><td>GEARS 与真实扰动比较结果；历史面板读取</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/v2_closed_loop_report.png">data/v2_closed_loop_report.png</a></td><td>GEARS 闭环图；历史面板读取</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/v2_vectors.npz">data/v2_vectors.npz</span></td><td>闭环预测、真实表达和归因向量</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/validation_results.json">data/validation_results.json</span></td><td>PBMC AC1/AC2 方向/幅度历史结果；历史面板读取</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ws_embeddings.npy">data/ws_embeddings.npy</span></td><td>网页 Williams 编码</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ws_expr.npz">data/ws_expr.npz</span></td><td>网页 Williams 对齐表达矩阵</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ws_gene_max.npy">data/ws_gene_max.npy</span></td><td>Williams 按基因表达最大值缓存</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ws_umap.npy">data/ws_umap.npy</span></td><td>网页 Williams 二维坐标</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../data/ws_web_meta.csv">data/ws_web_meta.csv</span></td><td>网页 Williams 标签与 cluster；WS 不是 WHS</td><td>网页运行或历史复现的配套材料；路径不变，矩阵/标签/顺序需整组保留</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="ARCHITECTURE_v3.md">docs/ARCHITECTURE_v3.md</a></td><td>设计理由/架构历史：ARCHITECTURE_v3.md</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="DESIGN_REVIEW_ITERATIVE.md">docs/DESIGN_REVIEW_ITERATIVE.md</a></td><td>设计理由/架构历史：DESIGN_REVIEW_ITERATIVE.md</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="ENGINEERING.md">docs/ENGINEERING.md</a></td><td>设计理由/架构历史：ENGINEERING.md</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="HANDOFF_v3.md">docs/HANDOFF_v3.md</a></td><td>设计理由/架构历史：HANDOFF_v3.md</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="IGEM_ARCHITECTURE.md">docs/IGEM_ARCHITECTURE.md</a></td><td>设计理由/架构历史：IGEM_ARCHITECTURE.md</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.html">docs/architecture.html</a></td><td>设计理由/架构历史：architecture.html</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.1440x900.dark.png">docs/architecture.visual-check.1440x900.dark.png</a></td><td>设计理由/架构历史：architecture.visual-check.1440x900.dark.png</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.1440x900.light.png">docs/architecture.visual-check.1440x900.light.png</a></td><td>设计理由/架构历史：architecture.visual-check.1440x900.light.png</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.2048x1320.dark.png">docs/architecture.visual-check.2048x1320.dark.png</a></td><td>设计理由/架构历史：architecture.visual-check.2048x1320.dark.png</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.2048x1320.light.png">docs/architecture.visual-check.2048x1320.light.png</a></td><td>设计理由/架构历史：architecture.visual-check.2048x1320.light.png</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.html">docs/architecture.visual-check.html</a></td><td>设计理由/架构历史：architecture.visual-check.html</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><a data-local-only-href="architecture.visual-check.json">docs/architecture.visual-check.json</a></td><td>设计理由/架构历史：architecture.visual-check.json</td><td>历史参考；当前启动及限制以阅读页和 README 为准</td><td>旧架构或历史过程，不等于现行集成方案</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_ckpt/config.pkl">gears_ckpt/config.pkl</span></td><td>GEARS 模型权重/配置：config.pkl</td><td>gears_engine.py 懒加载使用；需要 Norman 输入</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_ckpt/model.pt">gears_ckpt/model.pt</span></td><td>GEARS 模型权重/配置：model.pt</td><td>gears_engine.py 懒加载使用；需要 Norman 输入</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/essential_all_data_pert_genes.pkl">gears_data/essential_all_data_pert_genes.pkl</span></td><td>扰动基因集合或基因图资源：essential_all_data_pert_genes.pkl</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/gene2go_all.pkl">gears_data/gene2go_all.pkl</span></td><td>扰动基因集合或基因图资源：gene2go_all.pkl</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman/data_pyg/cell_graphs.pkl">gears_data/norman/data_pyg/cell_graphs.pkl</span></td><td>扰动基因集合或基因图资源：cell_graphs.pkl</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman/go.csv">gears_data/norman/go.csv</span></td><td>扰动基因集合或基因图资源：go.csv</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman/perturb_processed.h5ad">gears_data/norman/perturb_processed.h5ad</span></td><td>扰动基因集合或基因图资源：perturb_processed.h5ad</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman/splits/norman_simulation_1_0.75.pkl">gears_data/norman/splits/norman_simulation_1_0.75.pkl</span></td><td>扰动基因集合或基因图资源：norman_simulation_1_0.75.pkl</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman/splits/norman_simulation_1_0.75_subgroup.pkl">gears_data/norman/splits/norman_simulation_1_0.75_subgroup.pkl</span></td><td>扰动基因集合或基因图资源：norman_simulation_1_0.75_subgroup.pkl</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../gears_data/norman.zip">gears_data/norman.zip</span></td><td>扰动基因集合或基因图资源：norman.zip</td><td>GEARS 历史准备与复现实验；未反序列化检查</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../outputs/figures/MS4A1_ko_baseline.svg">outputs/figures/MS4A1_ko_baseline.svg</a></td><td>MS4A1 ko 历史响应图/摘要：MS4A1_ko_baseline.svg</td><td>历史面板读取 baseline.svg 和 summary.json；其他图为配套证据</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../outputs/figures/MS4A1_ko_celltype.svg">outputs/figures/MS4A1_ko_celltype.svg</a></td><td>MS4A1 ko 历史响应图/摘要：MS4A1_ko_celltype.svg</td><td>历史面板读取 baseline.svg 和 summary.json；其他图为配套证据</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../outputs/figures/MS4A1_ko_heatmap.svg">outputs/figures/MS4A1_ko_heatmap.svg</a></td><td>MS4A1 ko 历史响应图/摘要：MS4A1_ko_heatmap.svg</td><td>历史面板读取 baseline.svg 和 summary.json；其他图为配套证据</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../outputs/figures/MS4A1_ko_summary.json">outputs/figures/MS4A1_ko_summary.json</a></td><td>MS4A1 ko 历史响应图/摘要：MS4A1_ko_summary.json</td><td>历史面板读取 baseline.svg 和 summary.json；其他图为配套证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../predictive_test.py">predictive_test.py</span></td><td>梯度位移与归因相关性的历史探索</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../requirements-e2e.txt">requirements-e2e.txt</span></td><td>网页或浏览器测试环境依赖</td><td>scripts/setup_envs.sh / README 指定安装入口</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../requirements-web.txt">requirements-web.txt</span></td><td>网页或浏览器测试环境依赖</td><td>scripts/setup_envs.sh / README 指定安装入口</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/attribute.py">src/attribute.py</span></td><td>使用 SCimilarity 与 Captum 计算基因对嵌入的归因</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/cipher_engine.py">src/cipher_engine.py</span></td><td>以对照细胞协方差进行 CIPHER 线性响应近似</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/compute_ms_attribution.py">src/compute_ms_attribution.py</span></td><td>MS 与对照差异归因分析，保存可追踪的新运行</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/exploration_report.py">src/exploration_report.py</span></td><td>统一历史探索报告标记，区分探索结果和验收</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/gears_engine.py">src/gears_engine.py</span></td><td>GEARS 加载、训练图覆盖查询和预测接口</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/history_panel.py">src/history_panel.py</span></td><td>只读提供历史结果及其摘要和校验和</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/input_checks.py">src/input_checks.py</span></td><td>模型输入、基因顺序、表达与扰动数值契约检查</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/linear_baseline.py">src/linear_baseline.py</span></td><td>control-mean 和 additive 线性对照</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/load_gears.py">src/load_gears.py</span></td><td>历史 GEARS 模型加载与兼容处理实验</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/paths.py">src/paths.py</span></td><td>以工具所在位置统一解析模型、数据和输出路径</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/perturb.py">src/perturb.py</span></td><td>修改表达后重算嵌入，提供反事实位移探索</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/prepare_data.py">src/prepare_data.py</span></td><td>显式注释驱动的 PBMC 准备；写入独立新目录</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/prepare_ms_web.py">src/prepare_ms_web.py</span></td><td>由 MS 数据准备网页表达、坐标和标签</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/prepare_ws_umap_v2.py">src/prepare_ws_umap_v2.py</span></td><td>历史 Williams UMAP 和 cluster 标签重算</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/prepare_ws_web.py">src/prepare_ws_web.py</span></td><td>由 Williams 数据准备网页表达、编码、坐标和标签</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/tier0_validate.py">src/tier0_validate.py</span></td><td>归因排序与真实扰动效应的 Tier 0 历史探索</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/train_gears.py">src/train_gears.py</span></td><td>Dixit 数据上的历史 GEARS 训练实验</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/v2_closed_loop.py">src/v2_closed_loop.py</span></td><td>GEARS 预测、真实扰动与 SCimilarity 嵌入/归因的历史闭环</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/validate.py">src/validate.py</span></td><td>PBMC 标志基因扰动方向和幅度的历史探索</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/viz_perturbation.py">src/viz_perturbation.py</span></td><td>CIPHER 与线性基线比较的命令行图表导出</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../src/web_launcher.py">src/web_launcher.py</span></td><td>核对服务标识、工作目录和 PID 的本机启动器</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../test_artifacts/server-8377.json">test_artifacts/server-8377.json</span></td><td>当前运行说明与作者/第三方来源登记：server-8377.json</td><td>人工使用及 agent 溯源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../test_artifacts/vct_verify.png">test_artifacts/vct_verify.png</span></td><td>当前运行说明与作者/第三方来源登记：vct_verify.png</td><td>人工使用及 agent 溯源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_core_safety.py">tests/test_core_safety.py</span></td><td>离线输入与引擎保护回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_exploration_reports.py">tests/test_exploration_reports.py</span></td><td>历史探索输出语义回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_history.py">tests/test_history.py</span></td><td>只读历史材料与指标回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_preparation_safety.py">tests/test_preparation_safety.py</span></td><td>数据准备契约和防覆盖回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_runtime_workflow.py">tests/test_runtime_workflow.py</span></td><td>启动器身份与在线测试断言回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_signature_contract.py">tests/test_signature_contract.py</span></td><td>SCimilarity 包装层的输入契约回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_web_safety.py">tests/test_web_safety.py</span></td><td>离线 API 路由与懒加载回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests/test_web_state.cjs">tests/test_web_state.cjs</span></td><td>网页数据集切换、请求和状态管理回归</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests_api.py">tests_api.py</span></td><td>运行中服务的 API 与数据契约验收</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../tests_e2e_playwright.py">tests_e2e_playwright.py</span></td><td>运行中服务的 Chromium 真实点击验收</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../validate_attribution_vs_perturb.py">validate_attribution_vs_perturb.py</span></td><td>差分归因与实测差异表达的历史探索</td><td>手动历史实验/准备，不由网页启动时自动执行；保留用于追溯</td><td>历史流程，存在环境/输入前提；尚无等价替代依据</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../vct_server.log">vct_server.log</span></td><td>当前运行说明与作者/第三方来源登记：vct_server.log</td><td>人工使用及 agent 溯源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../web/app.py">web/app.py</span></td><td>FastAPI 网页后端，按需加载三个数据集和不同引擎</td><td>当前入口/模块/测试或明确保留的手动 CLI；见静态引用证据</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../web/history.html">web/history.html</span></td><td>只读历史证据面板</td><td>web/app.py 当前网页资源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../web/index.html">web/index.html</span></td><td>工具交互主页面</td><td>web/app.py 当前网页资源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../web/plotly.min.js">web/plotly.min.js</span></td><td>本地 Plotly 图表运行库</td><td>web/app.py 当前网页资源</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../%E5%90%AF%E5%8A%A8VirtualCellTool.command">启动VirtualCellTool.command</span></td><td>macOS 双击启动入口，调用统一 web_launcher</td><td>当前人工启动入口</td><td>不建议清理</td></tr></tbody></table></details><h2 id="history">3. 原始说明与历史全文</h2><details><summary>ATTRIBUTIONS.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original1-attributions-工作归属登记表">ATTRIBUTIONS — 工作归属登记表</h1>
+<blockquote>
+<p>iGEM 评审要求：明确区分自有工作 vs 文献/过往队伍/外部工具。每引入一个新资源当场登记。</p>
+</blockquote>
+<h2 id="original1-外部模型与数据">外部模型与数据</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>组件</th>
+<th>来源</th>
+<th>用途</th>
+<th>许可/引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCimilarity 预训练权重 + gene_order.tsv</td>
+<td>Genentech, Zenodo record 17903196</td>
+<td>细胞 embedding 编码器</td>
+<td>Heimberg et al., Nature 2024</td>
+</tr>
+<tr>
+<td>SIGnature Python 包</td>
+<td>github.com/Genentech/SIGnature</td>
+<td>attribution 管线、数据对齐</td>
+<td>Biancalani et al., Nat Biotechnol 2026</td>
+</tr>
+<tr>
+<td>PBMC 3k 数据集</td>
+<td>10x Genomics / scanpy 内置</td>
+<td>demo 与验证用真实细胞数据</td>
+<td>10x Genomics 公开数据</td>
+</tr>
+<tr>
+<td>Progressive MS 少突胶质细胞数据集</td>
+<td>CELLxGENE collection 16c1e722（Oligodendrocytes in MS, 17,799 细胞, MS vs normal）</td>
+<td>真实疾病数据差异归因</td>
+<td>CELLxGENE 公开数据</td>
+</tr>
+<tr>
+<td>Captum (Integrated Gradients)</td>
+<td>Meta AI</td>
+<td>IG attribution 算法</td>
+<td>github.com/pytorch/captum</td>
+</tr>
+<tr>
+<td>GEARS (cell-gears 0.1.2)</td>
+<td>snap-stanford (Roohani et al., Nat Biotechnol 2024)</td>
+<td>v2 因果扰动预测模型</td>
+<td>github.com/snap-stanford/GEARS</td>
+</tr>
+<tr>
+<td>GEARS 预训练权重</td>
+<td>HuggingFace matthewshu/gears-norman（sc-interp 项目）</td>
+<td>Norman 上预训练的 GEARS</td>
+<td>Roohani et al. 2024 / sc-interp</td>
+</tr>
+<tr>
+<td>GEARS 数据镜像（norman.zip, gene2go, essential genes）</td>
+<td>Zenodo record 17252307（官方源 Harvard Dataverse 被 WAF 封锁后的镜像）</td>
+<td>GEARS 训练数据与 GO 注释</td>
+<td>Norman et al., Science 2019</td>
+</tr>
+<tr>
+<td>CIPHER 线性响应理论</td>
+<td>Kuznets-Speck et al., “CIPHER: Covariance-based Inference of Perturbation…”, bioRxiv 2025</td>
+<td>v3 线性响应扰动预测引擎</td>
+<td>Kuznets-Speck et al. (Northwestern Goyal Lab)</td>
+</tr>
+<tr>
+<td>Nature Methods 2025 基准（线性基线）</td>
+<td>Ahlmann-Eltze et al., Nat Methods 2025, DOI 10.1038/s41592-025-02772-6</td>
+<td>control-mean + additive 强制基线参考</td>
+<td>const-ae / Wolf lab</td>
+</tr>
+</tbody>
+</table>
+<h2 id="original1-自有工作本队原创">自有工作（本队原创）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>模块</th>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>反事实扰动引擎</td>
+<td>src/perturb.py</td>
+<td>修改基因表达→重算 embedding→位移分析</td>
+</tr>
+<tr>
+<td>交互式虚拟细胞网页</td>
+<td>web/</td>
+<td>滑块调表达量→UMAP 实时显示细胞状态迁移</td>
+</tr>
+<tr>
+<td>验证分析</td>
+<td>src/validate.py</td>
+<td>AC1/AC2 定量验收测试</td>
+</tr>
+<tr>
+<td>使用文档</td>
+<td>README.md, docs/</td>
+<td>面向未来 iGEM 队伍</td>
+</tr>
+<tr>
+<td>CIPHER 线性响应引擎</td>
+<td>src/cipher_engine.py</td>
+<td>统计物理涨落-耗散定理，仅需对照细胞数据预测全转录组扰动响应</td>
+</tr>
+<tr>
+<td>线性基线引擎</td>
+<td>src/linear_baseline.py</td>
+<td>Nature Methods 2025 强制基线（control-mean + additive）</td>
+</tr>
+<tr>
+<td>路径管理</td>
+<td>src/paths.py</td>
+<td>集中式根目录相对路径解析</td>
+</tr>
+<tr>
+<td>数据管线</td>
+<td>src/prepare_data.py</td>
+<td>PBMC3k → SCimilarity 对齐 → embedding → UMAP</td>
+</tr>
+</tbody>
+</table>
+<h2 id="original1-ai-辅助声明">AI 辅助声明</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件/模块</th>
+<th>AI 工具</th>
+<th>人工工作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>（逐文件登记）</td>
+<td>Hermes Agent (Nous Research)</td>
+<td>设计决策、参数调优、结果判读</td>
+</tr>
+</tbody>
+</table>
+</details><details><summary>README.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original2-virtualcelltool">VirtualCellTool</h1>
+<p>单细胞虚拟扰动演示工具，包含 PBMC、MS 和 Williams 三个数据集。CIPHER 是未扰动对照细胞的线性响应近似；反事实嵌入保留为实验性的编码器敏感性探索，GEARS 为有限覆盖的对照，均不能视作临床或治疗效果预测。</p>
+<h2 id="original2-从克隆目录启动">从克隆目录启动</h2>
+<p>在仓库根目录运行 <code>git lfs pull</code>、<code>python3 scripts/check_release.py</code> 和 <code>bash scripts/setup_envs.sh</code>。随后：</p>
+<div class="sourceCode" id="original2-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb1-1"><a href="#original2-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 05_virtual_cell</span>
+<span id="original2-cb1-2"><a href="#original2-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> web/app.py</span></code></pre></div>
+<p>打开 <code>http://127.0.0.1:8377/</code>；数据集在页面顶部切换，不需要多个服务实例。macOS 也可双击 <code>启动VirtualCellTool.command</code>，该启动器使用同一个仓库根目录环境。通过终端启动时按 Ctrl-C 停止，不要用宽泛的 <code>pkill</code> 命令。不要沿用 <code>SIGnature/.venv</code>：旧环境含绝对路径，不可搬迁。</p>
+<p>启动器通过 <code>/api/health</code> 核对成功响应、VirtualCellTool 标识、当前工作目录和 PID；启动子进程还必须与响应 PID 相同，才报告就绪。端口被其他服务/工作树或无健康接口的旧版本占用时明确报错，不自动杀进程。自己的启动进程失败或超时会被清理；后台日志追加到 <code>vct_server.log</code>，成功启动记录在 <code>test_artifacts/server-&lt;端口&gt;.json</code>，不入库。PID 记录只是诊断记录，可能过期，不能据此直接停止进程。</p>
+<p>后台服务需要停止时，先访问 <code>http://127.0.0.1:8377/api/health</code> 核对项目路径和 PID，再用 <code>lsof -nP -iTCP:8377 -sTCP:LISTEN</code>、<code>ps -p &lt;PID&gt; -o command=</code> 核对监听进程确为本项目，最后执行 <code>kill -TERM &lt;PID&gt;</code>；旧服务没有健康接口时仍须用进程命令和工作目录确认，不能按模糊名称批量停止。服务不会热重载 Python 后端；更新后端后需重启，刷新网页只能重新读取前端。</p>
+<p>服务运行期间，另开终端运行 <code>../.venv/vct/bin/python tests_api.py --skip-gears</code>，验收健康接口、三个数据集及不需要 Norman 数据的 17/19 项 API；按仓库根目录 README 下载并解压 Norman 数据后，去掉 <code>--skip-gears</code> 验收全部 19 项。测试包含 4xx 错误状态、坐标/标签/表达数量与有限值、数据来源、表达汇总/单细胞值的一致性，以及加载 MS/WS 前后的 PBMC 结果一致性；仍不是科学有效性验收。细胞数是当前交付数据的回归基准，主动更换数据时需同步核对测试预期，不能忽略失败。</p>
+<p>启动器、API 测试和浏览器测试均读取 <code>VCT_PORT</code>（默认 8377）。使用非默认端口时，在服务与测试命令前均加上同一 <code>VCT_PORT=8399</code>，避免连到另一服务。</p>
+<h2 id="original2-数据与测试">数据与测试</h2>
+<h3 id="original2-signature-scimilarity-输入与输出约定">SIGnature / SCimilarity 输入与输出约定</h3>
+<p>这套模型用于细胞编码、基因归因和实验性编码器敏感性探索，不是 <code>03_pipeline</code> 每次筛选疾病时自动运行的步骤，也不是 CIPHER / GEARS 的共同扰动引擎。表达来自输入单细胞数据；embedding 和归因才是模型计算结果。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>本项目 Python 入口</th>
+<th>输入结构</th>
+<th>输出结构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PerturbEngine.embed(X)</code></td>
+<td>稠密 NumPy 数组 <code>(n, G)</code>，<code>n &gt;= 1</code></td>
+<td>当前模型为 <code>(n, 128)</code> embedding</td>
+</tr>
+<tr>
+<td><code>perturb(x, gene, new_value)</code> / <code>perturb_multi(x, gene_values)</code></td>
+<td>单细胞数组 <code>(G,)</code>；基因名及新表达值，多基因时为字典</td>
+<td>修改前后 embedding、差值及位移</td>
+</tr>
+<tr>
+<td><code>batch_perturb(X, gene, new_value)</code></td>
+<td>数组 <code>(n, G)</code>，同一基因/数值作用于整批</td>
+<td>修改后的 <code>(n, 128)</code> embedding</td>
+</tr>
+<tr>
+<td><code>AttributionEngine.attribute(x)</code> / <code>top_genes(x)</code></td>
+<td>单细胞数组 <code>(G,)</code></td>
+<td><code>(G,)</code> IG 归因 / 排序后的基因、归因与表达值</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>基因列</strong>：<code>G</code> 以实际加载的 <code>wrapper.gene_order</code> 为准，当前为 <strong>28,231</strong>；每列必须严格按该顺序对应基因，不能按字母重排或直接传 HVG 子集。<code>data/gene_order.txt</code> 应与模型顺序一致。归因矩阵列顺序也按此定义，排序后的差异表不能代替它。</li>
+<li><strong>表达尺度</strong>：传入已经按模型基因空间对齐、经 <code>lognorm_counts</code> 处理的表达，不是原始 counts、差异表达、归因分数或 embedding。基因标识转换、对齐和归一化由数据准备步骤负责，推理入口不自动猜测、补列、转置或归一化。</li>
+<li><strong>基本校验</strong>：拒绝错误维度/宽度、空批次、列表和稀疏矩阵，以及字符串、object、布尔、复数、NaN/Inf 和超出 float32 范围的值；在调用上游模型前抛出 <code>ValueError</code>。实数数组按模型原有 float32 精度计算，不修改调用者数组；整数数组也会转换，避免小数扰动值被截断。类型可接受不代表原始计数可以直接推理。</li>
+<li><strong>扰动参数</strong>：基因必须在模型基因表中，三个扰动入口统一明确报错；替换值必须是有限且在 float32 范围内的实数标量，尺度与输入一致，不接受字符串或单元素列表。</li>
+<li><strong>校验边界</strong>：只凭无标签数组无法检查基因顺序是否真实正确、样本身份或归一化是否合理；这些仍由准备步骤和使用者核对。本项不是科学有效性检查，也没有新增整机内存预算或自动稠密化。</li>
+</ul>
+<p>网页使用的文件均位于 <code>data/</code>；表达矩阵在磁盘上为 CSR <code>.npz</code>，网页取出单个细胞后才作为稠密向量调用上述模型入口。元数据、embedding 和 UMAP 必须与表达矩阵逐行对应，不能只因为行数相同就混用不同批次。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>网页数据集</th>
+<th>表达矩阵</th>
+<th>已计算 embedding</th>
+<th>元数据 / UMAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PBMC：2,700 细胞，早期工具可行性测试</td>
+<td><code>expr_aligned.npz</code></td>
+<td><code>embeddings.npy</code></td>
+<td><code>meta.csv</code> / <code>umap.npy</code></td>
+</tr>
+<tr>
+<td>MS：17,799 个少突胶质细胞，MS/normal</td>
+<td><code>ms_expr.npz</code></td>
+<td><code>ms_embeddings.npy</code></td>
+<td><code>ms_web_meta.csv</code> / <code>ms_umap.npy</code></td>
+</tr>
+<tr>
+<td>WS：96,969 个 Williams 脑类器官细胞，WS/CTRL；不是 WHS</td>
+<td><code>ws_expr.npz</code></td>
+<td><code>ws_embeddings.npy</code></td>
+<td><code>ws_web_meta.csv</code> / <code>ws_umap.npy</code></td>
+</tr>
+</tbody>
+</table>
+<p>以上为 2026-09-24 交付快照，表达宽度均为 28,231、embedding 宽度为 128，UMAP 为二维；元数据 <code>cell_type</code> 在 PBMC 表示细胞类型，在 MS/WS 表示病健分组。现有行序对应仍需要来源记录支持，维度核对不能倒推出完整历史谱系。网页归因和反事实结果现场计算返回，不自动保存成实验档案；已有 MS 差异归因表和 Williams 历史 NPZ 是另行保存的结果。归因解释的是编码器输出之和相对于零基线的贡献，不等于疾病因果重要性，编码位移不等于治疗效果。</p>
+<h3 id="original2-离线与在线测试">离线与在线测试</h3>
+<p>无需启动服务、下载模型或读取患者表达矩阵的核心回归（在本目录运行；历史面板测试会读取仓库中的小型存档报告与结果）：</p>
+<div class="sourceCode" id="original2-cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb2-1"><a href="#original2-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> tests <span class="at">-v</span></span></code></pre></div>
+<p>此测试独立于下述 API/浏览器验收，覆盖引擎异常输入、基因名与返回数值对应、资源预检、归因输出保护、PBMC 注释对齐/完整发布、稀疏最大值格式、API 参数契约及初始化失败/并发，不代表真实疾病预测效果或全量模型验收。PBMC 合成数据流测试使用模型/UMAP 替身；API 测试执行实际路由与 FastAPI 校验，但跳过 app 导入时的模型启动；缓存读写用临时目录及真实小矩阵引擎。不加载真实模型或联网下载。使用现有 VCT 环境，不另加 Python 测试依赖。CIPHER 拟合至少需要两个细胞；baseline 可接受一个细胞。矩阵维度、基因名数量/唯一性及有限值必须有效；未知的返回子集基因会明确报错，不再静默过滤。</p>
+<p>前端异步状态可另用 Node.js 内置测试器离线检查（需要支持 <code>node --test</code> 的 Node，无 npm 依赖；不是 Web 服务运行依赖）：</p>
+<div class="sourceCode" id="original2-cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb3-1"><a href="#original2-cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> tests/test_web_state.cjs</span></code></pre></div>
+<p>它执行实际页面脚本，控制 DOM/fetch/Plotly 替身，检查旧请求晚到、失败、快速切换、滑块/搜索及绘图快照，也检查历史入口与数据集隔离、缺失/损坏材料提示及接口失败后清空旧指标；不替代下面的真实浏览器点击验收。</p>
+<p>Web 输入约定：省略 <code>ds</code> 仍默认 PBMC；数据集相关端点显式传未知键返回 400。<code>cell</code> 必须在当前数据集范围内，归因 <code>k</code> 为 1～100、搜索 <code>limit</code> 为 1～200，<code>direction</code> 只接受 <code>ko/oe</code>，基线 <code>method</code> 只接受 <code>ctrl_mean/additive/both</code>；非法值返回 422，页面显示具体原因。数量上限只限制返回结果，不裁剪输入矩阵。切换数据/选择时过期响应被忽略，已完成图表保留其来源；加载期间旧数据操作被禁用。同数据集在单服务进程内只初始化一次，失败不发布半成品、下次请求可重试；不提供跨进程锁、后台自动重试或整机内存限额。</p>
+<p>三个数据集的表达矩阵、元数据、UMAP 缓存，以及 SIGnature 编码器和 GEARS 检查点随 Git/LFS 交付。根目录 <code>.gitignore</code> 排除了较大的 <code>cipher_*.npz</code> 缓存、<code>ms_attribution_fp16.npy</code> 和 Norman 原始/解压数据；缓存首次使用时重算，WS 首次加载更耗时与内存。GEARS 原始数据来源是 <a href="https://zenodo.org/records/17252307">Zenodo 17252307</a> 的 <code>norman.zip</code>；下载到 <code>gears_data/</code> 并解压后，<code>norman/data_pyg/cell_graphs.pkl</code> 会由 GEARS 从 <code>perturb_processed.h5ad</code> 生成。未下载时网页的 PBMC/MS/WS 核心模式仍可运行，但 GEARS 因果功能不可验收。</p>
+<p>浏览器回归测试还需要可选依赖：</p>
+<div class="sourceCode" id="original2-cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb4-1"><a href="#original2-cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements-e2e.txt</span>
+<span id="original2-cb4-2"><a href="#original2-cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">PLAYWRIGHT_BROWSERS_PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$PWD</span><span class="st">/.playwright-browsers&quot;</span> <span class="ex">../.venv/vct/bin/python</span> <span class="at">-m</span> playwright install chromium</span>
+<span id="original2-cb4-3"><a href="#original2-cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> tests_e2e_playwright.py</span></code></pre></div>
+<p>若已安装系统 Chrome，也可不下载 Playwright Chromium，设置 <code>PLAYWRIGHT_CHROMIUM_EXECUTABLE</code> 为 Chrome 可执行文件路径后运行同一测试。测试使用独立的无头浏览器，不操作个人资料或现有标签页。通过真实鼠标点击 UMAP、点击归因行、输入搜索/选择基因和按钮完成流程；只读取绘图坐标来定位鼠标，不调用页面内部选择函数。等待具体响应和界面状态，每步最长 180 秒，不用固定秒数猜测是否完成。测试仅检查反事实位移能计算/出图，不把非零位移当科学验收条件。</p>
+<p>浏览器流程还会在 PBMC 与 MS 页面分别打开历史面板，检查固定来源、Williams 指标、缺图标识、旧图解释和三张存档图加载。测试截图存本目录 <code>test_artifacts/</code>（成功 <code>vct_verify.png</code>、失败且页面仍可访问时 <code>vct_failure.png</code>）；异常返回非零，缺少 Playwright 返回 2 而非跳过后假报成功。浏览器启动失败时可能没有截图。页面的 GEARS 覆盖性检查也会被触发，所以此浏览器测试需要相应数据可用，不能拿 API 的 <code>--skip-gears</code> 结果代替。浏览器下载目录和截图均不入库。</p>
+<p>服务接口和数据加载逻辑见 <code>web/app.py</code>、<code>src/paths.py</code>。<code>src/paths.py</code> 按本目录位置解析本仓库内的数据、模型和同级 <code>SIGnature</code> 源码，不依赖旧工作站路径。</p>
+<h2 id="original2-使用边界">使用边界</h2>
+<h3 id="original2-离线-cli-的资源与输出保护">离线 CLI 的资源与输出保护</h3>
+<p><code>src/viz_perturbation.py</code> 在加载表达矩阵主体和转稠密前读取尺寸，估算表达副本和协方差工作内存。默认 <code>--max-memory-gib 2</code>（GiB）是保护预算，超预算退出 2，提示估算值/预算和矩阵尺寸，尚不创建输出目录。当前全基因 WS/PBMC 会被这一预算拦截；可考虑已有 Web HVG 工作流，或在确认机器内存足够后显式提高预算。程序不自动抽样或删基因。此估算不是操作系统硬限制，不覆盖其他进程、所有库内部峰值和强制杀进程；捕获到 MemoryError 会明确提示，但不能承诺绝不耗尽资源。Web 路径也不等于已完成所有设备上的资源验收。</p>
+<p><code>src/compute_ms_attribution.py</code> 将效应量排序和配套结果全部完成后，先写临时目录，再发布到新运行目录：</p>
+<div class="sourceCode" id="original2-cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb5-1"><a href="#original2-cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> src/compute_ms_attribution.py <span class="at">--output</span> outputs/ms_run_001</span></code></pre></div>
+<p>省略 <code>--output</code> 时使用带时间戳的新目录；已有目标拒绝覆盖。结果包含归因矩阵、embedding、样本表、差异归因表以及矩阵列顺序 <code>gene_order.txt</code>（差异表按效应量排序，不能替代矩阵列顺序）。不会自动替换网页 <code>data/</code>，需核对整套结果后再决定如何更新展示数据。中途写入失败不发布半套运行目录，临时文件正常异常退出时清理；强制终止可能遗留临时目录。脚本仍是昂贵的全量归因，不应把这里的输出保护误认为适用于它的内存预算保护。</p>
+<h3 id="original2-pbmc-测试数据的安全重建">PBMC 测试数据的安全重建</h3>
+<p>PBMC 是早期验证工具可行性的测试数据，不是本项目微缺失疾病的患者数据。直接使用现有网页数据不需要重建。需要重建时，在本目录运行：</p>
+<div class="sourceCode" id="original2-cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original2-cb6-1"><a href="#original2-cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> src/prepare_data.py <span class="dt">\</span></span>
+<span id="original2-cb6-2"><a href="#original2-cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metadata</span> /path/to/approved_pbmc_labels.csv <span class="at">--output</span> outputs/pbmc_run_001</span></code></pre></div>
+<p><code>--metadata</code> 必须显式指定你认可来源的 CSV；<code>cell</code> 为原始 PBMC 的细胞 ID，<code>cell_type</code> 为已确认标签，<code>cluster</code> 可选且提供时原样保留。ID 必须唯一并与原始数据完整对应，程序按 ID 重排，不能仅凭行数相同。缺列/空标签先于数据读取失败，细胞不匹配先于模型加载失败；不自动读取旧 meta，不新增聚类或把聚类编号猜成细胞类型。现有注释是否适用于一次重建，仍需使用者确认。</p>
+<p>省略 <code>--output</code> 会生成独立时间戳目录，已有目标拒绝覆盖。原始数据、对齐表达、embedding、注释、UMAP、基因列顺序和 <code>pbmc_info.json</code> 完整写入后才发布；信息文件记录测试用途及本次注释来源路径。失败不发布半套目录，强制终止可能遗留临时目录；本脚本不自动替换网页 <code>data/</code>。将新结果用于展示前还需核对兼容性和相关缓存，不能只换其中一个文件。实际运行仍需要现有模型及 PBMC 数据/下载条件，本轮没有进行全量重建验收。</p>
+<p>MS/WS 准备脚本的 <code>gene_max.npy</code> 现在保存普通的一维数值向量，检查长度/有限性且禁用 pickle 保存；只展开稀疏最大值一行，不改变归一化。仓库已有的两份旧 object 文件保持不变，当前网页不读取它们；修复生成代码不等于历史文件已修复，也不要为了读旧文件开启 pickle。这两个脚本其余输出步骤仍保持原状，本次没有给它们增加整套输出保护或重新执行。</p>
+<h3 id="original2-科学解释范围">科学解释范围</h3>
+<ul>
+<li>网页「⑤ 编码器敏感性探索（实验性）」默认折叠，展开后仍可进行单/多基因输入修改与编码位移观察。它只改变指定输入、其他基因输入保持不变；最近参考质心变化不是细胞类型转化，位移大小不能直接认定主效基因或疗效。该入口保留早期探索与迭代证据，不作为核心生物学预测功能；原公式、接口和历史结果不变。</li>
+<li>CIPHER 使用线性响应近似，弱表达或稀疏信号的基因可能没有可靠预测。</li>
+<li>反事实扰动和编码器位移不是因果治疗预测；大幅度扰动尤其需要谨慎。</li>
+<li>GEARS 的 Norman/K562 训练分布和微缺失疾病体系不同，主要用于覆盖性与方法对照。</li>
+<li>转录组效应不能代表 SINEUP 介导的翻译层面干预效果。</li>
+</ul>
+<h3 id="original2-历史实验与方法迭代只读">历史实验与方法迭代（只读）</h3>
+<p>点击网页顶部的「历史实验与方法迭代」，或展开编码器探索后点击历史证据入口。面板作为独立标签打开，也可访问 <code>/web/history.html</code>。更新 Python 后端后需重启服务；仅刷新网页不能加载新增接口。</p>
+<p>请通过服务地址打开，例如 <code>http://127.0.0.1:8377/web/history.html</code>，不要直接双击 <code>web/history.html</code>：本地 <code>file://</code> 模式无法读取历史接口，页面会明确提示并提供默认服务入口，不代表图片丢失。使用自定义 <code>VCT_PORT</code> 时，以启动日志的地址为准；页面不会自动启动服务或扫描端口。</p>
+<p>面板按疾病 CellOracle 实验、v1 归因/编码探索、v2 GEARS/Tier 0、v3 CIPHER/基线整理现有证据，不声称存在已证实的直接替代链，也不进行跨背景性能排名。显示三张已有图：MS 归因、CEBPA/GEARS、PBMC/MS4A1 基线对照；旧图中“34 倍位移、互相印证”等解释已在图前明确修正，原文件不改写。</p>
+<ul>
+<li>Williams 3016 基因的 KO/OE Spearman 从保存的汇总向量复算；其余指标读取历史 JSON，均不等于重新运行实验。</li>
+<li>Williams、PBMC 编码探索和 Tier 0 的对应图片标为待补；22q/TBX1 仅有报告描述，未找到对应结果 NPZ/图。汇总向量不能还原逐细胞轨迹。以后补绘须注明“基于历史数据补绘”。</li>
+<li>Tier 0 的 A549 标签与其他 Norman/K562 记录的关系待核对，本轮没有擅自改标签或把它们视为同背景比较。</li>
+<li><code>/api/history</code> 不接入当前疾病/细胞/基因状态；<code>/api/history/artifacts/{key}</code> 只提供 <code>src/history_panel.py</code> 明确列出的 14 份材料，拒绝未知键与逃逸仓库的路径。不会公开整个数据目录、加载 CellOracle 或触发模型计算。</li>
+<li>缺失、损坏和非有限结果分别提示，不用零值代替；加载失败清空上次指标。文件路径与 SHA-256 可查，但仅核对当前文件，不补造历史运行来源。</li>
+</ul>
+<p>这交付的是可核对的历史展示，不是历史复现环境。Williams 原始/中间输入和依赖、网络及参数版本仍需补齐；CR-033 保持待处理，不向主环境安装 CellOracle。</p>
+<h3 id="original2-历史探索脚本与工程验收的区别">历史探索脚本与工程验收的区别</h3>
+<p>以下文件名保留以便追溯，但不是标准测试流程中的科学通过门槛；不要仅凭文件名含 <code>validate/test</code> 或退出码 0 判断假设成立。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>脚本</th>
+<th>探索报告（相对于本工具目录）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/validate.py</code></td>
+<td><code>data/validation_results.json</code>；保留原 AC1/AC2 数值与历史 <code>pass</code> 字段</td>
+</tr>
+<tr>
+<td><code>src/tier0_validate.py</code></td>
+<td><code>data/tier0_validation.json</code>；保留原指标与表格</td>
+</tr>
+<tr>
+<td><code>predictive_test.py</code></td>
+<td><code>data/predictive_exploration.json</code>；方向比较与影响相关性</td>
+</tr>
+<tr>
+<td><code>validate_attribution_vs_perturb.py</code></td>
+<td><code>data/attribution_vs_perturb_exploration.json</code>；逐基因差分归因比较</td>
+</tr>
+</tbody>
+</table>
+<p>报告标注 <code>report_type: exploration</code>、<code>completion_status: completed</code> 和解释边界。退出 0 仅表示计算及报告写入完成；阴性结果、负相关或历史 <code>pass: false</code> 不因此当作程序故障。原 <code>pass</code> 仅指原脚本设定的历史比较条件，不是科学有效性认证。缺输入、计算异常、空报告、不可序列化/非有限指标或写入失败会非零退出；未定义的统计量也不能伪装成完整报告，需要检查数据条件，不等同科学假设被否定。本次未增加科学阈值或改变指标公式。</p>
+<p>这些脚本需正式数据/模型，部分包含全矩阵展开和大量推理，不属于轻量用户冒烟测试；本轮未重新运行或覆盖历史结果。手动重跑会写入上述路径，应先备份需要保留的历史报告。工程验证请使用前述 <code>tests/</code>、API 与浏览器流程。</p>
+<p>架构与历史实验见 <code>docs/</code>、<code>ATTRIBUTIONS.md</code>；旧版本性能数字并非在所有新设备上的保证。</p>
+</details><details><summary>docs/ARCHITECTURE_v3.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original35-virtualcelltool-v3.3-架构文档">VirtualCellTool v3.3 架构文档</h1>
+<blockquote>
+<p><strong>历史版本说明（标注于 2026-09-24，CR-042）</strong>：本文为 <strong>v3.3 / 2026-09-14</strong> 的架构快照，适用于理解当时的设计和迭代，不是当前克隆版本的安装、启动或测试指南。下文旧 <code>derived/tools</code> 路径、<code>SIGnature/.venv</code>、外部测试环境及“固定解释器”要求均仅作历史记录，不应照搬执行。当前安装见<a href="../../README.md">仓库 README</a>，启动/停止/测试见<a href="../README.md">工具 README</a>，使用仓库根目录 <code>.venv/vct</code>。原文和版本锚点保留，不代表当前验收结果。</p>
+</blockquote>
+<blockquote>
+<p>最后更新：2026-09-14 对应代码：<code>derived/tools/VirtualCellTool/</code>（app.py 853 行 · index.html 976 行 · 19 个端点） 版本锚点：<code>v1.0-scimilarity</code> · <code>v2.0-gears</code> · <code>v3.1-fixed</code> · <code>v3.2-zoom</code> · <code>v3.3-viz</code></p>
+</blockquote>
+<hr />
+<h2 id="original35-一全景架构">一、全景架构</h2>
+<pre><code>                    ┌──────────────────────────────────────────┐
+  浏览器              │         VirtualCellTool v3.3            │
+  (Plotly)           │                                          │
+    │                │  ┌──────────────────────────────────┐   │
+    │  HTTP          │  │      web/app.py (FastAPI)          │   │
+    ├───────────────►│  │                                    │   │
+    │                │  │  数据集  /api/data  /api/search_genes │   │
+    │  19 个端点      │  │         /api/gene_expr              │   │
+    │                │  │  归因    /api/attribute             │   │
+    │                │  │         /api/attribution_map  (图)  │   │
+    │                │  │  反事实  /api/perturb(_multi)       │   │
+    │                │  │  表达图  /api/gene_expr_map   (图)   │   │
+    │                │  │  因果    /api/gene_coverage         │   │
+    │                │  │         /api/perturb_causal  负对照  │   │
+    │                │  │  线性响应 /api/perturb_summary (主力) │   │
+    │                │  │         /api/celltype_response      │   │
+    │                │  │  基线    /api/perturb_compare       │   │
+    │                │  └──────────┬───────────────────────┘   │
+    │                │             │                            │
+    │                │    ┌────────┴────────────────────────┐  │
+    │                │    │          5 个扰动引擎             │  │
+    │                │    │                                  │  │
+    │                │    │  perturb.py       v1 反事实      │  │
+    │                │    │  attribute.py     v1 IG 归因     │  │
+    │                │    │  gears_engine.py  v2 GEARS 负对照 │  │
+    │                │    │  cipher_engine.py v3 CIPHER ★    │  │
+    │                │    │  linear_baseline.py v3 基线 ★    │  │
+    │                │    └──────────┬────────────────────┘   │
+    │                │               │                          │
+    │                │    ┌──────────┴────────────────────┐   │
+    │                │    │  数据层（3 数据集懒加载缓存）     │   │
+    │                │    │  {ds}_expr.npz (CSR 稀疏!) +    │   │
+    │                │    │  {ds}_embeddings + {ds}_umap +  │   │
+    │                │    │  {ds}_meta + cipher_{ds}.npz    │   │
+    │                │    └───────────────────────────────┘   │
+    └──────────────────────────────────────────────────────────┘</code></pre>
+<h2 id="original35-二引擎矩阵">二、引擎矩阵</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>引擎</th>
+<th>文件</th>
+<th>原理</th>
+<th>输入</th>
+<th>输出</th>
+<th>速度</th>
+<th>基因覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Attribution</td>
+<td><code>src/attribute.py</code></td>
+<td>Integrated Gradients (Captum)，对 embedding 求和归因</td>
+<td>细胞表达向量 x</td>
+<td>Top K 基因归因分数</td>
+<td>~0.1s</td>
+<td>28231</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Perturb (v1)</td>
+<td><code>src/perturb.py</code></td>
+<td>SCimilarity 编码器反事实</td>
+<td>x + 基因名 + 新值</td>
+<td>embedding 位移</td>
+<td>~0.9s</td>
+<td>28231</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GEARS (v2)</td>
+<td><code>src/gears_engine.py</code></td>
+<td>GNN + GO 知识图谱</td>
+<td>训练图内基因名</td>
+<td>全转录组预测</td>
+<td>~60s</td>
+<td>3127（仅 K562）<strong>负对照</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>CIPHER (v3)</strong></td>
+<td><code>src/cipher_engine.py</code></td>
+<td>线性响应 Δx=Σu</td>
+<td>对照细胞协方差 + 基因名</td>
+<td>全转录组 Δx</td>
+<td>~0.1s</td>
+<td>5000 HVG</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>线性基线 (v3)</strong></td>
+<td><code>src/linear_baseline.py</code></td>
+<td>control-mean / additive</td>
+<td>基因名</td>
+<td>零效应 / 自身 LFC</td>
+<td>&lt;1ms</td>
+<td>28231</td>
+</tr>
+</tbody>
+</table>
+<h2 id="original35-三api-端点19-个含首页">三、API 端点（19 个，含首页）</h2>
+<h3 id="original35-数据集与浏览">数据集与浏览</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /</code></td>
+<td>—</td>
+<td><code>index.html</code>（Cache-Control: no-store）</td>
+</tr>
+<tr>
+<td><code>GET /api/data</code></td>
+<td>ds</td>
+<td>UMAP 坐标、分组标签、候选基因、<code>group_label</code></td>
+</tr>
+<tr>
+<td><code>GET /api/search_genes</code></td>
+<td>q=<code>FOXP3</code></td>
+<td>全基因空间（28231）匹配的基因列表</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_expr</code></td>
+<td>ds, gene</td>
+<td>该基因的 max / mean</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original35-归因">归因</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/attribute</code></td>
+<td>ds, cell, k</td>
+<td>归因排序基因列表</td>
+</tr>
+<tr>
+<td><code>GET /api/attribution_map</code></td>
+<td>ds, cell, k</td>
+<td>归因分数 + 该细胞/全体表达对比（<strong>v3.3 归因图</strong>）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original35-v1-反事实扰动">v1 反事实扰动</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/perturb</code></td>
+<td>ds, cell, gene, value</td>
+<td>UMAP 新旧坐标、位移、<code>zoom</code> 视窗、<code>neighbors</code> 邻域</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_multi</code></td>
+<td>ds, cell, genes, value</td>
+<td>同上 + 细胞类型重判 + 质心距离</td>
+</tr>
+<tr>
+<td><code>GET /api/cell_gene_expr</code></td>
+<td>ds, cell, gene</td>
+<td>该细胞该基因的表达值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original35-v2-gears-因果负对照">v2 GEARS 因果（负对照）</h3>
+<table>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/gene_coverage</code></td>
+<td>gene</td>
+<td>是否在训练图内</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_causal</code></td>
+<td>gene</td>
+<td>GEARS 预测全转录组</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original35-v3-cipher-基线可视化核心">v3 CIPHER + 基线（可视化核心）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/cipher_status</code></td>
+<td>ds</td>
+<td>CIPHER 是否就绪 + HVG 数</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_in_cipher</code></td>
+<td>ds, gene</td>
+<td>该基因是否可预测 + 对照表达</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_summary</code></td>
+<td>ds, gene, direction</td>
+<td><strong>热图数据 + 分组响应（主力端点）</strong></td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_compare</code></td>
+<td>ds, gene, direction</td>
+<td><strong>CIPHER vs 基线对照数据</strong></td>
+</tr>
+<tr>
+<td><code>GET /api/celltype_response</code></td>
+<td>ds, gene, direction</td>
+<td>仅分组响应排序</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_cipher</code></td>
+<td>ds, gene, direction</td>
+<td>轻量 Δx 摘要</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_baseline</code></td>
+<td>ds, gene, method</td>
+<td>线性基线结果</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original35-v3.3-表达分布">v3.3 表达分布</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>参数</th>
+<th>返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/gene_expr_map</code></td>
+<td>ds, gene</td>
+<td>逐细胞表达值 + 分组统计（<strong>表达分布图</strong>）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <code>celltype_response</code> 与 <code>perturb_baseline</code> 当前<strong>未被前端调用</strong>（前端分别用 <code>perturb_summary</code> 与 <code>perturb_compare</code> 覆盖），保留供 CLI / 外部脚本使用。</p>
+</blockquote>
+<h2 id="original35-四前端渲染流程标签页式工作区">四、前端渲染流程（标签页式工作区）</h2>
+<pre><code>用户点击 UMAP 上的细胞
+  → selectCell(i) → GET /api/attribute → 侧栏归因表
+  → 点归因表里一个基因 → pickGene() → 查 CIPHER 覆盖性 + 滑杆同步
+
+用户点 📉 CIPHER 敲低 / 📈 过表达
+  → doCipher(dir) → GET /api/perturb_summary
+  → openTab(&quot;cipher_{gene}_{dir}_{ds}&quot;) → renderPerturbFigure()
+       左子图: Top30 |Δ| 基因（红=目标, 绿=上调, 蓝=下调）
+       右子图: 分组响应（橙=最敏感）+ 驱动基因标注
+
+用户点 📏 对比线性基线
+  → doBaseline() → GET /api/perturb_compare → openTab(&quot;base_...&quot;) 叠加图
+
+用户点 🎨 看表达分布（任意基因可用，不受 HVG 限制）
+  → doExprMap() → GET /api/gene_expr_map → openTab(&quot;expr_...&quot;)
+       左: UMAP 按表达量着色（带色阶条）  右: 各分组平均表达 + 表达%
+
+用户点 📊 归因结果出图
+  → doAttrFigure() → GET /api/attribution_map → openTab(&quot;attr_...&quot;)
+       左: IG 强度（橙/紫=方向）  右: 该细胞 vs 全体均值
+
+用户点 🚀 模拟单基因扰动 / TopN 联合扰动
+  → doPerturb() / doMultiPerturb() → GET /api/perturb(_multi)
+  → openTab(&quot;move&quot;) → showMove() 全景+放大双视图（kNN 插值坐标）
+  → renderCentroidFigure() 质心距离图（联合扰动时）
+
+用户点 🧪 因果预测
+  → doCausal() → GET /api/perturb_causal → renderGearsFigure()（负对照标注）</code></pre>
+<p><strong>标签页系统</strong>：<code>openTab(key,title,render)</code> / <code>activateTab</code> / <code>closeTab</code>，key 含 <code>ds</code> 与基因名， 多个结果并存可对比，切换时 <code>Plotly.Plots.resize()</code>。</p>
+<h2 id="original35-五cipher-引擎原理">五、CIPHER 引擎原理</h2>
+<pre><code>拟合阶段（每数据集一次，缓存到磁盘）:
+┌──────────────────────────────────────────────────┐
+│  对照细胞 X[n_cells × n_genes]  ← CSR 稀疏，不稠密化 │
+│      │                                              │
+│      ▼ 稀疏逐列方差 → 选 Top 5000 HVG（方差最大）      │
+│  X_hvg[n_cells × 5000]  （仅此处稠密化，~2GB 上限）    │
+│      │                                              │
+│      ▼ 算基因-基因协方差 + 岭正则化                    │
+│  Σ = (Xcᵀ Xc)/(n-1) + λ·diag_mean·I                │
+│      │                                              │
+│      ▼ 存盘: cipher_{ds}.npz                         │
+│        含 gene_list / ctrl_mean / Sigma /            │
+│           hvg_idx / full_mean  ← 缺任一项会失效重算   │
+└──────────────────────────────────────────────────┘
+
+预测阶段（每次 0.02–0.1s）:
+┌──────────────────────────────────────────────────┐
+│  输入: gene=MS4A1, direction=ko                    │
+│      │                                              │
+│      ▼ 构建扰动向量 u                                │
+│  u[MS4A1_idx] = 0 - ctrl_mean[MS4A1]  (敲低→0)     │
+│      │                                              │
+│      ▼ 线性响应                                     │
+│  Δx = Σ @ u      (5000 维向量)                      │
+│      │                                              │
+│      ▼ 排序 |Δx| → Top 30 基因                       │
+│      ▼ 分组响应 = 余弦对齐度（类型特异谱 vs |Δx|）      │
+│      ▼ 输出                                         │
+└──────────────────────────────────────────────────┘</code></pre>
+<p><strong>分组响应公式</strong>（v3.1 方法学修复，判别力 2/12 → 10/12）：</p>
+<pre><code>w_ct[g] = max(0, expr_ct[g] − mean_over_celltypes[g])   # 类型特异富集量
+response = Σ w_ct[g]·|Δ[g]| / (‖w_ct‖·‖|Δ|‖)            # 余弦对齐度</code></pre>
+<h2 id="original35-六数据流">六、数据流</h2>
+<pre><code>启动时（默认 pbmc，6.2s）:
+  1. 加载 SCimilarity 模型（117MB）
+  2. 加载数据集（CSR 稀疏 X + embeddings + meta）
+  3. 加载缓存 UMAP（存在则直接用，不重算）
+  4. 加载/拟合 CIPHER 协方差 → data/cipher_{ds}.npz
+  5. 服务就绪（其余数据集懒加载，切换时才加载）
+
+运行时:
+  用户请求 → FastAPI 路由 → _require_cipher(ds)（必要时自动加载）→ engine.predict() → JSON → Plotly</code></pre>
+<p><strong>缓存文件与实测大小</strong>：<code>cipher_pbmc.npz</code> 105M · <code>cipher_ms.npz</code> 104M · <code>cipher_ws.npz</code> 12M （ws 稀疏度高，压缩后反而最小）</p>
+<h2 id="original35-七文件清单">七、文件清单</h2>
+<pre><code>VirtualCellTool/
+├── web/
+│   ├── app.py              # FastAPI 主服务（853 行，19 个端点）
+│   ├── index.html          # 前端（976 行，标签页工作区 + 8 处 Plotly 图表）
+│   └── plotly.min.js       # Plotly 库
+├── src/
+│   ├── paths.py            # 集中路径管理（禁止硬编码）
+│   ├── prepare_*.py        # 各数据集预处理（pbmc/ms/ws）
+│   ├── attribute.py        # IG 归因引擎
+│   ├── perturb.py          # v1 反事实扰动引擎
+│   ├── gears_engine.py     # v2 GEARS 因果引擎（负对照）
+│   ├── cipher_engine.py    # v3 CIPHER 线性响应引擎 ★
+│   ├── linear_baseline.py  # v3 线性基线引擎 ★
+│   ├── viz_perturbation.py # CLI 出图脚本 ★
+│   └── ... (其他已有脚本)
+├── tests_e2e_playwright.py # 浏览器端到端回归（15 项断言）
+├── data/                   # 中间数据 + UMAP 缓存 + CIPHER 缓存
+├── docs/                   # 工程/设计/交接文档
+├── gears_data/             # GEARS 训练数据
+└── gears_ckpt/             # GEARS 模型权重</code></pre>
+<h2 id="original35-八启动命令">八、启动命令</h2>
+<div class="sourceCode" id="original35-cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original35-cb7-1"><a href="#original35-cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Web 交互（推荐：启动脚本，默认 pbmc）</span></span>
+<span id="original35-cb7-2"><a href="#original35-cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> derived/tools/VirtualCellTool</span>
+<span id="original35-cb7-3"><a href="#original35-cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./启动VirtualCellTool.command</span></span>
+<span id="original35-cb7-4"><a href="#original35-cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># → http://127.0.0.1:8377</span></span>
+<span id="original35-cb7-5"><a href="#original35-cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original35-cb7-6"><a href="#original35-cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 或手动指定数据集</span></span>
+<span id="original35-cb7-7"><a href="#original35-cb7-7" aria-hidden="true" tabindex="-1"></a><span class="va">VCT_DATASET</span><span class="op">=</span>pbmc <span class="ex">../SIGnature/.venv/bin/python</span> web/app.py</span>
+<span id="original35-cb7-8"><a href="#original35-cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据集也可在网页顶部下拉切换（懒加载，无需重启）</span></span>
+<span id="original35-cb7-9"><a href="#original35-cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original35-cb7-10"><a href="#original35-cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 端到端回归测试</span></span>
+<span id="original35-cb7-11"><a href="#original35-cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">~/ReactionSeek/.venv/bin/python</span> tests_e2e_playwright.py</span>
+<span id="original35-cb7-12"><a href="#original35-cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original35-cb7-13"><a href="#original35-cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CLI 出图（出版物用）</span></span>
+<span id="original35-cb7-14"><a href="#original35-cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">../SIGnature/.venv/bin/python</span> src/viz_perturbation.py <span class="dt">\</span></span>
+<span id="original35-cb7-15"><a href="#original35-cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--gene</span> GTF2I <span class="at">--direction</span> oe <span class="at">--dataset</span> ws <span class="at">--output</span> outputs/figures/</span>
+<span id="original35-cb7-16"><a href="#original35-cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># → SVG 热图 + 分组响应 + 基线对照 + JSON 数据</span></span></code></pre></div>
+<h2 id="original35-九关键约束踩过的坑">九、关键约束（踩过的坑）</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>约束</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>表达式矩阵必须保持 CSR 稀疏</strong></td>
+<td>ws 稠密化 = 96969×28231 float64 ≈ 21.9GB，直接 OOM</td>
+</tr>
+<tr>
+<td><strong>CIPHER 引擎按数据集独立实例</strong></td>
+<td>全局单例会在切数据集时互相覆盖协方差矩阵</td>
+</tr>
+<tr>
+<td><strong>缓存必须存 hvg_idx + full_mean</strong></td>
+<td>缺任一字段 → KeyError → 每次启动全量重算</td>
+</tr>
+<tr>
+<td><strong>UMAP 坐标用 kNN 插值，不用 k=1</strong></td>
+<td>k=1 会把坐标吸附到已有细胞，任何位移都输出 Δ=0</td>
+</tr>
+<tr>
+<td><strong>分组响应用余弦，不用加权均值</strong></td>
+<td>否则最大细胞群/高表达类型在任何扰动下都排第一</td>
+</tr>
+<tr>
+<td><strong>不要用系统 Python / pip install / uv</strong></td>
+<td>解释器固定为 <code>../SIGnature/.venv/bin/python</code></td>
+</tr>
+</tbody>
+</table>
+</details><details><summary>docs/DESIGN_REVIEW_ITERATIVE.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original36-基因筛选方案-三轮迭代设计评审记录">基因筛选方案 · 三轮迭代设计评审记录</h1>
+<blockquote>
+<p>评审对象：<strong>SIGnature（SCimilarity 归因）+ GEARS（因果扰动）的”双向验证”基因筛选方案</strong> 评审方法：每轮 = 以 iGEM 评委视角提问 → 以团队身份诚实自答 → 定位缺口 → 应用修改。连续三轮。 对应代码：<code>src/v2_closed_loop.py</code>（v1→v2 闭环）、<code>src/compute_ms_attribution.py</code>（v1 归因）</p>
+</blockquote>
+<hr />
+<h2 id="original36-评审前状态v2.0">评审前状态（v2.0）</h2>
+<p><code>v2_closed_loop.py</code> 用 <strong>CEBPA</strong> 验证 GEARS 加载/基因顺序正确（pearson r=0.972），并据此声称 “位移 0.338 是 v1 单基因扰动 0.01 的 34 倍，证明 v1 无级联效应、需要 v2 补足”。 本记录证明该结论不成立，并给出修正架构。</p>
+<hr />
+<h2 id="original36-第-1-轮方案定义与数据流">第 1 轮：方案定义与数据流</h2>
+<h3 id="original36-评委提问">1.1 评委提问</h3>
+<ul>
+<li><strong>Q1</strong>：“双向验证”到底验证什么？谁是”筛”、谁是”验”、结论对象是谁？v2 的输出有没有反哺去修正 v1 的排序？</li>
+<li><strong>Q2</strong>：闭环在真实疾病候选基因上闭合了吗？v1 筛出 FTL/ASPA，但 GEARS 只认 Norman 扰动图（K562 转录因子），FTL/ASPA 不在 <code>pert_list</code>。跑通的 CEBPA 与 MS 少突胶质零关系。</li>
+<li><strong>Q3</strong>：用 K562 的因果模型去”验证”CNS 细胞的归因，生物学前提是什么？</li>
+<li><strong>Q4</strong>：0.338（v2，K562）vs 0.01（v1，B 细胞）是同一把尺子吗？</li>
+</ul>
+<h3 id="original36-团队自答暴露的缺口">1.2 团队自答（暴露的缺口）</h3>
+<ul>
+<li><strong>G1</strong>：没有真正双向验证——v2 只证明了 GEARS 加载正确，没验证归因方案。</li>
+<li><strong>G2</strong>：数据流断点——疾病候选基因喂不进 GEARS，闭环未闭合。</li>
+<li><strong>G3</strong>：跨域无前提，K562→CNS 因果迁移不成立。</li>
+<li><strong>G4</strong>：尺度不可比，“34 倍”论证作废。</li>
+</ul>
+<h3 id="original36-本轮修改">1.3 本轮修改</h3>
+<ul>
+<li><strong>M1</strong>：确立两层架构——<strong>Tier 0 方法验证层</strong>（Norman/K562，有因果 ground truth）+ <strong>Tier 1 应用层</strong>（MS，无 ground truth）。</li>
+<li><strong>M2</strong>：重新定义”双向”= 正向（precision）+ 反向（recall）两个可证伪检验，都在 Tier 0 内做。</li>
+<li><strong>M3</strong>：GEARS 职责改为”<strong>验证方法</strong>”，不验证具体疾病基因。</li>
+<li><strong>M4</strong>：CEBPA 降级为反向检验的一个数据点，不再是整个 demo。</li>
+</ul>
+<h3 id="original36-修改后状态">1.4 修改后状态</h3>
+<p>架构：<code>单链 demo</code> → <code>验证层 + 应用层</code>。 缺口消除映射：G1→M2，G2→M3，G3/G4→M1（不再跨域比较）。</p>
+<hr />
+<h2 id="original36-第-2-轮tier-0-验证的严谨性">第 2 轮：Tier 0 验证的严谨性</h2>
+<h3 id="original36-评委提问-1">2.1 评委提问</h3>
+<ul>
+<li><strong>Q1（混淆变量）</strong>：attribution 和 perturbation effect 都跟基因表达水平相关。你证明的会不会只是”高表达基因扰动效应大”？SIGnature 的核心论点就是”表达量 ≠ 重要性”，你的验证必须直接检验这一点——加表达量/随机基线，证明归因有<strong>增量</strong>预测力。</li>
+<li><strong>Q2（统计功效）</strong>：Norman 有多少单基因扰动有真实敲低细胞？n 是多少？Spearman 相关够不够？</li>
+<li><strong>Q3（recall 定义）</strong>：“效应大”的阈值、recall@K 的 K 取多少？阈值选择会左右结论，需要敏感性分析。</li>
+<li><strong>Q4（方向 vs 幅度）</strong>：归因有符号，效应是恒正位移。正向检验用 |attr| 还是带符号？符号与效应方向是否单独检验？</li>
+</ul>
+<h3 id="original36-团队自答">2.2 团队自答</h3>
+<ul>
+<li><strong>G5</strong>：缺少基线对照，相关性可能被表达水平混淆。</li>
+<li><strong>G6</strong>：n 未统计，功效未知。</li>
+<li><strong>G7</strong>：recall 阈值未定义。</li>
+<li><strong>G8</strong>：符号信息未纳入。</li>
+</ul>
+<h3 id="original36-本轮修改-1">2.3 本轮修改</h3>
+<ul>
+<li><strong>M5</strong>：正向检验加三个基线——表达量 rank、随机 rank、以及归因对表达量的<strong>增量预测力</strong>（partial correlation / 含表达量协变量的多元回归）。</li>
+<li><strong>M6</strong>：明确 n = Norman 有真实敲低细胞的单基因扰动数（以实际数据统计为准，预计约百来个），据此报功效。</li>
+<li><strong>M7</strong>：recall@K 取 K∈{10,20,50} 做敏感性；“效应大”定义为真实位移 top-10%。</li>
+<li><strong>M8</strong>：正向检验用 |attr|（幅度）；另设<strong>符号对齐检验</strong>（attr 符号 vs 敲低效应方向一致性）。</li>
+</ul>
+<h3 id="original36-修改后状态-1">2.4 修改后状态</h3>
+<p>Tier 0 从”算一个相关系数”升级为”<strong>带基线的可证伪检验套件</strong>”。</p>
+<hr />
+<h2 id="original36-第-3-轮应用层与诚实-gap">第 3 轮：应用层与诚实 gap</h2>
+<h3 id="original36-评委提问-2">3.1 评委提问</h3>
+<ul>
+<li><strong>Q1（迁移假设）</strong>：“SCimilarity 是跨组织通才，所以归因-因果相关性可迁移”——这个假设本身没被验证。能否在 Tier 0 内加跨状态/跨数据集留一验证？</li>
+<li><strong>Q2（输出规格）</strong>：第 1 层最终交付什么？怎么防止湿实验队友把”排名第 1”当成”一定重要”？</li>
+<li><strong>Q3（假阳性率）</strong>：若 r=0.4（中等），排名前列有多少假阳性？怎么传达正确率？</li>
+<li><strong>Q4（与 iGEM 主线连接）</strong>：转录层面筛选的基因，但 RNA binder 调控的是<strong>翻译</strong>——这个 A3 gap 在应用层怎么接？</li>
+</ul>
+<h3 id="original36-团队自答-1">3.2 团队自答</h3>
+<ul>
+<li><strong>G9</strong>：迁移假设未验证。</li>
+<li><strong>G10</strong>：无输出规格、无置信框架。</li>
+<li><strong>G11</strong>：假阳性率未量化。</li>
+<li><strong>G12</strong>：与 RNA binder 主线的转录-翻译 gap 未在方案内闭合。</li>
+</ul>
+<h3 id="original36-本轮修改-2">3.3 本轮修改</h3>
+<ul>
+<li><strong>M9</strong>：迁移假设显式化为可检验命题 <strong>H2</strong>；若可用 Adamson（K562 另一套扰动）或 Norman 组合扰动做留一交叉验证。</li>
+<li><strong>M10</strong>：定义输出规格——排序 CSV + <code>effect_size / attr / expr</code> 列 + 顶部声明”假设生成器，非因果清单”。</li>
+<li><strong>M11</strong>：用 r 直接换算 R²，诚实呈现”排名前列仍含 X% 噪声”。</li>
+<li><strong>M12</strong>：明确定位——筛选输出是”<strong>靶点候选</strong>”，转录→翻译 gap 用 A3 显式声明；“是否需要蛋白层面证据”列为待定战略问题（见待办）。</li>
+</ul>
+<h3 id="original36-修改后状态-2">3.4 修改后状态</h3>
+<p>应用层有明确交付物 + 置信框架 + 诚实边界声明。</p>
+<hr />
+<h2 id="original36-三轮后的最终架构v2.1">三轮后的最终架构（v2.1）</h2>
+<h3 id="original36-tier-0-方法验证normank562有因果-ground-truth">Tier 0 — 方法验证（Norman/K562，有因果 ground truth）</h3>
+<ol type="1">
+<li>对照细胞 → SCimilarity embedding + IG 归因（28,231 空间，3536/5045 基因可映射）</li>
+<li>对每个有真实敲低细胞的单基因扰动 g，算<strong>真实因果效应</strong> = ‖embed(KD cells) − embed(ctrl)‖（GEARS 预测效应作补充）</li>
+<li><strong>正向（precision）</strong>：Spearman(attr_rank, effect) + 表达量/随机基线 + partial correlation</li>
+<li><strong>反向（recall）</strong>：recall@K（K=10/20/50）+ AUROC（top 效应基因 vs 随机）</li>
+<li><strong>符号对齐</strong>：attr 符号 vs 敲低效应方向</li>
+<li>产出可引用数字：r、p、recall、AUROC</li>
+</ol>
+<h3 id="original36-tier-1-应用ms-少突胶质无-ground-truth">Tier 1 — 应用（MS 少突胶质，无 ground truth）</h3>
+<ol type="1">
+<li>归因 → 差异归因（Cohen’s d）→ 排序清单</li>
+<li>外部验证：MS GWAS/文献已知基因富集（次级证据）</li>
+<li>输出规格：CSV + 置信声明</li>
+</ol>
+<h3 id="original36-假设清单显式">假设清单（显式）</h3>
+<ul>
+<li><strong>H1</strong>（Tier 0 内可检验）：K562 上归因排序与真实因果扰动效应显著相关，且<strong>增量于表达量</strong>。</li>
+<li><strong>H2</strong>（迁移，弱）：该相关关系可迁移到其他细胞类型（方法迁移，非逐基因迁移）。</li>
+<li><strong>A3</strong>（局限）：转录层面重要性对翻译层面干预只有参考价值。</li>
+</ul>
+<h3 id="original36-诚实-gap评委追问的标准回答">诚实 gap（评委追问的标准回答）</h3>
+<ul>
+<li>Tier 0 验证的是<strong>方法</strong>，不是 FTL/ASPA 这两个具体基因。</li>
+<li>FTL/ASPA 的因果验证三路（从强到弱）：① 湿实验 CRISPRi 敲低少突胶质；② CNS Perturb-seq 重训 GEARS；③ CellOracle/SCENIC 在 MS 数据上做同域 in silico 敲低（无 ground truth 的次级证据）。</li>
+<li>标准话术：“我们在 K562 上证明了归因排序与因果扰动效应显著相关（r=?, recall=?），因此把归因作为疾病数据里的筛选器；FTL/ASPA 的最终因果验证留给湿实验。”</li>
+</ul>
+<hr />
+<h2 id="original36-下一步代码改动待办">下一步（代码改动待办）</h2>
+<ol type="1">
+<li>改写 <code>v2_closed_loop.py</code> → Tier 0 正反验证，产出 r / p / recall / AUROC 实数。</li>
+<li>统计 Norman 单基因扰动 n 与真实细胞数（确定功效）。</li>
+<li>输出规格落地：<code>ms_differential_attribution.csv</code> 加置信列 + 顶部声明。</li>
+<li>（待定）是否引入 CellOracle/SCENIC 作为 MS 侧次级因果证据。</li>
+</ol>
+<hr />
+<h2 id="original36-tier-0-实测结果2026-08-16负结果">Tier 0 实测结果（2026-08-16，负结果）</h2>
+<p><code>src/tier0_validate.py</code> 在 Norman/A549 上跑通（注意：cell_type 实为 <strong>A549</strong> 非 K562）。 n=101 个单基因敲低（映射进 SCimilarity 且有真实细胞），效应测量无 n_cells 混杂（r=0.028）。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spearman(归因, 真实效应)</td>
+<td><strong>0.022 (p=0.83)</strong></td>
+<td>不相关 → <strong>H1 被证伪</strong></td>
+</tr>
+<tr>
+<td>Spearman(表达量, 真实效应)</td>
+<td>-0.092 (p=0.36)</td>
+<td>不相关</td>
+</tr>
+<tr>
+<td>Spearman(随机, 真实效应)</td>
+<td>0.007 ± 0.093</td>
+<td>零基线</td>
+</tr>
+<tr>
+<td>Spearman(归因, 表达量)</td>
+<td><strong>0.862</strong></td>
+<td>此数据归因≈表达量</td>
+</tr>
+<tr>
+<td>partial Spearman(归因, 效应 | 表达量)</td>
+<td>0.176 (p=0.079)</td>
+<td>弱、不显著</td>
+</tr>
+<tr>
+<td>recall@10/20/50</td>
+<td>0.2 / 0.2 / 0.56</td>
+<td>接近随机</td>
+</tr>
+<tr>
+<td>AUROC(top10% 效应)</td>
+<td>0.56</td>
+<td>接近 0.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论</strong>： 1. “双向验证”假设 H1（归因≈因果重要性）被证伪，原”GEARS 验证归因”思路作废。 2. 此数据里归因≈表达量（r=0.86），与 SIGnature 论文”表达量≠重要性”头条口号在秩相关层面相悖（他们强调的是顶部几个基因不同，整体排序仍跟表达量走）。 3. 负结果与 v1 负结果（12 基因敲低不翻转类型）同源：细胞身份冗余度高 → “表征重要性” ≠ “非冗余必需性”。</p>
+<p><strong>修正叙事</strong>：归因=表征重要性筛选器（marker 恢复 + 文献/GWAS 富集验证，非因果）；GEARS=因果预测器（held-out 验证 r=0.972，域受限）。两者<strong>互补非互验</strong>，r=0.02 即”重要≠必需”的直接证据。</p>
+</details><details><summary>docs/ENGINEERING.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original37-工程文档-virtualcelltool">工程文档 — VirtualCellTool</h1>
+<blockquote>
+<p>对应 iGEM Engineering 评审要求：DBTL 循环 + 假设清单 + 验收标准。</p>
+</blockquote>
+<h2 id="original37-问题陈述problem">1. 问题陈述（Problem）</h2>
+<p>iGEM 队伍设计”改变基因表达”的干预方案时，缺乏低成本手段<strong>在湿实验之前预览干预对细胞状态的影响</strong>。现有工具（SIGnature 等）只做静态分析，无交互式扰动模拟。</p>
+<h2 id="original37-文献基线与已知限制">2. 文献基线与已知限制</h2>
+<ul>
+<li>SIGnature (Nat Biotechnol 2026)：attribution 排序基因重要性，但无扰动模拟、无交互界面</li>
+<li>SCimilarity (Nature 2024)：编码器可对反事实输入做前向推理（原论文做过 in silico perturbation）</li>
+<li>scGen / CPA / GEARS / scDiffusion：基于 Perturb-seq 训练的因果扰动模型（我们的 v2 升级路径）</li>
+</ul>
+<h2 id="original37-假设近似与简化assumptions">3. 假设、近似与简化（Assumptions）</h2>
+<ul>
+<li><strong>A1</strong>：编码器对小幅度反事实扰动的响应方向具有生物学参考价值（外推可靠性随扰动幅度衰减）</li>
+<li><strong>A2</strong>：转录组 embedding 位移可近似代表细胞功能状态变化</li>
+<li><strong>A3</strong>：转录层面证据可外推至翻译层面干预（与本队 RNA binder 机制的层面差异，定位为概念验证）</li>
+<li><strong>S1</strong>：demo 阶段仅用 PBMC 数据集（非疾病模型），验证方法论而非具体疾病结论</li>
+</ul>
+<h2 id="original37-验收标准acceptance-criteria">4. 验收标准（Acceptance Criteria）</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>编号</th>
+<th>标准</th>
+<th>测量方法</th>
+<th>阈值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC1</td>
+<td>方向性：敲低细胞类型标志基因后，细胞 embedding 远离其类型质心</td>
+<td>位移向量 vs “细胞→质心”向量的余弦相似度，对比随机基因基线</td>
+<td>显著大于随机基线，置换检验 p&lt;0.05</td>
+</tr>
+<tr>
+<td>AC2</td>
+<td>区分度：标志基因扰动的位移幅度 &gt; 等量随机基因</td>
+<td>位移 L2 范数对比</td>
+<td>效应量显著（p&lt;0.05）</td>
+</tr>
+<tr>
+<td>AC3</td>
+<td>可用性：滑块操作→UMAP 更新延迟</td>
+<td>计时</td>
+<td>&lt; 2 秒</td>
+</tr>
+<tr>
+<td>AC4</td>
+<td>可复现：新机器 30 分钟复现 demo</td>
+<td>README 一键脚本</td>
+<td>通过</td>
+</tr>
+</tbody>
+</table>
+<h2 id="original37-dbtl-循环记录">5. DBTL 循环记录</h2>
+<h3 id="original37-循环-1核心机制验证">循环 1：核心机制验证</h3>
+<ul>
+<li>Design: 反事实扰动走 SCimilarity 编码器 + AC1/AC2</li>
+<li>Build: src/perturb.py</li>
+<li>Test: PBMC 数据 + 置换检验</li>
+<li>Learn:
+<ul>
+<li><strong>失败记录 1</strong>：SIGnature <code>lognorm_counts()</code> 要求原始 counts 存于 <code>layers['counts']</code>，直接传入 X 为原始 counts 的 AnnData 会报错 → 修复：显式 <code>adata.layers['counts'] = adata.X.copy()</code></li>
+<li><strong>失败记录 2</strong>：scanpy leiden 聚类缺 igraph/leidenalg 依赖（SIGnature 未声明）→ 补装</li>
+<li><strong>成功结果</strong>（data/validation_results.json）：AC1 方向性 +0.0012 vs 随机 -0.0000（p&lt;0.0005）；AC2 位移幅度 0.0124 vs 随机 0.0007（~18x，p&lt;0.0005）→ 核心假设 A1 在小扰动范围内成立</li>
+<li>生物学 sanity check：B 细胞 attribution top = MS4A1/CD79A/BANK1，与 SIGnature 原论文 Fig.2 结论一致</li>
+</ul></li>
+</ul>
+<h3 id="original37-循环-2工具化">循环 2：工具化</h3>
+<ul>
+<li>Design: 交互界面 + attribution 引导扰动建议</li>
+<li>Build: web/ 前端 + API</li>
+<li>Test: AC3 延迟 + 无说明书试用</li>
+<li>Learn:
+<ul>
+<li><strong>成功结果</strong>：attribution 0.09s、扰动模拟 0.88s（umap-learn transform 为主要开销），端到端 ~1.4s &lt; 2s 标准</li>
+<li><strong>迭代记录</strong>：候选基因列表按方差预筛 2000 个导致部分基因无法搜索 → 改为全 28231 基因空间后端搜索（/api/search_genes）</li>
+<li><strong>迭代记录</strong>：top 基因表改为可点击直接选中；重要性列改为显示 |attribution|（用户反馈负号干扰阅读）</li>
+</ul></li>
+</ul>
+<h3 id="original37-循环-3多基因联合扰动-类型重判重要负结果">循环 3：多基因联合扰动 + 类型重判（<strong>重要负结果</strong>）</h3>
+<ul>
+<li>Design: 假设”联合敲低 top N 身份证基因可使细胞类型重判翻转”</li>
+<li>Build: perturb_multi + 最近质心分类器 + Top1/3/5 按钮</li>
+<li>Test: B 细胞 #1，分别敲低 Top1/3/5/8/12 基因</li>
+<li>Learn:
+<ul>
+<li>位移随基因数近似线性增长：0.0102（1个）→ 0.0205（3个）→ 0.0344（5个）→ 0.0616（8个）→ 0.0826（12个）</li>
+<li><strong>负结果：即使联合敲低 12 个 B 细胞标志基因，最近质心重判仍为 B cell</strong>（距 B 质心 0.23 vs 次近 T 细胞 0.69）</li>
+<li>解读：① 细胞身份由数百基因冗余编码，简单编码器反事实扰动无法翻转类型——与 A1 假设的边界一致；② 说明该工具适用于”重要性排序 + 方向性验证”，不适用于”细胞命运预测”；③ 支持 v2 升级到 Perturb-seq 因果模型（GEARS 等）的必要性——<strong>这是 wiki 上论证工具定位与局限的关键数据</strong></li>
+</ul></li>
+</ul>
+<h3 id="original37-循环-4真实疾病数据差异归因ms-少突胶质细胞">循环 4：真实疾病数据差异归因（MS 少突胶质细胞）</h3>
+<ul>
+<li>Design: MS vs normal 同细胞类型差异归因 → 候选靶基因清单</li>
+<li>Build: src/compute_ms_attribution.py（批量化 IG，64 细胞/批）</li>
+<li>Test: 17,799 细胞（MS 11,208 / normal 6,591）</li>
+<li>Learn:
+<ul>
+<li><strong>性能惊喜</strong>：批量化 IG 达 645 细胞/秒（原估 0.09s/细胞是单细胞 API 调用开销）——17,799 细胞 attribution 矩阵仅 ~1 分钟</li>
+<li><strong>失败记录 3</strong>：pandas <code>sort_values</code> 列名笔误（effect vs effect_size）→ 分析步骤独立重跑修复；教训：数据产物先落盘再分析</li>
+<li><strong>Sanity check 通过</strong>：PLP1（髓鞘主蛋白）为两组 |attribution| 第一名；MOG 重要性在 MS 中减半（0.0007 vs 0.0015），与脱髓鞘生物学一致</li>
+<li><strong>产出</strong>：data/ms_differential_attribution.csv（全基因差异归因表）+ ms_analysis_report.png</li>
+<li><strong>候选基因</strong>（|d|&gt;0.3）：MS 中重要性↑ = ACTB/FTL（铁代谢）/LRP2 等；MS 中重要性↓ = ASPA（少突胶质标志）/NCAM1/CTNNA3 等</li>
+</ul></li>
+</ul>
+<h3 id="original37-循环-5v2-因果扰动模型接入-闭环验证成功">循环 5：v2 因果扰动模型接入 + 闭环验证（<strong>成功</strong>）</h3>
+<ul>
+<li>Design: v1 找关键基因 → GEARS（Perturb-seq 因果训练）预测扰动后转录组 → 重新归因放回 embedding 空间验证</li>
+<li>Build: src/v2_closed_loop.py</li>
+<li>Test: CEBPA 敲低（Norman 数据集中有 70 个真实敲低细胞做对照）</li>
+<li>过程中的失败记录：
+<ul>
+<li><strong>失败 4</strong>：PyPI <code>gears</code> 是同名错误包（Web 资产库）→ 正确包 <code>cell-gears</code></li>
+<li><strong>失败 5</strong>：Harvard Dataverse 被 AWS WAF 全面封锁（代理/直连/WARP/无头浏览器均失败）→ Zenodo 镜像（17252307）解决</li>
+<li><strong>失败 6</strong>：GEARS 与 pandas 2.x 不兼容（Series.nonzero 已删除）→ 猴子补丁</li>
+<li><strong>失败 7</strong>：AnnData 视图导致矩阵转稠密静默失效 → <code>to_memory()</code> 实体化</li>
+</ul></li>
+<li><strong>成功结果</strong>（data/v2_closed_loop.json）：
+<ul>
+<li>v2 模型验证：预测 vs 真实敲低细胞 pearson r = <strong>0.972</strong>（Top50 DE 基因 r = 0.974）</li>
+<li>闭环位移：GEARS 预测的扰动细胞在 SCimilarity 空间位移 <strong>0.338</strong>（v1 单基因扰动 ~0.01 的 34 倍）——证实 v1 位移小的根源是”只改一个输入、无级联效应”</li>
+<li>生物学一致性：CEBPA 敲低后归因变化 = 红系程序（HBG1/2、GYPA/B、KLF1）↓、髓系标志（TYROBP、LST1）↑，与 CEBPA 驱动髓系分化的经典生物学吻合</li>
+<li><strong>结论：SIGnature 归因框架与因果扰动模型互相印证，v1→v2→验证→指导湿实验的完整闭环跑通</strong></li>
+</ul></li>
+</ul>
+</details><details><summary>docs/HANDOFF_v3.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original38-virtualcelltool-v3.3-agent-交接文档">VirtualCellTool v3.3 — Agent 交接文档</h1>
+<blockquote>
+<p><strong>历史版本说明（标注于 2026-09-24，CR-042）</strong>：本文记录 <strong>v3.1～v3.3 / 2026-09-13～14</strong> 的交接与设计过程，仅适用于查阅当时状态。下文“先读本文”“必须用旧解释器”、旧 <code>derived/tools</code> 路径、批量杀进程及测试命令不是当前操作要求，请勿照搬。当前安装见<a href="../../README.md">仓库 README</a>，启动/精确停止/测试见<a href="../README.md">工具 README</a>，使用仓库根目录 <code>.venv/vct</code>。历史实验和结论原文保留，不等于当前科学验收。</p>
+</blockquote>
+<blockquote>
+<p>版本锚点：<code>v1.0-scimilarity</code> · <code>v2.0-gears</code> · <code>v3.1-fixed</code> · <code>v3.2-zoom</code> · <code>v3.3-viz</code> 第 0 节记录 v3.1→v3.3 三轮修复；第 1–10 节为架构与操作说明。</p>
+</blockquote>
+<blockquote>
+<p><strong>给接手 Agent 的第一句话</strong>：这是一个 iGEM 2026 项目的干实验工具。核心功能 = 在单细胞数据上预测基因扰动的转录组效应，并用交互式 Plotly 图表展示。代码在 <code>derived/tools/VirtualCellTool/</code>。先读这个文档，再读 <code>docs/ARCHITECTURE_v3.md</code>。</p>
+</blockquote>
+<hr />
+<h2 id="original38-v3.1-修复记录2026-09-13">0. v3.1 修复记录（2026-09-13）</h2>
+<p>上一版交接时工具<strong>无法启动</strong>（默认加载 ws 数据集时进程无限卡死）。本次修复的问题：</p>
+<h3 id="original38-致命-bug工具完全不可用">致命 bug（工具完全不可用）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>根因</th>
+<th>修复</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>启动无限卡死</td>
+<td><code>_load_dataset</code> 用 <code>X.toarray()</code> 稠密化。ws = 96969×28231 float64 ≈ <strong>21.9 GB</strong>，直接打爆内存进 swap</td>
+<td>全程保持 CSR 稀疏（<code>float32</code>），新增 <code>_sparse_col_var()</code> / <code>_row()</code> 稀疏工具函数；只在 5000 HVG 子矩阵上稠密化（~2 GB）</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>CIPHER 缓存永远失效</td>
+<td>缓存写盘时只存 <code>gene_list/ctrl_mean/Sigma</code>，读取时却访问 <code>c["hvg_idx"]</code> → KeyError → 每次启动全量重算</td>
+<td>缓存补存 <code>hvg_idx</code> + <code>full_mean</code>；读到旧格式自动识别并重建</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>缓存加载后仍重算</td>
+<td>缓存分支末尾<strong>没有 <code>return</code></strong>，代码继续往下执行全量拟合</td>
+<td>加载成功立即 <code>return</code></td>
+</tr>
+<tr>
+<td>F4</td>
+<td>多数据集结果互相污染</td>
+<td><code>cipher_eng</code> / <code>baseline_eng</code> 是模块级<strong>全局单例</strong>，切数据集时后加载的覆盖先加载的协方差矩阵</td>
+<td>改为 <code>_CIPHER_ENGINES[ds]</code> / <code>_BASELINE_ENGINES[ds]</code> 按数据集独立实例</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original38-前端-bug效果不好的直接原因">前端 bug（“效果不好”的直接原因）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>修复</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F5</td>
+<td>所有 <code>fetch</code> 都不带 <code>ds</code> 参数</td>
+<td>统一封装 <code>api(path, params)</code>，自动注入当前 <code>DS</code></td>
+</tr>
+<tr>
+<td>F6</td>
+<td>切数据集靠 <code>location.href</code> 整页跳转，状态全丢</td>
+<td>改为原地 <code>loadDataset(ds)</code> + <code>history.replaceState</code></td>
+</tr>
+<tr>
+<td>F7</td>
+<td>图表容器运行时 <code>createElement</code> 塞进 340px 侧边栏，图挤成一条</td>
+<td>重构为「左控制栏 + 右工作区」，图表在右侧大区域渲染</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>每点一次新基因，旧图表被 <code>Plotly.newPlot</code> 覆盖</td>
+<td>标签页系统（<code>openTab/activateTab/closeTab</code>），多个结果并存可对比</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>基因不在 HVG 集时只回一句干巴巴的 400</td>
+<td>后端返回 <code>reason</code> + <code>suggestions</code>（相近基因），前端展示可操作提示</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>CIPHER 必须先手动访问 <code>/api/data</code> 才能用，否则 503</td>
+<td><code>_require_cipher(ds)</code> 在数据集未加载时自动触发加载</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original38-方法学修复图表有判别力">方法学修复（图表有判别力）</h3>
+<p><strong>问题</strong>：细胞类型响应排序几乎没有区分度——MS4A1（B 细胞标志物）敲低时 B 细胞只排第 3，与第 1 名差距 &lt;5%。</p>
+<p><strong>根因</strong>：旧公式 = 「该类型 Top500 高表达基因上的 |Δ| 均值」。但各细胞类型的最高表达基因几乎都是核糖体/管家基因、彼此高度重叠，所以所有类型得分几乎相同。</p>
+<p><strong>修复</strong>：改为<strong>类型特异谱 vs 扰动效应谱的余弦相似度</strong></p>
+<pre><code>w_ct[g] = max(0, expr_ct[g] - mean_over_celltypes[g])     # 该类型特异富集量
+response = Σ w_ct[g]·|Δ[g]| / (‖w_ct‖·‖|Δ|‖)              # 余弦对齐度</code></pre>
+<p>两个关键细节： - 基准用<strong>各类型均值的均值</strong>，不是全体细胞均值——否则最大的细胞群（PBMC 里 T 细胞占 45%）会把基准拉向自己，导致它在任何扰动下都排不上去。 - 用<strong>余弦</strong>而非加权均值——消除两侧幅度影响，否则本身高表达的类型（单核细胞 LYZ/S100A9）在任何扰动下都拿最高分。</p>
+<p><strong>实测效果</strong>（PBMC，12 个标志物基因敲低，看最敏感类型是否命中该基因的已知归属类型）：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>Top1 命中</th>
+<th>平均排名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>旧（Top500 均值）</td>
+<td>~2/12</td>
+<td>~3.0/5</td>
+</tr>
+<tr>
+<td>新（余弦对齐）</td>
+<td><strong>10/12</strong></td>
+<td><strong>1.33/5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>命中：MS4A1/CD79A/CD79B→B cell、IL7R→T cell、LYZ/CD14/S100A9→Monocyte、GNLY/NKG7→NK cell、FCER1A→Dendritic 未命中：CD3D、CD3E（→Dendritic）。这是 <strong>CIPHER 线性响应的固有局限</strong>，不是代码 bug：这两个基因在 PBMC 中表达稀疏、协方差信号弱。汇报时应如实标注。</p>
+<h3 id="original38-数据语义修正">数据语义修正</h3>
+<p>ws / ms 数据集的 <code>meta.cell_type</code> 列装的其实是<strong>病健分组</strong>（WS vs CTRL / MS vs normal），不是细胞类型。 <code>DATASETS[ds]["group_label"]</code> 现在显式声明这一点，前端图表标题、按钮文案自动跟随，避免把「病健分组响应」误标成「细胞类型响应」。</p>
+<h3 id="original38-性能对比">性能对比</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>场景</th>
+<th>修复前</th>
+<th>修复后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冷启动（默认数据集）</td>
+<td>无限卡死（ws 稠密化 OOM）</td>
+<td><strong>6.2 s</strong>（默认改 pbmc）</td>
+</tr>
+<tr>
+<td>加载 Williams 96,969 细胞</td>
+<td>卡死 / swap</td>
+<td><strong>5 s</strong></td>
+</tr>
+<tr>
+<td>CIPHER 预测</td>
+<td>—</td>
+<td>0.02–0.1 s</td>
+</tr>
+<tr>
+<td>二次启动</td>
+<td>每次全量重算协方差</td>
+<td>秒级（缓存真正生效）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original38-验证方式">验证方式</h3>
+<p>Playwright 真实浏览器端到端测试（15 项断言全绿，零控制台错误）：选细胞→归因→选基因→CIPHER 敲低/过表达→线性基线→反事实位移→切数据集。 脚本见 <code>/tmp/vct_e2e.py</code>（可复制进项目长期保留）。</p>
+<h3 id="original38-默认数据集变更">默认数据集变更</h3>
+<p><code>VCT_DATASET</code> 默认值从 <code>ws</code> 改为 <strong><code>pbmc</code></strong>（2700 细胞秒开）。ws / ms 懒加载，在网页下拉切换时才加载。</p>
+<hr />
+<h2 id="original38-v3.2-v3.3-记录2026-09-1314">0.2 v3.2 / v3.3 记录（2026-09-13/14）</h2>
+<h3 id="original38-v3.2-反事实位移可视化修掉坐标吸附bug">v3.2 — 反事实位移可视化：修掉「坐标吸附」bug</h3>
+<p><strong>表面问题</strong>：用户反馈「反事实扰动的前后对比不够明显」。 <strong>真实根因</strong>（计算层，不是视觉问题）：<code>_FakeReducer</code> 用 <strong>k=1 最近邻</strong>反查 UMAP 坐标， 坐标被「吸附」到某个已有细胞上——只要扰动后嵌入的最近邻没换人，输出坐标与扰动前<strong>完全相同</strong>。 对照实验（人为施加不同量级位移）证实：</p>
+<table>
+<thead>
+<tr>
+<th>施加位移</th>
+<th>k=1 最近邻（旧）</th>
+<th>kNN 插值（新）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.01</td>
+<td>Δ=0.00000</td>
+<td>0.01057</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>Δ=0.00000</td>
+<td>0.18683</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td><strong>Δ=0.00000</strong></td>
+<td>0.24272</td>
+</tr>
+</tbody>
+</table>
+<p><strong>修复</strong>：改为 <strong>k=15 反距离加权插值</strong>，坐标连续可微。实测 UMAP 位移： MS4A1 敲低 0 → <strong>0.0451</strong>；Top5 联合 → <strong>0.1093</strong>；GTF2I(ws) 过表达 → <strong>0.2983</strong>。</p>
+<blockquote>
+<p>自我更正：v3.1 阶段加过的「扰动幅度不足以在 UMAP 上移动」提示，是在为 bug 辩解而非物理限制。</p>
+</blockquote>
+<p><strong>新增</strong>：<code>_zoom_window()</code>（按位移自适应的局部视窗）+ <code>_local_neighbors()</code>（邻域背景细胞作参照）， 前端 <code>showMove</code> 重写为<strong>全景 + 放大镜双视图</strong>（左定位+取景框，右放大前后对比+箭头）。</p>
+<h3 id="original38-v3.3-把剩余文字结果全部可视化">v3.3 — 把剩余文字结果全部可视化</h3>
+<p>新增 2 个端点 + 4 类图表：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>可视化</th>
+<th>端点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表达分布</td>
+<td><code>/api/gene_expr_map</code></td>
+<td>左=UMAP 按表达量着色，右=分组表达水平；<strong>全 28231 基因可用</strong></td>
+</tr>
+<tr>
+<td>📊 归因图</td>
+<td><code>/api/attribution_map</code></td>
+<td>左=IG 强度，右=该细胞 vs 全体均值</td>
+</tr>
+<tr>
+<td>🎯 质心距离图</td>
+<td>复用 <code>/api/perturb_multi</code></td>
+<td>联合扰动的身份归属，扰动前/后对比</td>
+</tr>
+<tr>
+<td>🧪 GEARS 图</td>
+<td>复用 <code>/api/perturb_causal</code></td>
+<td>上下调条形 + 负对照定位标注</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解读陷阱修正（重要）</strong>：归因图中 MS4A1 等标志基因显示为<strong>负值</strong>，旧标注写「定义了该细胞的基因」+ 红色表负值， 极易被误读为「负面因素」。查证 <code>src/attribute.py</code>：IG 目标是 <code>embedding.sum()</code>， <strong>正负号只表示把嵌入分量推高/推低，与是否标志基因无关</strong>，排序用 <code>|IG|</code>。 已改橙/紫配色 + 标注「长度=重要性，颜色仅表方向」+ 状态栏说明。</p>
+<hr />
+<h2 id="original38-一句话概述">1. 一句话概述</h2>
+<p>VirtualCellTool 是一个 <strong>Web 交互工具</strong>（FastAPI + Plotly），允许用户在 UMAP 上点选细胞 → 计算基因归因 → 选择基因 → 预测敲低/过表达后的全转录组变化 → 实时展示热图和细胞类型响应。</p>
+<hr />
+<h2 id="original38-目录结构只列关键文件">2. 目录结构（只列关键文件）</h2>
+<pre><code>derived/tools/VirtualCellTool/
+├── web/
+│   ├── app.py              ← ★ FastAPI 主服务（23KB，所有端点+引擎初始化+数据加载）
+│   ├── index.html          ← ★ 前端页面（Plotly UMAP + 按钮 + 图表渲染 JS）
+│   └── plotly.min.js       ← Plotly 库（3.6MB）
+├── src/
+│   ├── paths.py            ← ★ 集中路径管理（所有路径从这里解析，不再硬编码）
+│   ├── cipher_engine.py    ← ★ v3 CIPHER 线性响应引擎（核心新模块）
+│   ├── linear_baseline.py  ← ★ v3 线性基线引擎（Nature Methods 2025 强制对照）
+│   ├── perturb.py          ← v1 SCsimilarity 反事实扰动
+│   ├── attribute.py        ← v1 IG 归因
+│   ├── gears_engine.py     ← v2 GEARS 因果扰动（惰性加载）
+│   ├── prepare_data.py     ← 数据管线（PBMC3k → SCsimilarity → UMAP）
+│   ├── viz_perturbation.py ← CLI 出图脚本（出版物级 SVG/PNG）
+│   └── validate.py         ← AC1/AC2 验证
+├── data/
+│   ├── embeddings.npy      ← PBMC 3k 的 128 维嵌入（1.3MB）
+│   ├── expr_aligned.npz    ← PBMC 表达矩阵 2700×28231（4.7MB）
+│   ├── meta.csv            ← 细胞元数据
+│   ├── umap.npy            ← 预计算的 UMAP 坐标（缓存）
+│   ├── cipher_pbmc.npz     ← CIPHER 协方差缓存（138MB，首次启动后生成）
+│   ├── gene_order.txt      ← 28231 基因名列表
+│   ├── ws_*                ← Williams 脑类器官数据（47MB embeddings + 27MB expr）
+│   └── ms_*                ← MS 少突胶质细胞数据
+├── docs/
+│   ├── ARCHITECTURE_v3.md  ← ★ 架构文档（API 表、数据流、原理图）
+│   ├── ENGINEERING.md      ← DBTL 循环记录
+│   └── IGEM_ARCHITECTURE.md ← iGEM 架构规划
+├── gears_data/             ← GEARS 训练数据（Norman Perturb-seq）
+├── gears_ckpt/             ← GEARS 模型权重
+└── ../SIGnature/           ← SIGnature 框架（.venv + SCimilarity 模型）
+    ├── .venv/              ← Python 3.11 venv（所有依赖已装）
+    └── model_files/model_files/scimilarity/  ← SCsimilarity 模型权重（117MB）</code></pre>
+<hr />
+<h2 id="original38-如何启动">3. 如何启动</h2>
+<div class="sourceCode" id="original38-cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original38-cb3-1"><a href="#original38-cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. 杀旧进程</span></span>
+<span id="original38-cb3-2"><a href="#original38-cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> <span class="st">&quot;web/app.py&quot;</span></span>
+<span id="original38-cb3-3"><a href="#original38-cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb3-4"><a href="#original38-cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 进入目录</span></span>
+<span id="original38-cb3-5"><a href="#original38-cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> derived/tools/VirtualCellTool</span>
+<span id="original38-cb3-6"><a href="#original38-cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb3-7"><a href="#original38-cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 启动（默认 PBMC 数据集）</span></span>
+<span id="original38-cb3-8"><a href="#original38-cb3-8" aria-hidden="true" tabindex="-1"></a><span class="va">PYTHON</span><span class="op">=</span><span class="st">&quot;../SIGnature/.venv/bin/python&quot;</span></span>
+<span id="original38-cb3-9"><a href="#original38-cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">VCT_DATASET</span><span class="op">=</span>pbmc <span class="st">&quot;</span><span class="va">$PYTHON</span><span class="st">&quot;</span> web/app.py</span>
+<span id="original38-cb3-10"><a href="#original38-cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb3-11"><a href="#original38-cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 浏览器打开</span></span>
+<span id="original38-cb3-12"><a href="#original38-cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># http://127.0.0.1:8377</span></span>
+<span id="original38-cb3-13"><a href="#original38-cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb3-14"><a href="#original38-cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 其他数据集</span></span>
+<span id="original38-cb3-15"><a href="#original38-cb3-15" aria-hidden="true" tabindex="-1"></a><span class="va">VCT_DATASET</span><span class="op">=</span>ws <span class="st">&quot;</span><span class="va">$PYTHON</span><span class="st">&quot;</span> web/app.py     <span class="co"># Williams 脑类器官</span></span>
+<span id="original38-cb3-16"><a href="#original38-cb3-16" aria-hidden="true" tabindex="-1"></a><span class="va">VCT_DATASET</span><span class="op">=</span>ms <span class="st">&quot;</span><span class="va">$PYTHON</span><span class="st">&quot;</span> web/app.py     <span class="co"># MS 少突胶质细胞</span></span></code></pre></div>
+<p><strong>首次启动</strong>：需要 ~20 秒（加载模型 + 首次计算 CIPHER 协方差缓存 + 首次 UMAP 缓存）。 <strong>后续启动</strong>：~5 秒（UMAP 和 CIPHER 都从磁盘缓存读取）。</p>
+<hr />
+<h2 id="original38-架构原理">4. 架构原理</h2>
+<h3 id="original38-服务启动流程">4.1 服务启动流程</h3>
+<pre><code>app.py 启动
+  │
+  ├─ 1. 导入引擎单例（PerturbEngine, AttributionEngine, CipherEngine, LinearBaseline）
+  │      └─ PerturbEngine.__init__() 加载 SCsimilarity 模型（117MB）
+  │
+  ├─ 2. 加载默认数据集 _load_dataset(key)
+  │      ├─ 读 embeddings.npy + expr_aligned.npz + meta.csv
+  │      ├─ 读 umap.npy（缓存）或重算 UMAP（首次 + 缓存落盘）
+  │      ├─ 算质心、候选基因列表
+  │      └─ _fit_cipher_cached()  # 拟合 CIPHER 协方差
+  │            ├─ 读 cipher_{ds}.npz（缓存）→ 恢复引擎状态
+  │            └─ 或：选 Top5000 HVG → fit() → 存盘（首次 ~0.3s）
+  │
+  └─ 3. uvicorn.run() → http://127.0.0.1:8377</code></pre>
+<h3 id="original38-五个引擎">4.2 五个引擎</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>引擎</th>
+<th>类</th>
+<th>原理</th>
+<th>速度</th>
+<th>基因覆盖</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IG 归因</td>
+<td><code>AttributionEngine</code></td>
+<td>SCsimilarity + Captum IG</td>
+<td>0.1s</td>
+<td>28231</td>
+<td>候选排序</td>
+</tr>
+<tr>
+<td>v1 反事实</td>
+<td><code>PerturbEngine</code></td>
+<td>编码器反事实外推</td>
+<td>0.9s</td>
+<td>28231</td>
+<td>交互 demo</td>
+</tr>
+<tr>
+<td>v2 GEARS</td>
+<td><code>GearsEngine</code></td>
+<td>GNN + GO 图谱 + Perturb-seq</td>
+<td>60s</td>
+<td>3127</td>
+<td><strong>负对照</strong></td>
+</tr>
+<tr>
+<td>v3 CIPHER</td>
+<td><code>CipherEngine</code></td>
+<td>Δx = Σu（协方差线性响应）</td>
+<td>0.1s</td>
+<td>5000 HVG</td>
+<td><strong>假设生成</strong></td>
+</tr>
+<tr>
+<td>v3 基线</td>
+<td><code>LinearBaseline</code></td>
+<td>control-mean / additive</td>
+<td>&lt;1ms</td>
+<td>28231</td>
+<td><strong>强制对照</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="original38-cipher-原理核心新模块">4.3 CIPHER 原理（核心新模块）</h3>
+<pre><code>拟合：
+  对照细胞 X[n×28231] → 选 Top5000 HVG → 算协方差 Σ[5000×5000]
+  → 岭正则化 Σ += λ·diag_mean·I → 存盘 cipher_{ds}.npz
+
+预测 (0.1s)：
+  输入: gene, direction (ko=敲低→0, oe=过表达→2×ctrl)
+  构建: u[gene_idx] = target - ctrl_mean
+  计算: Δx = Σ @ u    （5000 维）
+  排序: Top30 |Δx| → 分上调/下调</code></pre>
+<h3 id="original38-api-端点19-个含首页完整表见-docsarchitecture_v3.md-第三节">4.4 API 端点（19 个，含首页；完整表见 <code>docs/ARCHITECTURE_v3.md</code> 第三节）</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>端点</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/data?ds=pbmc</code></td>
+<td>UMAP 坐标 + 基因列表 + 分组标签（<code>group_label</code>）</td>
+</tr>
+<tr>
+<td><code>GET /api/search_genes?q=</code></td>
+<td>全 28231 基因空间搜索</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_expr?gene=X</code></td>
+<td>该基因 max/mean</td>
+</tr>
+<tr>
+<td><code>GET /api/attribute?cell=N&amp;k=10</code></td>
+<td>IG 归因 Top K 基因</td>
+</tr>
+<tr>
+<td><code>GET /api/attribution_map?cell=N&amp;k=12</code></td>
+<td><strong>归因图数据</strong>（归因分数 + 该细胞/全体表达对比）</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb?cell=N&amp;gene=X&amp;value=V</code></td>
+<td>v1 反事实扰动（含 <code>zoom</code> 视窗 + <code>neighbors</code> 邻域）</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_multi?cell=N&amp;genes=X,Y&amp;value=V</code></td>
+<td>多基因联合扰动 + 类型重判</td>
+</tr>
+<tr>
+<td><code>GET /api/cell_gene_expr?cell=N&amp;gene=X</code></td>
+<td>该细胞该基因表达值</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_coverage?gene=X</code></td>
+<td>GEARS 覆盖查询（负对照）</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_causal?gene=X</code></td>
+<td>GEARS 因果预测（负对照）</td>
+</tr>
+<tr>
+<td><code>GET /api/cipher_status?ds=</code></td>
+<td>CIPHER 是否就绪 + HVG 数</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_in_cipher?ds=&amp;gene=X</code></td>
+<td>该基因是否在 CIPHER 覆盖内</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_summary?gene=X&amp;direction=ko\|oe</code></td>
+<td><strong>CIPHER 热图+分组响应</strong>（主力端点）</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_compare?gene=X&amp;direction=ko</code></td>
+<td><strong>CIPHER vs 基线</strong></td>
+</tr>
+<tr>
+<td><code>GET /api/celltype_response?gene=X&amp;direction=ko</code></td>
+<td>仅分组响应排序（前端未调用，供 CLI）</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_cipher?gene=X&amp;direction=ko</code></td>
+<td>轻量 Δx 摘要</td>
+</tr>
+<tr>
+<td><code>GET /api/perturb_baseline?gene=X&amp;method=both</code></td>
+<td>线性基线结果（前端未调用，供 CLI）</td>
+</tr>
+<tr>
+<td><code>GET /api/gene_expr_map?ds=&amp;gene=X</code></td>
+<td><strong>表达分布图数据</strong>（逐细胞表达 + 分组统计）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="original38-前端交互流程v3.3-标签页式工作区">4.5 前端交互流程（v3.3 标签页式工作区）</h3>
+<pre><code>用户点击 UMAP 上的细胞
+  → selectCell(i) → fetch /api/attribute → 渲染侧栏归因表
+  → 点击表里一个基因 → pickGene() → 查 CIPHER 覆盖性 + 滑杆同步该细胞表达值
+
+用户点 📉 CIPHER 敲低 / 📈 过表达
+  → doCipher(dir) → fetch /api/perturb_summary
+  → openTab(&quot;cipher_{gene}_{dir}_{ds}&quot;) → renderPerturbFigure()
+      左: Top30 |Δ| 基因（红=目标, 绿=上调, 蓝=下调）
+      右: 分组响应（橙=最敏感）+ 驱动基因文字标注
+
+用户点 📏 对比线性基线
+  → doBaseline() → fetch /api/perturb_compare → openTab() 叠加图（灰竖线=control-mean）
+
+用户点 🎨 看表达分布（任意基因可用，不受 HVG 限制）
+  → doExprMap() → fetch /api/gene_expr_map → openTab(&quot;expr_...&quot;)
+      左: UMAP 按表达量热力着色（带色阶条）  右: 各分组平均表达 + 表达%
+
+用户点 📊 归因结果出图
+  → doAttrFigure() → fetch /api/attribution_map → openTab(&quot;attr_...&quot;)
+      左: IG 强度（橙=推高/紫=推低，长度=重要性）  右: 该细胞 vs 全体均值
+
+用户点 🚀 模拟单基因扰动 / TopN 联合扰动
+  → doPerturb() / doMultiPerturb() → fetch /api/perturb(_multi)
+  → openTab(&quot;move&quot;) → showMove() 全景+放大双视图（kNN 插值坐标 + 箭头）
+  → 联合扰动额外 renderCentroidFigure() 质心距离图
+
+用户点 🧪 因果预测
+  → doCausal() → fetch /api/perturb_causal → renderGearsFigure()（负对照标注）
+
+标签页系统：openTab(key,title,render) / activateTab(key) / closeTab(key)
+  key 含 ds 与基因名；多结果并存可对比；UMAP 主图不可关闭。</code></pre>
+<blockquote>
+<p>⚠️ 旧版文档提到的 <code>renderHeatmap()</code> / <code>renderCellTypes()</code> / <code>renderSummary()</code> 三个函数 <strong>已在 v3.1 前端重写时移除</strong>，合并进 <code>renderPerturbFigure()</code>。若按旧文档找函数会找不到。</p>
+</blockquote>
+<hr />
+<h2 id="original38-路径管理规则重要">5. 路径管理规则（重要！）</h2>
+<p><strong>永远不要硬编码路径。</strong> 所有路径通过 <code>src/paths.py</code> 解析：</p>
+<div class="sourceCode" id="original38-cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="original38-cb7-1"><a href="#original38-cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> paths <span class="im">import</span> VCT_ROOT, DATA_DIR, SIG_DIR, MODEL_DIR, GEARS_DATA_DIR, GEARS_CKPT_DIR</span></code></pre></div>
+<ul>
+<li><code>VCT_ROOT</code> = VirtualCellTool 根目录（通过 <code>__file__</code> 自动检测）</li>
+<li><code>SIG_DIR</code> = 同级 SIGnature 目录</li>
+<li><code>MODEL_DIR</code> = SCimilarity 模型权重路径</li>
+</ul>
+<p>导入模块时注意：</p>
+<div class="sourceCode" id="original38-cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="original38-cb8-1"><a href="#original38-cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 在 src/ 下的文件</span></span>
+<span id="original38-cb8-2"><a href="#original38-cb8-2" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, os.path.join(SIG_DIR, <span class="st">&quot;src&quot;</span>))   <span class="co"># 导入 SIGnature</span></span>
+<span id="original38-cb8-3"><a href="#original38-cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> paths <span class="im">import</span> ...                                 <span class="co"># 导入路径常量</span></span>
+<span id="original38-cb8-4"><a href="#original38-cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb8-5"><a href="#original38-cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 在 web/ 下的文件</span></span>
+<span id="original38-cb8-6"><a href="#original38-cb8-6" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, os.path.join(ROOT, <span class="st">&quot;src&quot;</span>))       <span class="co"># 导入 src 模块</span></span></code></pre></div>
+<hr />
+<h2 id="original38-关键技术细节">6. 关键技术细节</h2>
+<h3 id="original38-python-环境">6.1 Python 环境</h3>
+<ul>
+<li><strong>解释器</strong>：<code>derived/tools/SIGnature/.venv/bin/python</code> (Python 3.11)</li>
+<li><strong>关键依赖</strong>：torch, captum, scanpy, anndata, scipy, numpy, fastapi, uvicorn, umap-learn, plotly</li>
+<li><strong>注意</strong>：系统 Python 不可用；不要用 uv；不要 pip install</li>
+</ul>
+<h3 id="original38-cipher-缓存">6.2 CIPHER 缓存</h3>
+<ul>
+<li>缓存文件：<code>data/cipher_{ds}.npz</code>（如 <code>cipher_pbmc.npz</code>）</li>
+<li>内容：gene_list（5000 个 HVG 名）、ctrl_mean、Sigma（5000×5000 协方差）、<strong>hvg_idx</strong>、<strong>full_mean</strong></li>
+<li>实测大小：<code>cipher_pbmc.npz</code> <strong>105M</strong> · <code>cipher_ms.npz</code> <strong>104M</strong> · <code>cipher_ws.npz</code> <strong>12M</strong> （ws 稀疏度高，压缩后反而最小；旧文档写的 “~138MB” 与实际不符）</li>
+<li>若删除缓存，下次启动自动重建（以 ws 为例：全量拟合约数秒～数十秒，视机器而定）</li>
+<li>⚠️ <strong>缓存的 5 个字段缺任何一个都会触发「加载失败 → 全量重算」</strong>，写缓存时务必完整</li>
+<li><strong>CIPHER 只覆盖 5000 个 HVG</strong>，不在 HVG 集中的基因返回 400 + <code>reason</code> + <code>suggestions</code></li>
+</ul>
+<h3 id="original38-umap-缓存">6.3 UMAP 缓存</h3>
+<ul>
+<li>缓存文件：<code>data/umap.npy</code>、<code>data/ws_umap.npy</code>、<code>data/ms_umap.npy</code></li>
+<li>已存在（从 prepare_data.py 生成），不要删除</li>
+<li>若缺失则自动重算并缓存</li>
+</ul>
+<h3 id="original38-gears-惰性加载">6.4 GEARS 惰性加载</h3>
+<ul>
+<li>首次调用 <code>/api/perturb_causal</code> 才加载模型（~30s）</li>
+<li>如有缓存 <code>data/gears_pert_list.pkl</code>，秒级</li>
+<li>微缺失病的 41 个基因中 0 个在训练图内</li>
+</ul>
+<h3 id="original38-推理锁">6.5 推理锁</h3>
+<ul>
+<li><code>web/app.py</code> 中有一个 <code>_inference_lock = threading.Lock()</code></li>
+<li>包围所有 PyTorch 推理调用（<code>attr_eng.top_genes()</code>, <code>perturb_eng.perturb()</code> 等）</li>
+<li>防止并发请求导致线程爆炸</li>
+</ul>
+<hr />
+<h2 id="original38-当前状态已完成-vs-待完成">7. 当前状态：已完成 vs 待完成</h2>
+<h3 id="original38-已完成">✅ 已完成</h3>
+<ul>
+<li>5 个引擎全部可用（归因/反事实/GEARS/CIPHER/基线）</li>
+<li>Web 前端 v3.3：UMAP 主图 + 归因表 + 6 个按钮组 + <strong>8 处 Plotly 图表</strong>（标签页式工作区）</li>
+<li><strong>反事实位移可视化</strong>：kNN 插值坐标 + 全景/放大双视图（v3.2）</li>
+<li><strong>全结果可视化</strong>：表达分布图、归因图、质心距离图、GEARS 图（v3.3）</li>
+<li><strong>GEARS 前端标注”负对照”</strong>（v3.1 完成，按钮与提示文案已改）</li>
+<li><strong>Williams 真实数据实测</strong>（v3.1 完成：GTF2I |Δ|max=10.08、ELN 仅 0.006、分组响应 CTRL 0.45 vs WS 0.27）</li>
+<li><strong>前端图表持久化</strong>（v3.1 完成：标签页系统，多结果并存可对比）</li>
+<li>CLI 出图：<code>src/viz_perturbation.py</code> 生成 SVG 出版物图</li>
+<li>路径修复：全部移除硬编码路径</li>
+<li>CIPHER HVG + 磁盘缓存：三数据集缓存齐全，冷启动 6.2s</li>
+<li>UMAP 缓存：启动不再阻塞</li>
+<li>3 个数据集：PBMC 2700 / MS 少突胶质 / Williams 脑类器官</li>
+<li>端到端回归测试：<code>tests_e2e_playwright.py</code>（15 项断言全绿）</li>
+</ul>
+<h3 id="original38-待完成来自-outputsreports虚拟细胞虚拟细胞工具组合推荐_igem决策_2026-09-12.md">⬜ 待完成（来自 <code>outputs/reports/虚拟细胞/虚拟细胞工具组合推荐_igem决策_2026-09-12.md</code>）</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CellOracle Web 集成</td>
+<td>现有代码在 <code>02_disease-williams/</code> 的 CLI 脚本中，不在 VCT Web 里</td>
+</tr>
+<tr>
+<td>pertpy 全套可视化</td>
+<td>Mixscape 质控、扰动空间热图未接入</td>
+</tr>
+<tr>
+<td>decoupler 通路富集</td>
+<td>PROGENy/CollecTRI 通路活性变化未接入</td>
+</tr>
+<tr>
+<td>CIPHER 稀疏表达基因的局限</td>
+<td>CD3D/CD3E 等表达稀疏基因预测不敏感，需在汇报中如实标注</td>
+</tr>
+<tr>
+<td>组织选择维度</td>
+<td>ELN 在脑类器官无效应，提示需心血管/成纤维细胞数据集（未接入）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="original38-常见问题排查">8. 常见问题排查</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>页面白屏</td>
+<td>服务器未就绪（UMAP/CIPHER 首次计算中）</td>
+<td>等 30s，观察终端输出</td>
+</tr>
+<tr>
+<td><code>/api/data</code> 返回空</td>
+<td>UMAP 仍在计算</td>
+<td>等终端打印 <code>[dataset] xxx 就绪</code></td>
+</tr>
+<tr>
+<td>CIPHER 返回 “未拟合”</td>
+<td>数据集未加载</td>
+<td>先访问 <code>/api/data?ds=pbmc</code> 触发加载</td>
+</tr>
+<tr>
+<td>CIPHER 返回 “基因不在 HVG 集”</td>
+<td>该基因不属于 Top5000 高变基因</td>
+<td>选其他基因（attribution Top 列表里的基因都在 HVG 内）</td>
+</tr>
+<tr>
+<td>端口 8377 被占用</td>
+<td>旧进程未杀</td>
+<td><code>pkill -f "web/app.py"</code></td>
+</tr>
+<tr>
+<td>Python 报 ModuleNotFound</td>
+<td>用了系统 Python</td>
+<td>必须用 <code>../SIGnature/.venv/bin/python</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="original38-测试命令">9. 测试命令</h2>
+<div class="sourceCode" id="original38-cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original38-cb9-1"><a href="#original38-cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 快速自测（不启动服务器）</span></span>
+<span id="original38-cb9-2"><a href="#original38-cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> derived/tools/VirtualCellTool</span>
+<span id="original38-cb9-3"><a href="#original38-cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">../SIGnature/.venv/bin/python</span> <span class="at">-c</span> <span class="st">&quot;</span></span>
+<span id="original38-cb9-4"><a href="#original38-cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">import sys; sys.path.insert(0, &#39;src&#39;)</span></span>
+<span id="original38-cb9-5"><a href="#original38-cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">from cipher_engine import CipherEngine</span></span>
+<span id="original38-cb9-6"><a href="#original38-cb9-6" aria-hidden="true" tabindex="-1"></a><span class="st">from linear_baseline import LinearBaseline</span></span>
+<span id="original38-cb9-7"><a href="#original38-cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st">from paths import DATA_DIR</span></span>
+<span id="original38-cb9-8"><a href="#original38-cb9-8" aria-hidden="true" tabindex="-1"></a><span class="st">import numpy as np, scipy.sparse as sp</span></span>
+<span id="original38-cb9-9"><a href="#original38-cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb9-10"><a href="#original38-cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st"># 加载 PBMC</span></span>
+<span id="original38-cb9-11"><a href="#original38-cb9-11" aria-hidden="true" tabindex="-1"></a><span class="st">X = sp.load_npz(DATA_DIR + &#39;/expr_aligned.npz&#39;).toarray()</span></span>
+<span id="original38-cb9-12"><a href="#original38-cb9-12" aria-hidden="true" tabindex="-1"></a><span class="st">with open(DATA_DIR + &#39;/gene_order.txt&#39;) as f:</span></span>
+<span id="original38-cb9-13"><a href="#original38-cb9-13" aria-hidden="true" tabindex="-1"></a><span class="st">    genes = f.read().strip().split(&#39;\n&#39;)</span></span>
+<span id="original38-cb9-14"><a href="#original38-cb9-14" aria-hidden="true" tabindex="-1"></a><span class="st">gvar = X.var(axis=0)</span></span>
+<span id="original38-cb9-15"><a href="#original38-cb9-15" aria-hidden="true" tabindex="-1"></a><span class="st">hvg = np.argsort(-gvar)[:5000]</span></span>
+<span id="original38-cb9-16"><a href="#original38-cb9-16" aria-hidden="true" tabindex="-1"></a><span class="st">Xh, gh = X[:, hvg], [genes[i] for i in hvg]</span></span>
+<span id="original38-cb9-17"><a href="#original38-cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb9-18"><a href="#original38-cb9-18" aria-hidden="true" tabindex="-1"></a><span class="st"># CIPHER</span></span>
+<span id="original38-cb9-19"><a href="#original38-cb9-19" aria-hidden="true" tabindex="-1"></a><span class="st">ce = CipherEngine(0.1); ce.fit(Xh, gh)</span></span>
+<span id="original38-cb9-20"><a href="#original38-cb9-20" aria-hidden="true" tabindex="-1"></a><span class="st">r = ce.predict({&#39;MS4A1&#39;: 0.0})</span></span>
+<span id="original38-cb9-21"><a href="#original38-cb9-21" aria-hidden="true" tabindex="-1"></a><span class="st">assert &#39;MS4A1&#39; in ce._gene_idx</span></span>
+<span id="original38-cb9-22"><a href="#original38-cb9-22" aria-hidden="true" tabindex="-1"></a><span class="st">assert abs(r[&#39;delta&#39;][gh.index(&#39;MS4A1&#39;)]) &gt; 0.1</span></span>
+<span id="original38-cb9-23"><a href="#original38-cb9-23" aria-hidden="true" tabindex="-1"></a><span class="st">print(&#39;CIPHER: OK&#39;)</span></span>
+<span id="original38-cb9-24"><a href="#original38-cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb9-25"><a href="#original38-cb9-25" aria-hidden="true" tabindex="-1"></a><span class="st"># Baseline</span></span>
+<span id="original38-cb9-26"><a href="#original38-cb9-26" aria-hidden="true" tabindex="-1"></a><span class="st">bl = LinearBaseline(); bl.fit(X, genes)</span></span>
+<span id="original38-cb9-27"><a href="#original38-cb9-27" aria-hidden="true" tabindex="-1"></a><span class="st">r = bl.predict_ctrl_mean()</span></span>
+<span id="original38-cb9-28"><a href="#original38-cb9-28" aria-hidden="true" tabindex="-1"></a><span class="st">assert r[&#39;method&#39;] == &#39;control-mean&#39;</span></span>
+<span id="original38-cb9-29"><a href="#original38-cb9-29" aria-hidden="true" tabindex="-1"></a><span class="st">print(&#39;Baseline: OK&#39;)</span></span>
+<span id="original38-cb9-30"><a href="#original38-cb9-30" aria-hidden="true" tabindex="-1"></a><span class="st">print(&#39;ALL TESTS PASSED&#39;)</span></span>
+<span id="original38-cb9-31"><a href="#original38-cb9-31" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="original38-cb9-32"><a href="#original38-cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="original38-cb9-33"><a href="#original38-cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co"># CLI 出图测试</span></span>
+<span id="original38-cb9-34"><a href="#original38-cb9-34" aria-hidden="true" tabindex="-1"></a><span class="ex">../SIGnature/.venv/bin/python</span> src/viz_perturbation.py <span class="dt">\</span></span>
+<span id="original38-cb9-35"><a href="#original38-cb9-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">--gene</span> MS4A1 <span class="at">--direction</span> ko <span class="at">--dataset</span> pbmc <span class="at">--output</span> outputs/figures/</span>
+<span id="original38-cb9-36"><a href="#original38-cb9-36" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> outputs/figures/MS4A1_ko_<span class="pp">*</span>.svg  <span class="co"># 应有 3 个 SVG</span></span></code></pre></div>
+<hr />
+<h2 id="original38-一句话给下一位-agent">10. 一句话给下一位 Agent</h2>
+<blockquote>
+<p>这个工具的核心是 <strong>CIPHER 线性响应引擎</strong>（<code>src/cipher_engine.py</code>）——用未扰动对照细胞的基因-基因协方差矩阵预测任意基因敲低/过表达后的全转录组响应。它不需要任何扰动训练数据，天然支持激活方向（匹配 SINEUP）。Web 前端是 FastAPI + Plotly，所有路径通过 <code>src/paths.py</code> 集中管理，Python 环境在 <code>../SIGnature/.venv/bin/python</code>。先读 <code>docs/ARCHITECTURE_v3.md</code>，再看交接报告 <code>outputs/reports/虚拟细胞/虚拟细胞工具组合推荐_igem决策_2026-09-12.md</code> 了解设计决策背景。</p>
+</blockquote>
+</details><details><summary>docs/IGEM_ARCHITECTURE.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original39-igem-架构规划virtualcelltool-v1v2-与项目主线的整合">iGEM 架构规划：VirtualCellTool v1/v2 与项目主线的整合</h1>
+<blockquote>
+<p>对应评审三大支柱：Engineering（DBTL）、Contributions（工具改进）、Attributions（归属）</p>
+</blockquote>
+<h2 id="original39-双模型架构总览">1. 双模型架构总览</h2>
+<pre><code>                    【项目主线：RNA binder 调控翻译 → AAV 递送 → CNS 疾病】
+                                      │
+        ┌─────────────────────────────┼─────────────────────────────┐
+        ▼                                                             ▼
+  【v1: 归因筛选层】                                        【v2: 因果预测层】
+  VirtualCellTool (现有)                                    GEARS/scGen 虚拟细胞
+  · 输入: 疾病 scRNA-seq                                    · 输入: v1 的候选靶基因
+  · 输出: 候选靶基因清单                                     · 输出: 扰动后全转录组预测
+  · 角色: &quot;改哪个基因&quot;                                       · 角色: &quot;改了会怎样&quot;
+  · 证据级别: 方向性/相关性                                   · 证据级别: 因果近似</code></pre>
+<p><strong>两层的接口</strong>：v1 差异归因产出的 top N 候选基因 → 作为 v2 的扰动输入；v2 预测结果 → 反哺主线 RNA binder 的靶点最终确认。</p>
+<h2 id="original39-与项目主线的三个接口">2. 与项目主线的三个接口</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>接口</th>
+<th>v1/v2 输出</th>
+<th>主线用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 靶点发现</td>
+<td>差异归因候选基因清单（MS 数据已产出）</td>
+<td>选择 RNA binder 调控的目标基因</td>
+</tr>
+<tr>
+<td>② 安全论证</td>
+<td>候选基因在 22M 细胞/各组织的重要性分布</td>
+<td>AAV 脱靶安全窗口（Slide 12 任务）</td>
+</tr>
+<tr>
+<td>③ 效果预览</td>
+<td>v2 预测的扰动后细胞状态</td>
+<td>湿实验前的 in silico 概念验证</td>
+</tr>
+</tbody>
+</table>
+<h2 id="original39-dbtl-全景engineering-页面结构">3. DBTL 全景（Engineering 页面结构）</h2>
+<ul>
+<li>循环 1（✅完成）：反事实扰动核心机制 — AC1/AC2 通过，p&lt;0.0005</li>
+<li>循环 2（✅完成）：工具化与可用性 — AC3 通过；3 次真实 UI 迭代（基因搜索/可点击表/输入防护）</li>
+<li>循环 3（✅完成）：多基因扰动 — <strong>负结果</strong>：12 基因敲低不翻转细胞类型 → 定位局限根源（无因果训练）</li>
+<li>循环 4（进行中）：真实疾病数据（MS 少突胶质细胞）差异归因 → 候选靶点</li>
+<li>循环 5（规划）：v2 接入 GEARS — 用循环 3 的负结果作为动机论证</li>
+</ul>
+<h2 id="original39-v1-vs-v2-的分工论证避免评审质疑为什么不直接用-gears">4. v1 vs v2 的分工论证（避免评审质疑”为什么不直接用 GEARS”）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>v1 (SCimilarity 反事实)</th>
+<th>v2 (GEARS 因果)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练数据</td>
+<td>23M 真实细胞（无扰动）</td>
+<td>Perturb-seq 扰动实验</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>秒级/细胞</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>适用问题</td>
+<td>哪个基因重要（排序）</td>
+<td>改了会怎样（预测）</td>
+</tr>
+<tr>
+<td>泛化</td>
+<td>任意细胞类型</td>
+<td>受 Perturb-seq 细胞系限制</td>
+</tr>
+<tr>
+<td>iGEM 定位</td>
+<td><strong>demo/筛选工具</strong>（评委可交互）</td>
+<td><strong>深度分析引擎</strong>（后端批处理）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>叙事要点</strong>：两层不是竞争而是流水线——v1 快速筛选值得深研的靶点，v2 对少数候选做因果验证。负结果（循环 3）是分层必要性的直接证据。</p>
+<h2 id="original39-contributions-落点最终-1-2-个工具">5. Contributions 落点（最终 1-2 个工具）</h2>
+<p><strong>主贡献</strong>：VirtualCellTool 交互式归因扰动平台（现有 + MS 真实数据模块） - 原工具不具备的功能：交互式扰动、多基因联合敲低、类型重判、差异归因管线 - 对未来队伍的价值：任何”基因表达调控类”项目的靶点初筛 + 演示</p>
+<p><strong>次贡献（可选）</strong>：v1→v2 桥接模块（差异归因输出 → GEARS 输入的标准化接口）</p>
+<h2 id="original39-attributions-纪律">6. Attributions 纪律</h2>
+<ul>
+<li>每个新数据源/模型引入时当场登记（MS 数据集已登记）</li>
+<li>v2 若接入 GEARS：登记 perturbgene/GEARS 包 + Replogle 数据集</li>
+<li>AI 辅助代码逐文件标注</li>
+</ul>
+<h2 id="original39-排期建议">7. 排期建议</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本周</td>
+<td>MS 差异归因完成 + wiki Model 页面初稿（循环 1-4 数据齐全）</td>
+<td>进行中</td>
+</tr>
+<tr>
+<td>下周</td>
+<td>候选基因 22M 细胞安全扫描（用预计算库单研究子集）</td>
+<td>待做</td>
+</tr>
+<tr>
+<td>视时间</td>
+<td>v2 GEARS 接入（循环 5）</td>
+<td>可选加分</td>
+</tr>
+</tbody>
+</table>
+</details></main></body></html>

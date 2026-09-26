@@ -1,0 +1,250 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>bibliography 文档盘点</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>bibliography 文档盘点</h1><p class="lead">按主题保留书目及各自的核验备注，正式引用前按原始来源复核。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>所有原文、数字、引文和历史建议均保留；本次整理不等同重新核实文献，也不把旧建议当成实施授权。</li><li>正文按需展开；当前代码使用方式以 03_pipeline/docs/index.html 和工具现行 README 为准。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a data-local-only-href="bibliography_microdeletion_driver_genes_AI_and_classical_methods.md" title="本地保留的来源文件，不随公开仓库发布">bibliography_microdeletion_driver_genes_AI_and_classical_methods.md</a></td><td>bibliography microdeletion driver genes AI and classical methods；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>2</td><td><a data-local-only-href="virtual_cell_review_bibliography.md" title="本地保留的来源文件，不随公开仓库发布">virtual_cell_review_bibliography.md</a></td><td>virtual cell review bibliography；原调研/书目内容</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. bibliography_microdeletion_driver_genes_AI_and_classical_methods.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc1-literature-search-ai-and-non-ai-methods-for-identifying-the-major-effect-driver-genes-of-chromosomal-microdeletion-syndromes">Literature Search: AI and non-AI methods for identifying the major-effect (driver) genes of chromosomal microdeletion syndromes</h1>
+<p><strong>Topic (translated):</strong> AI tools or non-AI tools/methods for identifying the major-effect genes (主效基因) of chromosomal microdeletion disorders (染色体微缺失病).</p>
+<p><strong>Scope &amp; assumptions:</strong> - “主效基因 (major-effect gene)” is interpreted as the dosage-sensitive / haploinsufficient driver gene(s) within a microdeletion critical region that causally account for the core syndrome phenotype. - The search covers two method families: (a) classical/non-AI approaches (smallest-region-of-overlap mapping, positional cloning, animal-model functional screens, population-genetic constraint scores, expert curation) and (b) AI/machine-learning approaches (haploinsufficiency prediction, CNV pathogenicity classification, network-based gene prioritization, LLM-assisted triage). - Landmark syndrome-specific discoveries (22q11.2, 7q11.23, 16p11.2, 2p15p16.1) are included as examples of how driver genes were actually established.</p>
+<p><strong>Search record (reproducibility):</strong> - Date: September 1, 2025. - Databases/sources queried: web search aggregation over scholarly sources (PubMed/PMC, Springer Nature, ScienceDirect, Wiley, PLOS, Frontiers, bioRxiv, medRxiv); direct verification via <strong>Crossref REST API</strong>, <strong>NCBI PubMed E-utilities</strong>, <strong>Europe PMC REST API</strong>, and Semantic Scholar (rate-limited). Web of Science and Google Scholar were not directly queried (no API access in this environment); content from those indices was surfaced via the aggregated web search instead. - Queries used (verbatim, 12 total): “chromosomal microdeletion syndrome driver gene prioritization machine learning”; “identifying dosage-sensitive genes within microdeletion syndromes computational methods”; “haploinsufficiency prediction gene 22q11.2 deletion syndrome critical region”; “minimal critical region mapping microdeletion syndrome candidate genes review”; “haploinsufficiency prediction machine learning HIPred Huang 2010 model genomic features”; “pLI LOEUF gnomAD gene constraint score dosage sensitivity landmark”; “16p11.2 deletion driver gene KCTD13 zebrafish mouse model”; “ClinGen dosage sensitivity curation workflow single gene dosage 2020”; “TBX1 DiGeorge syndrome 22q11 deletion major driver gene mouse knockout 2001”; “Deciphering Developmental Disorders exome haploinsufficiency DDG2P new genes Nature 2017”; “Williams-Beuren syndrome 7q11.23 elastin critical region gene discovery”; “deep learning copy number variant pathogenicity prediction 2024 CNV classification ACMG”. - All DOIs below were verified against Crossref or PubMed metadata on the search date; discrepancies found during verification are flagged in the notes.</p>
+<hr />
+<h2 id="doc1-results-by-theme">1. Results by theme</h2>
+<h3 id="doc1-theme-a-classical-non-ai-identification-of-driver-genes-in-microdeletion-syndromes">Theme A — Classical, non-AI identification of driver genes in microdeletion syndromes</h3>
+<p><strong>A1. Syndrome-specific landmark studies (primary research)</strong></p>
+<ol type="1">
+<li><strong>Ewart AK, Morris CA, Atkinson D, et al. (1993).</strong> “Hemizygosity at the elastin locus in a developmental disorder, Williams syndrome.” <em>Nature Genetics</em> 5:11–16. DOI: 10.1038/ng0993-11.
+<ul>
+<li><em>Primary research.</em> Established the first driver gene (ELN) of a classical microdeletion syndrome by showing hemizygosity at the elastin locus in Williams syndrome and linking ELN to supravalvular aortic stenosis — the template for “candidate gene from deleted region + phenotype correlation.”</li>
+</ul></li>
+<li><strong>Osborne LR, Martindale D, Scherer SW, et al. (1996).</strong> “Identification of genes from a 500-kb region at 7q11.23 that is commonly deleted in Williams syndrome patients.” <em>Genomics</em> 35:328–337. DOI: 10.1006/geno.1996.0469.
+<ul>
+<li><em>Primary research.</em> Positional cloning of the Williams-Beuren critical region; ELN accounted for vascular features while other genes (e.g., LIMK1) were proposed for cognitive features — illustrating the multi-gene reality of “contiguous gene” syndromes.</li>
+</ul></li>
+<li><strong>Merscher S, Funke B, Epstein JA, et al. (2001).</strong> “TBX1 is responsible for cardiovascular defects in velo-cardio-facial/DiGeorge syndrome.” <em>Cell</em> 104:619–629. DOI: 10.1016/S0092-8674(01)00247-1.
+<ul>
+<li><em>Primary research.</em> Using mouse genetic mapping (chromosomal deletions in the syntenic region), identified TBX1 as the major driver of cardiovascular defects in 22q11.2 deletion syndrome. <strong>Note:</strong> first author is Merscher, not Lindsay (a common miscitation; verified via Crossref).</li>
+</ul></li>
+<li><strong>Jerome LA &amp; Papaioannou VE (2001).</strong> “DiGeorge syndrome phenotype in mice mutant for the T-box gene, Tbx1.” <em>Nature Genetics</em> 27:286–291. DOI: 10.1038/85845.
+<ul>
+<li><em>Primary research.</em> Complementary mouse knockout confirming Tbx1 haploinsufficiency reproduces the DiGeorge phenotype; with ref. 3, established TBX1 as the principal 22q11.2 driver gene.</li>
+</ul></li>
+<li><strong>Lindsay EA, Vitelli F, Su H, et al. (2001).</strong> “Tbx1 haploinsufficiency in the DiGeorge syndrome region causes aortic arch defects in mice.” <em>Nature</em> 410:97–101. DOI: 10.1038/35065105.
+<ul>
+<li><em>Primary research.</em> Independent confirmation of the TBX1 dosage mechanism via engineered mouse deletions — the classic “mouse-model narrowing of a critical region” strategy.</li>
+</ul></li>
+<li><strong>Golzio C, Willer JR, Talkowski ME, et al. (2012).</strong> “KCTD13 is a major driver of mirrored neuroanatomical phenotypes of the 16p11.2 copy number variant.” <em>Nature</em> 485:363–367. DOI: 10.1038/nature11091.
+<ul>
+<li><em>Primary research.</em> Overexpressed/knocked down each of the 29 genes in the 16p11.2 interval in zebrafish embryos; KCTD13 alone recapitulated the mirrored head-size phenotypes (microcephaly in duplication, macrocephaly in deletion) — the paradigm for high-throughput in vivo screening of an entire critical region.</li>
+</ul></li>
+<li><strong>Bagheri H, Badduke C, Qiao Y, et al. (2016).</strong> “Identifying candidate genes for 2p15p16.1 microdeletion syndrome using clinical, genomic, and functional analysis.” <em>JCI Insight</em> 1:e85461. DOI: 10.1172/jci.insight.85461.
+<ul>
+<li><em>Primary research.</em> Combined shortest-region-of-overlap mapping across patients with genomic and functional data to nominate candidate genes (BCL11A, REL, USP34, XPO1) — a modern, integrative version of the classical SRO method.</li>
+</ul></li>
+<li><strong>Miceli M, Failla P, Saccuzzo L, et al. (2023).</strong> “Trait-driven analysis of the 2p15p16.1 microdeletion syndrome suggests a complex pattern of interactions among candidate genes.” <em>Genes &amp; Genomics</em> 45:495–508. DOI: 10.1007/s13258-023-01369-7.
+<ul>
+<li><em>Primary research/analysis.</em> Shows incomplete penetrance and multi-gene interactions complicate single-driver-gene attribution even after SRO refinement.</li>
+</ul></li>
+</ol>
+<p><strong>A2. Population-genetic constraint scores as evidence for dosage sensitivity (primary/methods research)</strong></p>
+<ol start="9" type="1">
+<li><strong>Samocha KE, Robinson EB, Sanders SJ, et al. (2014).</strong> “A framework for the interpretation of de novo mutation in human disease.” <em>Nature Genetics</em> 46:944–950. DOI: 10.1038/ng.3050.
+<ul>
+<li><em>Methods paper.</em> Introduced observed-vs-expected de novo mutation models (and missense z-scores) — a statistical foundation for gene-level intolerance inference.</li>
+</ul></li>
+<li><strong>Lek M, Karczewski KJ, Minikel EV, et al. (Exome Aggregation Consortium) (2016).</strong> “Analysis of protein-coding genetic variation in 60,706 humans.” <em>Nature</em> 536:285–291. DOI: 10.1038/nature19057.
+<ul>
+<li><em>Methods/resource.</em> Introduced pLI (probability of loss-of-function intolerance), widely used to prioritize haploinsufficient genes within microdeletion regions.</li>
+</ul></li>
+<li><strong>Karczewski KJ, Francioli LC, Tiao G, et al. (2020).</strong> “The mutational constraint spectrum quantified from variation in 141,456 humans.” <em>Nature</em> 581:434–443. DOI: 10.1038/s41586-020-2308-7.
+<ul>
+<li><em>Methods/resource.</em> gnomAD constraint metrics including LOEUF; LOEUF &lt; 0.35 is a standard cut-off for LOF-intolerant genes and is incorporated in clinical CNV interpretation.</li>
+</ul></li>
+<li><strong>Wright CF, Fitzgerald TW, Jones WD, et al. (DDD study) (2015).</strong> “Genetic diagnosis of developmental disorders in the DDD study: a scalable analysis of genome-wide data.” <em>The Lancet</em> 385:1305–1314. DOI: 10.1016/S0140-6736(14)61705-0.
+<ul>
+<li><em>Primary research.</em> Scalable clinical-genomic pipeline diagnosing children with developmental disorders; demonstrated the complementarity of CNV and sequence-variant diagnosis. <strong>Verified correction:</strong> venue is The Lancet, not Nature Genetics.</li>
+</ul></li>
+<li><strong>Deciphering Developmental Disorders Study (2017).</strong> “Prevalence and architecture of de novo mutations in developmental disorders.” <em>Nature</em> 542:433–438. DOI: 10.1038/nature21062.
+<ul>
+<li><em>Primary research.</em> Exome meta-analysis (4,293 trios + 3,287 published) showing enrichment of damaging de novo mutations in developmentally important (haploinsufficient) genes — connects constraint metrics to disease-gene discovery.</li>
+</ul></li>
+</ol>
+<p><strong>A3. Expert curation frameworks</strong></p>
+<ol start="14" type="1">
+<li><strong>ClinGen Dosage Sensitivity Working Group (ongoing; SOP v2).</strong> ClinGen Dosage Sensitivity curation process for haploinsufficiency/triplosensitivity evidence. URL: https://clinicalgenome.org/docs/dosage-sensitivity-curation-sop-v2/
+<ul>
+<li><em>Curated resource.</em> The reference standard for manual, evidence-based gene-level dosage-sensitivity classification (haploinsufficiency score 0–3); serves as the benchmark against which computational predictors are validated.</li>
+</ul></li>
+<li><strong>McDonald-McGinn DM, et al. (1993–updated).</strong> “22q11.2 Deletion Syndrome.” <em>GeneReviews</em>. URL: https://www.ncbi.nlm.nih.gov/books/NBK1523/
+<ul>
+<li><em>Expert review.</em> Canonical clinical summary; TBX1 as the principal driver for the core phenotype with modifier genes still debated.</li>
+</ul></li>
+</ol>
+<h3 id="doc1-theme-b-ai-machine-learning-methods">Theme B — AI / machine-learning methods</h3>
+<p><strong>B1. Predicting gene haploinsufficiency (the core computational task)</strong></p>
+<ol start="16" type="1">
+<li><strong>Huang N, Lee I, Marcotte EM, Hurles ME (2010).</strong> “Characterising and predicting haploinsufficiency in the human genome.” <em>PLoS Genetics</em> 6:e1001154. DOI: 10.1371/journal.pgen.1001154.
+<ul>
+<li><em>Primary research.</em> Foundational ML model (logistic regression on genomic, evolutionary, functional, network features) trained on known HI vs. CNV-tolerant “haplosufficient” genes; the template for all later HI predictors.</li>
+</ul></li>
+<li><strong>Shihab HA, Rogers MF, Campbell C, Gaunt TR (2017).</strong> “HIPred: an integrative approach to predicting haploinsufficient genes.” <em>Bioinformatics</em> 33:1751–1757. DOI: 10.1093/bioinformatics/btx028.
+<ul>
+<li><em>Methods paper.</em> ML integration of Ensembl + ENCODE features; deliberately avoids PPI-network features to reduce study bias toward well-characterized genes.</li>
+</ul></li>
+<li><strong>Liu Z &amp; Huang YF (2023).</strong> “Deep multiple-instance learning accurately predicts gene haploinsufficiency and deletion pathogenicity (DosaCNV).” <em>bioRxiv</em> preprint. DOI: 10.1101/2023.08.29.555384. PMCID: PMC10491176 (bioRxiv-in-PMC record).
+<ul>
+<li><em>Methods paper (preprint).</em> Attention-based deep multiple-instance learning jointly predicts gene haploinsufficiency and deletion pathogenicity; claims superior short-deletion/gene-level resolution over single-evidence predictors. <strong>Flag:</strong> at the search date, PubMed/Europe PMC indexed only the bioRxiv preprint; a peer-reviewed version could not be verified — treat accordingly.</li>
+</ul></li>
+<li><strong>Rahaie M, Rabiee R, Alinejad-Rokny H (2023).</strong> “DeepGenePrior: A deep learning model for prioritizing genes affected by copy number variants.” <em>PLOS Computational Biology</em> 19:e1011249. DOI: 10.1371/journal.pcbi.1011249.
+<ul>
+<li><em>Methods paper.</em> Deep-learning gene prioritization for genes within CNVs, focused on brain disorders; addresses the gap that genome-wide prioritization is dominated by prior knowledge and false positives.</li>
+</ul></li>
+<li><strong>LaPolice TM &amp; Huang YF (2023).</strong> “An unsupervised deep learning framework for predicting human essential genes from population and functional genomic data (DeepLOF).” <em>BMC Bioinformatics</em> 24:347. DOI: 10.1186/s12859-023-05481-z.
+<ul>
+<li><em>Methods paper.</em> Bayesian deep model combining a feature-based beta prior with a gnomAD likelihood; unsupervised and specifically improves prediction for <em>short</em> genes — relevant to pinpointing driver genes in small microdeletions.</li>
+</ul></li>
+<li><strong>Collins RL, Glessner JT, Porcu E, et al. (2022).</strong> “A cross-disorder dosage sensitivity map of the human genome.” <em>Cell</em> 185:3041–3055. DOI: 10.1016/j.cell.2022.06.036.
+<ul>
+<li><em>Primary research (large-scale).</em> Meta-analysis of rare CNVs in ~1 million individuals; ensemble ML identified 3,635 highly dosage-sensitive genes and showed convergence of rare CNVs and damaging coding variants at dosage-sensitive loci — currently the largest genome-wide empirical dosage-sensitivity map.</li>
+</ul></li>
+</ol>
+<p><strong>B2. ML/deep-learning CNV pathogenicity classification (variant-level tools)</strong></p>
+<ol start="22" type="1">
+<li><strong>Schuetz M, Ceyhan Ö, Antoniou K, et al. (2024).</strong> “CNVoyant: a machine learning framework for accurate and explainable copy number variant classification.” <em>Scientific Reports</em> 14:22038. DOI: 10.1038/s41598-024-72470-4.
+<ul>
+<li><em>Methods paper.</em> Explainable multi-class ML classifier for CNV clinical significance aligned with ACMG-style categories.</li>
+</ul></li>
+<li><strong>Sládeček T, Gažiová M, Kucharík M, et al. (2023).</strong> “Combination of expert guidelines-based and machine learning-based approaches leads to superior accuracy of automated prediction of clinical effect of copy number variations (MarCNV).” <em>Scientific Reports</em> 13:9753. DOI: 10.1038/s41598-023-37352-1.
+<ul>
+<li><em>Methods paper.</em> Hybrid ACMG-guideline + ML approach; reports better accuracy than either alone — evidence that rules-plus-ML hybrids outperform pure ML for clinical CNV triage.</li>
+</ul></li>
+<li><strong>Lv H, Chen J, Xiong H, et al. (2023).</strong> “dbCNV: deleteriousness-based model to predict pathogenicity of copy number variations.” <em>BMC Genomics</em> 24:126. DOI: 10.1186/s12864-023-09225-4.
+<ul>
+<li><em>Methods paper.</em> Aggregates per-gene/per-region deleteriousness into CNV scores; part of the ClassifyCNV/X-CNV/StrVCTVRE/dbCNV tool family for CNV prioritization.</li>
+</ul></li>
+<li><strong>Middelkamp S, Vlaar JM, Giltay J, et al. (2019).</strong> “Prioritization of genes driving congenital phenotypes of patients with de novo genomic structural variants.” <em>Genome Medicine</em> 11:74. DOI: 10.1186/s13073-019-0692-0.
+<ul>
+<li><em>Primary research.</em> Combined phenotype (HPO) matching, chromatin interaction data, and functional SV-effect prediction to nominate driver genes in 16/39 (41%) patients with de novo SVs — a phenotype-aware, computational-plus-curation workflow.</li>
+</ul></li>
+<li><strong>Liu C, Chen X, Jiang Y, et al. (2026, online ahead).</strong> “Tissue-specific gene dosage disruption is a key feature and pathogenic mechanism of structural variants in the human genome (PathoSV).” <em>Genome Medicine</em>. DOI: 10.1186/s13073-026-01653-7.
+<ul>
+<li><em>Methods paper.</em> Introduces a Transcript Disruption Ratio to capture tissue-specific dosage effects of SVs. <strong>Flag:</strong> Crossref lists a 2026 publication year (ahead-of-print at the search date, Sept 2025); included because it represents the newest methodological direction but noted as very recent/early.</li>
+</ul></li>
+</ol>
+<p><strong>B3. AI-assisted literature and knowledge triage</strong></p>
+<ol start="27" type="1">
+<li><strong>Gu A &amp; Chen JY (2025).</strong> “GETgene-AI: a framework for prioritizing actionable cancer drug targets.” <em>Frontiers in Systems Biology</em> 5:1649758. DOI: 10.3389/fsysb.2025.1649758.
+<ul>
+<li><em>Methods paper (adjacent field).</em> Although cancer-focused, it exemplifies the emerging pattern of coupling network-based gene prioritization with LLM (GPT-4o)-assisted literature triage — a template transferable to microdeletion driver-gene nomination. Included to represent the LLM-assisted prioritization direction.</li>
+</ul></li>
+</ol>
+<h3 id="doc1-theme-c-reviews-and-synthesis">Theme C — Reviews and synthesis</h3>
+<ol start="28" type="1">
+<li><strong>Watson CT, Marques-Bonet T, Sharp AJ, Mefford HC (2014).</strong> “The genetics of microdeletion and microduplication syndromes: an update.” <em>Annual Review of Genomics and Human Genetics</em> 15:215–244. DOI: 10.1146/annurev-genom-091212-153408.
+<ul>
+<li><em>Review.</em> Comprehensive synthesis of how genomic technologies moved discovery from phenotype-driven karyotype/FISH to unbiased array/sequencing, and the shift from single-driver to multi-gene models of microdeletion syndromes.</li>
+</ul></li>
+<li><strong>Motahari Z, Moody SA, Maynard TM, LaMantia AS (2019).</strong> “In the line-up: deleted genes associated with DiGeorge/22q11.2 deletion syndrome: are they all suspects?” <em>Journal of Neurodevelopmental Disorders</em> 11:7. DOI: 10.1186/s11689-019-9267-z.
+<ul>
+<li><em>Review.</em> Systematic appraisal of all ~40 protein-coding genes in the 22q11.2 deleted region; argues most phenotypes are polygenic within the interval, with TBX1 necessary but not sufficient.</li>
+</ul></li>
+<li><strong>Goldenberg P (2018).</strong> “An update on common chromosome microdeletion and microduplication syndromes.” <em>Pediatric Annals</em> 47:e198–e203. DOI: 10.3928/19382359-20180419-01.
+<ul>
+<li><em>Review (clinical).</em> Clinician-oriented overview of recurrent syndromes; useful for phenotypic scope but not method-focused.</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="doc1-key-findings-per-source-evidence-level">2. Key findings per source — evidence level</h2>
+<ul>
+<li><strong>Primary research</strong> (experimental or large-cohort): refs 1–8, 12–13, 21, 25. These actually <em>demonstrated</em> driver genes (TBX1, ELN, KCTD13, BCL11A/REL/USP34/XPO1) or built empirical dosage maps.</li>
+<li><strong>Methods/tool papers</strong> (primary research of a computational kind): refs 9–11, 16–20, 22–24, 26–27. These propose predictors whose claims rest on benchmarking, not new biological validation.</li>
+<li><strong>Reviews/curated resources</strong>: refs 14–15, 28–30. Secondary sources used for consensus framing.</li>
+</ul>
+<h2 id="doc1-major-themes-and-points-of-consensus">3. Major themes and points of consensus</h2>
+<ol type="1">
+<li><strong>Microdeletion syndromes are mostly not single-gene disorders.</strong> Across 22q11.2, 7q11.23, 16p11.2, and 2p15p16.1, the modern consensus is that one principal driver gene (TBX1, ELN, KCTD13) explains the core phenotype but that full expressivity involves additional genes in the interval (refs 2, 8, 28, 29).</li>
+<li><strong>Population-genetic constraint is the de facto computational baseline.</strong> pLI/LOEUF-style observed-vs-expected models (refs 9–11), plus the Collins et al. 2022 dosage map (ref 21), are the standard non-AI/statistical way to nominate dosage-sensitive genes genome-wide, and ClinGen dosage curation (ref 14) is the accepted human benchmark.</li>
+<li><strong>ML predictors broadly agree with, and extend beyond, constraint scores.</strong> HI predictors (refs 16–18, 20) reproduce known haploinsufficient genes and add functional annotation; newer deep models (refs 18–20) specifically claim better resolution for short genes and small deletions — precisely the regime relevant to microdeletions.</li>
+<li><strong>Hybrid rules-plus-ML outperforms either alone for clinical CNV interpretation</strong> (refs 23–25), and explainability is increasingly demanded (ref 22).</li>
+</ol>
+<h2 id="doc1-controversies-and-conflicting-evidence">4. Controversies and conflicting evidence</h2>
+<ul>
+<li><strong>Single-driver vs. oligogenic models.</strong> Even for TBX1/22q11.2, reviews argue most phenotypes are polygenic within the interval (ref 29), and 2p15p16.1 studies show candidate-gene effects with incomplete penetrance and interaction (refs 7–8) — contradicting the simple “one driver gene per syndrome” framing.</li>
+<li><strong>Study bias in training data.</strong> HIPred (ref 17) explicitly warns that network-based HI predictors perform best on well-studied genes; DeepGenePrior (ref 19) and DeepLOF (ref 20) echo that supervised models inherit label leakage and ascertainment bias — so reported accuracies are likely optimistic.</li>
+<li><strong>Publication/validation asymmetry for AI tools.</strong> Several AI CNV tools are benchmarked against data that overlap their training/annotation sources; the MarCNV hybrid result (ref 23) suggests pure-ML superiority claims should be read skeptically.</li>
+<li><strong>Preprint maturity.</strong> DosaCNV (ref 18) is a preprint at the search date; its deep multiple-instance-learning gains are not yet peer-reviewed.</li>
+</ul>
+<h2 id="doc1-gaps-in-current-knowledge">5. Gaps in current knowledge</h2>
+<ol type="1">
+<li><strong>Mechanism bridging:</strong> computational scores (pLI/LOEUF/ML) nominate dosage-sensitive genes, but connecting a nominated driver gene to a specific syndrome trait still requires functional studies (zebrafish/mouse) — no validated end-to-end pipeline exists (refs 6–8).</li>
+<li><strong>Tissue-specific dosage effects</strong> are only now being modeled (PathoSV, ref 26); most HI scores are tissue-agnostic, while microdeletion phenotypes are tissue-specific.</li>
+<li><strong>Regulatory/non-coding drivers</strong> within microdeletions (enhancers, chromatin topology effects) are under-modeled; Middelkamp et al. (ref 25) is one of few phenotype-aware attempts.</li>
+<li><strong>Evaluation standards:</strong> no independent, held-out benchmark for driver-gene prioritization in microdeletions; most tools self-benchmark on overlapping public sets.</li>
+<li><strong>LLM-assisted triage is immature</strong> for this domain — demonstrated in cancer target prioritization (ref 27) but not yet systematically applied or validated for microdeletion driver genes.</li>
+</ol>
+<hr />
+<h2 id="doc1-verification-notes-caveats">6. Verification notes / caveats</h2>
+<ul>
+<li>All DOIs verified against Crossref or PubMed metadata on 2025-09-01. Items with flags: DosaCNV (preprint only, ref 18); PathoSV (2026 ahead-of-print, ref 26); Merscher-not-Lindsay authorship correction (ref 3); Wright et al. 2015 venue is The Lancet, not Nature Genetics (ref 12).</li>
+<li>Web of Science and Google Scholar were not directly accessible in this environment; coverage from those indices was approximated via the aggregated scholarly web search. Citation counts were not systematically collected (ranking above reflects field-standing plus recency, not a formal bibliometric sort).</li>
+<li>This is a scoping-style search, not a full PRISMA systematic review: no dual screening, and result counts per database were not recorded for every query.</li>
+</ul>
+</details><details id="file2"><summary>2. virtual_cell_review_bibliography.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc2-引文书目-虚拟细胞药物效应模拟与基因扰动">引文书目 — 虚拟细胞：药物效应模拟与基因扰动</h1>
+<blockquote>
+<p>配套报告：<code>reports/管线文档/文献调研_虚拟细胞药物效应与基因扰动_2026-09-12.md</code> 日期：2026-09-12 · 检索线：AI 虚拟细胞 / 机制全细胞模型 / 药物效应模拟 / 剂量补偿 DOI 状态说明：<strong>v</strong> = 通过搜索结果双重确认（多数带 PubMed/EuropePMC/出版社页）；<strong>r</strong> = 检索所得 DOI/标识，建议 Crossref 复核后引用；<strong>p</strong> = preprint/bioRxiv/arXiv 标识（非正式 DOI）。</p>
+</blockquote>
+<hr />
+<h2 id="doc2-a.-ai-虚拟细胞愿景-综述">A. AI 虚拟细胞愿景 / 综述</h2>
+<ol type="1">
+<li><strong>Buettner et al. (2024). How to build the virtual cell with artificial intelligence: Priorities and opportunities. Cell, 187(25), 7045–7063.</strong> [v] doi:10.1016/j.cell.2024.11.015 · PubMed:39398201 · arXiv:2409.11654.
+<ul>
+<li>AIVC 愿景：多尺度多模态大网络模型，Universal Representation + Virtual Instruments；短期里程碑 = 可验证假设 + 跨模态基准。</li>
+</ul></li>
+<li><strong>Virtual Cells: Predict, Explain, Discover (2025). arXiv:2505.14613.</strong> [p] — 提出 P-E-D 验证体系与四方面基准（功能响应/细胞上下文/扰动类别/三种能力）；明确点评单细胞扰动模型”仅转录组读数、受翻译后调控限制”、全细胞模型”只覆盖简单组织”。</li>
+<li><strong>AI-driven virtual cell models in preclinical research: technical pathways, validation mechanisms, and clinical translation potential. npj Digital Medicine (2025).</strong> [v] doi:10.1038/s41746-025-02198-6（备：PMC12789685）
+<ul>
+<li>临床转化两阶段验证（计算+实验）；FDA 将 AI 视为补充证据；引用平台 VCell/PhysiCell/COPASI；毒理用例（DILI、cardiotoxicity）；原话确认”DL 基因扰动预测尚未超过简单线性基线”。</li>
+</ul></li>
+</ol>
+<h2 id="doc2-b.-基因扰动预测正面方法">B. 基因扰动预测（正面方法）</h2>
+<ol start="4" type="1">
+<li><strong>Roohani et al. (2023). Predicting transcriptional outcomes of novel multigene perturbations with GEARS. Nat Biotechnol 41(7), 564–575.</strong> [v] doi:10.1038/s41587-023-01905-6.</li>
+<li><strong>Schmittmann et al. (2023). Dissecting cell identity via network inference and in silico gene perturbation. Nature 613, 270–277.</strong> [v] doi:10.1038/s41586-022-05688-9（CellOracle）。</li>
+<li><strong>Lotfollahi et al. (2023). Predicting cellular responses to complex perturbations in high-throughput screens. Mol Syst Biol.</strong> [v] doi:10.15252/msb.202211517（CPA）。</li>
+<li><strong>Cui et al. (2024). scGPT: toward building a foundation model for single-cell multi-omics using generative AI. Nat Methods.</strong> [v] doi:10.1038/s41592-024-02201-0 · PubMed:38409223.</li>
+<li><strong>Pavelko et al. (?) scGenePT: Is language all you need for modeling single-cell perturbations? bioRxiv 2024.</strong> [p] doi:10.1101/2024.10.23.619972.</li>
+</ol>
+<h2 id="doc2-c.-基因扰动预测否定基准">C. 基因扰动预测（否定/基准）</h2>
+<ol start="9" type="1">
+<li><strong>Deep-learning-based gene perturbation effect prediction does not yet outperform simple linear baselines. Nat Methods (2025).</strong> [v] doi:10.1038/s41592-025-02772-6 · PubMed:40759747 · PMC12328236（bioRxiv 2024.09.16.613342 [p]）。
+<ul>
+<li>5 foundation models + 2 其他 DL 模型 vs 简单线性基线：无一超过；本报告直接引用为领域自我证伪证据。</li>
+</ul></li>
+<li><strong>arXiv:2602.18885 (2026)？“预测高维转录响应…均值坍缩（mean collapse）假阳性”</strong> [p] — 识别平均坍缩问题的 preprint（报道于检索，作者/标题待补）。</li>
+</ol>
+<h2 id="doc2-d.-药物效应模拟">D. 药物效应模拟</h2>
+<ol start="11" type="1">
+<li><strong>Hetzel et al. (2022). Predicting Cellular Responses to Novel Drug Perturbations at a Single-Cell Resolution. NeurIPS 2022.</strong> [p/v] arXiv:2204.13545（chemCPA）。</li>
+<li><strong>ONERAI/scDrugMap (2026). Benchmarking Large Foundation Models for Drug Response Prediction at single-cell resolution.</strong> [r] GitHub:ONERAI/scDrugMap。</li>
+<li><strong>AetherCell: A generative engine for virtual cell perturbation and in vivo drug discovery (2026).</strong> [r] doi:10.64898/2026.03.13.710968（新 DOI 前缀，复核）。</li>
+<li><strong>TwinCell: Large Causal Cell Model for Reliable and Interpretable Therapeutic Target Prioritisation. bioRxiv (2026).</strong> [p] doi:10.64898/2026.01.29.702072v2。</li>
+<li><strong>StateXDiff: Cell State-Contextualized Multimodal Diffusion for Single-Cell Perturbation Prediction (2026). arXiv:2605.16104.</strong> [p]</li>
+<li><strong>ProteinTalks: an operational perturbation proteomics-based virtual cell model. Nature (2026).</strong> [v] doi:10.1038/s41586-026-11001-9 — 蛋白层（~3.8×10⁷ 时间分辨蛋白测量）虚拟细胞；直击翻译层盲区。</li>
+</ol>
+<h2 id="doc2-e.-机制性全细胞模型-毒理-数字孪生">E. 机制性全细胞模型 / 毒理 / 数字孪生</h2>
+<ol start="17" type="1">
+<li><strong>Karr et al. (2012). A whole-cell computational model predicts phenotype from genotype. Cell 150(2), 389–401.</strong> [v] doi:10.1016/j.cell.2012.05.044 · PMID:22817898 · PMC3413483（M. genitalium，28 子模型/401 基因）。</li>
+<li><strong>An expanded whole-cell model of E. coli links cellular physiology with mechanisms of growth rate control. npj Syst Biol Appl (2022).</strong> [v] doi:10.1038/s41540-022-00242-9（wcEcoli/vEcoli 系列；全细胞 E. coli 仍 in development，见 wholecell.org）。</li>
+<li><strong>Quantitative Systems Pharmacology-Based Digital Twins for Enzyme Replacement Therapies in Pompe Disease.</strong> [r] doi:10.1002/cpt.3498（QSP 数字孪生 in silico 疗效对比；同类综述 PMC12703978 “Advancing rare disease therapeutics through digital twins”）。</li>
+<li><strong>Digital patient twins for personalized therapeutics and pharmaceutical manufacturing. Front Digit Health (2023).</strong> [v] doi:10.3389/fdgth.2023.1302338.</li>
+</ol>
+<h2 id="doc2-f.-治疗逻辑sineup-剂量补偿">F. 治疗逻辑（SINEUP / 剂量补偿）</h2>
+<ol start="21" type="1">
+<li><strong>Indrieri et al. (2016). Synthetic long non-coding RNAs [SINEUPs] rescue defective gene expression in vivo. Sci Rep 6:27315.</strong> [v] doi:10.1038/srep27315 · PMID:27265476 · PMC4893607。</li>
+<li><strong>SINEUPs: a novel toolbox for RNA therapeutics.</strong> [v] PubMed:34623427 · PMC8564737（haploinsufficiency 列为首要治疗场景的综述）。</li>
+<li><strong>Model-guided design of microRNA-based gene circuits supports precise dosage of transgenic cargoes / Synthetic dosage-compensating miRNA circuits.</strong> [p] bioRxiv doi:10.1101/2024.03.13.584179 + PMC11230401。</li>
+<li><strong>A synthetic circuit for buffering gene dosage variation between individual mammalian cells (Equalizers). Nat Commun (2021).</strong> [v] doi:10.1038/s41467-021-23889-0.</li>
+</ol>
+<hr />
+<h2 id="doc2-验证备注">验证备注</h2>
+<ul>
+<li>标记 [v] 的条目均出现于 ≥2 独立检索结果且与出版社/PubMed/EuropePMC 页面一致（Karr 2012、Indrieri 2016 已逐条核对 PMID/PMC）。</li>
+<li>标记 [r] 的条目（AetherCell、TwinCell、scDrugMap、Pompe 数字孪生）为 2026 最新的早期报告或新标识前缀，<strong>引用于 iGEM wiki 前建议 Crossref 复核</strong>。</li>
+<li>标记 [p] 的条目为 preprint/arXiv/NeurIPS 程序论文，报告中对它们的定位是”新支线（未经第三方基准）“，与 [v] 的正式基准明确区分。</li>
+<li>条目 #10（mean collapse preprint）标题/作者信息不全，报告中仅作现象引用；如需正式引用，先从检索补全元数据。</li>
+</ul>
+</details></main></body></html>

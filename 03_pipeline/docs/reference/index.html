@@ -1,0 +1,774 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管线补充说明</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><p class="note"><strong>当前发布规则（2026-09-26）：</strong>所有数据与模型独立准备。下方盘点和历史全文中的“保留”指本地保留，旧 Git/LFS 交付说法已失效。安装和运行请先看 <a href="../../../00_docs/01_guides/DATA_SETUP.html">数据准备指南</a> 与 <a href="../../../00_docs/01_guides/VCT_SETUP.html">VCT 接入指南</a>。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>管线补充说明</h1><p class="lead">把当前测试与接口说明和历史架构分开阅读，保留全部原文。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>当前测试先读 TESTING.md；AI 数据格式见 api/ai_scores.md，AI 为可选输入。</li><li>CNV 可选模块仍暂停开发；保留身份契约与历史步骤用于追溯。</li><li>ADR-001 解释采用 HGNC ID 的理由，其 2025 日期及旧失败阈值未擅自改写；具体校验以当前 normalize/config 为准。</li><li>Archify 图与讲解是旧结构，项目合并后才评估新图；本次不重画。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a data-local-only-href="../ARCHIFY_%E6%B5%81%E7%A8%8B%E8%AE%B2%E8%A7%A3.md" title="本地保留的来源文件，不随公开仓库发布">../ARCHIFY_流程讲解.md</a></td><td>旧架构图的逐阶段讲解，保留历史设计来源</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr><tr><td>2</td><td><a data-local-only-href="../cnv_workflow.md" title="本地保留的来源文件，不随公开仓库发布">../cnv_workflow.md</a></td><td>可选 CNV/已知区间提取接口、身份契约及历史操作</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr><tr><td>3</td><td><a data-local-only-href="../TESTING.md" title="本地保留的来源文件，不随公开仓库发布">../TESTING.md</a></td><td>当前标准测试入口、产物和验证边界</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr><tr><td>4</td><td><a data-local-only-href="../CNV_%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%AF%A6%E8%A7%A3.md" title="本地保留的来源文件，不随公开仓库发布">../CNV_工作流详解.md</a></td><td>CNV 基础概念、步骤与历史验收解释</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr><tr><td>5</td><td><a data-local-only-href="../decisions/ADR-001-hgnc-indexing.md" title="本地保留的来源文件，不随公开仓库发布">../decisions/ADR-001-hgnc-indexing.md</a></td><td>HGNC ID 主键设计决策；旧阈值与日期仅作原始历史记录</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr><tr><td>6</td><td><a data-local-only-href="../api/ai_scores.md" title="本地保留的来源文件，不随公开仓库发布">../api/ai_scores.md</a></td><td>可选 AI 分数数据契约与 DeepLOF 转换检查</td><td>接口查阅、主键设计理由和负结果追溯</td><td>原路径不变；reference 提供统一人读/agent 入口</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file1"><summary>1. ARCHIFY_流程讲解.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc1-igem_gene_pipeline-项目结构与流程讲解">igem_gene_pipeline — 项目结构与流程讲解</h1>
+<blockquote>
+<p><strong>2026-09-25 整理注记：</strong> 本文中的旧架构、<code>config/sources.json</code> 与 uv 命令只用于历史参考。数据来源已整合至 <a href="../../README.md#data-sources">README 数据来源</a>，旧登记的占位校验和不表示完成核验；当前环境只按 <a href="../../README.md">README 唯一安装入口</a>建立，旧锁文件已删除。</p>
+</blockquote>
+<blockquote>
+<p>配套文件：<code>igem_gene_pipeline.dataflow.html</code>（Archify 交互式数据流图，浏览器打开） 图谱源文件：<code>igem_gene_pipeline.dataflow.json</code> 本文讲解项目结构、两条子管线与图中的每个节点，内容来自 <code>README.md</code>、<code>docs/cnv_workflow.md</code>、<code>outputs/wbs/sources/report_v2.md</code>、<code>outputs/cnv/cnv_report.md</code>。</p>
+</blockquote>
+<hr />
+<h2 id="doc1-一项目结构">一、项目结构</h2>
+<pre><code>igem_gene_pipeline/
+├── README.md                  # 管线总览 + 快速上手（uv 环境 + 四步命令）
+├── config/                    # 全部参数集中在此，改配置不动代码
+│   ├── pipeline.yaml          # L1 管线：证据阈值（pLI/LOEUF/HPA）、共识权重
+│   ├── cnv.yaml               # CNV 工作流：样本、分辨率阶梯、片段阈值、已知区间
+│   └── sources.json           # 数据源清单（ClinGen/gnomAD/HPA/HGNC 的 URL 与校验）
+├── data/                      # 下载的数据（不入 git，只存 checksum）
+│   ├── clinGen_gene_curation_list_GRCh38.tsv   # ClinGen 单倍剂量不足评分
+│   ├── gnomad_constraint.tsv                   # gnomAD pLI / LOEUF 约束指标
+│   ├── hpa_rna_expression_consensus.tsv        # HPA 51 组织 RNA 表达共识
+│   ├── hgnc_aliases.tsv                        # HGNC 别名表（符号解析用）
+│   ├── gencode.v44.basic.annotation.gtf.gz     # GENCODE v44 蛋白编码基因注释
+│   ├── gencode_v44_gene_order.tsv              # GTF 派生的基因排序表
+│   └── scrna/GSE283473/                        # 病人 WS1 + 对照 CTRL1 的 10x 矩阵
+├── input/candidates.csv       # L1 管线入口：候选基因符号（可由 CNV 工作流产出生成）
+├── src/                       # 代码
+│   ├── normalize.py           # L1 第 1 步：符号 → HGNC ID 主键（ADR-001）
+│   ├── merge_evidence.py      # L1 第 2 步：整合 ClinGen/gnomAD/HPA → evidence.parquet
+│   ├── consensus.py           # L1 第 3 步 v1：加权投票排名
+│   ├── consensus_v2.py        # L1 第 3 步 v2：归一化加权 + Borda 对照 + LOO 调权
+│   └── cnv/                   # CNV 工作流（scRNA-seq → 缺失区间基因）
+│       ├── workflow.py        # CLI 编排器：5 个子命令（stage-samples 等）
+│       ├── infercnv.py        # 加载 → QC → 归一化 → infercnvpy 推断
+│       ├── segments.py        # robust z 片段发现 + 大小过滤
+│       ├── gene_order.py      # GTF 解析 + 区间基因提取
+│       └── expression_qc.py   # 区间基因表达 QC（防 E6 型 pivot）
+├── outputs/
+│   ├── evidence.parquet       # merge_evidence 产物
+│   ├── candidates_ranked_v2.csv  # 最终 top-N 排名（consensus_v2 产物）
+│   ├── report_v2.md           # iGEM 汇报报告
+│   └── cnv/                   # CNV 工作流产物
+│       ├── candidates.csv         # ← L1 管线输入（仅已知区间，35 基因）
+│       ├── candidates_all.csv     # 已知+自动片段并集（2488 基因）
+│       ├── auto_segment_genes.csv # 仅自动片段（探索性）
+│       ├── cnv_input.h5ad         # 中间表达矩阵
+│       ├── window_signal_*.tsv    # 两档分辨率的窗口信号
+│       ├── segments_*.csv         # 缺失片段表
+│       ├── heatmap_patient.png    # 患者染色体热图
+│       ├── validation_known_intervals.csv  # AC 判定
+│       └── cnv_report.md          # 工作流报告
+├── docs/
+│   ├── cnv_workflow.md        # scRNA → 缺失区间基因工作流文档（含验收门槛）
+│   ├── decisions/ADR-001-hgnc-indexing.md  # 架构决策：HGNC ID 为主键
+│   └── api/                   # 外部 AI 评分服务契约
+└── tests/                     # 回归与合成 CLI 数据流；统一入口见 docs/TESTING.md</code></pre>
+<p><strong>两条子管线的关系</strong>：CNV 工作流产出 <code>outputs/cnv/candidates.csv</code>，<code>cp</code> 到 <code>input/candidates.csv</code> 后即成为 L1 管线的入口 —— 这是图里标为「CNV → L1 交接」的那条 <code>candidates.csv</code> 边。</p>
+<hr />
+<h2 id="doc1-二流程讲解对应图中的-5-个阶段">二、流程讲解（对应图中的 5 个阶段）</h2>
+<h3 id="doc1-阶段-①-数据源灰框">阶段 ① 数据源（灰框）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>节点</th>
+<th>内容</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scRNA-seq 原始</td>
+<td>GEO <strong>GSE283473</strong> 的 10x 矩阵，WS1（Williams 综合征病人）vs CTRL1（对照）</td>
+<td>CNV 工作流的表达数据</td>
+</tr>
+<tr>
+<td>GENCODE v44</td>
+<td>蛋白编码基因注释 GTF（GRCh38）</td>
+<td>派生基因排序表，供区间提取</td>
+</tr>
+<tr>
+<td>参考数据库</td>
+<td><strong>ClinGen</strong>（单倍剂量不足 HI 评分）、<strong>gnomAD</strong>（pLI/LOEUF）、<strong>HPA</strong>（组织表达）、<strong>HGNC</strong>（别名表）</td>
+<td>L1 管线的四条证据源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc1-阶段-②-整理cnv-预处理">阶段 ② 整理（CNV 预处理）</h3>
+<ul>
+<li><strong>stage-samples</strong>：把 GEO 的 GSM 文件整理成 scanpy 可读的 per-sample 10x 目录（2 列 genes.tsv → 3 列 features.tsv）。</li>
+<li><strong>prepare-order</strong>：GTF → 蛋白编码基因排序表（基因名 → 染色体坐标）。</li>
+</ul>
+<h3 id="doc1-阶段-③-推断">阶段 ③ 推断</h3>
+<ul>
+<li><strong>infercnv</strong>（tag：回退路径）：加载两样本 → QC（min_genes≥200、线粒体≤20%）→ 降采样 → normalize_total+log1p → 按基因组坐标排序 → <strong>infercnvpy</strong> 两档分辨率推断（standard 100/10、fine 25/5）→ 每窗口信号表 + 热图 + cnv_input.h5ad。
+<ul>
+<li>图上 <code>prepare-order</code> 从下方汇入：推断必须按基因组坐标排序，排序表是它的第二个输入。</li>
+</ul></li>
+</ul>
+<h3 id="doc1-阶段-④-提取-整合-共识两条子管线在此汇合">阶段 ④ 提取 · 整合 · 共识（两条子管线在此汇合）</h3>
+<p><strong>CNV 支（上方）</strong>：</p>
+<ul>
+<li><strong>call-segments · extract-genes</strong>（tag：仅已知区间）：robust z（median/MAD，阈值 1.5）→ 连续低信号窗口段 → 大小过滤（&gt;10Mb 判为着丝粒伪影）→ 从<strong>已知临床区间</strong>（Williams 7q11.23）和自动片段提取基因清单。默认 <code>candidates.csv</code> 只含已知区间的 35 个基因（<strong>不依赖表达信号，永远可靠</strong>）；自动片段单独存为探索性候选。</li>
+</ul>
+<p><strong>L1 支（下方）</strong>：</p>
+<ul>
+<li><strong>normalize · merge_evidence</strong>（tag：ADR-001）：基因符号经 HGNC 别名映射 → <strong>HGNC ID 主键</strong>（架构决策 ADR-001，数据源变动不影响重跑）→ 与 ClinGen/gnomAD/HPA 按 HGNC ID join → <code>evidence.parquet</code>。</li>
+<li><strong>consensus_v2</strong>：归一化加权（rank 归一化 + 证据权重）+ <strong>Borda 对照</strong>（校验两种聚合方式是否一致）+ 可选 <strong>LOO 调权</strong>（leave-one-out，用正对照基因调权重）→ top-N 排名。</li>
+</ul>
+<h3 id="doc1-阶段-⑤-产出-下游">阶段 ⑤ 产出 · 下游</h3>
+<ul>
+<li><strong>candidates_ranked_v2</strong>（紫框 = 数据产物）：top-N 排名表 + <code>report_v2.md</code>（iGEM 汇报）。</li>
+<li><strong>L3 扰动工具</strong>（下游消费方）：VirtualCellTool / CellOracle 等基因扰动工具，接收 top-N 候选做因果验证。</li>
+</ul>
+<hr />
+<h2 id="doc1-三关键结果来自-report_v2.md-与-cnv_report.md">三、关键结果（来自 report_v2.md 与 cnv_report.md）</h2>
+<h3 id="doc1-验收门槛gse283473-真实数据">验收门槛（GSE283473 真实数据）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Gate</th>
+<th>判定</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AC-CNV-2</strong> 区间 marker 基因检出</td>
+<td>✅ PASS</td>
+<td>ELN / GTF2I / LIMK1 / CLIP2 均在表达数据中检出（首轮 FAIL 曾抓住配置坐标过窄的 bug：GTF2I 位于 74.65–74.76 Mb，原 74.4 Mb 终点漏掉了它）</td>
+</tr>
+<tr>
+<td><strong>AC-CNV-1</strong> 自动发现覆盖已知区间</td>
+<td>❌ FAIL（<strong>预期内负结果</strong>）</td>
+<td>1.55 Mb 胚系杂合缺失处于表达型推断的分辨率极限；区间基因平均 log2FC ≈ 0.05，与 E8「<strong>mRNA 隐身</strong>」（剂量补偿吸收稳态 mRNA 差异）一致</td>
+</tr>
+<tr>
+<td>大小过滤</td>
+<td>生效</td>
+<td>standard 19/27、fine 7/46 个 &gt;10Mb 伪影片段被过滤</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>负结果的定位：AC-CNV-1 的 FAIL 不否定缺失存在，也不影响 <code>candidates.csv</code>（只依赖已知区间坐标）。这正是本项目 E8 实验「mRNA 隐身」的机制印证 —— 表达型 CNV 推断注定是<strong>回退路径</strong>，权威来源是基因型（CNV 芯片 / WGS / MLPA）。</p>
+</blockquote>
+<h3 id="doc1-consensus_v2-top-1035-基因rank-归一化">consensus_v2 Top 10（35 基因，rank 归一化）</h3>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>基因</th>
+<th>得分</th>
+<th>Borda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>FZD9</td>
+<td>1.926</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>FKBP6</td>
+<td>1.037</td>
+<td>31</td>
+</tr>
+<tr>
+<td>3-8</td>
+<td>TMEM270 / SPDYE8-11 / ENSG…</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ELN</td>
+<td>-0.037</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>BAZ1B</td>
+<td>-0.074</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>证据覆盖率：gnomAD pLI/LOEUF 77%，clinGen 14%（其余证据列缺失时中性处理）。</li>
+<li>Additive-rank 与 Borda-rank 的 Spearman ρ = 0.234（两种聚合方式分歧较大，图上以 Borda 作为对照正是为此设计）。</li>
+<li>LOO 调权：对照基因 ELN/GTF2I 未进入 top-N（LOO hit rate 0%），提示当前证据组合对「mRNA 隐身」的区间基因不敏感 —— 这是待改进点，不是管线 bug。</li>
+</ul>
+<hr />
+<h2 id="doc1-四如何阅读-archify-图">四、如何阅读 Archify 图</h2>
+<ul>
+<li><strong>5 列 = 5 个阶段</strong>，从左到右是数据流向；<strong>行 = 并行支流</strong>（上方 CNV 支、下方 L1 支）。</li>
+<li><strong>绿箭头 = 主要数据</strong>（样本矩阵、candidates.csv、evidence.parquet 等），<strong>灰箭头 = 一般数据流</strong>（注释、证据源），<strong>紫框 = 数据存储产物</strong>，<strong>灰框 = 外部源/外部工具</strong>。</li>
+<li>节点上的小标签（tag）标注关键约束：<code>回退路径</code>（infercnv）、<code>仅已知区间</code>（candidates.csv 来源）、<code>ADR-001</code>（HGNC ID 主键决策）。</li>
+<li>两条关键边：
+<ul>
+<li><strong>candidates.csv（CNV → L1 交接）</strong>：把 CNV 工作流的产物接到 L1 管线入口；</li>
+<li><strong>证据源</strong>：四条外部数据库直接汇入证据整合。</li>
+</ul></li>
+<li>图内置功能：右上角可切换浅色/深色主题、演示模式、导出 PNG/SVG；底部工具栏支持路径追踪、搜索、聚焦。</li>
+</ul>
+</details><details id="file2"><summary>2. cnv_workflow.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc2-scrna-seq-缺失区间基因-工作流">scRNA-seq → 缺失区间基因 工作流</h1>
+<blockquote>
+<p>当前决定（2026-09-25）：自动 CNV 开发暂停，代码保留；已知区间提取仍可用。真实数据自动找回已知区间的检查未通过，因此自动发现未成为正式筛选前提。未来可能用于 DBTL，尚未决定实施。见<a href="../index.html#cnv-decision">决策说明</a>。下方保留工作流与历史探索记录，不表示授权重启开发。</p>
+</blockquote>
+<blockquote>
+<p>位置：<code>src/cnv/</code> · 配置：<code>config/cnv.yaml</code> · 演示验证：GSE283473（Williams 综合征脑类器官） 2026-09-25 已完成按编号保留原符号/计数的真实六样本工程验收，详见 <a data-local-only-href="../../../00_docs/04_acceptance/2026-09-25_gene_identity/GENE_ID_REPAIR_2026-09-25.md" title="本地保留的来源文件，不随公开仓库发布">最终记录及未匹配清单</a>。科学检验状态独立报告；下文 09-05 结果保留为历史记录。</p>
+</blockquote>
+<h2 id="doc2-目的与边界">目的与边界</h2>
+<p>从病人单细胞 RNA-seq 数据中产出<strong>微缺失区间内的基因清单</strong>，作为 L1 遗传学管线（<code>src/consensus*.py</code>）的输入。</p>
+<p><strong>适用边界（重要）</strong>：</p>
+<ul>
+<li>缺失区间的<strong>权威来源是基因型</strong>（CNV 芯片 / WGS / MLPA / 临床报告）。表达型 CNV 推断（infercnvpy）只是<strong>没有基因型时的回退路径</strong>。</li>
+<li>胚系杂合微缺失（典型 1–3 Mb）<strong>处于表达型推断的分辨率极限</strong>：窗口平滑（25–100 基因）会稀释 25–60 基因的缺失信号，且稳态 mRNA 剂量补偿会进一步抹平信号（本项目 E8 已观察到”mRNA 隐身”）。<strong>自动发现的片段一律标记为探索性，必须正交验证。</strong></li>
+<li>已知区间的基因提取<strong>不依赖表达信号</strong>；结果依赖输入坐标和基因注释的正确性，不替代临床确认。</li>
+</ul>
+<h2 id="doc2-仅输入缺失区间不进行-cnv2026-09-22-新增">仅输入缺失区间，不进行 CNV（2026-09-22 新增）</h2>
+<p>已获得临床确认区间，或本次只想按给定区间提取基因时，使用显式的 <code>intervals-only</code> 模式。不需要 <code>samples</code>、表达矩阵或自动分段；即使输出目录有旧 <code>segments_all.csv</code>、<code>cnv_input.h5ad</code>、热图，也不会读取或引用它们。保留旧文件，不把它们算作本次产物。</p>
+<p>从 <code>03_pipeline/</code> 运行：</p>
+<div class="sourceCode" id="doc2-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc2-cb1-1"><a href="#doc2-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow extract-genes <span class="dt">\</span></span>
+<span id="doc2-cb1-2"><a href="#doc2-cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--config</span> config/my_intervals.yaml <span class="at">--mode</span> intervals-only</span></code></pre></div>
+<p><code>config/my_intervals.yaml</code> 需自行创建，最小配置格式如下；<strong>chr1:100–200 仅为格式示例，不是疾病或临床区间</strong>：</p>
+<div class="sourceCode" id="doc2-cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="doc2-cb2-1"><a href="#doc2-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span><span class="at"> my_study</span></span>
+<span id="doc2-cb2-2"><a href="#doc2-cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">annotation</span><span class="kw">:</span></span>
+<span id="doc2-cb2-3"><a href="#doc2-cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">gene_order_tsv</span><span class="kw">:</span><span class="at"> data/gencode_v44_gene_order.tsv</span></span>
+<span id="doc2-cb2-4"><a href="#doc2-cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">genome_build</span><span class="kw">:</span><span class="at"> GRCh38</span></span>
+<span id="doc2-cb2-5"><a href="#doc2-cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">known_intervals</span><span class="kw">:</span></span>
+<span id="doc2-cb2-6"><a href="#doc2-cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">my_deletion</span><span class="kw">:</span></span>
+<span id="doc2-cb2-7"><a href="#doc2-cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">chr</span><span class="kw">:</span><span class="at"> chr1</span></span>
+<span id="doc2-cb2-8"><a href="#doc2-cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">start</span><span class="kw">:</span><span class="at"> </span><span class="dv">100</span></span>
+<span id="doc2-cb2-9"><a href="#doc2-cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">end</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
+<span id="doc2-cb2-10"><a href="#doc2-cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">genome_build</span><span class="kw">:</span><span class="at"> GRCh38</span></span>
+<span id="doc2-cb2-11"><a href="#doc2-cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">extract</span><span class="kw">:</span></span>
+<span id="doc2-cb2-12"><a href="#doc2-cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> intervals-only</span></span>
+<span id="doc2-cb2-13"><a href="#doc2-cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="doc2-cb2-14"><a href="#doc2-cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dir</span><span class="kw">:</span><span class="at"> outputs_repro/my_intervals</span></span></code></pre></div>
+<ul>
+<li>区间为 <strong>1-based、两端包含</strong>，起止必须是整数且 <code>1 &lt;= start &lt;= end</code>；支持 <code>chr1</code>～<code>chr22</code>、<code>chrX/chrY</code> 及不带 <code>chr</code> 的形式。注释和每个区间均需明确、匹配的 <code>genome_build</code>；不猜测版本、不自动 liftover。BED 等其他坐标体系需先转换，显式声明非 <code>1-based-inclusive</code> 会报错。声明一致不等于程序已核实文件真实组装版本。</li>
+<li>已有排序表即可提取；如果表缺失，可在 annotation 中额外指定 <code>gtf</code>，程序按原规则生成蛋白编码基因表并记录来源。基因与区间相交规则不变。</li>
+<li><code>markers</code> 可省略；CNV/表达两项验证为 <code>NOT_EVALUATED</code> 并附原因，不写成 <code>FAIL</code>，也不冒称 <code>PASS</code>。表达 QC 与自动片段基因表输出带表头空表。</li>
+<li><code>include_auto_in_candidates: true</code> 与仅区间模式冲突，会明确报错。不要使用 <code>all</code> 启动仅区间任务；<code>all</code> 会提示改用 <code>extract-genes</code>。缺省模式仍为 <code>cnv</code>，已有完整 CNV 命令不变。</li>
+<li>空区间配置或区间未命中基因时，候选 CSV 仍写入固定六列表头：<code>gene_symbol,source,deletion_id,chrom,start,end</code>。这表示成功得到零候选；后续 normalize 会按 CR-006 明确拒绝空候选，不能继续使用旧候选。</li>
+</ul>
+<h2 id="doc2-输出状态历史与审计cr-011013">输出状态、历史与审计（CR-011/013）</h2>
+<p><code>prepare-order</code>、<code>infercnv</code>、<code>call-segments</code>、<code>extract-genes</code> 各有独立 <code>execution_id</code>。<code>audit/run_&lt;stage&gt;.json</code> 表示该阶段最新状态；每次结束还保存 <code>audit/records/&lt;execution_id&gt;.json</code>，后续运行不覆盖这份记录。<code>stage-samples</code> 仍按 CR-010 做输入冲突预检，不属于这四个计算阶段的审计。</p>
+<ul>
+<li>记录完整配置快照、阶段有效参数、实际消费文件的真实路径/SHA-256、本次输出路径/SHA-256，以及上游执行编号和审计记录校验和。CLI 还记录配置文件校验和；命令行覆盖以有效参数和配置快照为准。输入、上游记录、输出以文件名或样本/文件名标识，路径单独保留。</li>
+<li>当前状态区分 <code>running</code> / <code>success</code> / <code>failed</code>；上游重跑时，依赖它的已有下游产物会归档，最新状态标为 <code>invalidated</code>。不依赖 CNV 的仅区间结果不会因 infercnv/call-segments 重跑而失效，但重建其基因注释时会失效。</li>
+<li>旧的阶段产物和最新审计移动到 <code>history/&lt;execution_id&gt;/previous/</code>；本次失败的半成品进入 <code>incomplete/</code>，失效的下游文件进入 <code>invalidated_&lt;stage&gt;/</code>。仅管理约定文件及前次审计记录的同类分辨率产物，不删除输入或未知文件，不自动清空 history。归档可能包含较大的 h5ad，需留意磁盘空间。</li>
+<li>必需的读取、计算或写入出错会使该阶段失败，不将已写出的候选半成品当成功结果。可选热图失败只警告，并在 infercnv 审计中记录 <code>heatmap.status=failed</code> 及原因；主表仍可成功，旧图和半张新图均不留作当前热图。</li>
+<li>复用 CNV 中间表时，检查上游成功状态、研究标识、对应阶段参数、文件路径/校验和、历史执行记录，以及 segments 与 h5ad 所属的 infercnv 执行。不同轮次或被替换的文件明确拒绝。仅调整下游分段阈值或待提取区间，可以复用兼容的上游。</li>
+<li>旧审计没有执行编号和校验链，不能自动冒认为已经验证；需要从相关上游重新运行。独立提供的 gene-order 表允许使用，会标记为 <code>supplied_table</code> 并哈希，不伪造 GTF 来源。历史仓库产物不会在此次代码修复中迁移。</li>
+</ul>
+<p>边界：上述是串行执行下的产物管理，不提供并发写入锁或磁盘故障/进程中断时的事务回滚。异常终止可能留下 <code>running</code>，不能据此认为成功；多个研究应使用独立输出目录。</p>
+<h2 id="doc2-原始矩阵身份与-qc-契约2026-09-25">原始矩阵、身份与 QC 契约（2026-09-25）</h2>
+<ul>
+<li>加载接受完整、同一压缩形式的 <code>matrix.mtx[.gz]</code>、<code>barcodes.tsv[.gz]</code> 和 <code>features.tsv[.gz]</code>（优先）或 <code>genes.tsv[.gz]</code>。矩阵方向必须是基因×细胞；只接收 Gene Expression，不能把归一化、负值、非有限值或非整数表达当原始计数。维度须与清单一致；重复矩阵坐标和不能被原有 float32 精确表示的计数明确拒绝。</li>
+<li>基因 ID、符号和样本内 barcode 不得缺失或带首尾空白；ID 和样本内 barcode 必须唯一。不同 ID 可以共用原始符号：矩阵索引 <code>var_names</code> 和 <code>var.gene_ids</code> 保存 ID，<code>var.gene_symbols</code> 保存原始符号，不求和、不加后缀。跨样本仍须有完全一致的 ID/符号及行顺序，不自动重排或补零。</li>
+<li>位置和表达 QC 按 <code>gene_id</code> 精确匹配；有 ID 的数据缺少注释 ID 时明确失败，不回退到符号。表达 QC 同时输出注释名称 <code>gene_name</code>、输入符号 <code>gene_symbol</code> 和 <code>gene_id</code>；窗口表的 <code>genes</code> 保留原始符号，另有 <code>gene_ids</code>。线粒体 QC 仍读取原始符号的 <code>MT-</code> 前缀。</li>
+<li><code>gene_position_mapping.csv</code> 逐行列出全部输入 ID、原始符号、注释名称、坐标和定位状态，纳入审计、归档和上游失效管理；h5ad 的 <code>uns.gene_position_mapping</code> 保留同表。<code>not_in_supplied_annotation</code> 表示未命中本次注释，不等于已证明基因不存在。CNV 仍只使用原有蛋白编码/主染色体注释中的可定位行；未定位编号显式列出，不补坐标。同一 ID 的冲突注释或无效位置明确报错。</li>
+<li>不同样本可重复使用同一 barcode。原值保存在 <code>obs.barcode</code>，细胞索引用 JSON <code>[sample_id, barcode]</code> 表示，另保留 <code>obs.sample/group</code>；消费者不要按旧索引分隔符拆解身份。原始计数保存在 <code>layers['counts']</code>。</li>
+<li>患者和对照类别须不同且都有样本/细胞。任一样本经原有 QC 后无细胞、没有可定位基因、没有可用 CNV 窗口，均报告数据不足并停止该阶段；不静默丢样本。注释中的同 ID 不同位置不能任取第一行；只有符号的旧内存对象也必须能无歧义匹配。QC 阈值、归一化、推断参数与评分方法不变。</li>
+</ul>
+<p><code>infercnv.n_jobs</code> 可限制推断并行进程数以降低内存峰值；省略时沿用 infercnvpy 默认值。该参数写入阶段追溯，计算分块、阈值、窗口及降采样设置不变。</p>
+<h2 id="doc2-cnv-验证状态cr-012">CNV 验证状态（CR-012）</h2>
+<p>阶段是否执行成功与科学检验是否通过分别记录：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOT_EVALUATED</code></td>
+<td>对应步骤未执行，或显式仅区间模式；缺失测量值留空。</td>
+</tr>
+<tr>
+<td><code>INSUFFICIENT_DATA</code></td>
+<td>必要组/细胞/基因/窗口不足；区间没有推断窗口覆盖，或未配置 marker/区间基因不在表达数据中。</td>
+</tr>
+<tr>
+<td><code>ERROR</code></td>
+<td>读取或计算错误、上游失败/失效、已记录产物丢失；阶段失败，错误和分类写入审计，半成品归档。</td>
+</tr>
+<tr>
+<td><code>PASS</code> / <code>FAIL</code></td>
+<td>有可用数据并完成实际检验后，按原 overlap 阈值或 marker 检出规则判定；空的已完成片段调用可以为 FAIL。</td>
+</tr>
+</tbody>
+</table>
+<p>异常阶段仍使用执行字段 <code>status=failed</code>，另加 <code>validation_status=ERROR/INSUFFICIENT_DATA</code>。成功提取的逐区间状态和原因写入 <code>validation_known_intervals.csv</code>、审计及报告。缺失文件有已执行记录时不能当作未执行；必须重跑对应上游。<code>1</code> 与 <code>chr1</code> 的染色体写法在 overlap 比较中等价，重叠比例公式和阈值不变。上述状态是工程表达，不把表达型阴性结果解释为无基因型缺失。</p>
+<p>本地和新建独立环境均 445 项通过、零跳过；四样本/两研究合成链、真实六样本重复推断及两样本输出隔离通过。区间表达验证按本区间编号筛选 QC，不能借用区间外同名基因的表达；126 个当前 GTF 未匹配编号单列。详见 <a data-local-only-href="../../../00_docs/04_acceptance/2026-09-25_gene_identity/GENE_ID_REPAIR_2026-09-25.md" title="本地保留的来源文件，不随公开仓库发布">本轮证据与限制</a>。</p>
+<h2 id="doc2-架构">架构</h2>
+<pre><code>10x mtx（patient + reference 样本）
+   │
+stage-samples     整理成 scanpy 可读的 per-sample 目录（GEO 文件名 → 10x 标准名，2列 genes.tsv → 3列 features.tsv）
+   │
+prepare-order     GENCODE GTF → 蛋白编码基因排序表（gene_order_tsv）
+   │
+infercnv          加载→QC(min_genes/线粒体)→降采样→normalize_total+log1p→按基因组坐标排序
+                  → infercnvpy 两档分辨率（standard 100/10, fine 25/5）→ 每窗口信号表 + 热图 + cnv_input.h5ad
+   │
+call-segments     robust z(median/MAD) → 连续低信号窗口段 → 大小过滤(≤10Mb，去着丝粒伪影)
+   │
+extract-genes     已知临床区间 + 自动片段 → 基因清单
+                  ├─ candidates.csv            ← L1 管线输入（默认仅已知区间）
+                  ├─ candidates_all.csv        ← 已知+自动并集
+                  ├─ auto_segment_genes.csv    ← 仅自动片段（探索性）
+                  ├─ candidate_provenance.csv  ← 每条提取来源及是否纳入 L1 输入
+                  ├─ interval_gene_expression_qc.csv  ← 每基因表达 QC（防 E6 型 pivot）
+                  ├─ validation_known_intervals.csv   ← AC 判定
+                  └─ cnv_report.md</code></pre>
+<h2 id="doc2-快速开始">快速开始</h2>
+<div class="sourceCode" id="doc2-cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc2-cb4-1"><a href="#doc2-cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="doc2-cb4-2"><a href="#doc2-cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc2-cb4-3"><a href="#doc2-cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0) 先在仓库根目录运行 bash scripts/setup_envs.sh。</span></span>
+<span id="doc2-cb4-4"><a href="#doc2-cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 统一的 requirements.txt 已包含 CNV 所需的 scanpy 和 infercnvpy。</span></span>
+<span id="doc2-cb4-5"><a href="#doc2-cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># GENCODE v44 GTF 随仓库交付；两样本的六个 GEO 原始压缩文件须</span></span>
+<span id="doc2-cb4-6"><a href="#doc2-cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 先按本文件附录下载到 data/scrna/GSE283473/。旧绝对路径链接不属于发布内容。</span></span>
+<span id="doc2-cb4-7"><a href="#doc2-cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc2-cb4-8"><a href="#doc2-cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) 整理样本目录 + 基因排序表（轻量，无 scanpy 依赖）</span></span>
+<span id="doc2-cb4-9"><a href="#doc2-cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow stage-samples <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc2-cb4-10"><a href="#doc2-cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow prepare-order <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc2-cb4-11"><a href="#doc2-cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc2-cb4-12"><a href="#doc2-cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) inferCNV（重步骤：scanpy + infercnvpy；16k 细胞 ≈ 几分钟）</span></span>
+<span id="doc2-cb4-13"><a href="#doc2-cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow infercnv <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc2-cb4-14"><a href="#doc2-cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc2-cb4-15"><a href="#doc2-cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) 片段发现 + 基因提取</span></span>
+<span id="doc2-cb4-16"><a href="#doc2-cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow call-segments <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc2-cb4-17"><a href="#doc2-cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.cnv.workflow extract-genes <span class="at">--config</span> config/cnv.yaml</span>
+<span id="doc2-cb4-18"><a href="#doc2-cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc2-cb4-19"><a href="#doc2-cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 或一步到位：all（= 1+2+3，不含 stage-samples）</span></span></code></pre></div>
+<p>新数据集接入：复制 <code>config/cnv.yaml</code>，改 <code>samples</code>（patient/reference）、<code>known_intervals</code>（临床确诊区间与坐标版本）、按需调 <code>resolutions</code>/<code>z_threshold</code>。</p>
+<h3 id="doc2-样本整理的重复运行与冲突处理">样本整理的重复运行与冲突处理</h3>
+<p><code>stage-samples</code> 会先检查全部样本，再创建目录和文件；任一样本存在已知冲突，其他样本也不会先被整理。</p>
+<ul>
+<li><code>samples</code> 必须为非空列表，每项含唯一 <code>id</code>、<code>group</code> 和非空 <code>path</code>；<code>id</code>/<code>group</code> 必须为非空字符串且无首尾空白。样本目录按真实路径核对，符号链接不能绕过重复目录检查。<code>infercnv</code> 和直接 <code>load_samples</code> 也执行这些身份检查；无效配置在读取矩阵及改动已有计算产物前失败。仅区间提取不要求样本。</li>
+<li>原始 matrix/barcodes/genes 必须存在且是文件。目标三件套若已存在，只接受指向本次对应原始文件的符号链接（相对链接也可）；普通文件、错误/断裂链接和目录均报错，不覆盖。</li>
+<li>两列 genes 转为三列 features，三列及以上 genes 沿用直接链接；空基因表、列数不一致或不足两列、不可读压缩基因文件会报错，不猜测补齐。</li>
+<li>已有普通 features 按解压后的完整文本核对内容和顺序，正确则复用；已有 features 链接仅在原始 genes 可直接使用、且指向该原始文件时复用。缺失时才创建，生成文件使用排他写入，已有正确文件不会被重写。</li>
+<li>不同样本不得共用实际整理目录，也不能将一个样本目录放在另一样本预定输出文件的位置或其下方。错误消息给出冲突路径，CLI 非零退出；建议换用独立整理目录，或先人工核对并保存旧文件后再处理，不自动删除历史数据。</li>
+</ul>
+<p>此预检确保样本身份字段有效、目录不重复和 features 与当前 genes 一致，不验证表达矩阵维度、计数合法性、患者/对照两组是否齐全或疾病真实性；也不检测同一路径原始矩阵被原地修改的历史版本变化。运行时请不要并发改动输入和目标目录；预检不是事务，预检后的磁盘/权限故障仍可能留下部分新文件，但不会报告成功。真实多样本 CNV 端到端验证另行执行。</p>
+<h2 id="doc2-验收门槛qc-gates">验收门槛（QC gates）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Gate</th>
+<th>含义</th>
+<th>GSE283473 结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AC-CNV-1</strong></td>
+<td>自动发现片段覆盖已知区间 ≥ 50%</td>
+<td><strong>FAIL（预期内负结果）</strong>：1.55 Mb 杂合缺失未被表达型推断恢复</td>
+</tr>
+<tr>
+<td><strong>AC-CNV-2</strong></td>
+<td>区间 marker 基因（ELN/GTF2I/LIMK1/CLIP2）在表达数据中检出</td>
+<td><strong>PASS</strong>（首轮 FAIL 曾抓住配置坐标过窄的错误：GTF2I 位于 74.65–74.76 Mb，原 74.4 Mb 终点漏掉了它）</td>
+</tr>
+<tr>
+<td>大小过滤</td>
+<td>&gt;10 Mb 的”片段”判为着丝粒/低可比对区伪影</td>
+<td>standard 19/27、fine 7/46 个片段被过滤</td>
+</tr>
+<tr>
+<td>剂量 sanity</td>
+<td>已知区间基因平均 log2FC</td>
+<td>≈ 0.05（≈0 与 E8”mRNA 隐身”一致，不作为否定缺失的证据）</td>
+</tr>
+<tr>
+<td>E6 风险</td>
+<td>患者中表达 &lt;5% 的区间基因列出</td>
+<td>ELN/FZD9/CLDN3/4 等 17 个（血管/上皮基因在脑类器官沉默，符合预期；GTF2I 正常表达）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doc2-方法学注意事项">方法学注意事项</h2>
+<ol type="1">
+<li><strong>chrX/chrY 从自动发现中排除</strong>（<code>exclude_chromosomes</code>）：性染色体剂量差异会主导信号。已知区间在性染色体上时仍可提取基因，但不做表达型自动验证。</li>
+<li><strong>细胞组成混杂</strong>：patient 与 reference 的细胞类型比例差异会在表达信号上产生类 CNV 波动——这是自动片段假阳性的主要来源，也是”自动片段必须正交验证”的原因之一。</li>
+<li><strong>窗口重建有硬断言</strong>：<code>window_table()</code> 会校验重建的窗口数与 <code>X_cnv</code> 列数一致；infercnvpy 版本变更导致布局不匹配时会显式报错而非静默错位。</li>
+<li><strong>坐标版本必须一致</strong>：<code>known_intervals.genome_build</code> 与 GTF 必须同一版本。本例使用 GENCODE v44 并声明 GRCh38；原始 10x 矩阵的比对版本尚未独立核实，不能以成功匹配 ID 代替版本确认。</li>
+<li>重复符号按唯一 ID 分别定位，保留各行计数及原始符号；不再使用 <code>var_names_make_unique</code>。未定位记录见 <code>gene_position_mapping.csv</code>，表达缺失见 QC 表 <code>found</code>。ID 对应也不能证明输入的参考基因组声明正确。</li>
+</ol>
+<h2 id="doc2-与-l1-管线集成">与 L1 管线集成</h2>
+<div class="sourceCode" id="doc2-cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc2-cb5-1"><a href="#doc2-cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> outputs/cnv/candidates.csv input/candidates.csv</span>
+<span id="doc2-cb5-2"><a href="#doc2-cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--out</span> outputs_repro/normalized.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span>
+<span id="doc2-cb5-3"><a href="#doc2-cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> outputs_repro/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--out</span> outputs/evidence.parquet <span class="at">--audit</span> outputs/audit</span>
+<span id="doc2-cb5-4"><a href="#doc2-cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/evidence.parquet <span class="at">--config</span> config/pipeline.yaml <span class="at">--out</span> outputs/candidates_ranked_v2.csv <span class="at">--report</span> outputs/report_v2.md <span class="at">--tune</span></span></code></pre></div>
+<p>正式排名入口 <code>candidates.csv</code> 继续要求符号唯一；自动探索表 <code>auto_segment_genes.csv</code> 和并集 <code>candidates_all.csv</code> 增加 <code>gene_id</code> 列，按编号保留不同基因，同一符号可以有多行。三表只在同一次研究中合并同一身份的重复提取。合并前比较 <code>gene_id</code>、基因染色体/起止/链方向及声明的参考基因组；重复记录的身份字段缺失或冲突、同一 <code>gene_id</code> 对应不同符号时明确失败，不选择第一条。探索表中的编号缺失也明确失败；默认排除自动候选时，探索表的不同编号共用符号不再阻止无冲突的已知区间候选输出。若设置 <code>include_auto_in_candidates: true</code> 将这些记录送入正式入口，仍因符号歧义报错。已知区间的参考基因组与坐标检查同时适用于 CNV 模式。不同患者、疾病或研究应继续分开运行。</p>
+<p><code>candidate_provenance.csv</code> 保留每条提取记录，包括基因符号/编号、来源类型、区间 ID、基因坐标、链方向、参考基因组和输入区间坐标。<code>chrom/start/end</code> 是基因坐标，<code>interval_chrom/interval_start/interval_end</code> 是选择该基因的区间坐标；<code>in_candidates</code> 标识是否进入当前 <code>candidates.csv</code>，未启用自动候选时自动来源仍保留但标为 false。该明细纳入阶段审计、空结果表头、失败归档和上游失效管理。</p>
+<p>正式候选无重复时保持原六列格式；两张探索表即使为空也含 <code>gene_id</code>。存在同一身份重复提取时，该表增加 <code>candidate_provenance</code> 列，每个单元格是该基因全部来源记录的 JSON 数组。不同来源合并后的 <code>deletion_id</code> 留空；<code>source</code> 若类型一致则保持原值，否则为 <code>multiple</code>。不能把空 <code>deletion_id</code> 解读为没有来源，应读取 JSON 或明细表。<code>normalize.py</code> 解析 <code>gene_symbol</code> 并透传 JSON，证据合并和最终排名 CSV 均保留；多次提取不增加评分权重。</p>
+<p>此规则仅合并提取阶段已确认一致的身份。任意手工候选表或不同符号经 HGNC 映射后发生的重复，仍由下游原有唯一性校验拒绝，不自动推断别名关系或解决科学身份争议。</p>
+<h2 id="doc2-测试">测试</h2>
+<div class="sourceCode" id="doc2-cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc2-cb6-1"><a href="#doc2-cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> ../scripts/test_pipeline.py</span></code></pre></div>
+<p>以上命令在 <code>03_pipeline/</code> 执行，先检查依赖，再运行全套回归。具体范围、合成 CLI 链路和日志见 <a data-local-only-href="../TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>。缺少 CNV 必需依赖不再静默跳过；合成 CNV 恢复与真实患者 CNV 验收分开，不以固定测试数量或历史通过数字代替当前结果。</p>
+<h2 id="doc2-附录gse283473-数据下载">附录：GSE283473 数据下载</h2>
+<div class="sourceCode" id="doc2-cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc2-cb7-1"><a href="#doc2-cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> data/scrna/GSE283473</span>
+<span id="doc2-cb7-2"><a href="#doc2-cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">base</span><span class="op">=</span><span class="st">&quot;https://ftp.ncbi.nlm.nih.gov/geo/samples&quot;</span></span>
+<span id="doc2-cb7-3"><a href="#doc2-cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> GSM8663068_CTRL1 GSM8663071_WS1<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="doc2-cb7-4"><a href="#doc2-cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">gsm</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${s</span><span class="op">%</span>_<span class="pp">*</span><span class="va">}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="va">dir</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${gsm</span><span class="op">:</span><span class="dv">0</span><span class="op">:</span><span class="dv">7</span><span class="va">}</span><span class="st">nnn&quot;</span></span>
+<span id="doc2-cb7-5"><a href="#doc2-cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> f <span class="kw">in</span> barcodes.tsv.gz genes.tsv.gz matrix.mtx.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="doc2-cb7-6"><a href="#doc2-cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-fL</span> <span class="at">--retry</span> 3 <span class="at">-o</span> <span class="st">&quot;data/scrna/GSE283473/</span><span class="va">${s}</span><span class="st">_</span><span class="va">${f}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${base}</span><span class="st">/</span><span class="va">${dir}</span><span class="st">/</span><span class="va">${gsm}</span><span class="st">/suppl/</span><span class="va">${s}</span><span class="st">_</span><span class="va">${f}</span><span class="st">&quot;</span></span>
+<span id="doc2-cb7-7"><a href="#doc2-cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gzip</span> <span class="at">-t</span> <span class="st">&quot;data/scrna/GSE283473/</span><span class="va">${s}</span><span class="st">_</span><span class="va">${f}</span><span class="st">&quot;</span></span>
+<span id="doc2-cb7-8"><a href="#doc2-cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span>
+<span id="doc2-cb7-9"><a href="#doc2-cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="doc2-cb7-10"><a href="#doc2-cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># GENCODE v44 GTF 已随 Git/LFS 交付；不必再次下载。</span></span></code></pre></div>
+</details><details id="file3"><summary>3. TESTING.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc3-筛选管线的标准测试流程">筛选管线的标准测试流程</h1>
+<p>用户与开发者使用同一个测试入口。测试自己生成小型合成输入，不读取仓库中的真实疾病数据或历史输出，不下载 GEO 数据，不覆盖正式结果。它验证软件能否运行、字段和文件能否正确衔接，不证明疾病筛选结论或临床有效性。</p>
+<h2 id="doc3-安装一次">1. 安装一次</h2>
+<p>在仓库根目录执行（Python 3.11）：</p>
+<div class="sourceCode" id="doc3-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb1-1"><a href="#doc3-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh <span class="at">--pipeline-only</span></span></code></pre></div>
+<p>注意：安装脚本会清除并重建 <code>.venv/pipeline</code>，不要在其中保存个人文件或未声明的依赖；此参数不会重建 VCT 环境。不带参数仍安装整个项目的两个独立环境。</p>
+<p>管线只有一个用户依赖文件：<code>03_pipeline/requirements.txt</code>，包含运行、测试和可选 CNV 所需包。<code>pyproject.toml</code> 的包依赖直接读取该文件，不另列开发依赖。构建用的 setuptools 声明是包构建引导要求，不是第二份用户环境清单；读取方式见 <a href="https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html">setuptools 官方文档</a>。VCT 的独立环境不属于本管线依赖合并范围。</p>
+<p>若已有自行创建的 Python 3.11 虚拟环境，可在该环境中执行 <code>python -m pip install -r 03_pipeline/requirements.txt</code>，后续测试命令相应使用该环境的 <code>python</code>。不要混用系统 Python 与虚拟环境的 pip。</p>
+<p>安装需要网络。安装完成后，本页的合成测试不需要网络、Git LFS 数据、模型权重或个人电脑上的已有结果。macOS arm64 已实测；Linux 和其他平台仍需独立安装验证。单一依赖清单不等于所有平台及全部间接依赖已锁定。</p>
+<h2 id="doc3-标准验收命令">2. 标准验收命令</h2>
+<p>仍在仓库根目录运行：</p>
+<div class="sourceCode" id="doc3-cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc3-cb2-1"><a href="#doc3-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> scripts/test_pipeline.py</span></code></pre></div>
+<p>默认完整验收依次检查：</p>
+<ol type="1">
+<li>Python 3.11、依赖声明一致性、包版本、必需包能否导入，以及 <code>pip check</code>。</li>
+<li>全部 <code>03_pipeline/tests/</code> 回归测试，包括下述合成 CLI 数据流。</li>
+<li>测试确实执行，且没有失败、错误或跳过。缺少 anndata/scanpy/infercnvpy 不再当作可以跳过的理由。</li>
+</ol>
+<p>成功退出码为 <code>0</code>，任何验收失败均为非零；参数错误返回 <code>2</code>。环境检查不通过会停止，不继续产生“测试通过”的结论。不要只看某一行 PASS，应同时看最终退出码与 <code>summary.json</code> 的 <code>status</code>。</p>
+<p>也可按目的选择：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>命令参数</th>
+<th>用途</th>
+<th>不能替代的验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--suite environment</code></td>
+<td>只检查安装环境，安装脚本自动执行此项</td>
+<td>没有执行业务测试</td>
+</tr>
+<tr>
+<td><code>--suite smoke</code></td>
+<td>环境检查、测试入口契约、核心 CLI 合成数据流</td>
+<td>不能替代全部单元/回归测试</td>
+</tr>
+<tr>
+<td>默认或 <code>--suite full</code></td>
+<td>环境检查和全套现有回归；提交前推荐</td>
+<td>不能替代真实样本或临床验证</td>
+</tr>
+</tbody>
+</table>
+<p>定位单个问题时仍可在 <code>03_pipeline/</code> 用 <code>../.venv/pipeline/bin/python -m pytest tests/&lt;文件名&gt; -q</code>，但局部运行不作为整套验收。标准入口清除 <code>PYTEST_ADDOPTS</code>、<code>PYTEST_PLUGINS</code>、<code>PYTHONPATH</code> 的子进程继承并禁用第三方 pytest 插件自动加载，减少个人配置引起的漏测。</p>
+<h2 id="doc3-合成数据流具体检查什么">3. 合成数据流具体检查什么</h2>
+<p><code>tests/test_pipeline_dataflow.py</code> 调用真实 CLI，而非只调用函数或读取历史 CSV：</p>
+<pre class="text"><code>已知区间 + 合成基因注释
+  → extract-genes（intervals-only）→ candidates.csv
+  → normalize → normalized.csv
+  → merge_evidence + 合成 HGNC/ClinGen/gnomAD/HPA → evidence.parquet
+  → consensus_v2（rank + sensitivity）→ ranked.csv + report.md + 审计</code></pre>
+<ul>
+<li>同一套代码分别处理两个研究配置：一个输出两个基因、另一个输出一个基因；核对各阶段候选身份、五个区间来源字段、审计哈希和产物隔离。</li>
+<li>空区间结果有表头；传到标准化时明确失败，不误生成后续产物。</li>
+<li>必需证据文件缺失或字段损坏时，合并命令明确失败，不生成本次排名。</li>
+<li>两个研究分别在原输出目录重复运行，标准化、证据、排名及报告保持逐字节一致，研究之间互不改写；核心 CLI 的输入/输出重叠、报告/审计同文件、符号链接/硬链接、文件/目录及父子路径冲突均在写入前拒绝，并验证旧文件未改变。</li>
+<li>其他现有测试继续检查 HGNC 引号/空表边界、样本暂存、生命周期、面板和合成 CNV 等，不删除旧版或可选模块的已有测试。</li>
+</ul>
+<p>合成基因、区间与组织仅用于工程测试，不代表 WHS/WBS 的生物学对应关系。此测试不是清洗用户上传数据的工具，也不会自动判断患者/对照分组正确与否。</p>
+<h2 id="doc3-日志和产物在哪里">4. 日志和产物在哪里</h2>
+<p>每次运行新建 <code>test_artifacts/pipeline/&lt;时间和随机后缀&gt;/</code>（Git 已忽略）。也可用 <code>--output /绝对路径/新的目录</code> 指定位置；目录若已存在会拒绝，不覆盖上次记录。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件/目录</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>summary.json</code></td>
+<td>最终状态、所选套件、解释器/平台、依赖版本与清单 SHA-256、完成阶段、测试数量或失败原因</td>
+</tr>
+<tr>
+<td><code>pip-check.log</code></td>
+<td>包依赖兼容性检查日志；环境预检失败时可能尚未生成</td>
+</tr>
+<tr>
+<td><code>pytest.log</code>、<code>junit.xml</code></td>
+<td>运行与机器可读测试结果；未进入测试阶段时不存在</td>
+</tr>
+<tr>
+<td><code>work/</code></td>
+<td>保留测试生成的输入、中间表、输出和 CLI 日志，便于逐段排查数据流</td>
+</tr>
+<tr>
+<td><code>matplotlib-cache/</code>、<code>numba-cache/</code></td>
+<td>本次绘图/JIT 缓存，按需生成，不写入个人缓存目录</td>
+</tr>
+</tbody>
+</table>
+<p>完整测试的数量随新增用例变化，以本次 <code>summary.json</code> 和 <code>junit.xml</code> 为准，不把旧文档的固定数字当验收目标。若进程被强制终止，<code>status=running</code> 的记录不是成功。默认输出可留作排查，确认不再需要后由使用者自行清理。</p>
+<h2 id="doc3-明确保留的边界">5. 明确保留的边界</h2>
+<ul>
+<li>核心 CLI 链路覆盖四个入口：CNV workflow 的仅区间子命令、normalize、merge_evidence、consensus_v2。<code>test_optional_cli_safety.py</code> 保留 ai_scores、compensation 的输入失败和合法调用检查；旧版 consensus 已按负责人决定退役，其 14 项专属测试同步删除。filter_recessive 的专门 CLI 回归及其他未覆盖路径仍属于 CR-015 延期余项，不宣称全部入口完整验收。历史验收数字保留为当时记录。</li>
+<li>完整套件包含合成 infercnvpy 恢复测试，但没有重新跑真实 GEO/多患者 CNV。CR-012 的 CNV 模式判定语义仍延期。</li>
+<li>实际用户数据需按 <a href="../../README.md">运行说明</a> 配置各自输入、坐标版本、分组及独立输出位置；测试通过不能替代这些数据检查。真实 WBS/WHS 复现、VCT API/浏览器验收分别记录，不并入这里的通过结论。</li>
+<li>有日期的历史验证数字保留，用于展示迭代；最新审查结果见 <a data-local-only-href="../../../00_docs/03_history/CODE_REVIEW_PROGRESS.md" title="本地保留的来源文件，不随公开仓库发布">审查进度</a> 和 <a data-local-only-href="../../../04_reports/PROJECT_LOG.md" title="本地保留的来源文件，不随公开仓库发布">项目日志</a>。</li>
+</ul>
+</details><details id="file4"><summary>4. CNV_工作流详解.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc4-cnv-工作流详解从-scrna-seq-到候选基因">CNV 工作流详解：从 scRNA-seq 到候选基因</h1>
+<blockquote>
+<p>配套图：<code>igem_cnv.workflow.html</code>（Archify 交互式流程图，浏览器打开） 源文件：<code>igem_cnv.workflow.json</code> 本文对照图中 4 条泳道、11 个节点逐一讲解：先讲基础概念，再讲每一步”做什么 → 怎么做 → 为什么这么做”。</p>
+</blockquote>
+<hr />
+<h2 id="doc4-一先搞懂三个基础概念">一、先搞懂三个基础概念</h2>
+<h3 id="doc4-cnv-与微缺失什么是拷贝数变异">1. CNV 与微缺失：什么是”拷贝数变异”</h3>
+<p>正常人体细胞每条常染色体有 <strong>2 份拷贝</strong>（一份来自父亲、一份来自母亲）。<strong>CNV（Copy Number Variation，拷贝数变异）</strong>就是基因组上某一段 DNA 的拷贝数发生了变化：</p>
+<ul>
+<li><strong>缺失（deletion）</strong>：2 份 → 1 份（<strong>杂合缺失</strong>）或 2 份 → 0 份（纯合缺失）</li>
+<li><strong>重复（duplication）</strong>：2 份 → 3 份或更多</li>
+</ul>
+<p>本项目关注的是 <strong>微缺失（microdeletion）</strong>：长度 1–3 Mb（百万碱基对）的小段缺失，典型例子就是 <strong>Williams 综合征（WBS）</strong>——7 号染色体 7q11.23 区域约 1.55 Mb 的杂合缺失，包含约 25–35 个蛋白编码基因。</p>
+<p><strong>为什么微缺失会致病？</strong> 关键机制叫<strong>单倍剂量不足（haploinsufficiency）</strong>：某些基因必须要有 2 份拷贝才能产生足够的蛋白；只剩 1 份时蛋白量减半，功能就不够了。所以 iGEM 项目的核心问题是：<strong>缺失区间里有 30 多个基因，到底哪一个（或哪几个）是导致疾病的主效基因？</strong> CNV 工作流的任务就是从这个区间里产出”候选基因清单”。</p>
+<h3 id="doc4-scrna-seq单细胞表达数据是什么样">2. scRNA-seq：单细胞表达数据是什么样</h3>
+<p><strong>scRNA-seq（单细胞 RNA 测序）</strong>测的是<strong>每个细胞里每个基因的表达量</strong>——即”哪个细胞表达了哪个基因、表达了多少”。</p>
+<ul>
+<li>普通 bulk RNA-seq：把一堆细胞磨碎混在一起测，得到平均值；</li>
+<li>scRNA-seq：每个细胞单独测，得到一张 <strong>细胞 × 基因的矩阵</strong>（每行一个细胞，每列一个基因，数值 = 该基因在该细胞中的转录本计数）。</li>
+</ul>
+<p>本项目用的数据是 <strong>10x Genomics</strong> 平台的输出，标准 <strong>10x mtx 格式</strong>由三个文件组成：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>matrix.mtx.gz</code></td>
+<td>稀疏矩阵：非零表达值</td>
+<td>成绩表本体（大部分格子是 0，只存非零）</td>
+</tr>
+<tr>
+<td><code>barcodes.tsv.gz</code></td>
+<td>每个细胞条码（细胞身份证）</td>
+<td>学生名单</td>
+</tr>
+<tr>
+<td><code>genes/features.tsv.gz</code></td>
+<td>基因名</td>
+<td>科目名</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc4-表达型-cnv-推断的原理为什么表达能推断缺失">3. 表达型 CNV 推断的原理：为什么”表达”能推断”缺失”</h3>
+<p>这是一个非常自然的逻辑链：</p>
+<ol type="1">
+<li>缺失了 1 份拷贝的基因，理论上表达量应<strong>大约减半</strong>（2 份 → 1 份）；</li>
+<li>因此，如果基因组上<strong>某一段连续区域的基因</strong>在患者细胞里<strong>整体表达偏低</strong>，就可能暗示这段区域发生了缺失；</li>
+<li><strong>infercnvpy</strong>（一个公开 Python 包）就是这样做的：把相邻基因的表达信号按基因组坐标<strong>窗口平滑</strong>，比较患者 vs 对照在每个窗口的平均差异，得到”每个窗口的缺失信号（score）“。score 越负，越像缺失。</li>
+</ol>
+<p><strong>但为什么这只是”回退路径”？</strong> 三个原因（图中 infercnv 节点的 tag”回退路径”就是指这个）：</p>
+<ol type="1">
+<li><strong>分辨率极限</strong>：1–3 Mb 微缺失只含 25–60 个基因，而窗口平滑要用 25–100 个基因，信号会被稀释；</li>
+<li><strong>剂量补偿 /「mRNA 隐身」</strong>：细胞有补偿机制，缺失基因的稳态 mRNA 不一定真的减半。本项目 E8 实验已实测：杂合缺失基因的平均 log2FC ≈ 0.05（≈0），缺失在 mRNA 层面”隐身”了；</li>
+<li><strong>细胞组成混杂</strong>：患者和对照的细胞类型比例不同，会在表达信号上造成类似 CNV 的假波动。</li>
+</ol>
+<p>所以：<strong>缺失区间的权威来源永远是基因型</strong>（CNV 芯片 / WGS / MLPA / 临床报告）；表达型推断只是”没有基因型数据时的兜底方案”。</p>
+<hr />
+<h2 id="doc4-二数据来源与用处">二、数据来源与用处</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据</th>
+<th>来源</th>
+<th>在本工作流中的用处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GSE283473</strong>（GEO 公共数据库）</td>
+<td>Williams 综合征<strong>脑类器官</strong> scRNA-seq，两个样本：<code>GSM8663068_CTRL1</code>（健康对照）、<code>GSM8663071_WS1</code>（患者）</td>
+<td>唯一的表达数据。用脑类器官是因为 WBS 有神经发育表型，脑组织最相关</td>
+</tr>
+<tr>
+<td><strong>GENCODE v44 GTF</strong>（基因注释数据库）</td>
+<td>每个蛋白编码基因在 GRCh38 上的坐标（染色体、起止位点）</td>
+<td>两处关键用途：① 把表达矩阵的基因<strong>按基因组坐标排序</strong>（窗口平滑的前提）；② 按<strong>已知缺失区间的坐标</strong>把基因捞出来</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么坐标这么重要？</strong> 因为”窗口”和”区间”都是<strong>基因组上的物理位置</strong>概念。没有 GENCODE 坐标，就不知道”哪些基因在 7q11.23 区间里”。<strong>坐标版本必须一致</strong>：GSE283473 的 10x 参考是 GRCh38，GENCODE 也必须是 v44（GRCh38），否则区间会错位。</p>
+<hr />
+<h2 id="doc4-三五步详解对照图中泳道-0203">三、五步详解（对照图中泳道 02/03）</h2>
+<h3 id="doc4-第-①-步-stage-samples整理样本目录">第 ① 步 stage-samples：整理样本目录</h3>
+<ul>
+<li><strong>做什么</strong>：把 GEO 下载的原始文件整理成 scanpy 能读的 per-sample 10x 目录。</li>
+<li><strong>怎么做</strong>：为每个样本建一个目录，用<strong>符号链接</strong>（symlink）把原始 mtx/barcodes/genes 三件套链进去（不复制，省 100+ MB 空间）；然后把旧的 <strong>2 列 genes.tsv 转换成 3 列 features.tsv</strong>。</li>
+<li><strong>为什么</strong>：GEO 提供的 genes.tsv 是旧版 2 列格式（基因 ID + 基因名），而新版 scanpy 只认 3 列 features.tsv（多一个 feature type 列）。不转换会直接报错。这一步很轻量，<strong>不依赖 scanpy</strong>，纯文件操作。</li>
+</ul>
+<h3 id="doc4-第-②-步-prepare-order基因排序表">第 ② 步 prepare-order：基因排序表</h3>
+<ul>
+<li><strong>做什么</strong>：把 GENCODE GTF 解析成一张<strong>蛋白编码基因排序表</strong>（gene_name、chrom、start、end），按染色体和坐标排好。</li>
+<li><strong>怎么做</strong>：逐行解析 GTF（gzip 直接读），只保留 <code>protein_coding</code> 类型、只保留 1-22+X+Y 主染色体。</li>
+<li><strong>为什么</strong>：这张表后面被<strong>两个地方</strong>复用（图上的两条虚线/灰线”基因排序表”）：
+<ul>
+<li>infercnv 的”按坐标排序”——窗口平滑要求基因按染色体顺序排列；</li>
+<li>extract-genes 的”区间→基因”——用坐标判断哪些基因落在缺失区间内。 一次解析、两处消费，所以单独做成一步。</li>
+</ul></li>
+</ul>
+<h3 id="doc4-第-③-步-infercnv加载-qc-归一化-推断最重的一步">第 ③ 步 infercnv：加载 → QC → 归一化 → 推断（最重的一步）</h3>
+<p>按顺序四个子操作：</p>
+<p><strong>a) 加载 + QC（质控）</strong> - <code>min_genes=200</code>：每个细胞至少要测到 200 个基因，否则判为空液滴/测序失败，丢弃； - <code>mito&lt;20%</code>：线粒体基因占比超过 20% 说明是死细胞/破损细胞（细胞质 RNA 泄漏后线粒体 RNA 相对富集），丢弃； - <strong>降采样 8000/样本</strong>（seed=0 可重复）：16k 细胞全量跑 infercnvpy 太慢，验证跑随机抽 8000 个细胞。<strong>为什么</strong>：结果几分钟 vs 几十分钟，且不影响验证结论。 - 原始计数单独存进 <code>layers['counts']</code>——<strong>为什么</strong>：后面表达 QC 必须用 raw counts（归一化后的数据会丢失测序深度信息）。</p>
+<p><strong>b) 归一化 + 按坐标排序</strong> - <code>normalize_total(1e4)</code>：每个细胞的测序深度不同（有的细胞测了 1 万条读段、有的 10 万条），把每个细胞缩放到相同的总计数，<strong>消除测序深度差异</strong>——否则”深度高”会被误读成”表达高”； - <code>log1p</code>：对数压缩，防止少数超高表达基因主导信号； - <strong>按坐标排序</strong>：把基因列重排成染色体 1→22→X→Y、每染色体内按 start 排序，并给每个基因标注 chromosome/start/end。<strong>为什么</strong>：infercnvpy 的窗口 = “染色体上位置相邻的 100 个基因”，不排序窗口就没有意义。</p>
+<p><strong>c) infercnvpy 窗口推断（两档分辨率）</strong> - <strong>standard（窗口 100 基因 / 步长 10）</strong>：全基因组稳定，信号平滑但<strong>会稀释 25–60 基因的小缺失</strong>； - <strong>fine（窗口 25 / 步长 5）</strong>：专门针对 1–3 Mb 微缺失，灵敏度高但<strong>噪声更大</strong>； - <strong>为什么两档都要</strong>：standard 看大局、fine 抓小缺失，互为印证。 - <strong>排除 chrX/chrY</strong>（重要防坑）：男性只有 1 条 X、女性 2 条，性染色体剂量差异会在 X 染色体上制造巨大假缺失信号，必须从自动发现里排除（已知区间在性染色体上时仍可提取基因，只是不做表达型验证）。</p>
+<p><strong>d) 产出窗口信号表</strong> - 每个窗口一行：chr/start/end、<code>score</code>（患者细胞 X_cnv 均值）、<code>ref_score</code>（对照细胞均值，sanity check 应该≈0）。 - 一个<strong>硬断言</strong>（代码里 <code>window_table()</code> 会校验重建的窗口数与 X_cnv 列数一致）：<strong>为什么</strong>——infercnvpy 版本变更可能导致窗口布局不匹配，宁可显式报错也不要静默错位。</p>
+<h3 id="doc4-第-④-步-call-segmentsrobust-z-找缺失片段">第 ④ 步 call-segments：robust z 找缺失片段</h3>
+<ul>
+<li><strong>做什么</strong>：从窗口信号表里找出”连续显著偏低”的片段。</li>
+<li><strong>怎么做</strong>（三步，纯 numpy/pandas，不依赖 scanpy，可单测）：
+<ol type="1">
+<li><strong>robust z</strong>：z = (score − 全基因组中位数) / (1.4826 × MAD)。<strong>为什么不用普通 z</strong>（均值/标准差）：普通 z 会被少数极端值（真实缺失信号）拉偏；median/MAD 是稳健统计量，而”单个小缺失几乎不会移动全基因组中位数”（segments.py 注释原文），所以以全基因组为背景找偏差是合理的；</li>
+<li>找 <strong>z ≤ −1.5 的连续窗口段</strong>，长度 ≥ 3 个窗口才算片段（过滤孤立噪声点）；</li>
+<li><strong>大小过滤 ≤ 10 Mb</strong>：超过 10 Mb 的”大缺失”多半不是真的——<strong>为什么</strong>：着丝粒和低可比对区（重复序列多、测序读段比对不上去）会产生大范围假性低信号，真正的微缺失只有 1–3 Mb。</li>
+</ol></li>
+<li><strong>产出</strong>：片段表（segments_standard.csv / segments_fine.csv）。</li>
+</ul>
+<h3 id="doc4-第-⑤-步-extract-genes区间-基因-qc-验收">第 ⑤ 步 extract-genes：区间 → 基因 → QC → 验收</h3>
+<ul>
+<li><strong>做什么</strong>：从”已知临床区间 + 自动发现片段”提取基因清单，并做表达 QC 和验收判定。</li>
+<li><strong>怎么做</strong>：
+<ol type="1">
+<li><strong>区间 → 基因</strong>：用 prepare-order 的排序表，按 GRCh38 坐标把落在区间内的基因捞出来。已知区间 = Williams 7q11.23（chr7: 72.7–74.8 Mb，含 marker 基因 ELN/GTF2I/LIMK1/CLIP2）；自动片段 = 第 ④ 步的产物；</li>
+<li><strong>表达 QC</strong>（防 E6 型 pivot）：对每个区间基因统计患者 vs 对照的平均计数、表达细胞比例、log2FC（用 raw counts + 0.5 伪计数）。<strong>为什么</strong>：如果某个候选基因在这个数据集里几乎不表达（如脑类器官里的血管/上皮基因 ELN、CLDN3），下游 L3 扰动工具根本没法用它——必须先标出来；</li>
+<li><strong>验收判定（AC）</strong>：AC-CNV-1 = 自动片段是否覆盖已知区间 ≥50%；AC-CNV-2 = marker 基因是否都在表达数据里检出。</li>
+</ol></li>
+<li><strong>产出</strong>：
+<ul>
+<li><code>candidates.csv</code>（<strong>L1 管线输入，默认只含已知区间的 35 个基因</strong>）——<strong>为什么</strong>：已知区间来自临床确诊，可靠；自动片段只是表达型推断的探索性结果，不可靠，所以默认不混入；</li>
+<li><code>candidates_all.csv</code>（2488 基因，已知+自动并集，供探索）；</li>
+<li><code>auto_segment_genes.csv</code>（仅自动片段）、<code>validation_known_intervals.csv</code>（AC 判定）、<code>cnv_report.md</code>。</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="doc4-四验收结果怎么读gse283473-真实数据">四、验收结果怎么读（GSE283473 真实数据）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>门槛</th>
+<th>结果</th>
+<th>怎么理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AC-CNV-2</strong>：marker 基因检出</td>
+<td>✅ <strong>PASS</strong></td>
+<td>ELN/GTF2I/LIMK1/CLIP2 都在表达数据里。首轮还 FAIL 过：配置把区间终点写成 74.4 Mb，漏掉了位于 74.65–74.76 Mb 的 GTF2I——<strong>验收门槛真的能抓 bug</strong></td>
+</tr>
+<tr>
+<td><strong>AC-CNV-1</strong>：自动发现覆盖已知区间</td>
+<td>❌ <strong>FAIL（预期内负结果）</strong></td>
+<td>1.55 Mb 杂合缺失没被表达型推断恢复。原因正是第一节讲的：分辨率极限 + mRNA 隐身。<strong>这不否定缺失存在，也不影响 candidates.csv</strong>（它只依赖已知区间坐标）</td>
+</tr>
+<tr>
+<td>区间基因平均 log2FC</td>
+<td>≈ 0.05</td>
+<td>与 E8「mRNA 隐身」一致：缺失基因的稳态 mRNA 被剂量补偿吸收。这正是表达型推断注定是回退路径的机制原因</td>
+</tr>
+<tr>
+<td>大小过滤</td>
+<td>standard 19/27、fine 7/46 片段被过滤</td>
+<td>大量 &gt;10 Mb 伪影被正确剔除</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一句话总结这条管线</strong>：表达型推断（infercnv + call-segments）负责”在没有基因型时尽力猜测缺失区域”，但<strong>交付给 L1 管线的候选基因永远来自权威的已知临床区间</strong>；表达信号只用来做 QC 和验收。</p>
+<hr />
+<h2 id="doc4-五图中图标速查">五、图中图标速查</h2>
+<ul>
+<li><strong>绿框 = 处理步骤</strong>（7 个，对应 5 个子命令的内部环节）</li>
+<li><strong>灰框 = 外部输入</strong>（GEO、GENCODE）</li>
+<li><strong>紫框 = 数据产物</strong>（窗口信号表、candidates.csv）</li>
+<li><strong>绿色实线箭头 = 主数据流</strong>；<strong>灰色/虚线 = 注释支流</strong>（基因排序表的两处消费）</li>
+<li>节点 tag「回退路径」= infercnv 的方法学定位；卡片总结了”为什么这么做”的两个核心决策和两个防坑设计。</li>
+</ul>
+</details><details id="file5"><summary>5. ADR-001-hgnc-indexing.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc5-adr-001-primary-index-hgnc-id-vs-hgnc-symbol">ADR-001: Primary index — HGNC ID vs HGNC symbol</h1>
+<p><strong>Date:</strong> 2025-09-01 · <strong>Status:</strong> Accepted</p>
+<h2 id="doc5-context">Context</h2>
+<p>输入是 HGNC gene symbol 列表（每行一个），但国外数据源（ClinGen/gnomAD/HPA）以及我们内部要对同一基因建立一致的 join。HGNC 名会更新，HGNC ID 是固定。</p>
+<h2 id="doc5-decision">Decision</h2>
+<p>以 HGNC ID 为 pipeline 主键。输入做 alias mapping 之后统一从 <code>normalized.csv</code> 中产生 HGNC ID。所有数据源 join 都用 HGNC ID 作键。</p>
+<h2 id="doc5-consequences">Consequences</h2>
+<ul>
+<li>输入校验强：在 normalize 阶段就判断哪些 gene symbol 不能 resolve（&gt;10% 失败 → 报错）</li>
+<li>数据源变动时不影响 repeat run</li>
+<li><code>input_symbol</code> 用于展示（debug/audit）</li>
+</ul>
+<h2 id="doc5-notes">Notes</h2>
+<ul>
+<li>每次 run 的数据源 checksums 记录于 audit/data_checksums.txt</li>
+</ul>
+</details><details id="file6"><summary>6. ai_scores.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc6-ai-prescore-外部服务契约-可选">AI Prescore — 外部服务契约 (可选)</h1>
+<p>DeepLOF / DosaCNV / DeepGenePrior 的分数都是<strong>可选</strong>输入；未运行时对相应基因的相应权重贡献 0（不参与 aggregate）。</p>
+<h2 id="doc6-接口输入输出">接口（输入/输出）</h2>
+<p><strong>输入</strong> — <code>outputs/evidence.parquet</code>（含 <code>hgnc_id</code>，供 AI 读取）<br />
+<strong>输出</strong> — <code>outputs/ai_scores.csv</code> - 列：<code>hgnc_id</code>, <code>DeepLOF_score</code>, <code>DosaCNV_score</code>, <code>DeepGenePrior_score</code> - 缺失用 NaN/空</p>
+<p>Pipeline 在每次 run 里读 <code>outputs/ai_scores.csv</code>，拼到 evidence 表。请确保 AI 分数键入 <code>hgnc_id</code>。</p>
+<h2 id="doc6-责任">责任</h2>
+<ul>
+<li>服务运行环境（模型、依赖、GPU 等）在本工程外。</li>
+<li>预计算也可以——团队内部把 AI 分数作为仅影响高权重项的输入。</li>
+</ul>
+<h2 id="doc6-deeplof-转换入口的输入检查2026-09-24">DeepLOF 转换入口的输入检查（2026-09-24）</h2>
+<p><code>src.ai_scores deeplof</code> 接收预计算 CSV，必需列为 <code>ensembl</code>、<code>gene_symbol</code>、<code>DeepLOF_score</code>，且至少有一行。这里每条评分记录必须具有 <code>[0, 1]</code> 内的有限数值；空值、非数值、NaN/Inf 和越界值会报错，不自动补零或裁剪。此要求针对原始评分转换表；上文合并后证据中“某个基因没有该项证据”的缺失含义不变。</p>
+<p>转换以源记录的 Ensembl ID 对照 HGNC 表中的 <code>ensembl_gene_id</code>，只接受唯一对应关系；不再用基因名替代未匹配的 Ensembl ID。若基因名和 Ensembl ID 各自指向不同 HGNC ID，该条记录也不写入评分表。两类排除项的行号、源标识、候选 HGNC ID 和数量都记入审计 JSON，供后续核查；这不是断言被排除的源记录无生物学价值。当前转换结果只含 <code>hgnc_id,DeepLOF_score</code> 两列。</p>
+<p>映射后，同一 HGNC ID 的相同分数仍保留一条，并在审计中记录去重数量和规则。如果分数不同，报出冲突数量及前 10 条源记录（数据行号、Ensembl、符号、HGNC ID、分数），停止写出。程序不取均值、最大值或默认第一条，不更改输入文件。</p>
+<p>所有输入校验、冲突检测、统计和审计内容准备完成后才写结果。输入错误时 CLI 返回 <code>2</code>，保留已有结果与审计；旧文件存在不代表本次成功。本保护不承诺磁盘故障或进程中断时两个输出文件的事务回滚。</p>
+<p>2026-09-24 全量检查：原先仅按符号匹配时的 <strong>29 个 HGNC ID</strong> 分数冲突，改用上述身份规则后不再重复映射。19,197 条源记录中输出 18,439 个唯一 HGNC ID；735 条 Ensembl ID 未匹配、23 条 Ensembl/符号对应不一致，被排除并记录。与历史 <code>outputs/ai_scores.csv</code> 比较，新表新增 459 个 ID、缺少 80 个 ID、共有 ID 中 32 个分数不同；WBS 候选覆盖/分数未变，WHS 候选 <code>HGNC:51180</code>（CFAP99）的旧分数因源 Ensembl ID 未在本地 HGNC 表中匹配而不再写入。历史表和排名未重写；新规则也不等于已经人工确认所有基因身份或重新认证历史结果。</p>
+</details></main></body></html>

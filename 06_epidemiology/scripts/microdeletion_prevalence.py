@@ -6,6 +6,8 @@ CI for count-based studies computed with Clopper-Pearson exact binomial.
 Literature ranges are reported min-max of published estimates (not statistical CI).
 Exports every figure as PNG (raster) + PDF/SVG (vector).
 """
+import argparse
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -13,8 +15,14 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy.stats import beta as _beta
 
-FIG_DIR = "outputs/figures"
-DATA_DIR = "outputs/data"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--output-dir", type=Path, default=Path(__file__).resolve().parents[1],
+                    help="Output root containing data/ and figures/ (default: 06_epidemiology).")
+OUTPUT_DIR = parser.parse_args().output_dir.resolve()
+FIG_DIR = OUTPUT_DIR / "figures"
+DATA_DIR = OUTPUT_DIR / "data"
+for directory in (FIG_DIR, DATA_DIR):
+    directory.mkdir(parents=True, exist_ok=True)
 CB = "#1f77b4"   # count-based / primary
 LR = "#9e9e9e"   # literature
 RED = "#d62728"
@@ -130,10 +138,14 @@ for d in q22:
                           lo=per10k(lo), hi=per10k(hi)))
     else:
         qrows.append(dict(label=d["label"], pt=d["pt"], lo=np.nan, hi=np.nan))
+    qrows[-1].update(n_cases=d["k"], n_total=d["n"], src=d["label"],
+                     unit="per 10,000 live births",
+                     interval_type="exact 95% CI" if d["k"] is not None else "not available")
 qdf = pd.DataFrame(qrows)
+qdf.to_csv(DATA_DIR / "22q11_2_forest.csv", index=False)
 
 fig, ax = plt.subplots(figsize=(9.2, 4.8))
-y = np.arange(len(qdf))[::-1]
+y = np.arange(len(qdf))
 for i, r in qdf.iterrows():
     ax.plot(r["pt"], i, "o", color=CB, zorder=4)
     if np.isfinite(r["lo"]):
@@ -143,6 +155,7 @@ for i, r in qdf.iterrows():
                 textcoords="offset points", fontsize=8.5, color="#222222", va="bottom")
 ax.set_yticks(y)
 ax.set_yticklabels(qdf["label"], fontsize=9)
+ax.invert_yaxis()
 ax.set_xlabel("22q11.2 deletion birth prevalence (per 10,000 live births)", fontsize=10.5)
 ax.set_title("22q11.2 deletion syndrome — population-based estimates", fontsize=12, fontweight="bold")
 ax.axvline(4.7, color=RED, ls="--", lw=1.2)
@@ -151,11 +164,11 @@ for spine in ["top", "right"]:
     ax.spines[spine].set_visible(False)
 ax.set_xlim(0, 9)
 # incidence note
-ax.annotate("Incidence (Sweden, Oskarsdóttir 2004):\n14.1 per 100,000 live births / year (= 1.41 / 10,000)",
-            xy=(0.995, 0.02), xycoords="axes fraction", ha="right", va="bottom",
+fig.text(0.5, 0.02, "Incidence (Sweden, Oskarsdóttir 2004):\n14.1 per 100,000 live births / year (= 1.41 / 10,000)",
+            ha="center", va="bottom",
             fontsize=8.2, color="#444444",
             bbox=dict(boxstyle="round,pad=0.35", fc="#f5f5f5", ec="#cccccc", lw=0.6))
-fig.tight_layout()
+fig.tight_layout(rect=(0, 0.13, 1, 1))
 save(fig, "22q11_2_forest")
 
 # ======================================================================
@@ -182,7 +195,7 @@ for i, r in dn.iterrows():
     if r["lo"] is not None:
         ax.errorbar(r["v"], i, xerr=[[r["v"] - r["lo"]], [r["hi"] - r["v"]]],
                     fmt="none", ecolor="#333333", elinewidth=1.3, capsize=3, zorder=4)
-    ax.annotate(f"{int(r['v'])}%", xy=(r["v"], i), xytext=(6, 0),
+    ax.annotate(f"{int(r['v'])}%", xy=(r["hi"] if np.isfinite(r["hi"]) else r["v"], i), xytext=(6, 0),
                 textcoords="offset points", va="center", fontsize=8.5, color="#222222")
 ax.set_yticks(y)
 ax.set_yticklabels(dn["name"], fontsize=9.5)
@@ -203,18 +216,30 @@ save(fig, "microdeletion_denovo_fraction")
 # adult UK Biobank carrier counts (Kendall 2017, n=151,659): 22q11.2 = 5, 16p11.2 = 44
 n_ukb = 151659
 groups = [
-    ("22q11.2\n(DiGeorge/VCFS)", 4.66, (2.55, 7.81), 5 / n_ukb),
-    ("16p11.2\n(proximal)", 2.94, None, 44 / n_ukb),
+    dict(label="22q11.2\n(DiGeorge/VCFS)", birth_pt=4.66, birth_lo=2.55, birth_hi=7.81,
+         birth_n_cases=14, birth_n_total=30074,
+         birth_src="Blagojevic 2021, Ontario newborn screening (CMAJ Open)",
+         birth_source_status="recorded in original script; rounded estimate", adult_n_cases=5),
+    dict(label="16p11.2\n(proximal)", birth_pt=2.94, birth_lo=None, birth_hi=None,
+         birth_n_cases=None, birth_n_total=None, birth_src=None,
+         birth_source_status="unverified", adult_n_cases=44),
 ]
-birth = np.array([g[1] for g in groups])
-adult = np.array([g[3] for g in groups]) * 10000.0
+comparison = pd.DataFrame(groups)
+comparison["adult_n_total"] = n_ukb
+comparison["adult_pt"] = comparison["adult_n_cases"] / n_ukb * 10000.0
+comparison["adult_src"] = "Kendall 2017, UK Biobank"
+comparison["unit"] = "per 10,000"
+comparison.to_csv(DATA_DIR / "microdeletion_birth_vs_adult.csv", index=False)
+birth = comparison["birth_pt"].to_numpy()
+adult = comparison["adult_pt"].to_numpy()
 
-fig, ax = plt.subplots(figsize=(7.4, 4.6))
+fig, ax = plt.subplots(figsize=(7.4, 5.2))
 x = np.arange(len(groups)); w = 0.34
 b1 = ax.bar(x - w / 2, birth, w, color=CB, label="Birth prevalence\n(newborn screening)", zorder=3)
 b2 = ax.bar(x + w / 2, adult, w, color="#ff7f0e", label="Adult population\n(UK Biobank, Kendall 2017)", zorder=3)
 # CI for 22q11.2 birth
-ax.errorbar(x[0] - w / 2, birth[0], yerr=[[birth[0] - 2.55], [7.81 - birth[0]]],
+ax.errorbar(x[0] - w / 2, birth[0],
+            yerr=[[birth[0] - comparison.loc[0, "birth_lo"]], [comparison.loc[0, "birth_hi"] - birth[0]]],
             fmt="none", ecolor="#333333", elinewidth=1.3, capsize=3, zorder=4)
 for xi, bi, ad in zip(x, birth, adult):
     ax.annotate(f"{bi:.2f}", (xi - w / 2, bi), textcoords="offset points", xytext=(0, 3),
@@ -222,7 +247,7 @@ for xi, bi, ad in zip(x, birth, adult):
     ax.annotate(f"{ad:.2f}", (xi + w / 2, ad), textcoords="offset points", xytext=(0, 3),
                 ha="center", fontsize=8.5)
 ax.set_xticks(x)
-ax.set_xticklabels([g[0] for g in groups], fontsize=10)
+ax.set_xticklabels(comparison["label"], fontsize=10)
 ax.set_ylabel("Prevalence (per 10,000)", fontsize=11)
 ax.set_title("Birth vs adult prevalence — selection & penetrance", fontsize=12, fontweight="bold")
 ax.legend(fontsize=8.5, frameon=False, loc="upper right")
@@ -230,11 +255,13 @@ ax.grid(True, axis="y", ls=":", alpha=0.4, zorder=0)
 for spine in ["top", "right"]:
     ax.spines[spine].set_visible(False)
 ax.set_ylim(0, 9.5)
-ax.annotate("22q11.2: severe phenotype + early mortality →\n~93% lower in adults.\n16p11.2: incomplete penetrance → similar\nin adults vs newborns.",
-            xy=(0.01, 0.04), xycoords="axes fraction", ha="left", va="bottom",
+fig.text(0.08, 0.07, "22q11.2: severe phenotype + early mortality → ~93% lower in adults.\n16p11.2: incomplete penetrance → similar in adults vs newborns.",
+            ha="left", va="bottom",
             fontsize=8.5, color="#444444",
             bbox=dict(boxstyle="round,pad=0.35", fc="#f5f5f5", ec="#cccccc", lw=0.6))
-fig.tight_layout()
+fig.text(0.5, 0.01, "16p11.2 birth estimate: source unverified (CR-051); original value retained.",
+         ha="center", fontsize=8, color="#555555")
+fig.tight_layout(rect=(0, 0.19, 1, 1))
 save(fig, "microdeletion_birth_vs_adult")
 
 print("done")

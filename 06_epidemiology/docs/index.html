@@ -1,0 +1,348 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>流行病学资料：数据、图表与交付包</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="../INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整盘点</a></nav><h1>流行病学资料：数据、图表与交付包</h1><p class="lead">四组文献图表与一个 WBS 历史分析表分开说明；原数据和独立交付包原样保留。</p><h2 id="overview">1. 先看这些</h2><ul><li>本模块描述文献中的发生率、出生与成人频率和 de novo 比例，不是单细胞模型的输入。</li><li>CR-051 尚未解决：16p11.2 的 3.60/万与 2.94/万口径/来源未核清。不能把成人对照计数自动标成出生患病率。</li><li>计数对应的区间与文献给出的范围不是同一种统计量；详细来源与限制见原说明和 04_reports 的流行病学报告。</li><li>重建预览：在仓库根运行 .venv/pipeline/bin/python 06_epidemiology/scripts/microdeletion_prevalence.py --output-dir /tmp/igem-epidemiology-preview；不会覆盖项目内图表。</li><li>构建独立交付包使用 deliverables/igem_epidemiology_package/build.py，会覆盖包内复制文件及 ZIP；本次未重建。</li><li>PNG 用于展示，SVG 用于编辑，PDF 用于导出；交付包内的副本用于脱离项目独立阅读，因此不按重复文件删除。</li><li>wbs_interval_de_analysis.csv 属于历史 WBS 差异表达证据，不是流行病学脚本生成物，单独保留。</li></ul><h2 id="files">2. 逐文件盘点</h2><details><summary>展开 36 个文件的用途和保留理由</summary><table><thead><tr><th>文件</th><th>作用</th><th>现在怎么用</th><th>陈旧判断</th></tr></thead><tbody><tr><td><a data-local-only-href="../README_%E5%8E%9Foutputs%E7%B4%A2%E5%BC%95.md" title="本地保留的来源文件，不随公开仓库发布">README_原outputs索引.md</a></td><td>流行病学来源、操作说明或历史报告：README_原outputs索引.md</td><td>人工阅读；旧结论须结合 CR-051 未决来源说明</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/22q11_2_forest.csv">data/22q11_2_forest.csv</a></td><td>文献频率/计数表：22q11_2_forest</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/microdeletion_birth_prevalence.csv">data/microdeletion_birth_prevalence.csv</a></td><td>文献频率/计数表：microdeletion_birth_prevalence</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/microdeletion_birth_vs_adult.csv">data/microdeletion_birth_vs_adult.csv</a></td><td>文献频率/计数表：microdeletion_birth_vs_adult</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/microdeletion_denovo_fraction.csv">data/microdeletion_denovo_fraction.csv</a></td><td>文献频率/计数表：microdeletion_denovo_fraction</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../data/wbs_interval_de_analysis.csv">data/wbs_interval_de_analysis.csv</a></td><td>WBS 差异表达历史结果</td><td>历史结论证据；单独保留，不能被四表重建覆盖</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/README.md" title="本地保留的来源文件，不随公开仓库发布">deliverables/igem_epidemiology_package/README.md</a></td><td>流行病学来源、操作说明或历史报告：README.md</td><td>人工阅读；旧结论须结合 CR-051 未决来源说明</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../deliverables/igem_epidemiology_package/build.py">deliverables/igem_epidemiology_package/build.py</span></td><td>复制流行病学图表/表格并构建独立 HTML 和 ZIP 交付包</td><td>当前 README 列出的手动构建入口；覆盖生成结果前可使用临时目录</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/data/22q11_2_forest.csv">deliverables/igem_epidemiology_package/data/22q11_2_forest.csv</a></td><td>文献频率/计数表：22q11_2_forest</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/data/microdeletion_birth_prevalence.csv">deliverables/igem_epidemiology_package/data/microdeletion_birth_prevalence.csv</a></td><td>文献频率/计数表：microdeletion_birth_prevalence</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/data/microdeletion_birth_vs_adult.csv">deliverables/igem_epidemiology_package/data/microdeletion_birth_vs_adult.csv</a></td><td>文献频率/计数表：microdeletion_birth_vs_adult</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/data/microdeletion_denovo_fraction.csv">deliverables/igem_epidemiology_package/data/microdeletion_denovo_fraction.csv</a></td><td>文献频率/计数表：microdeletion_denovo_fraction</td><td>图表与独立交付包输入或包内副本</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/22q11_2_forest.png">deliverables/igem_epidemiology_package/figures/22q11_2_forest.png</a></td><td>流行病学图：22q11_2_forest（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/22q11_2_forest.svg">deliverables/igem_epidemiology_package/figures/22q11_2_forest.svg</a></td><td>流行病学图：22q11_2_forest（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_birth_prevalence.png">deliverables/igem_epidemiology_package/figures/microdeletion_birth_prevalence.png</a></td><td>流行病学图：microdeletion_birth_prevalence（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_birth_prevalence.svg">deliverables/igem_epidemiology_package/figures/microdeletion_birth_prevalence.svg</a></td><td>流行病学图：microdeletion_birth_prevalence（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_birth_vs_adult.png">deliverables/igem_epidemiology_package/figures/microdeletion_birth_vs_adult.png</a></td><td>流行病学图：microdeletion_birth_vs_adult（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_birth_vs_adult.svg">deliverables/igem_epidemiology_package/figures/microdeletion_birth_vs_adult.svg</a></td><td>流行病学图：microdeletion_birth_vs_adult（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_denovo_fraction.png">deliverables/igem_epidemiology_package/figures/microdeletion_denovo_fraction.png</a></td><td>流行病学图：microdeletion_denovo_fraction（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/figures/microdeletion_denovo_fraction.svg">deliverables/igem_epidemiology_package/figures/microdeletion_denovo_fraction.svg</a></td><td>流行病学图：microdeletion_denovo_fraction（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../deliverables/igem_epidemiology_package/index.html">deliverables/igem_epidemiology_package/index.html</a></td><td>已有独立交付网页，含嵌入图</td><td>交付包正式入口；本次不覆盖</td><td>不建议清理</td></tr><tr><td><a data-local-only-href="../deliverables/igem_epidemiology_package/report.md" title="本地保留的来源文件，不随公开仓库发布">deliverables/igem_epidemiology_package/report.md</a></td><td>流行病学来源、操作说明或历史报告：report.md</td><td>人工阅读；旧结论须结合 CR-051 未决来源说明</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../deliverables/igem_epidemiology_package.zip">deliverables/igem_epidemiology_package.zip</span></td><td>可独立分享的流行病学交付包快照</td><td>打包副本；不是与源码重复就可删除</td><td>不建议清理</td></tr><tr><td><a href="../figures/22q11_2_forest.pdf">figures/22q11_2_forest.pdf</a></td><td>流行病学图：22q11_2_forest（pdf）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/22q11_2_forest.png">figures/22q11_2_forest.png</a></td><td>流行病学图：22q11_2_forest（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/22q11_2_forest.svg">figures/22q11_2_forest.svg</a></td><td>流行病学图：22q11_2_forest（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_prevalence.pdf">figures/microdeletion_birth_prevalence.pdf</a></td><td>流行病学图：microdeletion_birth_prevalence（pdf）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_prevalence.png">figures/microdeletion_birth_prevalence.png</a></td><td>流行病学图：microdeletion_birth_prevalence（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_prevalence.svg">figures/microdeletion_birth_prevalence.svg</a></td><td>流行病学图：microdeletion_birth_prevalence（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_vs_adult.pdf">figures/microdeletion_birth_vs_adult.pdf</a></td><td>流行病学图：microdeletion_birth_vs_adult（pdf）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_vs_adult.png">figures/microdeletion_birth_vs_adult.png</a></td><td>流行病学图：microdeletion_birth_vs_adult（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_birth_vs_adult.svg">figures/microdeletion_birth_vs_adult.svg</a></td><td>流行病学图：microdeletion_birth_vs_adult（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_denovo_fraction.pdf">figures/microdeletion_denovo_fraction.pdf</a></td><td>流行病学图：microdeletion_denovo_fraction（pdf）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_denovo_fraction.png">figures/microdeletion_denovo_fraction.png</a></td><td>流行病学图：microdeletion_denovo_fraction（png）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><a href="../figures/microdeletion_denovo_fraction.svg">figures/microdeletion_denovo_fraction.svg</a></td><td>流行病学图：microdeletion_denovo_fraction（svg）</td><td>SVG 便于编辑，PNG 便于展示，PDF 便于出版；保留三种用途</td><td>不建议清理</td></tr><tr><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="../scripts/microdeletion_prevalence.py">scripts/microdeletion_prevalence.py</span></td><td>从脚本内文献数值生成四张数据表及十二张图</td><td>当前 README 列出的手动构建入口；覆盖生成结果前可使用临时目录</td><td>不建议清理</td></tr></tbody></table></details><h2 id="history">3. 原始说明与历史全文</h2><details><summary>README_原outputs索引.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original0-流行病学图表与数据索引">流行病学图表与数据索引</h1>
+<p>本索引仅管理 <code>06_epidemiology/</code>。脚本使用内置文献数值生成图表，不读取疾病实验的表达矩阵，也不调用扰动工具。</p>
+<h2 id="original0-生成与验证">生成与验证</h2>
+<p>复用根目录 <code>.venv/pipeline</code> 环境，依赖由 <code>03_pipeline/requirements.txt</code> 统一管理，不另建环境文件。在仓库根目录运行：</p>
+<div class="sourceCode" id="original0-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original0-cb1-1"><a href="#original0-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> 06_epidemiology/scripts/microdeletion_prevalence.py</span>
+<span id="original0-cb1-2"><a href="#original0-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> scripts/tests <span class="at">-p</span> test_epidemiology.py <span class="at">-v</span></span></code></pre></div>
+<p>脚本根据自身位置定位输出，自动创建本模块的 <code>data/</code>、<code>figures/</code>，与启动工作目录无关。每次生成 <strong>4 份 CSV + 12 个图文件</strong>，覆盖同名生成物，不清空目录或删除其他文件。正式重跑前可先用 Git 保留上一版本。</p>
+<p>如需先预览而不覆盖正式图表：</p>
+<div class="sourceCode" id="original0-cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original0-cb2-1"><a href="#original0-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> 06_epidemiology/scripts/microdeletion_prevalence.py <span class="at">--output-dir</span> /tmp/igem-epidemiology-preview</span></code></pre></div>
+<p>该目录也使用 <code>data/</code>、<code>figures/</code> 布局；相对 <code>--output-dir</code> 按启动目录解释。图表测试在临时目录执行，不覆盖仓库结果，不需要联网或真实疾病数据。</p>
+<h2 id="original0-图表与数据一一对应">图表与数据一一对应</h2>
+<p>下列同名图均在 <code>figures/</code>，每组包含 PNG、PDF、SVG。CSV 直接保存本次绘图使用的数值。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>图表文件名（不含扩展名）</th>
+<th>数据表</th>
+<th>内容 / 单位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>microdeletion_birth_prevalence</code></td>
+<td><a data-local-only-href="../data/microdeletion_birth_prevalence.csv">CSV</a></td>
+<td>14 个综合征的汇总；<code>pt/lo/hi</code> 为每万例，<code>kind</code> 区分计数区间与文献范围</td>
+</tr>
+<tr>
+<td><code>22q11_2_forest</code></td>
+<td><a data-local-only-href="../data/22q11_2_forest.csv">CSV</a></td>
+<td>5 项研究；<code>pt/lo/hi</code>、原始计数与分母、来源、单位和区间类型</td>
+</tr>
+<tr>
+<td><code>microdeletion_denovo_fraction</code></td>
+<td><a data-local-only-href="../data/microdeletion_denovo_fraction.csv">CSV</a></td>
+<td>de novo 比例；<code>v/lo/hi</code> 为百分比，<code>note</code> 为原说明</td>
+</tr>
+<tr>
+<td><code>microdeletion_birth_vs_adult</code></td>
+<td><a data-local-only-href="../data/microdeletion_birth_vs_adult.csv">CSV</a></td>
+<td><code>birth_*</code> / <code>adult_*</code> 分列；每万例，保留已有计数、区间、来源及来源状态</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>CSV 空值表示原脚本未提供，不表示零；没有计数或区间时不补造。</li>
+<li>森林图 <code>label</code> 与 <code>src</code> 保留原研究标签；计数区间仍用 Clopper–Pearson 精确 95% CI。出生—成人比较的出生点与区间保留原脚本的舍入值，不重新计算。</li>
+<li><strong>CR-051 待核对：</strong> 16p11.2 在汇总图中为 <code>3/8329 × 10000 ≈ 3.60</code>，来源标为 Cooper 2011 成人对照；对比图中的出生数值为 <code>2.94</code>，没有明确来源。用户批准本轮保留两者，不擅自统一；新表 <code>birth_src</code> 留空、<code>birth_source_status=unverified</code>，对比图和交付页也显示提示。该差异不能当作已核实的同一人群估计。</li>
+<li>本次工程测试验证输出和图表对应关系，不证明原文献选择、人群可比性或图中的科学解释正确。</li>
+<li><code>data/wbs_interval_de_analysis.csv</code> 为既有旁支产物，不由本脚本生成，保留不动。</li>
+</ul>
+<h2 id="original0-交付网页与-zip">交付网页与 ZIP</h2>
+<p>正式图表核对后，再运行：</p>
+<div class="sourceCode" id="original0-cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="original0-cb3-1"><a href="#original0-cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> 06_epidemiology/deliverables/igem_epidemiology_package/build.py</span></code></pre></div>
+<p>构建脚本从本模块 <code>data/</code>、<code>figures/</code> 复制四份 CSV 和四组 SVG/PNG，重建内嵌图像的 <code>index.html</code>，最后更新同级 <code>igem_epidemiology_package.zip</code>。三处展示（主图、交付页、ZIP）由同一批结果产生；预览目录不会自动发布到交付包。</p>
+<ul>
+<li><a data-local-only-href="../deliverables/igem_epidemiology_package/README.md" title="本地保留的来源文件，不随公开仓库发布">交付说明</a></li>
+<li><a href="../deliverables/igem_epidemiology_package/index.html">交付网页</a>（图像内嵌；CSV 下载需同时保留 <code>data/</code>）</li>
+<li><a data-local-only-href="../deliverables/igem_epidemiology_package/report.md" title="本地保留的来源文件，不随公开仓库发布">原报告</a>（保留原叙述，顶部标注待核对项）</li>
+</ul>
+<p>旧图可从 Git 修复前版本追溯；不要继续分发旧 ZIP 中错误的森林图。其他项目报告、文献及筛选管线的入口见根目录 README，不在本目录输出。</p>
+</details><details><summary>deliverables/igem_epidemiology_package/README.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original6-igem-网页数据包-使用说明">iGEM 网页数据包 — 使用说明</h1>
+<p>本文件夹是「染色体微缺失综合征流行病学数据」的 iGEM wiki 打包版，双语（英文为主 + 中文说明）。</p>
+<h2 id="original6-内容">内容</h2>
+<pre><code>igem_epidemiology_package/
+├── index.html     ← 自包含 HTML 页面（内嵌 SVG 图 + 表格 + 参考文献），可直接粘进 wiki
+├── report.md      ← 双语 Markdown 报告（完整来源说明）
+├── README.md      ← 本文件
+├── figures/       ← 4 张图的 SVG（矢量，推荐） + PNG（预览）
+│   ├── microdeletion_birth_prevalence.{svg,png}   出生患病率汇总
+│   ├── 22q11_2_forest.{svg,png}                    22q11.2 多研究森林图
+│   ├── microdeletion_denovo_fraction.{svg,png}     de novo 比例
+│   └── microdeletion_birth_vs_adult.{svg,png}      出生 vs 成人患病率
+└── data/          ← 四张与图同名的 CSV 数据表
+    ├── microdeletion_birth_prevalence.csv
+    ├── 22q11_2_forest.csv
+    ├── microdeletion_denovo_fraction.csv
+    └── microdeletion_birth_vs_adult.csv</code></pre>
+<h2 id="original6-如何放到-igem-wiki">如何放到 iGEM wiki</h2>
+<p>iGEM wiki 目前用 <strong>HTML/CSS/JS 上传系统</strong>（2024 年起的 wiki 编辑器）。两种方式：</p>
+<h3 id="original6-方式-a推荐上传整个-html-文件">方式 A（推荐）：上传整个 HTML 文件</h3>
+<ol type="1">
+<li>在 iGEM wiki 编辑器中，把 <code>index.html</code> 的<strong>完整内容</strong>复制粘贴进你目标页面（Background / Description 页）的 HTML 源码模式。</li>
+<li>因为图是<strong>内嵌 SVG</strong>，无需单独上传图片文件，整页即自包含。</li>
+<li>若编辑器不支持内嵌 SVG，改用方式 B。</li>
+</ol>
+<h3 id="original6-方式-bhtml-单独上传图片">方式 B：HTML + 单独上传图片</h3>
+<ol type="1">
+<li>新建页面，粘贴 <code>index.html</code> 正文（去掉 <code>&lt;figure&gt;</code> 里的内嵌 SVG 部分）。</li>
+<li>在 wiki 的「Upload Files」里上传 <code>figures/</code> 下的 4 张 <strong>SVG</strong>（矢量，缩放不糊，评委友好）。</li>
+<li>把 <code>&lt;figure&gt;</code> 里的内容替换成 <code>&lt;img data-historical-src="your-uploaded-filename.svg" title="历史路径，当前未解析；见原始文件" alt="..."&gt;</code>。</li>
+</ol>
+<h3 id="original6-建议">建议</h3>
+<ul>
+<li><strong>优先用 SVG</strong>：矢量图在放大/缩放时清晰，适合评委在大屏查看。</li>
+<li>参考文献（<code>index.html</code> 末尾的 References）已按期刊格式整理，<strong>保留在页面上</strong>（iGEM 评审重视可查证的引用）。</li>
+<li>图像已内嵌 HTML，但四份 CSV 的下载链接依赖包内 <code>data/</code>；上传 wiki 时同时上传数据表并更新下载链接。</li>
+<li>如需改图，在仓库根目录运行 <code>.venv/pipeline/bin/python 06_epidemiology/scripts/microdeletion_prevalence.py</code>，输出到 <code>06_epidemiology/figures/</code> 与 <code>data/</code>；可先加 <code>--output-dir /tmp/igem-epidemiology-preview</code> 单独预览。</li>
+<li>核对后运行 <code>.venv/pipeline/bin/python 06_epidemiology/deliverables/igem_epidemiology_package/build.py</code>，同步四份表与 SVG/PNG、重建 HTML 并更新同级 ZIP；覆盖同名生成物，旧版从 Git 追溯。单独下载的本包用于展示，重建需完整仓库。</li>
+<li>回归入口：<code>.venv/pipeline/bin/python -m unittest discover -s scripts/tests -p test_epidemiology.py -v</code>；依赖复用 <code>03_pipeline/requirements.txt</code>。</li>
+</ul>
+<h2 id="original6-数据来源与注意事项摘要">数据来源与注意事项（摘要）</h2>
+<ul>
+<li><strong>CR-051 来源待核对：</strong> 16p11.2 在出生—成人图中的出生数值为 2.94/万，没有明确来源；汇总图为 3.60/万，来源标为 Cooper 2011 成人对照。按用户决定保留原值，在 CSV、图和网页上标记，不视为已统一的估计。本轮不修改下面的原科学解释，工程测试也不验证这些解释。</li>
+<li><strong>无内置疾病数据库</strong>，数据全部来自公开文献与人群队列，逐条标注来源（见 <code>report.md</code>）。</li>
+<li>单位：<strong>每 10,000 例活产</strong>。计数来源用 Clopper–Pearson 精确 95% CI；文献来源给出的是已发表范围（非统计 CI）。</li>
+<li>关键结论：
+<ol type="1">
+<li>22q11.2 是最常见且数据最可靠的微缺失（主动筛查 <strong>1/2,148</strong>）。</li>
+<li>成人患病率低于出生患病率（选择效应 + 早亡），22q11.2 约降 93%，16p11.2 几乎不变（不完全外显）。</li>
+<li>de novo 比例：重症缺失多新发，16p11.2/1q21.1 常遗传。</li>
+</ol></li>
+</ul>
+</details><details><summary>deliverables/igem_epidemiology_package/report.md · 完整原文</summary><p>保留历史表述与设计理由；旧命令不自动代表当前启动方式。</p><h1 id="original21-microdeletion-syndromes-epidemiological-overview-微缺失综合征流行病学概览">Microdeletion Syndromes — Epidemiological Overview / 微缺失综合征流行病学概览</h1>
+<blockquote>
+<p><strong>2026-09-24 / CR-051 待核对：</strong> 16p11.2 的汇总值为 3.60/万（原标注 Cooper 2011 成人对照），出生—成人图的出生值为 2.94/万且来源不明。本轮按用户决定保留原数值与正文，不视为已统一的估计；来源与人群口径待另行核查。图表工程修复不验证原科学解释。四份绘图数据见 <code>data/</code> 中的同名 CSV。</p>
+</blockquote>
+<blockquote>
+<p><strong>Bilingual note</strong> / 双语说明：正文以英文为主（iGEM 评委评审语言），关键段落附中文说明。 All prevalence is <strong>per 10,000 live births</strong> (/万). “Count (CI)” = Clopper–Pearson exact 95% CI from a population count; “literature” = published min–max range (not a statistical CI).</p>
+</blockquote>
+<hr />
+<h2 id="original21-birth-prevalence-出生患病率">1. Birth prevalence / 出生患病率</h2>
+<p>The most common microdeletion is <strong>22q11.2 (DiGeorge/VCFS)</strong>: contemporary newborn screening gives <strong>4.7 / 10,000 live births (95% CI 2.5–7.8)</strong>, i.e. <strong>1 in 2,148</strong> [1]. Next most common are 1q21.1, 16p11.2 and 15q11-q13 (PWS/Angelman). The rarest (4p Wolf–Hirschhorn, 22q13 Phelan-McDermid, 2q37) are ~1 in 50,000–100,000.</p>
+<p>中文：最常见的是 22q11.2（1/2,148），其次 1q21.1、16p11.2、15q11-q13；最罕见 4p/22q13/2q37（约 1/5万–1/10万）。</p>
+<p><strong>Figure 1</strong> — <code>figures/microdeletion_birth_prevalence.svg</code> (blue = count with exact CI, grey = literature range)</p>
+<table>
+<thead>
+<tr>
+<th>Syndrome (region)</th>
+<th>/10k</th>
+<th>95% CI or range</th>
+<th>~1 in</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22q11.2 (DiGeorge/VCFS)</td>
+<td>4.66</td>
+<td>2.55–7.81</td>
+<td>2,148</td>
+<td>count</td>
+</tr>
+<tr>
+<td>1q21.1 deletion</td>
+<td>4.90</td>
+<td>1.80–10.66</td>
+<td>2,042</td>
+<td>count</td>
+</tr>
+<tr>
+<td>16p11.2 (proximal)</td>
+<td>3.60</td>
+<td>0.74–10.52</td>
+<td>2,800</td>
+<td>count</td>
+</tr>
+<tr>
+<td>15q11-q13 (PWS/Angelman)</td>
+<td>2.94</td>
+<td>0.36–10.60</td>
+<td>3,400</td>
+<td>count</td>
+</tr>
+<tr>
+<td>15q13.3 deletion</td>
+<td>2.50</td>
+<td>1.80–3.30</td>
+<td>4,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>1p36 deletion</td>
+<td>1.47</td>
+<td>0.04–8.18</td>
+<td>6,800</td>
+<td>count</td>
+</tr>
+<tr>
+<td>Williams (7q11.23)</td>
+<td>1.00</td>
+<td>0.50–1.30</td>
+<td>10,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>Cri-du-chat (5p)</td>
+<td>0.50</td>
+<td>0.20–0.67</td>
+<td>20,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>Smith-Magenis (17p11.2)</td>
+<td>0.50</td>
+<td>0.40–0.67</td>
+<td>20,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>Koolen-de Vries (17q21.31)</td>
+<td>0.33</td>
+<td>0.18–0.63</td>
+<td>30,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>3q29 deletion</td>
+<td>0.33</td>
+<td>0.20–0.50</td>
+<td>30,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>Wolf-Hirschhorn (4p)</td>
+<td>0.20</td>
+<td>0.10–0.30</td>
+<td>50,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>Phelan-McDermid (22q13)</td>
+<td>0.20</td>
+<td>0.10–0.30</td>
+<td>50,000</td>
+<td>literature</td>
+</tr>
+<tr>
+<td>2q37 deletion</td>
+<td>0.10</td>
+<td>0.05–0.15</td>
+<td>100,000</td>
+<td>literature</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="original21-q11.2-across-studies-incidence-多研究对比与发病率">2. 22q11.2 across studies &amp; incidence / 多研究对比与发病率</h2>
+<p>Estimates span ~10-fold by <strong>ascertainment method</strong>: clinical/registry ~1.4/10k vs prospective molecular newborn screening 4.7/10k [1,7,8,9]. The Swedish population study reports a mean annual <strong>incidence of 14.1 / 100,000 live births</strong> [7].</p>
+<p>中文：22q11.2 估计相差约 10 倍，由确定方法决定；瑞典年均发病率 14.1/10 万活产。</p>
+<p><strong>Figure 2</strong> — <code>figures/22q11_2_forest.svg</code></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Study</th>
+<th>/10k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Panamonta 2016 systematic review (pooled, 156/1,111,336)</td>
+<td>1.40</td>
+</tr>
+<tr>
+<td>Oskarsdóttir 2004 Sweden</td>
+<td>1.41</td>
+</tr>
+<tr>
+<td>Sørensen 2010 Denmark (7/25,704)</td>
+<td>2.72</td>
+</tr>
+<tr>
+<td>Smajlagić 2020 MoBa Norway (1/12,252)</td>
+<td>0.82</td>
+</tr>
+<tr>
+<td>Blagojevic 2021 Ontario newborn screening (14/30,074)</td>
+<td><strong>4.66 (2.55–7.81)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="original21-de-novo-fraction-新发de-novo比例">3. De novo fraction / 新发（de novo）比例</h2>
+<p>Most severe recurrent deletions are de novo (Williams ~95%, 22q11.2 &gt;90%, 1p36/Smith-Magenis ~90%, Cri-du-chat 85–90%). 16p11.2 is de novo in only 60–76% and 1q21.1 in ~33% — more often inherited [10,11].</p>
+<p>中文：重症复发性缺失多为新发；16p11.2（60–76%）和 1q21.1（~33%）常遗传自轻症父母。</p>
+<p><strong>Figure 3</strong> — <code>figures/microdeletion_denovo_fraction.svg</code></p>
+<table>
+<thead>
+<tr>
+<th>Syndrome</th>
+<th>De novo %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Williams (7q11.23)</td>
+<td>~95</td>
+</tr>
+<tr>
+<td>22q11.2 (3 Mb)</td>
+<td>&gt;90</td>
+</tr>
+<tr>
+<td>1p36 / Smith-Magenis</td>
+<td>~90</td>
+</tr>
+<tr>
+<td>Cri-du-chat (5p)</td>
+<td>85–90</td>
+</tr>
+<tr>
+<td>Wolf-Hirschhorn (4p)</td>
+<td>~85</td>
+</tr>
+<tr>
+<td>PWS/Angelman (15q11-q13)</td>
+<td>~70</td>
+</tr>
+<tr>
+<td>16p11.2 (proximal)</td>
+<td>60–76</td>
+</tr>
+<tr>
+<td>1q21.1 deletion</td>
+<td>~33</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="original21-birth-vs-adult-prevalence-出生-vs-成人患病率选择-外显率">4. Birth vs adult prevalence / 出生 vs 成人患病率（选择 &amp; 外显率）</h2>
+<p>Adult population prevalence is lower than birth prevalence (reduced fertility + early mortality). 22q11.2 drops from 4.7/10k at birth to <strong>0.33/10k in adults</strong> (UK Biobank, 5 carriers/151,659) — a ~93% drop. 16p11.2 stays ~2.9/10k in adults — <strong>incomplete penetrance</strong> [10]. MoBa: recurrent NDD CNVs in 0.48% of newborns vs 0.35–0.36% of parents (~1/3 negative selection) [2].</p>
+<p>中文：成人率低于出生率。22q11.2 从 4.7/万降至成人 0.33/万（约 93% 下降，重症）；16p11.2 成人仍 ~2.9/万（不完全外显）。</p>
+<p><strong>Figure 4</strong> — <code>figures/microdeletion_birth_vs_adult.svg</code></p>
+<hr />
+<h2 id="original21-references-参考文献">References / 参考文献</h2>
+<ol type="1">
+<li>Blagojevic C, et al. <em>CMAJ Open</em> 2021;9:E802–E809. doi:10.9778/cmajo.20200294</li>
+<li>Smajlagić D, et al. <em>Eur J Hum Genet</em> 2021;29:205–215. doi:10.1038/s41431-020-00707-7</li>
+<li>Tucker T, et al. <em>Mol Genet Genomic Med</em> 2013;1:87–97. doi:10.1002/mgg3.12</li>
+<li>Cooper GM, et al. <em>Nat Genet</em> 2011;43:838–846. doi:10.1038/ng.909</li>
+<li>Heilstedt HA, et al. <em>Am J Hum Genet</em> 2003;72:1200–1212. doi:10.1086/375177</li>
+<li>Gillentine MA, et al. <em>J Hum Genet</em> 2018;63:795–801. doi:10.1038/s10038-018-0451-x</li>
+<li>Oskarsdóttir S, et al. <em>Arch Dis Child</em> 2004;89:148–151. doi:10.1136/adc.2003.026880</li>
+<li>Sørensen KM, et al. <em>J Mol Diagn</em> 2010;12:147–151. doi:10.2353/jmoldx.2010.090099</li>
+<li>Panamonta V, et al. <em>J Med Assoc Thai</em> 2016;99(Suppl 5):S187–S193. PMID:29906080</li>
+<li>Kendall KM, et al. <em>Biol Psychiatry</em> 2017;82:103–110. doi:10.1016/j.biopsych.2016.08.014</li>
+<li>GeneReviews (NCBI Bookshelf): 22q11.2 (NBK1523); 16p11.2 (NBK11167); Williams (NBK1249)</li>
+<li>Orphanet: 22q11.2 (ORPHA:567); Williams (ORPHA:904); Monosomy 5p (ORPHA:281)</li>
+</ol>
+</details><h2 id="figures">4. 图表预览</h2><p>以下为既存历史图。涉及未决来源的出生/成人对比图须连同 CR-051 说明阅读。</p><details><summary>22q11_2_forest</summary><img loading="lazy" alt="22q11_2_forest" src="../figures/22q11_2_forest.png"></details><details><summary>microdeletion_birth_prevalence</summary><img loading="lazy" alt="microdeletion_birth_prevalence" src="../figures/microdeletion_birth_prevalence.png"></details><details><summary>microdeletion_birth_vs_adult</summary><img loading="lazy" alt="microdeletion_birth_vs_adult" src="../figures/microdeletion_birth_vs_adult.png"></details><details><summary>microdeletion_denovo_fraction</summary><img loading="lazy" alt="microdeletion_denovo_fraction" src="../figures/microdeletion_denovo_fraction.png"></details><p><a href="../deliverables/igem_epidemiology_package/index.html">打开原有独立交付网页</a> · <a href="../../04_reports/index.html">查看关联历史报告</a></p></main></body></html>

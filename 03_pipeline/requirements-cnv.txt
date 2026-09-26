@@ -1,3 +1,0 @@
--r requirements-runtime.txt
-scanpy==1.11.5
-infercnvpy==0.6.1

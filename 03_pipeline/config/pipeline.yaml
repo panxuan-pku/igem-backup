@@ -43,7 +43,7 @@ consensus_v2:
       weight: 1
     clinGen_hi_score:
       direction: ordinal
-      low_score_penalty: 0.5
+      low_score_penalty: 0.0
       ordinal_scale: 3
       weight: 3
     gnomad_LOEUF:
@@ -85,8 +85,11 @@ external:
 gene_constraints:
   LOEUF_upper: 0.35
   pLI_threshold: 0.9
-  use_LOEUF_v4: true
+  use_LOEUF_v4: false  # current snapshot is v2.1.1; this flag does not upgrade data
 hpa_filter:
+  organ_tissues:
+    brain: [amygdala, basal ganglia, cerebellum, cerebral cortex, choroid plexus, hippocampal formation, hypothalamus, midbrain, pons, medulla oblongata, spinal cord, thalamus]
+    gastrointestinal: [appendix, colon, duodenum, esophagus, rectum, small intestine, stomach]
   high_expression_log: 1.0
   negative_expr_threshold: 4.0
   organs:
@@ -95,11 +98,15 @@ hpa_filter:
   - kidney
   - gastrointestinal
 pipeline_mode: auto
+# WHS is the first intended disease; phenotype-to-tissue mappings await confirmation.
+# Panels annotate all candidates in this run and never change scores or ranks.
+phenotype_panels: []
 recessive:
-  gnomad_weight_multiplier: 0.5
+  gnomad_weight_multiplier: 1.0  # annotation only; <1 is an unvalidated, opt-in heuristic
 sensitivity:
   enabled: false
 validation:
+  # Maximum fraction of candidates with no usable positively weighted evidence.
   max_missing_rate: 0.5
   require_unique_hgnc: true
 warnings:

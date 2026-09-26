@@ -60,5 +60,6 @@ for g in ["GTF2I","GTF2IRD1","ELN","LIMK1","BAZ1B","CLIP2"]:
         x = np.asarray(raw.X[:, i].todense()).ravel() if hasattr(raw.X[:, i], "todense") else np.asarray(raw.X[:, i]).ravel()
         print(f"  {g:10s} 表达 {(x>0).sum()}/{len(x)} 细胞, 均值 {x.mean():.3f}")
 
+(BASE / "03_intermediate").mkdir(parents=True, exist_ok=True)
 adata.write(BASE / "03_intermediate" / "processed.h5ad")
 print("已保存 processed.h5ad", adata.shape)

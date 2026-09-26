@@ -1,0 +1,755 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026-09-19 筛选复核</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>2026-09-19 筛选复核</h1><p class="lead">保留 WBS/WHS 的输入、证据、排名、报告、审计和 summary，供后续追溯。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>summary 与 CSV 记录：WBS 35 行，第一 BAZ1B；WHS 19 行，第一 NSD2。</li><li>summary 中权重扰动 8 次：WBS 有 4 次改变 top3，最大排名移动 4；WHS 无 top3 改变，最大移动 3。仅代表当时这组敏感性试验。</li><li>ai_scores.csv 为本地被 gitignore 的全基因派生表，当前保留，不能假定新 clone 会包含它。可追溯审计及候选结果保留在版本库。</li><li>审计含旧 worktree 绝对路径；这些路径作为原始记录保留，不当作当前可执行路径。sources 为本地来源引用，不能据此声称所有原始输入已随仓库交付。</li><li>完整旧报告含模板占位符 {sym} 和旧实验建议；保留原文供追溯，勿直接用作现行操作指引。</li><li>Spearman 是两种排序的一致性，不是生物学准确率。本次没有重算科学结果。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a data-local-only-href="ai_scores.csv">ai_scores.csv</a></td><td>该次复核的本地全基因 AI 分数表</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>2</td><td><a data-local-only-href="audit/ai_scores_deeplof_20260919.json" title="本地保留的来源文件，不随公开仓库发布">audit/ai_scores_deeplof_20260919.json</a></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>3</td><td><a data-local-only-href="summary.json">summary.json</a></td><td>两种疾病的 top10、对照与敏感性复核汇总</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>4</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-data-local-only-href="wbs/audit/data_checksums.txt" title="本地保留的来源文件，不随公开仓库发布">wbs/audit/data_checksums.txt</span></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>5</td><td><a data-local-only-href="wbs/audit/run.json" title="本地保留的来源文件，不随公开仓库发布">wbs/audit/run.json</a></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>6</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="wbs/evidence.parquet">wbs/evidence.parquet</span></td><td>评分前证据矩阵，保留缺失值和原始注释</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>7</td><td><a data-local-only-href="wbs/normalized.csv">wbs/normalized.csv</a></td><td>该次复核的基因编号映射输入</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>8</td><td><a data-local-only-href="wbs/ranked.csv">wbs/ranked.csv</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>9</td><td><a data-local-only-href="wbs/ranked.csv.audit.json" title="本地保留的来源文件，不随公开仓库发布">wbs/ranked.csv.audit.json</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>10</td><td><a data-local-only-href="wbs/report.md" title="本地保留的来源文件，不随公开仓库发布">wbs/report.md</a></td><td>参数、排名及历史解释全文</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>11</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-data-local-only-href="whs/audit/data_checksums.txt" title="本地保留的来源文件，不随公开仓库发布">whs/audit/data_checksums.txt</span></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>12</td><td><a data-local-only-href="whs/audit/run.json" title="本地保留的来源文件，不随公开仓库发布">whs/audit/run.json</a></td><td>历史运行审计与来源校验</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>13</td><td><span title="在项目文件面板查看；预览服务不提供此文件" data-repository-href="whs/evidence.parquet">whs/evidence.parquet</span></td><td>评分前证据矩阵，保留缺失值和原始注释</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>14</td><td><a data-local-only-href="whs/normalized.csv">whs/normalized.csv</a></td><td>该次复核的基因编号映射输入</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>15</td><td><a data-local-only-href="whs/ranked.csv">whs/ranked.csv</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>16</td><td><a data-local-only-href="whs/ranked.csv.audit.json" title="本地保留的来源文件，不随公开仓库发布">whs/ranked.csv.audit.json</a></td><td>候选排序快照，与同名实验报告配对</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr><tr><td>17</td><td><a data-local-only-href="whs/report.md" title="本地保留的来源文件，不随公开仓库发布">whs/report.md</a></td><td>参数、排名及历史解释全文</td><td>结论追溯、实验比较或复现核对</td><td>原位保留；按现有实验子目录归类</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file4"><summary>4. data_checksums.txt</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><pre>hgnc_aliases.tsv  b0e18be4d7a6e6a9711d0cb94eba426b8251317798d164c8ba7f3c783c14682f
+clinGen_gene_curation_list_GRCh38.tsv  c888d46dd01797962214496bc8112d62b94fb63faff38851a7f0786b7f604e74
+gnomad_constraint.tsv  78f14346180de3fb552747099d9a34238ca535924418a3596d75f45654837d69
+/Users/leobranch/.codex/worktrees/3a07/09_github_export/03_pipeline/outputs/review_20260919/sources/rna_tissue_consensus.tsv  c49b5b33a076e3b9c1eb4f7d15d063ee936e07045e192ceccfeb9edcf1d90ddb</pre></details><details id="file10"><summary>10. report.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc10-微缺失主效基因筛选-共识排名-consensus-v2">微缺失主效基因筛选 — 共识排名 (consensus v2)</h1>
+<p>Pipeline mode: <strong>Mode B · 增强筛选（排序 + 正对照检验）</strong> · Normalization: <strong>raw</strong> · 35 genes</p>
+<h2 id="doc10-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>86%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>86%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution): DeepGenePrior_score, DosaCNV_score</p>
+<p>HPA penalty: per-organ 0.0 above expr&gt;9999.0, capped at 0.0</p>
+<p>排名是候选优先级，不是因果证明或 SINEUP 可行性检验。HI=40 为剂量敏感性反向证据，需人工复核；不与未评估混同。</p>
+<h2 id="doc10-clingen-原始证据">ClinGen 原始证据</h2>
+<table>
+<thead>
+<tr>
+<th>gene</th>
+<th>HI raw</th>
+<th>status</th>
+<th>evaluated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BAZ1B</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CLIP2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LIMK1</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2012-08-22</td>
+</tr>
+<tr>
+<td>STX1A</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ELN</td>
+<td>3.0</td>
+<td>sufficient_evidence</td>
+<td>2012-07-10</td>
+</tr>
+<tr>
+<td>GTF2IRD1</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2012-10-10</td>
+</tr>
+<tr>
+<td>VPS37D</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GTF2I</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2012-08-08</td>
+</tr>
+<tr>
+<td>EIF4H</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CLDN3</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MLXIPL</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BCL7B</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>POM121</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BUD23</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>FZD9</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TBL2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LAT2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>RFC2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ABHD11</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>FKBP6</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>METTL27</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NCF1</td>
+<td>30.0</td>
+<td>recessive_association</td>
+<td>2012-10-10</td>
+</tr>
+<tr>
+<td>TRIM74</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GTF2IRD2</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2013-12-04</td>
+</tr>
+<tr>
+<td>DNAJC30</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TRIM50</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NSUN5</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CLDN4</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TMEM270</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TYW1B</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SPDYE8</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SPDYE9</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SPDYE10</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SPDYE11</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ENSG00000289346</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doc10-正对照检验已知主效基因位置">正对照检验（已知主效基因位置）</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>gene</th>
+<th>in candidates</th>
+<th>rank</th>
+<th>top-10</th>
+<th>consensus</th>
+<th>ClinGen</th>
+<th>pLI</th>
+<th>补偿</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ELN</td>
+<td>✓</td>
+<td>5</td>
+<td>✓</td>
+<td>4.450</td>
+<td>3.0</td>
+<td>2.1429e-14</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GTF2I</td>
+<td>✓</td>
+<td>8</td>
+<td>✓</td>
+<td>3.804</td>
+<td>0.0</td>
+<td>9.9592e-01</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BAZ1B</td>
+<td>✓</td>
+<td>1</td>
+<td>✓</td>
+<td>5.000</td>
+<td>—</td>
+<td>1.0000e+00</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LIMK1</td>
+<td>✓</td>
+<td>3</td>
+<td>✓</td>
+<td>4.792</td>
+<td>0.0</td>
+<td>9.9937e-01</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>正对照 top-10 命中率: <strong>4/4</strong></p>
+<h2 id="doc10-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:961</td>
+<td>BAZ1B</td>
+<td>5.000</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:2586</td>
+<td>CLIP2</td>
+<td>4.822</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:6613</td>
+<td>LIMK1</td>
+<td>4.792</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:11433</td>
+<td>STX1A</td>
+<td>4.681</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:3327</td>
+<td>ELN</td>
+<td>4.450</td>
+<td>13</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:4661</td>
+<td>GTF2IRD1</td>
+<td>4.358</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:18287</td>
+<td>VPS37D</td>
+<td>4.259</td>
+<td>7</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:4659</td>
+<td>GTF2I</td>
+<td>3.804</td>
+<td>3</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:12741</td>
+<td>EIF4H</td>
+<td>3.245</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:2045</td>
+<td>CLDN3</td>
+<td>2.969</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.845</strong> (&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="doc10-数据源校验">数据源校验</h2>
+<pre><code>合并阶段：所指定 audit 目录中的 run.json / data_checksums.txt；评分阶段：&lt;排名 CSV&gt;.audit.json（或 --audit 指定路径）。</code></pre>
+<h2 id="doc10-权重敏感性分析">⚖️ 权重敏感性分析</h2>
+<ul>
+<li>8 次权重扰动测试 (±1 每个证据列)</li>
+<li>最大排名偏移: 4 位</li>
+<li>扰动导致 Top-3 变化的次数: 4/8</li>
+<li>排名稳健性: <strong>moderate</strong></li>
+</ul>
+<h2 id="doc10-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="doc10-第一候选验证路径-baz1b">第一候选验证路径: BAZ1B</h3>
+<p><strong>证据</strong>: DeepLOF_score=0.94, gnomad_LOEUF=1.0900e-01, gnomad_pLI=1.0000e+00</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤: 1. 用独立 DNA 证据核验缺失是否包含 BAZ1B 2. Western blot 确认蛋白质是否不足（翻译层未补偿） 3. 如果蛋白不足 → 设计 SINEUP-BAZ1B → 细胞模型测试蛋白恢复 4. 如果蛋白正常 → 切换到备选基因（见下）</p>
+<h3 id="doc10-切换策略">切换策略</h3>
+<p>如果 BAZ1B 的蛋白质正常（翻译也补偿了），切换到以下备选: - CLIP2 - LIMK1 - STX1A</p>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 BAZ1B</p>
+<h3 id="doc10-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是以适当对照比较候选基因功能恢复后的表型: - 恢复每个候选基因的表达 - 看哪个恢复表型最好 - 将独立验证结果与调权数据分开，避免循环验证</p>
+</details><details id="file11"><summary>11. data_checksums.txt</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><pre>hgnc_aliases.tsv  b0e18be4d7a6e6a9711d0cb94eba426b8251317798d164c8ba7f3c783c14682f
+clinGen_gene_curation_list_GRCh38.tsv  c888d46dd01797962214496bc8112d62b94fb63faff38851a7f0786b7f604e74
+gnomad_constraint.tsv  78f14346180de3fb552747099d9a34238ca535924418a3596d75f45654837d69
+/Users/leobranch/.codex/worktrees/3a07/09_github_export/03_pipeline/outputs/review_20260919/sources/rna_tissue_consensus.tsv  c49b5b33a076e3b9c1eb4f7d15d063ee936e07045e192ceccfeb9edcf1d90ddb</pre></details><details id="file17"><summary>17. report.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc17-微缺失主效基因筛选-共识排名-consensus-v2">微缺失主效基因筛选 — 共识排名 (consensus v2)</h1>
+<p>Pipeline mode: <strong>Mode B · 增强筛选（排序 + 正对照检验）</strong> · Normalization: <strong>raw</strong> · 19 genes</p>
+<h2 id="doc17-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>95%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution): DeepGenePrior_score, DosaCNV_score</p>
+<p>HPA penalty: per-organ 0.0 above expr&gt;9999.0, capped at 0.0</p>
+<p>排名是候选优先级，不是因果证明或 SINEUP 可行性检验。HI=40 为剂量敏感性反向证据，需人工复核；不与未评估混同。</p>
+<h2 id="doc17-clingen-原始证据">ClinGen 原始证据</h2>
+<table>
+<thead>
+<tr>
+<th>gene</th>
+<th>HI raw</th>
+<th>status</th>
+<th>evaluated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NSD2</td>
+<td>3.0</td>
+<td>sufficient_evidence</td>
+<td>2023-10-25</td>
+</tr>
+<tr>
+<td>FAM193A</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ADD1</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NAT8L</td>
+<td>30.0</td>
+<td>recessive_association</td>
+<td>2016-08-22</td>
+</tr>
+<tr>
+<td>RNF4</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MXD4</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NELFA</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2012-09-06</td>
+</tr>
+<tr>
+<td>ZFYVE28</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>FGFR3</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2011-11-09</td>
+</tr>
+<tr>
+<td>NOP14</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>C4orf48</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LETM1</td>
+<td>0.0</td>
+<td>no_evidence</td>
+<td>2012-02-03</td>
+</tr>
+<tr>
+<td>TNIP2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SH3BP2</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>HAUS3</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GRK4</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MFSD10</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CFAP99</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+<tr>
+<td>POLN</td>
+<td>—</td>
+<td>not_curated</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doc17-正对照检验已知主效基因位置">正对照检验（已知主效基因位置）</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>gene</th>
+<th>in candidates</th>
+<th>rank</th>
+<th>top-10</th>
+<th>consensus</th>
+<th>ClinGen</th>
+<th>pLI</th>
+<th>补偿</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NSD2</td>
+<td>✓</td>
+<td>1</td>
+<td>✓</td>
+<td>8.000</td>
+<td>3.0</td>
+<td>1.0000e+00</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>正对照 top-10 命中率: <strong>1/1</strong></p>
+<h2 id="doc17-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:12766</td>
+<td>NSD2</td>
+<td>8.000</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:16822</td>
+<td>FAM193A</td>
+<td>4.797</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:243</td>
+<td>ADD1</td>
+<td>4.574</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:26742</td>
+<td>NAT8L</td>
+<td>4.141</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:10067</td>
+<td>RNF4</td>
+<td>3.917</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:13906</td>
+<td>MXD4</td>
+<td>3.818</td>
+<td>8</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:12768</td>
+<td>NELFA</td>
+<td>2.428</td>
+<td>4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:29334</td>
+<td>ZFYVE28</td>
+<td>2.362</td>
+<td>9</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:3690</td>
+<td>FGFR3</td>
+<td>1.889</td>
+<td>7</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:16821</td>
+<td>NOP14</td>
+<td>1.817</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.937</strong> (&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="doc17-数据源校验">数据源校验</h2>
+<pre><code>合并阶段：所指定 audit 目录中的 run.json / data_checksums.txt；评分阶段：&lt;排名 CSV&gt;.audit.json（或 --audit 指定路径）。</code></pre>
+<h2 id="doc17-权重敏感性分析">⚖️ 权重敏感性分析</h2>
+<ul>
+<li>8 次权重扰动测试 (±1 每个证据列)</li>
+<li>最大排名偏移: 3 位</li>
+<li>扰动导致 Top-3 变化的次数: 0/8</li>
+<li>排名稳健性: <strong>high</strong></li>
+</ul>
+<h2 id="doc17-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="doc17-第一候选验证路径-nsd2">第一候选验证路径: NSD2</h3>
+<p><strong>证据</strong>: DeepLOF_score=0.94, clinGen_hi_score=3.00, gnomad_LOEUF=1.1900e-01, gnomad_pLI=1.0000e+00</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤: 1. 用独立 DNA 证据核验缺失是否包含 NSD2 2. Western blot 确认蛋白质是否不足（翻译层未补偿） 3. 如果蛋白不足 → 设计 SINEUP-NSD2 → 细胞模型测试蛋白恢复 4. 如果蛋白正常 → 切换到备选基因（见下）</p>
+<h3 id="doc17-切换策略">切换策略</h3>
+<p>如果 NSD2 的蛋白质正常（翻译也补偿了），切换到以下备选: - FAM193A - ADD1 - NAT8L</p>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 NSD2</p>
+<h3 id="doc17-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是以适当对照比较候选基因功能恢复后的表型: - 恢复每个候选基因的表达 - 看哪个恢复表型最好 - 将独立验证结果与调权数据分开，避免循环验证</p>
+</details></main></body></html>

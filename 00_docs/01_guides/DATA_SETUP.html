@@ -1,0 +1,140 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据下载与重新生成</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><nav><a href="PROJECT_INDEX.html">项目资料导航</a><a href="QUICKSTART.html">首次筛选：从这里开始</a></nav><h1>数据下载与重新生成</h1><p class="lead">所有科学数据均在本地准备；仓库只提供源码、配置、说明及网页报告。</p><p class="note">首次使用请先运行 <a href="QUICKSTART.html">快速示例</a>，它会自动下载数据并生成排名。下文面向自定义候选与手工数据准备。</p><h2 id="先选择要做的事">1. 先选择要做的事</h2>
+<p><strong>检查代码 → 无需真实数据；运行筛选 → 准备四份参考表和自己的候选；启动 VCT → 另外准备模型及单细胞数据。</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>目的</th>
+<th>准备内容</th>
+<th>操作入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行工程测试</td>
+<td>Python 3.11、管线依赖；测试现场生成合成输入</td>
+<td>下方第 3 节</td>
+</tr>
+<tr>
+<td>新疾病核心筛选</td>
+<td>HGNC、ClinGen、gnomAD、HPA、候选列表、显式控制清单</td>
+<td>第 2—3 节</td>
+</tr>
+<tr>
+<td>VCT 演示</td>
+<td>SIGnature 源码、SCimilarity 模型、配套矩阵及标签</td>
+<td><a href="VCT_SETUP.html">SIGnature 与 VCT 接入</a></td>
+</tr>
+<tr>
+<td>历史疾病实验</td>
+<td>对应 GEO 原始数据及历史分析环境</td>
+<td>第 4 节；不是默认运行要求</td>
+</tr>
+</tbody>
+</table>
+<p>数据、权重、候选列表和已有排名均不再由 Git/LFS 交付。HTML 中保留的历史数值用于阅读，不是新的实验结果。静态报告配图保留；测试中的合成输入由代码生成。</p>
+<h2 id="核心筛选来源位置与格式">2. 核心筛选：来源、位置与格式</h2>
+<p>所有位置均相对于仓库根目录。先创建 <code>03_pipeline/data/</code> 与 <code>03_pipeline/input/</code>。选择版本后保存下载地址、日期和 SHA256；下面是来源入口，不承诺源站当前版本等于历史快照。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据</th>
+<th>从哪里获得、如何处理</th>
+<th>本地文件和必需字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HGNC 命名</td>
+<td><a href="https://www.genenames.org/help/custom-downloads/">官方自定义下载</a>；下载 TSV，核对并统一表头</td>
+<td><code>03_pipeline/data/hgnc_aliases.tsv</code>：<code>hgnc_id</code>、<code>symbol</code>；建议包含 <code>prev_symbol</code>、<code>alias_symbol</code>、<code>ensembl_gene_id</code></td>
+</tr>
+<tr>
+<td>ClinGen 剂量敏感性</td>
+<td><a href="https://ftp.clinicalgenome.org/">官方 FTP</a>；取 GRCh38 gene curation list，保留注释和表头</td>
+<td><code>03_pipeline/data/clinGen_gene_curation_list_GRCh38.tsv</code>：<code>#Gene Symbol</code>、<code>Haploinsufficiency Score</code>、<code>Triplosensitivity Score</code></td>
+</tr>
+<tr>
+<td>gnomAD 约束</td>
+<td><a href="https://gnomad.broadinstitute.org/downloads">下载页</a>与<a href="https://gnomad.broadinstitute.org/help/constraint">字段说明</a>；历史配置针对 v2.1.1，选择兼容表后保存为 TSV</td>
+<td><code>03_pipeline/data/gnomad_constraint.tsv</code>：<code>gene</code> 或 <code>gene_symbol</code>、<code>pLI</code>、<code>oe_lof_upper</code>；不能直接替换成指标口径不同的新版本</td>
+</tr>
+<tr>
+<td>HPA 组织表达</td>
+<td><a href="https://www.proteinatlas.org/about/download">官方下载页</a>中 Tissue RNA expression consensus；解压 TSV</td>
+<td><code>03_pipeline/data/rna_tissue_consensus.tsv</code>：<code>Gene name</code>、<code>Tissue</code>、<code>nTPM</code></td>
+</tr>
+<tr>
+<td>疾病候选</td>
+<td>根据你确认的疾病文献或已知缺失区间生成，记录区间与基因组版本；不要把旧排名当输入</td>
+<td><code>03_pipeline/input/my_candidates.csv</code>：首行 <code>gene_symbol</code>，随后每行一个候选符号；可加 <code>source</code>、<code>deletion_id</code>、<code>chrom</code>、<code>start</code>、<code>end</code></td>
+</tr>
+<tr>
+<td>控制基因</td>
+<td>根据本次疾病明确选择，每行一个符号；尚未设置时使用空文件</td>
+<td><code>03_pipeline/input/my_controls.txt</code>；或在本次配置中显式设 <code>positive_controls: []</code>。示例配置中的旧控制列表不能直接用于新疾病</td>
+</tr>
+</tbody>
+</table>
+<p><a href="DATA_REQUIREMENTS.json">历史文件指纹清单</a>只登记本地旧快照的大小和 SHA256，便于辨认版本；它不是下载器，也不证明来源正确。若拿不到旧版本，可用明确登记的新版本重新分析，但不能声称逐值复现历史结果。候选清单同样要自行确定，旧清单不入库。</p>
+<h2 id="安装检查与运行">3. 安装、检查与运行</h2>
+<p>在仓库根目录运行。安装脚本会重建同名 <code>.venv/pipeline</code> 环境。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh <span class="at">--pipeline-only</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> scripts/test_pipeline.py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/check_release.py</span></code></pre></div>
+<p>工程测试使用合成输入。<code>check_release.py</code> 默认只检查发布源码完整性，不表示真实数据已经就绪。准备好第 2 节文件后，执行：</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.normalize <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span> input/my_candidates.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/normalized.csv</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.merge_evidence <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--normalized</span> outputs_repro/my_run/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/evidence.parquet <span class="at">--audit</span> outputs_repro/my_run/audit</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.consensus_v2 <span class="dt">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evidence</span> outputs_repro/my_run/evidence.parquet <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> rank <span class="at">--controls</span> input/my_controls.txt <span class="dt">\</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/ranked.csv <span class="at">--report</span> outputs_repro/my_run/report.md</span></code></pre></div>
+<p>每次使用新的运行目录，不覆盖旧结果。该示例未接入 AI 分数，不应期待与旧的含 AI 排名完全一致；如另行准备 AI 表，先阅读<a href="../../03_pipeline/docs/reference/index.html">技术参考</a>的输入契约，再传 <code>--ai-scores</code>。DeepLOF 的正式替换和科学核对尚未完成，不能把已有代理分数描述成已运行该模型。</p>
+<p><code>python3 scripts/check_release.py --with-data</code> 检查上述四份参考表；候选路径、字段有效性与匹配问题由实际命令检查。<code>--with-vct-data</code> 另查 VCT 演示资源；<code>--with-optional-data</code> 检查历史 GEO/GEARS 的指定文件。存在性检查均不等于科学复现。</p>
+<h2 id="历史与可选数据">4. 历史与可选数据</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>用途</th>
+<th>获取与生成方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Williams 单细胞</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE283473">GEO GSE283473</a>，GSM8663068—GSM8663073；原始文件放 <code>02_disease-williams/01_rawdata/</code>，按<a href="../../02_disease-williams/docs/index.html">Williams 说明</a>准备样本布局，再运行该目录保留的预处理脚本。<code>processed.h5ad</code> 不随仓库提供</td>
+</tr>
+<tr>
+<td>22q11.2 历史实验</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE244005">GEO GSE244005</a>，GSM7804653、GSM7804654；放 <code>01_disease-22q11.2/data/</code>，见<a href="../../01_disease-22q11.2/docs/index.html">历史说明</a></td>
+</tr>
+<tr>
+<td>GENCODE / 可选 CNV</td>
+<td><a href="https://www.gencodegenes.org/human/release_44.html">GENCODE human release 44</a>的 GRCh38 basic GTF，保存为 <code>03_pipeline/data/gencode.v44.basic.annotation.gtf.gz</code>；GEO 六文件的具体布局见<a href="../../03_pipeline/docs/reference/index.html">技术参考</a>。自动 CNV 开发暂停，不是核心筛选前置步骤</td>
+</tr>
+<tr>
+<td>流行病学数据与图</td>
+<td>见<a href="../../06_epidemiology/docs/index.html">流行病学说明</a>中的来源和生成脚本；表格本地准备，仓库保留脚本、HTML 和静态图</td>
+</tr>
+</tbody>
+</table>
+<p>历史 CellOracle 环境和部分输入来源仍待补齐。此次发布整理不构成这些实验的重新运行或完整复现。</p>
+</main></body></html>

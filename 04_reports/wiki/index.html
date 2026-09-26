@@ -1,0 +1,1222 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>wiki 文档盘点</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><h1>wiki 文档盘点</h1><p class="lead">先看当前工作提纲，再使用 Model、Document 和 Contribution 草稿；尚未定稿。</p><h2 id="overview">1. 结论与阅读顺序</h2><ul><li>所有原文、数字、引文和历史建议均保留；本次整理不等同重新核实文献，也不把旧建议当成实施授权。</li><li>正文按需展开；当前代码使用方式以 03_pipeline/docs/index.html 和工具现行 README 为准。</li><li>旧稿中的测试数量、控制基因命中率和来源结论有版本限制。四份旧 HTML 保留为历史呈现，当前阅读以此页和 README 内容为入口。</li></ul><h2 id="inventory">2. 文件盘点</h2><table><thead><tr><th>编号</th><th>文件</th><th>作用</th><th>后续价值</th><th>处理</th></tr></thead><tbody><tr><td>1</td><td><a href="wiki_Model_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.html">wiki_Model_页面大纲.html</a></td><td>历史 wiki_Model_页面大纲 草稿的 HTML 呈现</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>2</td><td><a href="wiki_Document_%E6%A1%86%E6%9E%B6.html">wiki_Document_框架.html</a></td><td>历史 wiki_Document_框架 草稿的 HTML 呈现</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>3</td><td><a data-local-only-href="wiki_Contribution_%E9%9D%B6%E7%82%B9%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF.md" title="本地保留的来源文件，不随公开仓库发布">wiki_Contribution_靶点筛选管线.md</a></td><td>贡献章节英文草稿，需证据核验后定稿</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>4</td><td><a data-local-only-href="wiki_Document_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.md" title="本地保留的来源文件，不随公开仓库发布">wiki_Document_页面大纲.md</a></td><td>历史 wiki_Document_页面大纲 草稿正文</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>5</td><td><a data-local-only-href="README.md" title="本地保留的来源文件，不随公开仓库发布">README.md</a></td><td>Wiki 当前工作提纲；Model/Document/Tool 尚未定稿</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>6</td><td><a href="wiki_Document_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.html">wiki_Document_页面大纲.html</a></td><td>历史 wiki_Document_页面大纲 草稿的 HTML 呈现</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>7</td><td><a data-local-only-href="wiki_Model_%E6%A1%86%E6%9E%B6.md" title="本地保留的来源文件，不随公开仓库发布">wiki_Model_框架.md</a></td><td>历史 wiki_Model_框架 草稿正文</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>8</td><td><a data-local-only-href="wiki_Document_%E6%A1%86%E6%9E%B6.md" title="本地保留的来源文件，不随公开仓库发布">wiki_Document_框架.md</a></td><td>历史 wiki_Document_框架 草稿正文</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>9</td><td><a data-local-only-href="wiki_Model_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.md" title="本地保留的来源文件，不随公开仓库发布">wiki_Model_页面大纲.md</a></td><td>历史 wiki_Model_页面大纲 草稿正文</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr><tr><td>10</td><td><a href="wiki_Model_%E6%A1%86%E6%9E%B6.html">wiki_Model_框架.html</a></td><td>历史 wiki_Model_框架 草稿的 HTML 呈现</td><td>项目历史、Wiki 引用、方法依据或设计对照</td><td>原位保留完整来源；增加 HTML 导读和 agent 分节索引</td></tr></tbody></table><h2 id="sources">3. 完整历史记录</h2><details id="file3"><summary>3. wiki_Contribution_靶点筛选管线.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><p><strong>Title: An evidence-guided strategy for target prioritization and virtual perturbation</strong></p>
+<p><strong>Outline:</strong> We developed a gene-prioritization pipeline and a complementary virtual perturbation tool to support target selection and mechanistic exploration for our iGEM project’s SINEUP-based dosage-restoration experiments.</p>
+<p><strong>Advance:</strong> Chromosomal microdeletions can affect multiple genes, making experimental target selection challenging. Our pipeline integrates ClinGen dosage-sensitivity evidence, gnomAD loss-of-function constraint metrics, and optional DeepLOF predictions into an interpretable ranking, with tissue-expression context, traceable evidence, and robustness checks. Developed using Williams–Beuren syndrome and applied to Wolf–Hirschhorn syndrome, it ranked NSD2 first among 19 WHS candidates in our reviewed analysis.</p>
+<p>For downstream exploration, VirtualCellTool allows users to simulate gene downregulation or upregulation where suitable single-cell data and gene coverage are available. Its CIPHER-based linear-response model and baseline comparisons provide interactive views of predicted expression changes and cell-type response patterns. These outputs help generate mechanistic hypotheses and identify possible experimental readouts. They remain separate from the genetic-evidence ranking and do not establish SINEUP-mediated protein restoration or functional rescue.</p>
+<p>Together, these tools connect evidence-guided candidate selection with exploratory perturbation analysis and wet-lab planning. Other iGEM teams can reuse the prioritization workflow for their own human microdeletion candidates and, where appropriate data are available, use virtual perturbation to develop testable hypotheses.</p>
+<p><strong>Process:</strong> Known deletion interval or candidate gene list → gene identification and standardization → evidence integration and prioritization → optional virtual perturbation and visualization → mechanistic hypotheses and experimental planning → wet-lab validation</p>
+<hr />
+<p>撰写依据（截至 2026-09-22；不属于英文正文）：<a data-local-only-href="../PROJECT_LOG.md" title="本地保留的来源文件，不随公开仓库发布">最新项目日志</a>、<a data-local-only-href="../../00_docs/03_history/MINIMAL_ROBUST_CORE.md" title="本地保留的来源文件，不随公开仓库发布">最小核心与实现范围</a>、<a data-local-only-href="../%E7%AE%A1%E7%BA%BF%E6%96%87%E6%A1%A3/%E7%AD%9B%E9%80%89%E9%80%BB%E8%BE%91%E5%A4%8D%E6%A0%B8%E4%B8%8E%E4%BF%AE%E5%A4%8D_2026-09-19.md" title="本地保留的来源文件，不随公开仓库发布">筛选逻辑复核与修复</a>、<a data-local-only-href="../../03_pipeline/outputs/review_20260919/whs/report.md" title="本地保留的来源文件，不随公开仓库发布">WHS 复核运行报告</a>、<a href="../../05_virtual_cell/README.md">VirtualCellTool 当前说明</a>、<a data-local-only-href="../../05_virtual_cell/docs/HANDOFF_v3.md">VirtualCellTool 功能记录</a>。流程末端表示后续验证方向，不宣称已经完成湿实验验证；模拟扰动为可选的机制探索环节，不代表已实现自动组合筛选、WHS/NSD2 扰动验证或 SINEUP 疗效预测。</p>
+</details><details id="file4"><summary>4. wiki_Document_页面大纲.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc4-igem-wiki-document-页面大纲工具说明书">iGEM Wiki — Document 页面大纲（工具说明书）</h1>
+<blockquote>
+<p><strong>历史操作说明（标注于 2026-09-24，CR-042）</strong>：本文版本/时间为 2026-09-14 Wiki Document 草稿（未标版本号）。设计、实验和报告正文保留，适用于理解当时过程，不作为当前安装、启动或验收指令；旧 SIGnature venv、derived/tools 路径、uv 安装及测试命令仅为历史记录，请勿直接沿用。当前安装以<a href="../../README.md">仓库 README</a>为准，管线操作见<a href="../../03_pipeline/README.md">管线 README</a>与<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>，网页启动见<a href="../../05_virtual_cell/README.md">工具 README</a>。历史测试数字不代表当前版本。</p>
+</blockquote>
+<blockquote>
+<p><strong>页面主题</strong>：筛选管线 + VirtualCellTool 的<strong>使用说明书</strong>（README 风格） <strong>起草日期</strong>：2026-09-14 <strong>项目状态</strong>：未完全开发（本大纲标注每节的实际完成度） <strong>读者假设</strong>：会跑命令行、有单细胞/遗传学基础的下一位队员或外部复用者</p>
+</blockquote>
+<p><strong>状态标记</strong></p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>【✓ 照抄即可】</td>
+<td>现有 README/文档已有可搬内容</td>
+</tr>
+<tr>
+<td>【◐ 需重写】</td>
+<td>有素材但需改写成说明文体/补步骤</td>
+</tr>
+<tr>
+<td>【○ 待补】</td>
+<td>功能未完成，先留占位</td>
+</tr>
+</tbody>
+</table>
+<p><strong>语言建议</strong>：iGEM 评审为英文，<strong>正文最终需英文</strong>。命令与参数名保持原样不译。</p>
+<p><strong>重要前提</strong>：说明书写给”没参与开发的人”。当他们卡住时，<strong>文档的责任，不是他们的</strong>。每步都要写”预期看到什么”。</p>
+<hr />
+<h2 id="doc4-页面定位与结构">0. 页面定位与结构</h2>
+<p><strong>建议英文标题</strong>：<code>Documentation — Microdeletion Gene Prioritization Pipeline &amp; VirtualCellTool</code></p>
+<p><strong>要写什么</strong> - 本页是<strong>两个人的工具</strong>的说明书：① 筛选管线（Python CLI）② VirtualCellTool（交互式网页） - 两者的关系图：管线输出 <code>ranked_*.csv</code> → 作为 VirtualCellTool 的输入基因列表 → 输出机制假设 → 回到实验设计 - 导航：每节开头一句”读完这节你会得到什么” - 版本对应关系（避免读者拿到不匹配的组合）</p>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-工具概览tldr">1. 工具概览（TL;DR）</h2>
+<p><strong>建议英文标题</strong>：<code>1. Overview</code></p>
+<p><strong>要写什么</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>筛选管线</th>
+<th>VirtualCellTool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一句话</td>
+<td>给一串基因，按遗传学证据排出优先级</td>
+<td>给一个基因，预测扰动后的细胞反应</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>Python CLI（<code>python -m src.*</code>）</td>
+<td>FastAPI 网页（localhost:8377）</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>HGNC 基因符号列表 / 缺失区间坐标</td>
+<td>基因名 + 数据集选择</td>
+</tr>
+<tr>
+<td>输出</td>
+<td><code>candidates_ranked*.csv</code> + <code>report*.md</code></td>
+<td>交互图表（预测 / 对照组 / 位移）</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>秒级</td>
+<td>秒级（首次启动 6.2s）</td>
+</tr>
+<tr>
+<td>是否需要 GPU</td>
+<td>否</td>
+<td>否（CPU 可跑）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>五分钟决策表</strong>：你想做什么 → 用哪个工具 → 跳到第几节</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-系统要求与环境">2. 系统要求与环境</h2>
+<p><strong>建议英文标题</strong>：<code>2. Requirements</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="doc4-筛选管线">2.1 筛选管线</h3>
+<ul>
+<li>Python 3.11；依赖通过 <code>uv</code> 管理（<strong>不要用系统 Python，不要 pip install</strong>）</li>
+<li>依赖：pandas / pyarrow / pyyaml / numpy / requests；测试需 pytest</li>
+<li>磁盘：数据源约数百 MB（<code>data/</code> 不入库）</li>
+<li>无需网络（数据源预先下载）</li>
+</ul>
+<h3 id="doc4-virtualcelltool">2.2 VirtualCellTool</h3>
+<ul>
+<li>解释器固定为同级 SIGnature 项目的 venv：<code>derived/tools/SIGnature/.venv/bin/python</code>（Python 3.11 + torch/captum/scanpy/fastapi/umap-learn/plotly）</li>
+<li>内存：<strong>重要</strong>——见下方”已知陷阱”</li>
+<li>磁盘：CIPHER 缓存 <code>cipher_pbmc.npz</code> 105M / <code>cipher_ms.npz</code> 104M / <code>cipher_ws.npz</code> 12M</li>
+<li>端口：8377</li>
+</ul>
+<p><strong>要写的”已知陷阱”表（强烈建议保留，能救下一个人的一天）</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>陷阱</th>
+<th>后果</th>
+<th>规避</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表达式矩阵被稠密化</td>
+<td>ws 数据集 96969×28231 float64 ≈ <strong>21.9 GB</strong> → OOM/swap 卡死</td>
+<td>全程保持 CSR 稀疏，只在 5000 HVG 子矩阵上 dense</td>
+</tr>
+<tr>
+<td>用系统 Python / pip</td>
+<td>依赖冲突/权限报错</td>
+<td>只用指定 venv</td>
+</tr>
+<tr>
+<td>CIPHER 缓存字段不全</td>
+<td>每次启动全量重算（数秒～数十秒）</td>
+<td>缓存必须含 <code>gene_list/ctrl_mean/Sigma/hvg_idx/full_mean</code></td>
+</tr>
+<tr>
+<td>用 <code>file://</code> 打开 index.html</td>
+<td>页面静默失败（API 不可用）</td>
+<td>必须经 <code>http://127.0.0.1:8377</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>状态</strong>：【✓ 照抄即可】（陷阱表来自实际踩坑记录）</p>
+<hr />
+<h2 id="doc4-安装与启动">3. 安装与启动</h2>
+<p><strong>建议英文标题</strong>：<code>3. Installation &amp; Startup</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="doc4-筛选管线-1">3.1 筛选管线</h3>
+<div class="sourceCode" id="doc4-cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc4-cb1-1"><a href="#doc4-cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 在仓库根目录执行；只运行合成测试可跳过 git lfs pull</span></span>
+<span id="doc4-cb1-2"><a href="#doc4-cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> lfs pull</span>
+<span id="doc4-cb1-3"><a href="#doc4-cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh <span class="at">--pipeline-only</span></span>
+<span id="doc4-cb1-4"><a href="#doc4-cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> scripts/test_pipeline.py</span>
+<span id="doc4-cb1-5"><a href="#doc4-cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据来源见 03_pipeline/README.md 的“数据从哪里获得”</span></span></code></pre></div>
+<h3 id="doc4-virtualcelltool-1">3.2 VirtualCellTool</h3>
+<div class="sourceCode" id="doc4-cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc4-cb2-1"><a href="#doc4-cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> derived/tools/VirtualCellTool</span>
+<span id="doc4-cb2-2"><a href="#doc4-cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./启动VirtualCellTool.command</span>          <span class="co"># 或双击</span></span>
+<span id="doc4-cb2-3"><a href="#doc4-cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期输出：🚀 启动… / ✅ 服务已在运行 / 🌐 打开 http://127.0.0.1:8377</span></span>
+<span id="doc4-cb2-4"><a href="#doc4-cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 浏览器打开 http://127.0.0.1:8377</span></span>
+<span id="doc4-cb2-5"><a href="#doc4-cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 停止：pkill -f &quot;web/app.py&quot;</span></span></code></pre></div>
+<ul>
+<li><strong>每步写”预期看到什么”</strong>（成功信号 vs 失败信号）</li>
+<li>冷启动 6.2s；切换数据集为懒加载（首次切 ws 约 5s）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-快速上手最小可行示例">4. 快速上手（最小可行示例）</h2>
+<p><strong>建议英文标题</strong>：<code>4. Quick Start — A Minimal Working Example</code></p>
+<p><strong>要写什么</strong>：一条完整的端到端路径，读者照抄就能跑出结果。</p>
+<div class="sourceCode" id="doc4-cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="doc4-cb3-1"><a href="#doc4-cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1 准备候选（WBS 7q11.23 区间示例）</span></span>
+<span id="doc4-cb3-2"><a href="#doc4-cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
+<span id="doc4-cb3-3"><a href="#doc4-cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;STX1A\nELN\nBAZ1B\nGTF2I\n&quot;</span> <span class="op">&gt;</span> input/candidates.csv</span>
+<span id="doc4-cb3-4"><a href="#doc4-cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc4-cb3-5"><a href="#doc4-cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2 归一化 + 合并证据</span></span>
+<span id="doc4-cb3-6"><a href="#doc4-cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="at">--input</span> input/candidates.csv <span class="at">--out</span> data/normalized.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv</span>
+<span id="doc4-cb3-7"><a href="#doc4-cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="at">--normalized</span> data/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
+<span id="doc4-cb3-8"><a href="#doc4-cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="at">--audit</span> outputs/audit</span>
+<span id="doc4-cb3-9"><a href="#doc4-cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc4-cb3-10"><a href="#doc4-cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3 排序</span></span>
+<span id="doc4-cb3-11"><a href="#doc4-cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="at">--evidence</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/evidence.parquet <span class="dt">\</span></span>
+<span id="doc4-cb3-12"><a href="#doc4-cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ai-scores</span> outputs/ai_scores.csv <span class="at">--config</span> config/pipeline.yaml <span class="at">--mode</span> auto <span class="dt">\</span></span>
+<span id="doc4-cb3-13"><a href="#doc4-cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/candidates_ranked_v2.csv <span class="at">--report</span> outputs/<span class="op">&lt;</span>主题<span class="op">&gt;</span>/report_v2.md</span>
+<span id="doc4-cb3-14"><a href="#doc4-cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="doc4-cb3-15"><a href="#doc4-cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4 看结果 → 预期：CSV 按 consensus_score 降序</span></span>
+<span id="doc4-cb3-16"><a href="#doc4-cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5 用 VirtualCellTool 看机制 → 把基因名粘进网页搜索框</span></span></code></pre></div>
+<ul>
+<li>每步给出<strong>预期输出片段</strong>（复制真实输出，不要写”跑完即可”）</li>
+<li>加入一个<strong>截图占位</strong>（<code>[Figure: 快速上手结果示例]</code>）</li>
+</ul>
+<p><strong>状态</strong>：【◐ 需重写】（命令已准确，需补预期输出与截图）</p>
+<hr />
+<h2 id="doc4-输入准备">5. 输入准备</h2>
+<p><strong>建议英文标题</strong>：<code>5. Preparing Your Inputs</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="doc4-候选基因列表">5.1 候选基因列表</h3>
+<ul>
+<li>格式：每行一个 HGNC 基因符号（<code>input/candidates.csv</code>）</li>
+<li>符号会自动经 HGNC 别名表解析为 HGNC ID 主键（<strong>支持旧符号</strong>，如 WHSC1→NSD2）</li>
+<li>正对照文件：<code>input/controls_wbs.txt</code> / <code>controls_whs.txt</code></li>
+</ul>
+<h3 id="doc4-缺失区间坐标可选">5.2 缺失区间坐标（可选）</h3>
+<ul>
+<li>若只有区间坐标：用 <code>src/cnv/</code> 工作流从 GTF 提取区间内基因</li>
+<li><strong>重要限制</strong>：scRNA-seq CNV caller 对 &lt;3 Mb focal CNV 灵敏度极低 → 用已知临床区间提取基因是正确策略</li>
+</ul>
+<h3 id="doc4-数据源准备">5.3 数据源准备</h3>
+<ul>
+<li><a href="../../03_pipeline/README.md#data-sources">管线 README 数据来源</a>列出四类来源入口、实际文件名、字段及核实限制；实际输入 checksum 由运行审计记录</li>
+<li>checksum 校验步骤</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-配置参考">6. 配置参考</h2>
+<p><strong>建议英文标题</strong>：<code>6. Configuration Reference</code></p>
+<p><strong>要写什么</strong>：<code>config/pipeline.yaml</code> 的逐项说明表——<strong>全项目最实用的一张表</strong>。</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>配置项</th>
+<th>取值</th>
+<th>默认</th>
+<th>含义</th>
+<th>改它会怎样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>consensus_v2.normalize</code></td>
+<td><code>raw</code> / <code>rank</code></td>
+<td><code>raw</code></td>
+<td>证据归一化方式</td>
+<td><code>rank</code> 在小样本下有伪影（曾让 pLI=0.002 的基因排 #1）</td>
+</tr>
+<tr>
+<td><code>consensus_v2.hpa_penalty</code>（cap / per_organ_weight）</td>
+<td>数值</td>
+<td><code>0.0</code></td>
+<td>HPA 器官惩罚</td>
+<td>非 0 会错杀正对照（STX1A/ELN/GTF2I）</td>
+</tr>
+<tr>
+<td><code>consensus_v2.evidence.*.weight</code></td>
+<td>数值</td>
+<td>见文件</td>
+<td>各证据源权重</td>
+<td>直接影响排名</td>
+</tr>
+<tr>
+<td><code>pipeline_mode</code></td>
+<td><code>auto</code> / 四 mode</td>
+<td><code>auto</code></td>
+<td>运行模式</td>
+<td>见 §7</td>
+</tr>
+<tr>
+<td><code>tuning.enabled</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>LOO 权重调优</td>
+<td>对照数 &lt;3 时应保持关闭</td>
+</tr>
+<tr>
+<td><code>tuning.positive_controls</code></td>
+<td>基因列表</td>
+<td>TBX1/ELN…</td>
+<td>调优用的已知主效基因</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>每个权重的<strong>来源依据</strong>需注明（见图表/局限，属于待补项）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】（需从 config 逐项抄写并补依据）</p>
+<hr />
+<h2 id="doc4-运行模式">7. 运行模式</h2>
+<p><strong>建议英文标题</strong>：<code>7. Running Modes</code></p>
+<p><strong>要写什么</strong>：四种模式的”什么时候用哪个”决策表。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Mode</th>
+<th>名称</th>
+<th>场景</th>
+<th>输出差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validate</code></td>
+<td>A 验证</td>
+<td>主效基因已确定（如 WHS 的 NSD2）</td>
+<td>验证报告面板（ClinGen/pLI/SINEUP 靶向条件表）</td>
+</tr>
+<tr>
+<td><code>rank</code></td>
+<td>B 增强筛选</td>
+<td>有争议候选、有正对照</td>
+<td>排序 + 正对照检验表</td>
+</tr>
+<tr>
+<td><code>exploratory</code></td>
+<td>D 探索</td>
+<td>全新 CNV、无任何证据</td>
+<td>探索声明，<strong>不给实验建议</strong></td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>自动（默认）</td>
+<td>不确定时</td>
+<td>按输入丰富度自动选择</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>每个 mode 给一条<strong>完整命令</strong> + 一段<strong>真实输出节选</strong></li>
+<li>⚠️ 注意：代码支持 <code>full</code>（Mode C 全栈筛选，排序 + 补偿集成），README 表中应包含</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-输出解读">8. 输出解读</h2>
+<p><strong>建议英文标题</strong>：<code>8. Understanding the Output</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="doc4-产物位置">8.1 产物位置</h3>
+<ul>
+<li>产物按主题归档：<code>outputs/{wbs,whs,mode,cnv}/</code>（<strong>不在根目录</strong>）</li>
+<li>索引：<code>outputs/README.md</code></li>
+<li>审计：<code>outputs/audit/</code>（<code>run.json</code> + <code>data_checksums.txt</code>）</li>
+</ul>
+<h3 id="doc4-排名-csv-字段表逐列说明">8.2 排名 CSV 字段表（逐列说明）</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>怎么读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rank</code></td>
+<td>最终排名</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>hgnc_id</code> / <code>input_symbol</code></td>
+<td>主键 / 输入符号</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clinGen_hi_score</code></td>
+<td>单倍剂量不足评分</td>
+<td>3=明确、30=不确定、40=无证据</td>
+</tr>
+<tr>
+<td><code>gnomad_pLI</code></td>
+<td>功能缺失不耐受</td>
+<td><strong>高</strong>=剂量敏感</td>
+</tr>
+<tr>
+<td><code>gnomad_LOEUF</code></td>
+<td>观察/期望 LOF 比</td>
+<td><strong>低</strong>=剂量敏感（与 pLI 反直觉，重点说明）</td>
+</tr>
+<tr>
+<td><code>DeepLOF_score</code></td>
+<td>AI 层分数（可选）</td>
+<td>高=预测剂量敏感</td>
+</tr>
+<tr>
+<td><code>compensation_ratio</code> / <code>compensation_class</code></td>
+<td>患者/对照 mRNA 比</td>
+<td>&gt;1=过补偿，<code>unreliable</code>=表达过低不可判</td>
+</tr>
+<tr>
+<td><code>consensus_score</code></td>
+<td>加权总分</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>contrib_*</code></td>
+<td>各证据源贡献分解</td>
+<td><strong>排查”为什么它排第一”用这一列</strong></td>
+</tr>
+<tr>
+<td><code>hpa_penalty</code></td>
+<td>惩罚项</td>
+<td>v2.2 起为 0</td>
+</tr>
+<tr>
+<td><code>borda_score</code> / <code>borda_rank</code></td>
+<td>Borda 对照排名</td>
+<td>与加性排序不一致时提示权重敏感</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>特别说明：<strong>LOEUF 低才好</strong>、<strong>pLI 高才好</strong>——这是最常被误读的一对</li>
+</ul>
+<h3 id="doc4-验证报告怎么看mode-ab">8.3 验证报告怎么看（Mode A/B）</h3>
+<ul>
+<li>正对照检查表的五个维度：in_candidates / rank / top10 / 共识 / 证据</li>
+<li>“正对照没进 Top10 意味着什么”</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-virtualcelltool-使用手册">9. VirtualCellTool 使用手册</h2>
+<p><strong>建议英文标题</strong>：<code>9. VirtualCellTool — User Manual</code></p>
+<p><strong>要写什么</strong>：按界面从上到下写，含每类图表的<strong>读图方法</strong>。</p>
+<h3 id="doc4-界面结构">9.1 界面结构</h3>
+<ul>
+<li>顶栏：数据集下拉（3 个）+ 加载状态</li>
+<li>左控制栏：① 选细胞 ② 归因 Top 基因 ③ 选基因 ④ CIPHER 扰动预测 ⑤ 反事实位移 ⑥ GEARS 因果</li>
+<li>右工作区：标签页（UMAP 主图 + 各类结果图）</li>
+<li>底部状态栏：统计摘要</li>
+</ul>
+<h3 id="doc4-三个数据集的语义最容易踩的坑">9.2 三个数据集的语义（<strong>最容易踩的坑</strong>）</h3>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>数据集</th>
+<th>细胞数</th>
+<th>分组语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pbmc</code></td>
+<td>PBMC 2700</td>
+<td>2,700</td>
+<td><strong>细胞类型</strong>（B/T/NK/单核/树突）</td>
+</tr>
+<tr>
+<td><code>ms</code></td>
+<td>MS 少突胶质</td>
+<td>17,799</td>
+<td><strong>病健分组</strong>（MS / normal）</td>
+</tr>
+<tr>
+<td><code>ws</code></td>
+<td>Williams 脑类器官</td>
+<td>96,969</td>
+<td><strong>病健分组</strong>（WS / CTRL）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ ws/ms 的”细胞类型”实际是<strong>病健分组</strong>——读图时别把”WS 响应第一”理解成”某种细胞类型”。</p>
+</blockquote>
+<h3 id="doc4-八类图表的读法">9.3 八类图表的读法</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>图</th>
+<th>怎么读</th>
+<th>常见误读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UMAP 细胞图谱</td>
+<td>点=细胞，近=状态相似；<strong>坐标轴无物理意义</strong></td>
+<td>把簇间距当绝对距离</td>
+</tr>
+<tr>
+<td>CIPHER 双子图</td>
+<td>左=转录组变化（红=目标/绿=上调/蓝=下调）；右=哪个分组最敏感（橙）</td>
+<td>把”上调/下调”当成好坏</td>
+</tr>
+<tr>
+<td>线性基线对照</td>
+<td>彩色条<strong>超出灰线</strong>的部分才是模型增量信号</td>
+<td>忽略基线，直接信模型</td>
+</tr>
+<tr>
+<td>反事实位移（双视图）</td>
+<td>左=全景定位+取景框；右=放大后 ⚫扰动前 → ⭐扰动后</td>
+<td>以为位移小=没效果（实为 UMAP 尺度问题）</td>
+</tr>
+<tr>
+<td>质心距离图</td>
+<td>灰色=扰动前，红=最近的类型；身份是否改变</td>
+<td>—</td>
+</tr>
+<tr>
+<td>表达分布图</td>
+<td>左=UMAP 按表达着色（灰=不表达）；右=分组表达水平</td>
+<td>拿它当”功能重要性”</td>
+</tr>
+<tr>
+<td>归因图</td>
+<td><strong>长度=重要性，颜色只表方向</strong>（橙=推高/紫=推低嵌入）</td>
+<td><strong>把负值当”负面基因”</strong>（最严重的误读）</td>
+</tr>
+<tr>
+<td>GEARS 图</td>
+<td>负对照，标注了域外推断</td>
+<td>把它当有效预测</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc4-推荐分析顺序四步法">9.4 推荐分析顺序（四步法）</h3>
+<ol type="1">
+<li>🎨 <strong>表达分布</strong> —— 先确认基因在该组织是否表达（<strong>排除组织特异性问题</strong>）</li>
+<li>📉/📈 <strong>CIPHER</strong> —— 转录组效应 + 最敏感分组</li>
+<li>📏 <strong>线性基线</strong> —— 诚实性对照</li>
+<li>🎯 <strong>位移 + 质心</strong> —— 细胞身份能否被推回对照状态</li>
+</ol>
+<h3 id="doc4-已知边界写进说明书避免误用">9.5 已知边界（写进说明书，避免误用）</h3>
+<ul>
+<li>CIPHER 只覆盖 Top 5000 HVG；区间外基因按钮会灰掉并给出相近基因建议</li>
+<li>CIPHER 对表达稀疏基因不敏感（实测 CD3D/CD3E 未命中）</li>
+<li>GEARS 对微缺失候选基因 0 覆盖——仅作负对照</li>
+</ul>
+<p><strong>状态</strong>：【✓ 照抄即可】（来自 VirtualCellTool/README.md 与 ARCHITECTURE_v3.md）</p>
+<hr />
+<h2 id="doc4-端到端示例完整案例">10. 端到端示例（完整案例）</h2>
+<p><strong>建议英文标题</strong>：<code>10. Worked Example — WBS 7q11.23</code></p>
+<p><strong>要写什么</strong>：用一个真实案例串起两个工具。</p>
+<ol type="1">
+<li>输入：WBS 区间 35 基因</li>
+<li>管线运行（命令 + 输出节选）</li>
+<li>结果解读：STX1A #1 / ELN #3 / GTF2I #9 …</li>
+<li>拿到 VirtualCellTool 里逐个查：
+<ul>
+<li>GTF2I 过表达 → |Δ|max = 10.08，全部落在神经发育/突触基因</li>
+<li>ELN → |Δ|max = 0.006（脑内无效应，组织特异性）</li>
+</ul></li>
+<li>综合结论：GTF2I 优先级建议上调；ELN 需换组织验证</li>
+<li><strong>明确写出这次分析得出了什么、没得出什么</strong></li>
+</ol>
+<p><strong>状态</strong>：【◐ 需重写】（数据齐全，需整理成叙事）</p>
+<hr />
+<h2 id="doc4-故障排查">11. 故障排查</h2>
+<p><strong>建议英文标题</strong>：<code>11. Troubleshooting</code></p>
+<p><strong>要写什么</strong>：症状 → 原因 → 解决 三段式表格。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>症状</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动卡住/无响应</td>
+<td>大数据集被稠密化（内存不足）</td>
+<td>确认代码保持稀疏；默认用 pbmc</td>
+</tr>
+<tr>
+<td>页面白屏</td>
+<td>服务未就绪或经 <code>file://</code> 打开</td>
+<td>等就绪；改用 <code>http://127.0.0.1:8377</code></td>
+</tr>
+<tr>
+<td>每次启动都很慢</td>
+<td>CIPHER 缓存字段不全 → 全量重算</td>
+<td>检查缓存 5 个字段</td>
+</tr>
+<tr>
+<td>切换数据集后结果像没变</td>
+<td>前端请求未带 <code>ds</code> 参数</td>
+<td>已在 v3.1 修复；确认版本 ≥ v3.1</td>
+</tr>
+<tr>
+<td>基因按钮灰掉</td>
+<td>不在 Top 5000 HVG</td>
+<td>用提示的相近基因，或换高变基因</td>
+</tr>
+<tr>
+<td>测试预检提示依赖缺失或版本不符</td>
+<td>统一环境不完整</td>
+<td>按仓库 README 重建 pipeline 环境，再运行标准测试入口</td>
+</tr>
+<tr>
+<td>排名与上次不同</td>
+<td>配置被改（权重/归一化）</td>
+<td>对比 <code>config/pipeline.yaml</code> 与 audit 产物</td>
+</tr>
+</tbody>
+</table>
+<p><strong>状态</strong>：【✓ 照抄即可】（陷阱表已有）</p>
+<hr />
+<h2 id="doc4-版本与变更记录">12. 版本与变更记录</h2>
+<p><strong>建议英文标题</strong>：<code>12. Versions &amp; Changelog</code></p>
+<p><strong>要写什么</strong> - 两套工具的版本对应表（避免读者混用） - 筛选管线：<strong>v2.2</strong>（代码自述） - VirtualCellTool：<strong>v3.3</strong>，tag <code>v1.0-scimilarity</code> / <code>v2.0-gears</code> / <code>v3.1-fixed</code> / <code>v3.2-zoom</code> / <code>v3.3-viz</code> - 完整变更史指向 <code>outputs/reports/PROJECT_LOG.md</code>（条目 #0–#15） - <strong>诚实标注</strong>：筛选管线目录目前<strong>不在任何 git 仓库跟踪范围内</strong>，无独立 tag——引用版本时需写 v2.2 + 快照</p>
+<p><strong>状态</strong>：【✓ 照抄即可】</p>
+<hr />
+<h2 id="doc4-归属与引用">13. 归属与引用</h2>
+<p><strong>建议英文标题</strong>：<code>13. Attribution &amp; Citation</code></p>
+<p><strong>要写什么</strong> - 自有工作 vs 第三方依赖的明确分界（iGEM 归属要求） - 第三方：SCimilarity（Genentech）、Captum、GEARS、scipy/scanpy、ClinGen/gnomAD/HPA/DeepLOF 数据 - 自有：管线四层架构与全部模块、CIPHER 引擎实现、VirtualCellTool 前端与 API、方法学修复（余弦对齐度公式等） - 每条第三方依赖的许可证 + 原始文献 DOI - 引用格式（可参考 <code>ATTRIBUTIONS.md</code>、<code>docs/api/ai_scores.md</code>） - 【○ 待补】本项目的正式引用条目 / DOI / 代码仓库地址</p>
+<p><strong>状态</strong>：【◐ 需重写】（<code>ATTRIBUTIONS.md</code> 已有登记，需整理成表）</p>
+<hr />
+<h2 id="doc4-附录">14. 附录</h2>
+<p><strong>建议英文标题</strong>：<code>14. Appendix</code></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>附录</th>
+<th>内容</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>数据来源与校验记录</td>
+<td>【◐】<a href="../../03_pipeline/README.md#data-sources">README 来源入口</a> + 运行审计；历史快照上游版本仍须核实</td>
+</tr>
+<tr>
+<td>B</td>
+<td>全参数默认值速查表</td>
+<td>【◐】从 <code>pipeline.yaml</code> 抄</td>
+</tr>
+<tr>
+<td>C</td>
+<td>目录结构说明</td>
+<td>【✓】两份 README</td>
+</tr>
+<tr>
+<td>D</td>
+<td>术语表（pLI / LOEUF / HI / SINEUP / CIPHER / 补偿状态…）</td>
+<td>【◐】可参考 <code>outputs/reports/管线文档/名词解释_WBS筛选管线报告.md</code></td>
+</tr>
+<tr>
+<td>E</td>
+<td>API 端点全表（19 个）</td>
+<td>【✓】<code>docs/ARCHITECTURE_v3.md</code> 第三节</td>
+</tr>
+<tr>
+<td>F</td>
+<td>测试与回归说明</td>
+<td>【✓】<code>tests/</code> + <code>tests_e2e_playwright.py</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>状态</strong>：【◐ 待整理】</p>
+<hr />
+<h2 id="doc4-待补清单写正文前需先产出">15. 待补清单（写正文前需先产出）</h2>
+<ul>
+<li>【○】对外发布方式（仓库地址、许可证、DOI）— 影响 §12/§13</li>
+<li>【○】快速上手与端到端示例的<strong>截图</strong>（§4/§10）</li>
+<li>【◐】每个配置权重的来源依据（§6）</li>
+<li>【◐】把 <code>ATTRIBUTIONS.md</code> 整理成归属表（§13）</li>
+<li>【○】英文翻译（全文）</li>
+<li>【◐】确认是否有对外复用的使用者反馈/测试案例（iGEM 很看重”别人真的用了吗”）</li>
+</ul>
+<hr />
+<h2 id="doc4-附写作顺序建议">附：写作顺序建议</h2>
+<ol type="1">
+<li><strong>§2（环境与陷阱）+ §11（排查）</strong> —— 最实用，也最容易写</li>
+<li><strong>§6（配置）+ §8（输出解读）</strong> —— 使用者真正要查的两张表</li>
+<li><strong>§9（VirtualCellTool 手册）</strong> —— 界面与 8 类图表读法</li>
+<li><strong>§4 + §10（示例）</strong> —— 依赖截图，稍后补</li>
+<li>最后 <strong>§12/§13</strong>（依赖对外发布方式）</li>
+</ol>
+</details><details id="file5"><summary>5. README.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc5-wiki-当前写作入口">Wiki 当前写作入口</h1>
+<p>更新日期：2026-09-25。本文是依据现有交付能力整理的工作提纲，尚未定稿。CNV 和另一个项目的合并按负责人决定暂缓。</p>
+<h2 id="doc5-model解释筛选方法">Model：解释筛选方法</h2>
+<ol type="1">
+<li>说明目的：为微缺失区间内的候选基因安排研究优先级。</li>
+<li>按实际流程解释候选标准化、证据合并、评分和报告；AI 分数是可选输入。</li>
+<li>解释证据缺失、身份无法解析、正对照未设置时如何呈现，避免把缺数据写成负证据。</li>
+<li>使用同一配置下的 WBS/WHS 运行实例解释结果与限制。当前 WBS 控制清单为 4 个，旧稿“6/6”不能沿用。</li>
+<li>将历史方法尝试放在开发过程部分，附当时输入、配置和结果来源；工程测试通过不证明科学结论成立。</li>
+</ol>
+<p>实现依据：<a href="../../03_pipeline/README.md">管线 README</a>；工程验证依据：<a data-local-only-href="../../00_docs/04_acceptance/2026-09-25_gene_identity/GENE_ID_REPAIR_2026-09-25.md" title="本地保留的来源文件，不随公开仓库发布">验收说明</a>。评分公式和权重正文仍需逐项对照实际配置与代码，不能直接从旧稿复制。</p>
+<h2 id="doc5-document让下一位队员能够运行">Document：让下一位队员能够运行</h2>
+<ol type="1">
+<li>环境安装、Git LFS 和必需输入，使用<a href="../../README.md">仓库 README</a>的当前命令。</li>
+<li>从候选表开始生成标准化表、证据表、排名与报告；已知区间作为另一入口，无需先运行 CNV 推断。</li>
+<li>换疾病时更换候选、控制清单和输出目录；控制基因必须显式配置，未确定时用 <code>[]</code>。</li>
+<li>说明每份输出怎么看、常见输入错误如何修正、如何判断本次运行成功。</li>
+<li>给出<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>及复现范围。当前独立新环境验收发生在同一台 Mac，不能扩写成跨平台验证。</li>
+</ol>
+<h2 id="doc5-tool说明网页操作与解释边界">Tool：说明网页操作与解释边界</h2>
+<ol type="1">
+<li>按<a href="../../05_virtual_cell/README.md">工具 README</a>启动网页，选择 PBMC、MS 或 Williams 数据集，再选择基因与操作。</li>
+<li>为每张示例图记录数据集、基因、方法、输入参数及结果来源；待实际核对后补图。</li>
+<li>解释 CIPHER 线性响应近似、实验性编码器敏感性探索和 GEARS 的有限覆盖，不承诺治疗效果预测。</li>
+<li>说明从筛选结果选取基因进入工具需要分别操作，不宣称已有自动衔接。</li>
+<li>区分 API 与浏览器验收：当前 API 脚本覆盖 19 路，跳过 GEARS 为 17/19；这不是网页操作已经验收的证明。</li>
+</ol>
+<h2 id="doc5-旧稿与定稿前的缺口">旧稿与定稿前的缺口</h2>
+<p><a data-local-only-href="wiki_Model_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.md" title="本地保留的来源文件，不随公开仓库发布">旧 Model 大纲</a>和<a data-local-only-href="wiki_Document_%E9%A1%B5%E9%9D%A2%E5%A4%A7%E7%BA%B2.md" title="本地保留的来源文件，不随公开仓库发布">旧 Document 大纲</a>保留开发思路，不作为当前运行指令。目录内旧框架、HTML 和大纲中的完成标记只代表起草时状态。<a data-local-only-href="wiki_Contribution_%E9%9D%B6%E7%82%B9%E7%AD%9B%E9%80%89%E7%AE%A1%E7%BA%BF.md" title="本地保留的来源文件，不随公开仓库发布">Contribution 草稿</a>可作为措辞参考，最终仍需核对来源。</p>
+<p>定稿前还要逐项核对科学数字与引用、找齐每张图的可复查产物、完成交付版本的复现和网页操作验收。当前待处理内容见<a data-local-only-href="../../00_docs/03_history/DELIVERY_NEXT_STEPS_2026-09-25.md" title="本地保留的来源文件，不随公开仓库发布">交付任务清单</a>；未找到材料的位置明确写待补，不用旧截图或猜测结果填充。</p>
+</details><details id="file7"><summary>7. wiki_Model_框架.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc7-igem-wiki-model-页面框架">iGEM Wiki — Model 页面框架</h1>
+<blockquote>
+<p>主题：筛选管线的原理与开发过程　｜　正文建议用英文</p>
+</blockquote>
+<hr />
+<h2 id="doc7-页面定位">0. 页面定位</h2>
+<p>说明本页回答什么问题（如何从共缺失的 20–40 个基因中挑出主效靶点），以及与其他页面的引用关系。</p>
+<h2 id="doc7-问题定义">1. 问题定义</h2>
+<p>疾病背景（WBS 7q11.23 / WHS 4p16.3）；为什么必须筛主效基因；治疗策略对靶点的三条约束（剂量不足驱动、上调可挽救、过表达安全）。</p>
+<h2 id="doc7-为什么自建管线而不是直接用现成-ai">2. 为什么自建管线，而不是直接用现成 AI</h2>
+<p>用项目自身的负结果说明必要性：归因与扰动效应 r=0.02、GEARS 对候选基因覆盖 4/41、Nature Methods 2025 基准显示深度模型未超线性基线。结论：改用证据金字塔 + 强制对照。</p>
+<h2 id="doc7-原理四层证据金字塔">3. 原理：四层证据金字塔</h2>
+<p>总览图 + 严格单向的层间关系（下游不可回补上游）。</p>
+<ul>
+<li><strong>3.1 L1 遗传学证据层</strong> —— ClinGen HI/三倍剂量、gnomAD pLI/LOEUF、DeepLOF（可选 AI 层）、HGNC 主键与三值标注</li>
+<li><strong>3.2 L2 验证层</strong> —— scRNA-seq mRNA 补偿状态（ratio 与四种分类），为什么它只做验证不做发现</li>
+<li><strong>3.3 L3 机制假设层</strong> —— VirtualCellTool 五个引擎的分工与定位；为什么选 CIPHER（零训练、上下调对称）；为什么强制并排线性基线</li>
+<li><strong>3.4 被否决的方案</strong> —— 表格列出否决项与理由（AI 直接排序、scRNA-seq CNV 发现、HPA 惩罚项、rank 归一化、CellOracle 当因果引擎）</li>
+<li><strong>3.5 为什么不可回补</strong> —— 回补会重新引入归因偏倚与 mRNA 隐身问题</li>
+</ul>
+<h2 id="doc7-开发过程dbtl-七轮循环">4. 开发过程：DBTL 七轮循环</h2>
+<p>每轮统一写：假设 → 实现 → 测试数据 → 发现 → 下一轮改动。 七轮主题：v1 骨架 / WBS 首跑发现归一化伪影 / raw 修正与 DeepLOF 接入 / v2.1-v2.2 六项优化 / WHS 实证与符号缺口修复 / 六 mode 全验证 / VirtualCellTool 修复与可视化。</p>
+<h2 id="doc7-验证正对照与负对照">5. 验证：正对照与负对照</h2>
+<p>正对照结果（WHS NSD2 #1、WBS 6/6 命中）；负对照设置（线性基线、GEARS 覆盖性检查）；未通过的案例与原因。</p>
+<h2 id="doc7-与湿实验治疗设计的接口">6. 与湿实验/治疗设计的接口</h2>
+<p>三列决策面板（L1 排名 × 补偿状态 × 机制假设）；案例：GTF2I 的排名分歧；进入湿实验的前置条件。</p>
+<h2 id="doc7-局限与未来工作">7. 局限与未来工作</h2>
+<p>表格化呈现局限（翻译层盲区、单基因-多基因错配、mRNA 隐身、组织选择、数据缺口、未验证假设）与对应的未来工作。</p>
+<h2 id="doc7-可复现性">8. 可复现性</h2>
+<p>数据源与 checksum、审计产物、配置驱动、测试命令、代码获取方式。</p>
+<h2 id="doc7-图表清单">9. 图表清单</h2>
+<p>列出全页配图及来源（四层架构图、负结果图、正对照热图、补偿分布、DBTL 时间线、CIPHER 预测示例、ELN 负结果、基线对照、位移图）。</p>
+</details><details id="file8"><summary>8. wiki_Document_框架.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc8-igem-wiki-document-页面框架">iGEM Wiki — Document 页面框架</h1>
+<blockquote>
+<p>主题：筛选管线 + VirtualCellTool 使用说明书　｜　正文建议用英文</p>
+</blockquote>
+<hr />
+<h2 id="doc8-概览">1. 概览</h2>
+<p>两个工具的分工与关系；对比表（形态、输入、输出、耗时）；“想做什么 → 用哪个工具”的导航。</p>
+<h2 id="doc8-系统要求">2. 系统要求</h2>
+<p>两个工具各自的运行环境、依赖、磁盘与端口需求；已知陷阱表（稀疏矩阵不可稠密化、缓存字段完整性、不能用 file:// 打开）。</p>
+<h2 id="doc8-安装与启动">3. 安装与启动</h2>
+<p>分工具的安装命令、启动命令、停止命令；每步写明预期输出。</p>
+<h2 id="doc8-快速上手">4. 快速上手</h2>
+<p>最小可行示例：一串命令从候选基因跑到排名结果，再粘进 VirtualCellTool 查看机制。</p>
+<h2 id="doc8-输入准备">5. 输入准备</h2>
+<p>候选基因列表格式；区间坐标的可选用法；数据源清单与 checksum 校验。</p>
+<h2 id="doc8-配置参考">6. 配置参考</h2>
+<p><code>pipeline.yaml</code> 逐项说明表（归一化方式、HPA 惩罚、各证据源权重、模式、调优开关），并注明每项改动的影响。</p>
+<h2 id="doc8-运行模式">7. 运行模式</h2>
+<p>四种模式（validate / rank / full / exploratory）的场景与输出差异对比表；每个模式配一条命令与输出节选。</p>
+<h2 id="doc8-输出解读">8. 输出解读</h2>
+<p>产物存放位置与归档结构；排名 CSV 逐字段含义表（重点说明 LOEUF 低才对、<code>contrib_*</code> 用于排查）；验证报告怎么看。</p>
+<h2 id="doc8-virtualcelltool-使用手册">9. VirtualCellTool 使用手册</h2>
+<p>界面结构说明；三个数据集的语义（含”细胞类型实为病健分组”的提醒）；八类图表的读法与常见误读；推荐的四步分析顺序；已知边界（HVG 覆盖、稀疏基因不敏感、GEARS 仅作负对照）。</p>
+<h2 id="doc8-端到端示例">10. 端到端示例</h2>
+<p>一个真实案例（WBS 7q11.23）串起两个工具：输入 → 管线排名 → 逐个基因查机制 → 结论（得出了什么、没得出什么）。</p>
+<h2 id="doc8-故障排查">11. 故障排查</h2>
+<p>症状 / 原因 / 解决 三段式表格（启动卡死、页面白屏、启动变慢、切换数据集无效、基因按钮灰掉、测试找不到 pytest、排名与上次不同）。</p>
+<h2 id="doc8-版本与变更">12. 版本与变更</h2>
+<p>两个工具的版本对应关系与 git tag；变更史指向项目日志；说明筛选管线当前无版本控制。</p>
+<h2 id="doc8-归属与引用">13. 归属与引用</h2>
+<p>自有工作与第三方依赖的分界；每条依赖的许可证与文献 DOI；本项目的引用条目。</p>
+<h2 id="doc8-附录">14. 附录</h2>
+<p>数据源清单、参数默认值速查表、目录结构、术语表、API 端点全表、测试与回归说明。</p>
+</details><details id="file9"><summary>9. wiki_Model_页面大纲.md</summary><p>以下保留来源全文；历史陈述和命令不自动代表当前状态。</p><h1 id="doc9-igem-wiki-model-页面大纲">iGEM Wiki — Model 页面大纲</h1>
+<blockquote>
+<p><strong>历史操作说明（标注于 2026-09-24，CR-042）</strong>：本文版本/时间为 2026-09-14 Wiki Model 草稿（未标版本号）。设计、实验和报告正文保留，适用于理解当时过程，不作为当前安装、启动或验收指令；旧 uv 测试命令、旧通过/跳过数量与目录仅为历史记录，请勿直接沿用。当前安装以<a href="../../README.md">仓库 README</a>为准，管线操作见<a href="../../03_pipeline/README.md">管线 README</a>与<a data-local-only-href="../../03_pipeline/docs/TESTING.md" title="本地保留的来源文件，不随公开仓库发布">标准测试流程</a>，网页启动见<a href="../../05_virtual_cell/README.md">工具 README</a>。历史测试数字不代表当前版本。</p>
+</blockquote>
+<blockquote>
+<p><strong>页面主题</strong>：染色体微缺失主效基因筛选管线的<strong>原理与开发过程</strong> <strong>起草日期</strong>：2026-09-14 <strong>项目状态</strong>：未完全开发（本大纲标注每节的实际完成度）</p>
+</blockquote>
+<p><strong>状态标记</strong></p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>【✓ 可落笔】</td>
+<td>数据/代码已就绪，可直接写正文</td>
+</tr>
+<tr>
+<td>【◐ 待整理】</td>
+<td>有原始产出，需要整理成 wiki 语言</td>
+</tr>
+<tr>
+<td>【○ 待补】</td>
+<td>尚未产出，需后续实验/开发</td>
+</tr>
+</tbody>
+</table>
+<p><strong>语言建议</strong>：iGEM 评审为英文，<strong>正文最终需英文</strong>。下方每节给出建议英文小标题，可先写中文草稿再翻译。</p>
+<hr />
+<h2 id="doc9-页面定位">0. 页面定位</h2>
+<p><strong>建议英文标题</strong>：<code>Model — Prioritizing the Causal Gene in a Chromosomal Microdeletion</code></p>
+<p><strong>要写什么</strong> - 一句话说明本页回答什么问题：<em>一条染色体微缺失带走了 20–40 个基因，我们如何找出该用 AAV + RNA binder（SINEUP）去救的那一个？</em> - 本页与项目其他页面的关系（Design / Engineering / Parts / Human Practices 的引用关系） - 对应评分标准：<strong>Model</strong>（建模）+ <strong>Contribution</strong>（可复用工具）</p>
+<p><strong>要避免</strong> - 不要一上来讲代码实现（那是 Document 页的职责） - 不要宣称”我们找到了主效基因”——本项目产出的是<strong>候选优先级</strong>，不是因果证明</p>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="doc9-问题定义">1. 问题定义</h2>
+<p><strong>建议英文标题</strong>：<code>1. Problem Statement</code></p>
+<p><strong>要写什么</strong> - 疾病背景：Williams 综合征（WBS, 7q11.23, ~1.5–1.8 Mb, 26–28 基因）、Wolf-Hirschhorn 综合征（WHS, 4p16.3, ~1.8 Mb, 19 基因） - 为什么需要筛主效基因：微缺失是<strong>连续基因综合征</strong>，但临床上往往有一两个基因承担主要表型（WBS 的 ELN→主动脉瓣上狭窄；WHS 的 NSD2→核心表型） - 治疗策略约束（决定筛选标准）：靶点必须满足 1. <strong>剂量不足驱动</strong>（单倍剂量不足，而非显性负效应） 2. <strong>上调可挽救</strong>（SINEUP 是翻译层增强，不是 CRISPR 修复） 3. <strong>过表达安全</strong>（AAV 递送后的剂量窗口） - 手工筛选不可行的量化理由：区间内 20–40 个基因 × 多数据库证据 × 表型异质性</p>
+<p><strong>可用素材</strong> - <code>outputs/reports/管线文档/管线现状与Williams主效基因筛选实验总结_2026-09-05.md</code> - <code>outputs/reports/microdeletion_prevalence_report.md</code>（发病率） - <code>outputs/reports/管线文档/WHS主效基因NSD2证据链与叙事指南_2026-09-12.md</code>（NSD2 证据链 6 步）</p>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="doc9-为什么必须建模型而不是跑-ai">2. 为什么必须”建模型”而不是”跑 AI”</h2>
+<p><strong>建议英文标题</strong>：<code>2. Why a Purpose-Built Pipeline Instead of an Off-the-Shelf AI Model</code></p>
+<p><strong>这是本页最有说服力的一节</strong>——用项目自身的负结果论证设计必要性。</p>
+<p><strong>要写什么</strong> - <strong>E3/E4 负结果</strong>：SIGnature 归因分数与真实扰动效应 <strong>r = 0.02（p=0.83）</strong>——归因 ≠ 因果 - <strong>E11 覆盖失败</strong>：GEARS（Perturb-seq 训练）对微缺失候选基因 <strong>4/41 覆盖</strong>，且训练于 K562 癌细胞系，对 CNS 神经元双重域外 - <strong>领域级佐证</strong>：Nature Methods 2025 基准（Ahlmann-Eltze et al.）——5 个基础模型 + 2 个深度学习模型在基因扰动转录预测上<strong>均未超过简单线性基线</strong>，存在 mean collapse - <strong>方法论结论</strong>：我们不用”一个 AI 模型给出答案”，改用<strong>证据金字塔 + 强制正对照 + 诚实报负结果</strong></p>
+<p><strong>要避免</strong> - 不要写成”AI 没用”——要写成”我们测试过、量化了它的边界，因此重新设计了架构”（这是 Engineering Success 的叙事）</p>
+<p><strong>可用素材</strong> - <code>outputs/reports/虚拟细胞/AI虚拟细胞扰动响应预测工具调研报告.md</code> - <code>outputs/reports/管线文档/文献调研_虚拟细胞药物效应与基因扰动_2026-09-12.md</code>（含 24 条 DOI） - <code>docs/decisions/</code> ADR</p>
+<p><strong>状态</strong>：【✓ 可落笔】（负结果数据齐全，这是项目的特色资产）</p>
+<hr />
+<h2 id="doc9-核心原理四层证据金字塔">3. 核心原理：四层证据金字塔</h2>
+<p><strong>建议英文标题</strong>：<code>3. Architecture — A Four-Layer Evidence Pyramid</code></p>
+<p><strong>要写什么</strong> - 总览图：L1 遗传学证据 → L2 验证（mRNA 补偿） → L3 机制假设 → L4 输出 - 强调<strong>严格单向</strong>：下游层不能回补上游（为什么？见 3.5） - 每层写：输入、证据源、算法、输出、为什么放这一层</p>
+<h3 id="doc9-l1-人类遗传学证据层">3.1 L1 — 人类遗传学证据层</h3>
+<table>
+<thead>
+<tr>
+<th>证据源</th>
+<th>字段</th>
+<th>方向</th>
+<th>权重</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClinGen 单倍剂量不足评分</td>
+<td><code>clinGen_hi_score</code></td>
+<td>高=好</td>
+<td>3</td>
+</tr>
+<tr>
+<td>ClinGen 三倍剂量敏感性</td>
+<td><code>clinGen_triplo_score</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>gnomAD pLI</td>
+<td><code>gnomad_pLI</code></td>
+<td>高=好</td>
+<td>2</td>
+</tr>
+<tr>
+<td>gnomAD LOEUF</td>
+<td><code>gnomad_LOEUF</code></td>
+<td><strong>低</strong>=好</td>
+<td>2</td>
+</tr>
+<tr>
+<td>DeepLOF（AI 层，可选）</td>
+<td><code>DeepLOF_score</code></td>
+<td>高=好</td>
+<td>见配置</td>
+</tr>
+<tr>
+<td>HPA 组织表达</td>
+<td><code>hpa_*_expr</code></td>
+<td>双重角色（见 3.4）</td>
+<td>0（v2.2 起）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>要写什么</strong> - <strong>三值标注</strong>：ClinGen 的 3 / 30 / 40 分语义（30=不确定、40=无证据）→ 中性不扣分 - <strong>HGNC 主键</strong>：为什么用 HGNC ID 而非基因符号（符号会变，见 4.2 的 WHS 案例） - <strong>归一化的坑</strong>：rank 归一化在小样本下产生伪影（pLI=0.002 的基因排到 #1）→ 改用 raw</p>
+<h3 id="doc9-l2-验证层mrna-剂量补偿状态">3.2 L2 — 验证层：mRNA 剂量补偿状态</h3>
+<p><strong>要写什么</strong> - 概念：单倍剂量不足基因未必表现为 mRNA 减半——转录/翻译层存在补偿 - 方法：CNV 工作流（scRNA-seq）+ 逐基因 ratio = mean(患者)/mean(对照) - 状态分类（<code>compensation_class</code>）：<code>full</code> / <code>partial_high</code> / <code>overcompensated</code> / <code>unreliable</code> - 实测：GTF2I ratio = 0.995（完美转录补偿）、ELN = 3.138（过补偿）、35 基因中 17+ 过补偿 - <strong>关键洞察</strong>：补偿状态<strong>逐基因可变</strong>，不是全或无；且<strong>在 Down 综合征中几乎不存在转录补偿</strong>——说明补偿不是微缺失的自然后果 - 为什么 scRNA-seq 从”发现引擎”降格为”验证层”（scRNA-seq CNV caller 对 &lt;3Mb focal CNV 灵敏度极低，Schmid et al. 2025）</p>
+<h3 id="doc9-l3-机制假设层virtualcelltool">3.3 L3 — 机制假设层（VirtualCellTool）</h3>
+<p><strong>要写什么</strong> - 定位声明：<strong>只做机制假设与演示，不进 L1 排序</strong> - 五个引擎与各自定位（CIPHER 主力 / 线性基线对照 / 反事实演示 / 归因解释 / GEARS 负对照） - 为什么选 CIPHER： 1. <strong>零训练</strong>——只需未扰动对照细胞（我们没有 Perturb-seq 数据） 2. <strong>上下调对称</strong>——SINEUP 是<strong>上调</strong>治疗，而绝大多数模型只学过敲除方向 3. 秒级响应，可交互 - 为什么要<strong>强制并排展示线性基线</strong>（Nature Methods 2025 的学术诚实性要求）</p>
+<h3 id="doc9-反向设计被否决的方案与理由">3.4 反向设计：被否决的方案与理由</h3>
+<p><strong>要写什么</strong>（这一节体现 Engineering 思维）</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>被否决的方案</th>
+<th>否决理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用 AI 排序直接产出主效基因</td>
+<td>r=0.02；GEARS 4/41 覆盖</td>
+</tr>
+<tr>
+<td>用 scRNA-seq CNV caller 自动发现缺失区间</td>
+<td>对 &lt;3Mb focal CNV 灵敏度极低</td>
+</tr>
+<tr>
+<td>HPA 作为器官惩罚项</td>
+<td>错杀正对照（STX1A/ELN/GTF2I 因肝肾表达被罚），v2.2 起改为双重角色、权重置 0</td>
+</tr>
+<tr>
+<td>rank 归一化</td>
+<td>小样本伪影</td>
+</tr>
+<tr>
+<td>把 CellOracle 作为因果引擎</td>
+<td>只能扰动 TF，对非 TF 无出边</td>
+</tr>
+</tbody>
+</table>
+<h3 id="doc9-为什么严格单向不可回补">3.5 为什么严格单向（不可回补）</h3>
+<p><strong>要写什么</strong> - 若允许 L3 回补 L1：信息源与转录组重叠 → 重新引入 E3（归因≠因果）与 E8（mRNA 隐身）偏倚 - 单向性是可验证性的前提：L1 只依赖外部遗传学证据，任何人可独立复算</p>
+<p><strong>状态</strong>：3.1–3.3 【✓ 可落笔】；3.4 【◐ 待整理】（需从 PROJECT_LOG 提炼成表格）；3.5 【✓ 可落笔】</p>
+<hr />
+<h2 id="doc9-开发过程dbtl-循环">4. 开发过程：DBTL 循环</h2>
+<p><strong>建议英文标题</strong>：<code>4. Development Process — Seven Design-Build-Test-Learn Cycles</code></p>
+<blockquote>
+<p>本节是 Model 页的”过程”部分，对应 <strong>Engineering Success</strong>。 素材主源：<code>outputs/reports/PROJECT_LOG.md</code>（条目 #0–#15）</p>
+</blockquote>
+<p><strong>每轮循环统一写法</strong>：Design（假设）→ Build（代码/配置）→ Test（在哪个数据上跑）→ Learn（发现什么）→ 下一轮改什么</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>主题</th>
+<th>关键产出</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>v1 四层架构骨架</td>
+<td><code>normalize → merge_evidence → (AI) → consensus</code>；27+ 测试</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>2</td>
+<td>WBS 35 基因端到端首跑</td>
+<td>发现 rank 归一化伪影（FZD9 pLI=0.002 排 #1）；ClinGen 覆盖率仅 14%</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>3</td>
+<td>修归一化 + 接入 DeepLOF</td>
+<td>raw 归一化（Spearman ρ 0.23→0.71）；发现 GTF2I 在 DeepLOF 中缺失</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>4</td>
+<td>v2.1/v2.2 六项优化</td>
+<td>mRNA 补偿维度、隐性致病过滤器、ClinGen 三值标注、权重敏感性、四 mode、稀疏性警告</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>5</td>
+<td>WHS 实证运行</td>
+<td><strong>发现并修复 gnomAD 符号别名缺口</strong>（WHSC1/NSD2）→ NSD2 从 #5 升至 #1</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>6</td>
+<td>六 mode 全验证</td>
+<td>WBS 正对照 6/6；WHS NSD2 全 mode #1；移除了错杀正对照的 HPA 惩罚</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>7</td>
+<td>VirtualCellTool 修复与可视化</td>
+<td>修复不可启动（21.9GB 内存爆）→ 冷启动 6.2s；分组响应判别力 2/12→10/12；位移可视化</td>
+<td>【✓】</td>
+</tr>
+</tbody>
+</table>
+<p><strong>每轮要突出的”Learn → 下一步”链</strong> - Cycle 2 → 3：伪影 → 换归一化方式 - Cycle 4 → 5：架构通用化 → 立刻被真实数据检验出符号缺口 - Cycle 5 → 6：单点修复 → 需要系统性正对照回归 - Cycle 6 → 7：筛选层稳定 → 转向机制假设层的可用性</p>
+<p><strong>要写的”诚实”细节</strong> - Cycle 5 的 bug 是<strong>静默失败</strong>（匹配率 17/19，无人察觉最强证据被丢弃）——这类 bug 的教训值得单独一段 - 每次修复都保留负结果，未删除历史条目</p>
+<p><strong>状态</strong>：【✓ 可落笔】（PROJECT_LOG 已是最完整的素材源）</p>
+<hr />
+<h2 id="doc9-验证正对照与负对照">5. 验证：正对照与负对照</h2>
+<p><strong>建议英文标题</strong>：<code>5. Validation — Positive and Negative Controls</code></p>
+<p><strong>要写什么</strong></p>
+<h3 id="doc9-正对照已知答案反测流程">5.1 正对照（已知答案反测流程）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>疾病</th>
+<th>已知主效基因</th>
+<th>管线排名</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WHS</td>
+<td>NSD2</td>
+<td><strong>#1</strong>/19（score 3.889，领先第 2 名 1.91）</td>
+<td>✅ 修复符号缺口后</td>
+</tr>
+<tr>
+<td>WBS</td>
+<td>STX1A / ELN / BAZ1B / CLIP2 / LIMK1 / GTF2I</td>
+<td>#1 / #3 / #4 / #5 / #8 / #9</td>
+<td>✅ 6/6 命中 Top10</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>正对照设计：跑排序时<strong>不告知</strong>已知答案</li>
+<li>Mode B 内置正对照检验表</li>
+</ul>
+<h3 id="doc9-负对照">5.2 负对照</h3>
+<ul>
+<li>线性基线（control-mean）：为什么必须并排展示</li>
+<li>GEARS 覆盖性检查：做成产品内建功能（按钮灰掉 + 明确提示），而非隐藏</li>
+</ul>
+<h3 id="doc9-未通过的案例诚实呈现">5.3 未通过的案例（诚实呈现）</h3>
+<ul>
+<li>CIPHER 对表达稀疏基因不敏感（CD3D/CD3E 未命中目标细胞类型）</li>
+<li>ELN 在脑类器官中 |Δ|max 仅 0.006（组织特异性，非失败）</li>
+</ul>
+<p><strong>状态</strong>：【✓ 可落笔】</p>
+<hr />
+<h2 id="doc9-与湿实验治疗设计的接口">6. 与湿实验/治疗设计的接口</h2>
+<p><strong>建议英文标题</strong>：<code>6. From Ranking to Wet-Lab Target</code></p>
+<p><strong>要写什么</strong> - 三列表决策面板：<code>L1 证据排名 × mRNA 补偿状态 × L3 机制假设</code> - 靶点优先级 = 遗传学证据（该救谁）× 补偿状态（救了有没有用）× 机制假设（救了会怎样） - 具体案例：<strong>GTF2I 的排名分歧</strong>——管线 #9，但脑类器官中转录组效应量第一（|Δ|max = 10.08）且全部落在神经发育/突触基因上 → 建议上调优先级 - 每个候选基因进入湿实验前必须满足的三个条件（见 1. 的问题定义）</p>
+<p><strong>状态</strong>：【◐ 待整理】（素材在 PROJECT_LOG #14，需整理成决策表）</p>
+<hr />
+<h2 id="doc9-局限与未来工作">7. 局限与未来工作</h2>
+<p><strong>建议英文标题</strong>：<code>7. Limitations and Future Work</code></p>
+<p><strong>要写什么</strong>（结构化呈现，不要含糊）</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>局限</th>
+<th>性质</th>
+<th>缓解/未来</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>翻译层盲区</td>
+<td><strong>根本性</strong>——RNA 层面的计算无法预测 SINEUP 的翻译增强效果</td>
+<td>需蛋白层方法（ProteinTalks 等，尚未成熟）</td>
+</tr>
+<tr>
+<td>单基因 vs 多基因错配</td>
+<td>微缺失是连续基因综合征</td>
+<td>优化为按表型分层排序而非唯一排名</td>
+</tr>
+<tr>
+<td>mRNA 隐身（E8）</td>
+<td>删失基因稳态 mRNA 检测不到</td>
+<td>用蛋白组/翻译组数据补充</td>
+</tr>
+<tr>
+<td>组织选择维度</td>
+<td>ELN 在脑无效应</td>
+<td>接入心血管/成纤维细胞数据集</td>
+</tr>
+<tr>
+<td>补偿状态数据缺口</td>
+<td>WHS 无公开 scRNA-seq 数据</td>
+<td>依赖小鼠模型（GSE232564）</td>
+</tr>
+<tr>
+<td>未验证假设</td>
+<td>CIPHER 预测未经扰动实验验证</td>
+<td>设计小规模 benchmark（见下）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>未来工作要具体</strong> - 低成本「基准对比小实验」把负结果转化为 Contribution - 扩展病种：补齐 8 病区间表 - 【○ 待补】湿实验验证循环</p>
+<p><strong>状态</strong>：【✓ 可落笔】（局限清单在文档中已梳理）</p>
+<hr />
+<h2 id="doc9-可复现性">8. 可复现性</h2>
+<p><strong>建议英文标题</strong>：<code>8. Reproducibility</code></p>
+<p><strong>要写什么</strong> - <a href="../../03_pipeline/README.md#data-sources">数据来源与字段说明</a>；历史快照版本仍须核实，校验和见每次运行审计 - 每次运行的审计产物：<code>audit/run.json</code>、<code>data_checksums.txt</code> - 配置文件驱动：阈值与权重全在 <code>config/pipeline.yaml</code>，改配置不改代码 - 测试：仓库根执行 <code>.venv/pipeline/bin/python scripts/test_pipeline.py</code>，按本次日志报告结果；旧 20 passed / 1 skipped 仅为历史记录 - 代码与数据获取方式（注意：管线目录目前无 git 版本控制——需说明如何获取固定版本） - 【○ 待补】对外的代码/数据仓库与许可证</p>
+<p><strong>状态</strong>：【◐ 待整理】（技术信息齐全，但”对外如何取用”待定）</p>
+<hr />
+<h2 id="doc9-图表清单wiki-用图">9. 图表清单（wiki 用图）</h2>
+<p><strong>建议英文标题</strong>：<code>9. Figures</code></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>图</th>
+<th>内容</th>
+<th>素材来源</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fig 1</td>
+<td>四层证据金字塔总览</td>
+<td>需新绘（架构图可在 <code>igem_gene_pipeline/docs/diagrams/</code>、<code>derived/tools/VirtualCellTool/docs/architecture.html</code> 基础上改造）</td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 2</td>
+<td>为什么不用 AI：r=0.02 散点图 + GEARS 覆盖率饼图</td>
+<td>项目 E3/E4/E11 数据</td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 3</td>
+<td>正对照结果热图（WBS 6 基因 × 6 mode；WHS NSD2）</td>
+<td><code>outputs/mode/ranked_*.csv</code></td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 4</td>
+<td>补偿状态分布（35 基因 ratio 条形图）</td>
+<td><code>outputs/mode/compensation_wbs.csv</code></td>
+<td>【◐】</td>
+</tr>
+<tr>
+<td>Fig 5</td>
+<td>DBTL 七轮循环时间线</td>
+<td>需新绘</td>
+<td>【○】</td>
+</tr>
+<tr>
+<td>Fig 6</td>
+<td>CIPHER 预测示例（GTF2I 过表达：基因条形 + 分组响应）</td>
+<td>VirtualCellTool 截图</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>Fig 7</td>
+<td>ELN 组织特异性负结果（对照表达 0.042，</td>
+<td>Δ</td>
+<td>max 0.006）</td>
+</tr>
+<tr>
+<td>Fig 8</td>
+<td>线性基线对照图（诚实性）</td>
+<td>VirtualCellTool 截图</td>
+<td>【✓】</td>
+</tr>
+<tr>
+<td>Fig 9</td>
+<td>反事实位移（患者细胞能否推回对照群）</td>
+<td>VirtualCellTool 双视图截图</td>
+<td>【✓】</td>
+</tr>
+</tbody>
+</table>
+<p><strong>状态</strong>：【◐ 待整理】</p>
+<hr />
+<h2 id="doc9-待补清单写正文前需先产出">10. 待补清单（写正文前需先产出）</h2>
+<ul>
+<li>【○】对外的代码/数据发布方式（仓库、许可证、DOI）</li>
+<li>【○】Fig 1 / Fig 5 的绘图</li>
+<li>【○】“基准对比小实验”的设计与结果（用于把负结果转成 Contribution）</li>
+<li>【○】8 病区间表补全后的扩展验证</li>
+<li>【◐】<code>pipeline.yaml</code> 全部权重的<strong>来源依据</strong>（每个权重值需要文献或数据支撑，否则需在局限中说明为经验取值）</li>
+<li>【◐】CIPHER 预测的独立验证方案（当前未经验证，必须明确标注）</li>
+</ul>
+<hr />
+<h2 id="doc9-附写作顺序建议">附：写作顺序建议</h2>
+<ol type="1">
+<li>先写 <strong>§2（为什么不用现成 AI）</strong> 和 <strong>§5（正/负对照）</strong>——素材最全、最体现项目特色</li>
+<li>再写 <strong>§3（原理）</strong> 和 <strong>§4（开发过程）</strong>——这是主体</li>
+<li>然后 <strong>§1、§6、§7</strong></li>
+<li>最后补 <strong>§8、§9</strong>（依赖对外发布方式）</li>
+</ol>
+</details></main></body></html>

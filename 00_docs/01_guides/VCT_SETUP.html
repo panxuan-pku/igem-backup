@@ -1,0 +1,103 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SIGnature 与 VirtualCellTool 接入</title><style>body{font:17px/1.75 system-ui,sans-serif;color:#243544;background:#f3f6f8;margin:0}main{max-width:1120px;margin:32px auto;padding:32px;background:white;border-radius:18px}h1{font-size:30px}h2{margin-top:36px;border-bottom:2px solid #dce9ea;padding-bottom:8px}a{color:#086978;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:15px}td,th{border:1px solid #dce5e9;padding:9px;text-align:left;vertical-align:top}th{background:#e9f2f2}details{border:1px solid #dce5e9;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:14px;font-size:13px}img{max-width:100%;height:auto}.note{background:#fff6e2;border-left:4px solid #d8a43c;padding:14px}.lead{font-size:19px;color:#245e66}nav{display:flex;flex-wrap:wrap;gap:16px}@media(max-width:700px){main{margin:8px;padding:18px}body{font-size:16px}}</style></head><body><main><nav><a href="PROJECT_INDEX.html">项目资料导航</a></nav><h1>SIGnature 与 VirtualCellTool 接入</h1><p class="lead">VCT 源码在 05_virtual_cell/；第三方源码和全部运行数据由使用者另行准备。</p><h2 id="两者各做什么">1. 两者各做什么</h2>
+<p><strong>单细胞表达 → SIGnature / SCimilarity 编码和归因 → VCT 展示与实验性探索。</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>组件</th>
+<th>归属与作用</th>
+<th>本地位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIGnature</td>
+<td>Genentech 的第三方工具；调用 SCimilarity 等模型，提供编码与归因接口</td>
+<td>默认 <code>05_tools/SIGnature/</code>，整个 <code>05_tools/</code> 不入库</td>
+</tr>
+<tr>
+<td>VirtualCellTool</td>
+<td>本项目的网页、数据准备和分析整合代码；CIPHER、GEARS 等各有不同用途</td>
+<td><code>05_virtual_cell/</code>，源码和测试保留</td>
+</tr>
+<tr>
+<td>数据及模型</td>
+<td>原始单细胞矩阵、标签、编码、缓存和模型检查点</td>
+<td>本地下载或生成，均不入库</td>
+</tr>
+</tbody>
+</table>
+<p>VCT 与核心候选排名管线目前独立，尚未自动串联。编码器位移不是细胞类型转化或治疗效果预测；CIPHER 是线性近似，GEARS 的训练背景也不能直接等同微缺失疾病。外部工作归属见 <a href="../../05_virtual_cell/ATTRIBUTIONS.md">ATTRIBUTIONS</a>。</p>
+<h2 id="获取第三方源码和环境">2. 获取第三方源码和环境</h2>
+<p>先安装 Python 3.11，在仓库根目录执行。安装会清除并重建 <code>.venv/pipeline</code> 和 <code>.venv/vct</code>；依赖安装需要网络。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> 05_tools</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/Genentech/SIGnature.git 05_tools/SIGnature</span></code></pre></div>
+<p>若目录已经存在，不要重复克隆或覆盖。VCT 直接从该 checkout 的 <code>src/</code> 导入 SIGnature，项目依赖由 <code>requirements-web.txt</code> 安装；无需再向主环境安装一套 SIGnature。独立使用第三方包时，按<a href="https://genentech.github.io/SIGnature/install.html">SIGnature 官方安装说明</a>操作。</p>
+<p>可用 <code>SIGNATURE_DIR=/绝对路径/SIGnature</code> 指定其他 checkout，运行准备脚本、测试及服务时保持一致。上游 API 正在演进，当前仓库尚未锁定一个已重新验证的上游 commit；获取后记录 <code>git -C 05_tools/SIGnature rev-parse HEAD</code> 并运行第 5 节兼容性测试。不能把“最新下载成功”当兼容性通过。</p>
+<h2 id="下载-scimilarity-模型">3. 下载 SCimilarity 模型</h2>
+<p>从官方安装页指向的 <a href="https://zenodo.org/records/17903196">Zenodo 17903196</a>下载 <code>model_files.tar.gz</code>。该记录含 SCimilarity 权重，文件 MD5 为 <code>ec04ae13a9ecd1ebad7e78b0ea6ae39e</code>。下载后核对校验值；在全新模型目录中解压，使最终路径为：</p>
+<pre class="text"><code>05_tools/SIGnature/model_files/model_files/scimilarity/
+├── encoder.ckpt
+├── gene_order.tsv
+└── 其余随模型提供的配置文件（完整保留）</code></pre>
+<p>例如，压缩包放在 <code>/path/to/model_files.tar.gz</code> 时，在根目录运行：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> 05_tools/SIGnature/model_files</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> /path/to/model_files.tar.gz <span class="at">-C</span> 05_tools/SIGnature/model_files</span></code></pre></div>
+<p>若使用 <code>SIGNATURE_DIR</code>，在对应目录下保持相同结构。模型目录含两层 <code>model_files</code> 是本项目目前的路径约定。只放权重、不放基因顺序及配置，无法正确运行。</p>
+<h2 id="准备自己的演示数据">4. 准备自己的演示数据</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>数据集</th>
+<th>来源与生成脚本</th>
+<th>仍需注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PBMC 测试集</td>
+<td><code>src/prepare_data.py</code> 调用 Scanpy PBMC3k；必须自行提供认可的细胞注释 CSV</td>
+<td>注释列 <code>cell,cell_type</code>，ID 唯一且完整匹配；<code>cluster</code> 可选。没有可信标签时不能猜测或沿用旧标签</td>
+</tr>
+<tr>
+<td>Williams / WS</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE283473">GSE283473</a> → Williams 预处理 → <code>processed.h5ad</code> → <code>src/prepare_ws_web.py</code></td>
+<td>可用 <code>VCT_WS_H5AD</code> 指定输入；脚本会写 <code>data/ws_*</code>，需先核对分组与预处理，避免覆盖自己的已有结果</td>
+</tr>
+<tr>
+<td>MS 少突胶质细胞</td>
+<td>历史归属表登记为 CELLxGENE collection <code>16c1e722</code>；<code>src/compute_ms_attribution.py</code> 和 <code>src/prepare_ms_web.py</code></td>
+<td>缺少完整 collection/dataset ID 和可核验的下载链接，尚不能据此唯一下载历史文件；应先补齐来源。所需输入名为 <code>data/ms_oligodendrocytes.h5ad</code></td>
+</tr>
+<tr>
+<td>GEARS（可选）</td>
+<td><a href="https://github.com/snap-stanford/GEARS">GEARS 源码</a>、<a href="https://zenodo.org/records/17252307">Norman 数据</a>、<a href="https://huggingface.co/matthewshu/gears-norman">模型仓库</a></td>
+<td><code>norman.zip</code> 解压至 <code>gears_data/norman/</code>；检查点与配置放 <code>gears_ckpt/</code>。只在使用 GEARS 时准备</td>
+</tr>
+</tbody>
+</table>
+<p>PBMC 的准备命令（在 VCT 目录内）：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 05_virtual_cell</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> src/prepare_data.py <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metadata</span> /path/to/approved_pbmc_labels.csv <span class="at">--output</span> outputs/pbmc_run_001</span></code></pre></div>
+<p>该命令生成新目录，不自动替换网页 <code>data/</code>。核对同一次生成的 <code>expr_aligned.npz</code>、<code>embeddings.npy</code>、<code>meta.csv</code>、<code>umap.npy</code>、<code>gene_order.txt</code> 后整套部署到 <code>data/</code>，不能混用不同运行的矩阵与标签。MS 归因同样生成独立输出目录；必须核对后整套部署，准备脚本不会自动完成全部网页发布步骤。</p>
+<p><a href="DATA_REQUIREMENTS.json">文件指纹清单</a>列出历史演示所用文件，可辅助核对，但不是可下载的数据包。新克隆默认没有 PBMC/MS/WS 数据；没有准备的页面功能会缺数据，不能宣称三个数据集已经可用。</p>
+<h2 id="检查并启动">5. 检查并启动</h2>
+<p>先在 VCT 目录做离线回归，要求 SIGnature checkout 和 VCT 依赖可导入；历史实数据回归在缺少本地归档时明确跳过：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> tests <span class="at">-v</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> web/app.py</span></code></pre></div>
+<p>浏览器访问 <code>http://127.0.0.1:8377/</code>。macOS 双击 <code>启动VirtualCellTool.command</code> 使用同一环境。服务启动不代表所有数据集已准备好。</p>
+<p>三个数据集都准备好后，可在另一个终端执行 <code>../.venv/vct/bin/python tests_api.py --skip-gears</code>；GEARS 完整数据就绪后再去掉该选项。历史 API 测试含特定细胞数，主动更换数据时需核对预期；测试通过仍不是科学有效性证明。更详细的端口、停止、浏览器测试和方法边界见 <a href="../../05_virtual_cell/README.md">VCT README</a>。</p>
+<h2 id="本次改动的验证边界">6. 本次改动的验证边界</h2>
+<p>本次检查源码迁移、忽略规则与工程回归；没有重新下载全部模型/疾病数据，没有完成从远程新克隆到全部演示的一键重建。独立复现需在 push 后的新克隆、新环境中继续进行，不能直接沿用本机历史输出。</p>
+</main></body></html>

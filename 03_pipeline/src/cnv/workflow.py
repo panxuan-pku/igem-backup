@@ -13,10 +13,10 @@ Subcommands (run from the pipeline root, 03_pipeline/):
 Outputs land under config['output']['dir'] (default outputs/cnv/).
 """
 import argparse
-import hashlib
+import gzip
 import json
 import sys
-import time
+from functools import wraps
 from pathlib import Path
 
 import numpy as np
@@ -24,22 +24,20 @@ import pandas as pd
 import yaml
 
 from .expression_qc import interval_gene_qc
+from .artifacts import StageRun, sha256_file
 from .gene_order import genes_in_interval, parse_gtf_genes
-from .segments import call_deletion_segments, filter_segments, segment_overlap_frac
+from .infercnv import validate_sample_specs
+from .segments import SEGMENT_COLUMNS, call_deletion_segments, filter_segments, segment_overlap_frac
 
 
 # ------------------------------------------------------------------ helpers
 def load_config(path):
     with open(path) as f:
-        return yaml.safe_load(f)
-
-
-def sha256_file(p, _chunk=8192):
-    h = hashlib.sha256()
-    with open(p, "rb") as f:
-        for chunk in iter(lambda: f.read(_chunk), b""):
-            h.update(chunk)
-    return h.hexdigest()
+        cfg = yaml.safe_load(f)
+    if not isinstance(cfg, dict):
+        raise ValueError("config must be a mapping")
+    cfg["_config_path"] = str(Path(path).resolve())
+    return cfg
 
 
 def _outdir(cfg):
@@ -48,66 +46,207 @@ def _outdir(cfg):
     return d
 
 
-def _write_audit(cfg, outdir, stage, extra=None):
-    payload = {"stage": stage, "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
-               "project": cfg.get("project"), "config": {
-                   "qc": cfg.get("qc"), "infercnv": cfg.get("infercnv"),
-                   "segments": cfg.get("segments"),
-                   "known_intervals": cfg.get("known_intervals")}}
-    if extra:
-        payload.update(extra)
-    run_file = outdir / "audit" / f"run_{stage}.json"
-    run_file.write_text(json.dumps(payload, indent=2, default=str))
-    return run_file
+def _resolutions(cfg):
+    resolutions = cfg.get("infercnv", {}).get(
+        "resolutions", [{"name": "standard", "window_size": 100, "step": 10}])
+    names = [r["name"] for r in resolutions]
+    if not names or len(set(names)) != len(names) or any(
+            not isinstance(n, str) or not n or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" for c in n)
+            for n in names):
+        raise ValueError("resolution names must be unique nonempty filename-safe names")
+    return resolutions
+
+
+def _stage_parameters(cfg, stage):
+    ann = cfg.get("annotation", {})
+    if stage == "prepare_order":
+        return {"genome_build": ann.get("genome_build"), "coordinate_system": "1-based-inclusive",
+                "gene_types": ["protein_coding"]}
+    if stage == "infercnv":
+        cnv, qc = cfg.get("infercnv", {}), cfg.get("qc", {})
+        return {"samples": [{"id": s["id"], "group": s["group"], "path": str(Path(s["path"]).resolve())}
+                            for s in cfg.get("samples", [])],
+                "genome_build": ann.get("genome_build"),
+                "gene_order": str(Path(ann["gene_order_tsv"]).resolve()),
+                "qc": {k: qc.get(k, v) for k, v in {"min_genes_per_cell": 200,
+                       "max_mito_pct": 20.0, "downsample_per_sample": None, "seed": 0}.items()},
+                "reference_group": cnv.get("reference_group", "reference"),
+                "patient_group": cnv.get("patient_group", "patient"),
+                "n_jobs": cnv.get("n_jobs"),
+                "resolutions": _resolutions(cfg),
+                "exclude_chromosomes": cnv.get("exclude_chromosomes", ["chrX", "chrY"])}
+    if stage == "call_segments":
+        seg = cfg.get("segments", {})
+        return {"z_threshold": seg.get("z_threshold", 1.5), "min_windows": seg.get("min_windows", 3),
+                "max_segment_mb": seg.get("max_segment_mb") or None, "resolutions": _resolutions(cfg)}
+    extract = cfg.get("extract", {})
+    return {"mode": extract.get("mode", "cnv"),
+            "include_auto_in_candidates": extract.get("include_auto_in_candidates", False),
+            "known_intervals": cfg.get("known_intervals", {}) or {},
+            "genome_build": ann.get("genome_build"), "coordinate_system": "1-based-inclusive",
+            "min_overlap_frac": cfg.get("validation", {}).get("min_overlap_frac", 0.5),
+            "patient_group": cfg.get("infercnv", {}).get("patient_group", "patient"),
+            "reference_group": cfg.get("infercnv", {}).get("reference_group", "reference")}
+
+
+CANDIDATE_COLUMNS = ["gene_symbol", "source", "deletion_id", "chrom", "start", "end"]
+PROVENANCE_COLUMNS = CANDIDATE_COLUMNS + ["gene_id", "strand", "genome_build",
+                                         "interval_chrom", "interval_start", "interval_end"]
+QC_COLUMNS = ["gene_name", "found", "mean_counts_patient", "mean_counts_ref",
+              "pct_expr_patient", "pct_expr_ref", "log2fc_patient_vs_ref", "chrom", "start", "end"]
+VALIDATION_COLUMNS = ["interval", "n_genes", "n_genes_in_expression", "mean_log2fc_interval_genes",
+                      "auto_overlap_frac", "AC-CNV-1 (auto recovers known interval)", "markers",
+                      "markers_in_expression", "AC-CNV-2 (markers detected in data)", "reason"]
+EXTRACT_OUTPUTS = ["candidates.csv", "candidates_all.csv", "auto_segment_genes.csv",
+                   "candidate_provenance.csv", "interval_gene_expression_qc.csv",
+                   "validation_known_intervals.csv", "cnv_report.md"]
+
+
+def _audited_stage(stage):
+    def decorate(function):
+        @wraps(function)
+        def execute(cfg):
+            if stage == "infercnv":
+                validate_sample_specs(cfg.get("samples"))
+            outdir = Path(cfg.get("output", {}).get("dir", "outputs/cnv"))
+            if stage == "prepare_order":
+                outputs = [Path(cfg["annotation"]["gene_order_tsv"])]
+            elif stage == "infercnv":
+                outputs = [outdir / name for name in ["cnv_input.h5ad", "gene_position_mapping.csv", "heatmap_patient.png"] +
+                           [f"window_signal_{r['name']}.tsv" for r in _resolutions(cfg)]]
+            elif stage == "call_segments":
+                outputs = [outdir / name for name in ["segments_all.csv"] +
+                           [f"segments_{r['name']}.csv" for r in _resolutions(cfg)]]
+            else:
+                outputs = [outdir / name for name in EXTRACT_OUTPUTS]
+            if stage in ("infercnv", "call_segments"):
+                audit = outdir / "audit" / f"run_{stage}.json"
+                previous = json.loads(audit.read_text()) if audit.is_file() else {}
+                prefix, suffix = ("window_signal_", ".tsv") if stage == "infercnv" else ("segments_", ".csv")
+                outputs += [outdir / n for n in previous.get("outputs", {})
+                            if Path(n).name == n and n.startswith(prefix) and n.endswith(suffix)
+                            and outdir / n not in outputs]
+            with StageRun(cfg, stage, outputs, _stage_parameters(cfg, stage)) as run:
+                if cfg.get("_config_path"):
+                    run.input("config_file", cfg["_config_path"])
+                if stage in ("prepare_order", "infercnv", "call_segments"):
+                    downstream = {"prepare_order": ["infercnv", "call_segments", "extract_genes"],
+                                  "infercnv": ["call_segments", "extract_genes"],
+                                  "call_segments": ["extract_genes"]}[stage]
+                    for child in downstream:
+                        audit = outdir / "audit" / f"run_{child}.json"
+                        old = json.loads(audit.read_text()) if audit.is_file() else {}
+                        # Independent interval-only output does not depend on CNV.
+                        if (child == "extract_genes" and stage != "prepare_order"
+                                and old.get("parameters", {}).get("mode") == "intervals-only"):
+                            continue
+                        if child == "extract_genes":
+                            names = EXTRACT_OUTPUTS
+                        else:
+                            names = (["cnv_input.h5ad", "gene_position_mapping.csv", "heatmap_patient.png"] if child == "infercnv"
+                                     else ["segments_all.csv"])
+                            prefix, suffix = ("window_signal_", ".tsv") if child == "infercnv" else ("segments_", ".csv")
+                            names += [f"{prefix}{r['name']}{suffix}" for r in _resolutions(cfg)]
+                            names += [n for n in old.get("outputs", {})
+                                      if Path(n).name == n and n.startswith(prefix) and n.endswith(suffix)]
+                        # A nested prepare-order has no completed current caller output yet.
+                        if old.get("status") == "running":
+                            continue
+                        run.invalidate(child, [outdir / n for n in sorted(set(names))])
+                return function(cfg, run)
+        return execute
+    return decorate
 
 
 # ------------------------------------------------------------------ stages
 def cmd_stage_samples(cfg):
     """Link raw GEO per-sample files (GSMxxx_SAMPLE_matrix.mtx.gz ...) into
-    per-sample 10x dirs expected by scanpy.read_10x_mtx."""
-    staged = []
+    per-sample 10x dirs, checking every sample before writing any files."""
+    validate_sample_specs(cfg.get("samples"))
+    plans = []
+    destinations = set()
     for s in cfg["samples"]:
         raw_dir = Path(s["raw_dir"])
         prefix = s["raw_prefix"]
         dest = Path(s["path"])
-        dest.mkdir(parents=True, exist_ok=True)
+        destinations.add(dest.resolve())
+        for directory in (dest, *dest.parents):
+            if (directory.exists() or directory.is_symlink()) and not directory.is_dir():
+                raise ValueError(f"sample directory conflicts with existing path: {directory}")
+        links = []
         for src_name, dst_name in [
             (f"{prefix}_matrix.mtx.gz", "matrix.mtx.gz"),
             (f"{prefix}_barcodes.tsv.gz", "barcodes.tsv.gz"),
             (f"{prefix}_genes.tsv.gz", "genes.tsv.gz"),
         ]:
             src, dst = raw_dir / src_name, dest / dst_name
-            if not src.exists():
-                raise FileNotFoundError(f"missing raw file: {src}")
-            if not dst.exists():
-                dst.symlink_to(src.resolve())
-        _ensure_features_tsv(dest)
-        staged.append(str(dest))
+            if not src.is_file():
+                raise FileNotFoundError(f"missing raw file or not a regular file: {src}")
+            if dst.exists() or dst.is_symlink():
+                if not dst.is_symlink() or dst.resolve() != src.resolve():
+                    raise ValueError(f"sample file conflict: {dst}; expected a link to {src.resolve()}; "
+                                     "use a new sample path or inspect the existing file; nothing overwritten")
+            else:
+                links.append((src.resolve(), dst))
+        genes = raw_dir / f"{prefix}_genes.tsv.gz"
+        features, link_features = _expected_features(genes)
+        feat = dest / "features.tsv.gz"
+        create_features = not (feat.exists() or feat.is_symlink())
+        if not create_features:
+            if feat.is_symlink():
+                matches = link_features and feat.resolve() == genes.resolve()
+            else:
+                matches = feat.is_file() and _read_gene_text(feat) == features
+            if not matches:
+                raise ValueError(f"features conflict: {feat}; does not match {genes}; "
+                                 "use a new sample path or inspect the existing file; nothing overwritten")
+        if create_features and link_features:
+            links.append((genes.resolve(), feat))
+        plans.append((dest, links, features if create_features and not link_features else None))
+
+    output_paths = {directory / name for directory in destinations
+                    for name in ("matrix.mtx.gz", "barcodes.tsv.gz", "genes.tsv.gz", "features.tsv.gz")}
+    for directory in destinations:
+        for parent in (directory, *directory.parents):
+            if parent in output_paths:
+                raise ValueError(f"sample directory overlaps a staged file: {parent}; use separate sample paths")
+
+    # Known source/target conflicts must fail above, before even creating directories.
+    for dest, links, features in plans:
+        dest.mkdir(parents=True, exist_ok=True)
+        for src, dst in links:
+            dst.symlink_to(src)
+        if features is not None:
+            with gzip.open(dest / "features.tsv.gz", "xt") as f:
+                f.write(features)
+    staged = [str(plan[0]) for plan in plans]
     print(f"staged {len(staged)} samples: {staged}")
 
 
-def _ensure_features_tsv(dest):
-    """Newer scanpy only reads features.tsv.gz (3 cols: id, name, feature_type).
-    GEO 'genes.tsv.gz' files are often the old 2-col format — convert in place."""
-    import gzip
-    genes = dest / "genes.tsv.gz"
-    feat = dest / "features.tsv.gz"
-    if feat.exists() or not genes.exists():
-        return
-    with gzip.open(genes, "rt") as f:
-        first = f.readline()
-    if len(first.rstrip("\n").split("\t")) >= 3:
-        feat.symlink_to(genes.resolve())
-        return
-    with gzip.open(genes, "rt") as fin, gzip.open(feat, "wt") as fout:
-        for line in fin:
-            parts = line.rstrip("\n").split("\t")
-            parts = (parts + ["Gene Expression"] * 3)[:3]
-            fout.write("\t".join(parts) + "\n")
+def _read_gene_text(path):
+    try:
+        with gzip.open(path, "rt") as f:
+            return f.read()
+    except (OSError, EOFError, UnicodeError) as exc:
+        raise ValueError(f"cannot read gene/features file {path}: {exc}") from exc
 
 
-def cmd_prepare_order(cfg):
+def _expected_features(genes):
+    """Return expected features text and whether the raw genes can be linked."""
+    text = _read_gene_text(genes)
+    rows = text.splitlines()
+    widths = [len(row.split("\t")) for row in rows]
+    if not rows or min(widths) < 2 or len(set(widths)) != 1:
+        raise ValueError(f"invalid genes table: {genes}; expected nonempty rows with consistent >=2 columns")
+    if widths[0] >= 3:
+        return text, True
+    return "".join(row + "\tGene Expression\n" for row in rows), False
+
+
+@_audited_stage("prepare_order")
+def cmd_prepare_order(cfg, run):
     ann = cfg["annotation"]
+    run.input("gtf", ann["gtf"])
     genes = parse_gtf_genes(ann["gtf"])
     out = Path(ann["gene_order_tsv"])
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -116,32 +255,58 @@ def cmd_prepare_order(cfg):
     return genes
 
 
-def _load_gene_order(cfg):
+def _load_gene_order(cfg, run):
     tsv = Path(cfg["annotation"]["gene_order_tsv"])
     if not tsv.exists():
         print(f"gene order table missing at {tsv}; building from GTF")
-        return cmd_prepare_order(cfg)
+        cmd_prepare_order(cfg)
+    audit = run.audit.parent / "run_prepare_order.json"
+    producer = None
+    if audit.is_file():
+        previous = json.loads(audit.read_text())
+        entry = previous.get("outputs", {}).get(tsv.name, {})
+        if entry.get("path") == str(tsv.resolve()):
+            producer = "prepare_order"
+    run.input("gene_order", tsv, producer,
+              _stage_parameters(cfg, "prepare_order") if producer else None)
+    run.data["gene_order_origin"] = "prepare_order" if producer else "supplied_table"
     return pd.read_csv(tsv, sep="\t")
 
 
-def cmd_infercnv(cfg):
+@_audited_stage("infercnv")
+def cmd_infercnv(cfg, run):
     from . import infercnv as ic  # deferred: needs scanpy/infercnvpy
 
     outdir = _outdir(cfg)
-    genes = _load_gene_order(cfg)
+    genes = _load_gene_order(cfg, run)
     qc = cfg.get("qc", {})
     cnv_cfg = cfg.get("infercnv", {})
+
+    ic.validate_groups([s["group"] for s in cfg["samples"]],
+                       cnv_cfg.get("patient_group", "patient"), cnv_cfg.get("reference_group", "reference"))
+    for s in cfg["samples"]:
+        for path in ic.sample_input_paths(s["path"]):
+            run.input(f"{s['id']}/{path.name}", path)
 
     adata = ic.load_samples(cfg["samples"],
                             min_genes=qc.get("min_genes_per_cell", 200),
                             max_mito_pct=qc.get("max_mito_pct", 20.0),
                             downsample=qc.get("downsample_per_sample"),
                             seed=qc.get("seed", 0))
+    ic.validate_groups(adata.obs["group"], cnv_cfg.get("patient_group", "patient"),
+                       cnv_cfg.get("reference_group", "reference"))
     print(f"loaded {adata.n_obs} cells × {adata.n_vars} genes "
           f"({dict(adata.obs['group'].value_counts())})")
     adata = ic.normalize_for_cnv(adata)
     adata = ic.order_by_position(adata, genes)
     print(f"positioned genes: {adata.n_vars}")
+    mapping = adata.uns["gene_position_mapping"]
+    mapping.to_csv(outdir / "gene_position_mapping.csv", index=False)
+    run.data["gene_position_mapping"] = mapping["status"].value_counts().to_dict()
+    unmatched = mapping[mapping["status"] != "positioned"]
+    if not unmatched.empty:
+        print(f"WARN: {len(unmatched)} input genes lack positions in the supplied annotation; "
+              f"see {outdir / 'gene_position_mapping.csv'}", file=sys.stderr)
 
     input_path = outdir / "cnv_input.h5ad"
     adata.write_h5ad(input_path)
@@ -153,7 +318,7 @@ def cmd_infercnv(cfg):
         ic.run_infercnv(adata, reference_key="group",
                         reference_cat=cnv_cfg.get("reference_group", "reference"),
                         window_size=res["window_size"], step=res["step"],
-                        exclude_chromosomes=exclude)
+                        exclude_chromosomes=exclude, n_jobs=cnv_cfg.get("n_jobs"))
         tab = ic.window_table(adata, res["window_size"], res["step"],
                               group_col="group",
                               patient_cat=cnv_cfg.get("patient_group", "patient"),
@@ -165,10 +330,11 @@ def cmd_infercnv(cfg):
               f"(patient mean |score| {tab['score'].abs().mean():.4f}, "
               f"ref mean {tab['ref_score'].abs().mean():.4f})")
 
-    _save_heatmap(adata, cfg, outdir)
-    _write_audit(cfg, outdir, "infercnv", extra={
-        "input_checksums": _sample_checksums(cfg), "n_cells": adata.n_obs,
-        "n_positioned_genes": adata.n_vars, "h5ad": str(input_path)})
+    run.data["heatmap"] = _save_heatmap(adata, cfg, outdir)
+    if run.data["heatmap"]["status"] != "success":
+        run.skip_output(outdir / "heatmap_patient.png")
+    run.data.update({"n_cells": adata.n_obs, "n_positioned_genes": adata.n_vars,
+                     "h5ad": str(input_path)})
 
 
 def _save_heatmap(adata, cfg, outdir):
@@ -185,24 +351,14 @@ def _save_heatmap(adata, cfg, outdir):
         plt.savefig(path, dpi=150, bbox_inches="tight")
         plt.close("all")
         print(f"heatmap → {path}")
+        return {"status": "success"}
     except Exception as e:  # heatmap is evidence, not a gate
         print(f"WARN: heatmap skipped ({e})", file=sys.stderr)
+        return {"status": "failed", "reason": str(e)}
 
 
-def _sample_checksums(cfg):
-    checks = {}
-    for s in cfg["samples"]:
-        for f in ("matrix.mtx.gz", "barcodes.tsv.gz", "features.tsv.gz"):
-            p = Path(s["path"]) / f
-            if p.exists():
-                checks[str(p)] = sha256_file(p)
-    gtf = Path(cfg["annotation"]["gtf"])
-    if gtf.exists():
-        checks[str(gtf)] = sha256_file(gtf)
-    return checks
-
-
-def cmd_call_segments(cfg):
+@_audited_stage("call_segments")
+def cmd_call_segments(cfg, run):
     outdir = _outdir(cfg)
     seg_cfg = cfg.get("segments", {})
     z = seg_cfg.get("z_threshold", 1.5)
@@ -213,6 +369,8 @@ def cmd_call_segments(cfg):
 
     frames = []
     for res in resolutions:
+        run.input(f"window_signal_{res['name']}.tsv", outdir / f"window_signal_{res['name']}.tsv",
+                  "infercnv", _stage_parameters(cfg, "infercnv"))
         sig = pd.read_csv(outdir / f"window_signal_{res['name']}.tsv", sep="\t")
         segs = call_deletion_segments(sig[["chr", "start", "end", "score"]],
                                       z_threshold=z, min_windows=min_w)
@@ -225,112 +383,244 @@ def cmd_call_segments(cfg):
               f"(z<=-{z}, min {min_w} windows; {n_raw - len(segs)} dropped by size cap)")
     all_segs = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
     all_segs.to_csv(outdir / "segments_all.csv", index=False)
-    _write_audit(cfg, outdir, "call_segments",
-                 extra={"n_segments": int(len(all_segs))})
+    run.data["n_segments"] = int(len(all_segs))
     return all_segs
 
 
-def cmd_extract_genes(cfg):
+def _check_known_intervals(cfg):
+    ann = cfg["annotation"]
+    if not ann.get("genome_build"):
+        raise ValueError("interval extraction requires annotation.genome_build")
+    if ann.get("coordinate_system", "1-based-inclusive") != "1-based-inclusive":
+        raise ValueError("annotation must use 1-based-inclusive coordinates")
+    known = cfg.get("known_intervals", {}) or {}
+    if not isinstance(known, dict):
+        raise ValueError("known_intervals must be a mapping")
+    for name, iv in known.items():
+        if not isinstance(iv, dict):
+            raise ValueError(f"invalid interval {name}: expected a mapping")
+        start, end = iv.get("start"), iv.get("end")
+        if (type(start) is not int or type(end) is not int or start < 1 or end < start
+                or str(iv.get("chr", "")) not in
+                [str(i) for i in range(1, 23)] + [f"chr{i}" for i in range(1, 23)] + ["X", "Y", "chrX", "chrY"]):
+            raise ValueError(f"invalid interval {name}: expected chr1-22/X/Y and integer 1 <= start <= end")
+        if iv.get("genome_build") != ann["genome_build"]:
+            raise ValueError(f"interval {name}: genome_build must match annotation ({ann['genome_build']})")
+        if iv.get("coordinate_system", "1-based-inclusive") != "1-based-inclusive":
+            raise ValueError(f"interval {name}: only 1-based-inclusive coordinates are supported; convert BED first")
+
+
+def _unique_candidates(origins, by_id=False):
+    """Collapse verified identities, retaining every extraction record as JSON."""
+    identities = origins[["gene_symbol", "gene_id"]].dropna().drop_duplicates()
+    ambiguous = identities[identities.gene_id.duplicated(keep=False)]
+    if not ambiguous.empty:
+        raise ValueError(f"conflicting gene identity: {ambiguous.to_dict('records')}")
+    identity_cols = ["gene_id", "chrom", "start", "end", "strand", "genome_build"]
+    key = "gene_id" if by_id else "gene_symbol"
+    if by_id and (origins.gene_id.isna().any() or origins.gene_id.astype(str).str.strip().eq("").any()):
+        raise ValueError("incomplete gene identity in exploratory candidates: gene_id required")
+    repeated = origins[key].duplicated().any()
+    rows = []
+    columns = CANDIDATE_COLUMNS + (["gene_id"] if by_id else [])
+    for symbol, group in origins.groupby(key, sort=False, dropna=False):
+        identity = group[identity_cols].drop_duplicates()
+        if (by_id or len(group) > 1) and (len(identity) != 1 or identity.isna().any().any()
+                               or any(not str(v).strip() for v in identity.iloc[0])):
+            raise ValueError(f"conflicting or incomplete gene identity for {symbol}: "
+                             f"{identity.to_dict('records')}")
+        row = group.iloc[0][columns].to_dict()
+        if repeated:
+            # A merged candidate must not pretend to have only its first origin.
+            if len(group[["source", "deletion_id"]].drop_duplicates()) > 1:
+                row["deletion_id"] = None
+            if group.source.nunique() > 1:
+                row["source"] = "multiple"
+            ordered = group.sort_values(["source", "deletion_id", "interval_chrom", "interval_start", "interval_end"])
+            records = ordered.astype(object).where(pd.notna(ordered), None).to_dict("records")
+            row["candidate_provenance"] = json.dumps(records, ensure_ascii=False, allow_nan=False)
+        rows.append(row)
+    return pd.DataFrame(rows, columns=columns + (["candidate_provenance"] if repeated else []))
+
+
+def _check_missing_cnv_output(run, producer):
+    """A missing file after a recorded execution is not an unexecuted check."""
+    from .infercnv import InsufficientDataError
+    audit = run.outdir / "audit" / f"run_{producer}.json"
+    if audit.exists():
+        record = json.loads(audit.read_text())
+        message = f"missing upstream output from {producer}: {record.get('error', record.get('status'))}; rerun {producer}"
+        if record.get("validation_status") == "INSUFFICIENT_DATA":
+            raise InsufficientDataError(message)
+        raise ValueError(message)
+
+
+@_audited_stage("extract_genes")
+def cmd_extract_genes(cfg, run):
     outdir = _outdir(cfg)
-    genes = _load_gene_order(cfg)
+    mode = cfg.get("extract", {}).get("mode", "cnv")
+    if mode not in ("cnv", "intervals-only"):
+        raise ValueError("extract.mode must be cnv or intervals-only")
+    direct = mode == "intervals-only"
+    if direct or cfg.get("known_intervals"):
+        _check_known_intervals(cfg)
+    genes = _load_gene_order(cfg, run)
     cnv_cfg = cfg.get("infercnv", {})
     known = cfg.get("known_intervals", {}) or {}
     include_auto = cfg.get("extract", {}).get("include_auto_in_candidates", False)
+    if direct and include_auto:
+        raise ValueError("intervals-only cannot include auto CNV candidates")
 
     seg_path = outdir / "segments_all.csv"
-    auto = pd.read_csv(seg_path) if seg_path.exists() else pd.DataFrame(
-        columns=["chr", "start", "end", "resolution"])
+    auto = pd.DataFrame(columns=SEGMENT_COLUMNS + ["resolution"])
+    windows = pd.DataFrame(columns=["chr", "start", "end"])
+    if not direct and not seg_path.exists():
+        _check_missing_cnv_output(run, "call_segments")
+    if not direct and seg_path.exists():
+        run.input("segments_all.csv", seg_path, "call_segments", _stage_parameters(cfg, "call_segments"))
+        segments_record = json.loads(Path(run.data["upstream"]["call_segments"]["record"]).read_text())
+        infer_record = run.upstream("infercnv", _stage_parameters(cfg, "infercnv"))
+        if segments_record.get("upstream", {}).get("infercnv", {}).get("execution_id") != infer_record["execution_id"]:
+            raise ValueError("upstream mismatch: segments belong to another infercnv execution; rerun call-segments")
+        if infer_record.get("inputs", {}).get("gene_order") != run.data["inputs"]["gene_order"]:
+            raise ValueError("upstream gene-order checksum mismatch; rerun infercnv")
+        auto = pd.read_csv(seg_path)
+        for name, entry in segments_record.get("inputs", {}).items():
+            if name.startswith("window_signal_"):
+                run.input(f"validation/{name}", entry["path"], "infercnv", _stage_parameters(cfg, "infercnv"))
+                windows = pd.concat([windows, pd.read_csv(entry["path"], sep="\t")], ignore_index=True)
 
     # ---- interval genes (known + auto, tracked separately) ------------------
     interval_genes, known_rows, auto_rows = {}, [], []
     for iv_id, iv in known.items():
         g = genes_in_interval(genes, iv["chr"], iv["start"], iv["end"])
-        interval_genes[iv_id] = g
+        interval_genes[("known_interval", iv_id)] = g
         for _, r in g.iterrows():
             known_rows.append({"gene_symbol": r["gene_name"], "source": "known_interval",
                                "deletion_id": iv_id, "chrom": r["chrom"],
-                               "start": r["start"], "end": r["end"]})
+                               "start": r["start"], "end": r["end"],
+                               "gene_id": r.get("gene_id"), "strand": r.get("strand"),
+                               "genome_build": cfg["annotation"].get("genome_build"),
+                               "interval_chrom": iv["chr"], "interval_start": iv["start"],
+                               "interval_end": iv["end"]})
     for i, s in auto.iterrows():
         iv_id = f"auto_{s['resolution']}_{i}"
         g = genes_in_interval(genes, s["chr"], s["start"], s["end"])
-        interval_genes[iv_id] = g
+        interval_genes[("auto_segment", iv_id)] = g
         for _, r in g.iterrows():
             auto_rows.append({"gene_symbol": r["gene_name"], "source": "auto_segment",
                               "deletion_id": iv_id, "chrom": r["chrom"],
-                              "start": r["start"], "end": r["end"]})
+                              "start": r["start"], "end": r["end"],
+                              "gene_id": r.get("gene_id"), "strand": r.get("strand"),
+                              "genome_build": cfg["annotation"].get("genome_build"),
+                              "interval_chrom": s["chr"], "interval_start": s["start"],
+                              "interval_end": s["end"]})
 
-    known_cand = pd.DataFrame(known_rows)
-    auto_cand = pd.DataFrame(auto_rows)
-    if not known_cand.empty:
-        known_cand = known_cand.drop_duplicates(["gene_symbol", "deletion_id"])
-    if not auto_cand.empty:
-        auto_cand = auto_cand.drop_duplicates(["gene_symbol", "deletion_id"])
-        auto_cand.to_csv(outdir / "auto_segment_genes.csv", index=False)
-
+    known_origins = pd.DataFrame(known_rows, columns=PROVENANCE_COLUMNS)
+    auto_origins = pd.DataFrame(auto_rows, columns=PROVENANCE_COLUMNS)
+    origins = pd.concat([known_origins, auto_origins], ignore_index=True)
     # candidates.csv = the L1-ready input; auto segments are exploratory by default
-    cand = pd.concat([known_cand, auto_cand], ignore_index=True) if include_auto else known_cand
-    cand_all = pd.concat([known_cand, auto_cand], ignore_index=True)
-    if not cand.empty:
-        cand = cand.drop_duplicates(["gene_symbol", "deletion_id"])
-        cand.to_csv(outdir / "candidates.csv", index=False)
-    if not cand_all.empty:
-        cand_all = cand_all.drop_duplicates(["gene_symbol", "deletion_id"])
-        cand_all.to_csv(outdir / "candidates_all.csv", index=False)
+    cand = _unique_candidates(origins if include_auto else known_origins)
+    cand_all = _unique_candidates(origins, by_id=True)
+    auto_cand = _unique_candidates(auto_origins, by_id=True)
+    origins["in_candidates"] = (origins.source == "known_interval") | include_auto
+    origins.to_csv(outdir / "candidate_provenance.csv", index=False)
+    auto_cand.to_csv(outdir / "auto_segment_genes.csv", index=False)
+    cand.to_csv(outdir / "candidates.csv", index=False)
+    cand_all.to_csv(outdir / "candidates_all.csv", index=False)
     print(f"candidates.csv: {cand['gene_symbol'].nunique() if not cand.empty else 0} genes "
           f"(known intervals only={not include_auto}); "
-          f"candidates_all.csv: {cand_all['gene_symbol'].nunique() if not cand_all.empty else 0} genes")
+          f"candidates_all.csv: {len(cand_all)} gene IDs")
 
     # ---- expression QC -------------------------------------------------------
-    qc_df = pd.DataFrame()
-    all_iv_genes = (pd.concat(interval_genes.values()).drop_duplicates("gene_name")
+    qc_df = pd.DataFrame(columns=QC_COLUMNS)
+    all_iv_genes = (pd.concat(interval_genes.values()).drop_duplicates()
                     if interval_genes else pd.DataFrame())
     h5ad = outdir / "cnv_input.h5ad"
-    if not all_iv_genes.empty and h5ad.exists():
+    if not direct and not h5ad.exists():
+        # A completed inference may intentionally supply windows only (external producer).
+        # Failed/invalidated inference must still fail extraction even without a file.
+        audit = outdir / "audit" / "run_infercnv.json"
+        if audit.exists():
+            record = json.loads(audit.read_text())
+            if record.get("status") != "success" or "cnv_input.h5ad" in record.get("outputs", {}):
+                _check_missing_cnv_output(run, "infercnv")
+    run.data["expression_qc"] = {"status": "not_evaluated", "reason": (
+        "intervals-only: CNV and expression QC not requested" if direct else "no interval genes or no h5ad")}
+    if not direct and not all_iv_genes.empty and h5ad.exists():
+        run.input("cnv_input.h5ad", h5ad, "infercnv", _stage_parameters(cfg, "infercnv"))
+        parent = json.loads(Path(run.data["upstream"]["infercnv"]["record"]).read_text())
+        if parent.get("inputs", {}).get("gene_order") != run.data["inputs"]["gene_order"]:
+            raise ValueError("upstream gene-order checksum mismatch; rerun infercnv")
         import anndata
         adata = anndata.read_h5ad(h5ad)
         qc_df = interval_gene_qc(adata, all_iv_genes, group_col="group",
                                  patient_cat=cnv_cfg.get("patient_group", "patient"),
                                  ref_cat=cnv_cfg.get("reference_group", "reference"),
                                  layer="counts")
-        qc_df.to_csv(outdir / "interval_gene_expression_qc.csv", index=False)
+        run.data["expression_qc"] = {"status": "success"}
+    qc_df.to_csv(outdir / "interval_gene_expression_qc.csv", index=False)
 
     # ---- validation vs known intervals ----------------------------------------
     val_cfg = cfg.get("validation", {})
     min_ov = val_cfg.get("min_overlap_frac", 0.5)
     validations = []
     for iv_id, iv in known.items():
-        g = interval_genes.get(iv_id, pd.DataFrame())
+        g = interval_genes.get(("known_interval", iv_id), pd.DataFrame())
         overlaps = [segment_overlap_frac(s["chr"], s["start"], s["end"],
                                          iv["chr"], iv["start"], iv["end"])
                     for _, s in auto.iterrows()]
         best_ov = max(overlaps) if overlaps else 0.0
         markers = iv.get("markers", [])
-        found = set(qc_df.loc[qc_df["found"] == True, "gene_name"]) if not qc_df.empty else set()
+        iv_qc = (qc_df[qc_df["gene_id"].isin(g["gene_id"])]
+                 if "gene_id" in qc_df and "gene_id" in g else qc_df)
+        found = set(iv_qc.loc[iv_qc["found"] == True, "gene_name"]) if not iv_qc.empty else set()
         iv_genes_found = set(g["gene_name"]) & found
-        iv_fc = (qc_df[qc_df["gene_name"].isin(iv_genes_found)]["log2fc_patient_vs_ref"].mean()
-                 if not qc_df.empty and iv_genes_found else float("nan"))
+        iv_fc = (iv_qc[iv_qc["gene_name"].isin(iv_genes_found)]["log2fc_patient_vs_ref"].mean()
+                 if not iv_qc.empty and iv_genes_found else float("nan"))
+        reasons = []
+        cnv_status, expression_status = "NOT_EVALUATED", "NOT_EVALUATED"
+        if direct:
+            reasons.append("intervals-only: CNV and expression QC not requested")
+        else:
+            if not seg_path.exists():
+                reasons.append("CNV: call-segments not executed")
+            elif not any(segment_overlap_frac(s["chr"], s["start"], s["end"],
+                                              iv["chr"], iv["start"], iv["end"]) > 0
+                         for _, s in windows.iterrows()):
+                cnv_status = "INSUFFICIENT_DATA"
+                reasons.append("CNV: no inferred windows overlap this interval")
+            else:
+                cnv_status = "PASS" if best_ov >= min_ov else "FAIL"
+            if not h5ad.exists():
+                reasons.append("expression: cnv_input.h5ad unavailable; QC not executed")
+            elif not markers or not iv_genes_found:
+                expression_status = "INSUFFICIENT_DATA"
+                reasons.append("expression: no configured markers or no interval genes in expression data")
+            else:
+                expression_status = "PASS" if all(m in found for m in markers) else "FAIL"
         validations.append({
             "interval": iv_id,
             "n_genes": int(len(g)),
-            "n_genes_in_expression": int(len(iv_genes_found)),
+            "n_genes_in_expression": np.nan if expression_status == "NOT_EVALUATED" else int(len(iv_genes_found)),
             "mean_log2fc_interval_genes": float(iv_fc),
-            "auto_overlap_frac": float(best_ov),
-            "AC-CNV-1 (auto recovers known interval)": "PASS" if best_ov >= min_ov else "FAIL",
+            "auto_overlap_frac": float(best_ov) if cnv_status in ("PASS", "FAIL") else np.nan,
+            "AC-CNV-1 (auto recovers known interval)": cnv_status,
             "markers": ",".join(markers),
             "markers_in_expression": ",".join(m for m in markers if m in found),
-            "AC-CNV-2 (markers detected in data)": (
-                "PASS" if markers and all(m in found for m in markers) else "FAIL"),
+            "AC-CNV-2 (markers detected in data)": expression_status,
+            "reason": "; ".join(reasons),
         })
-    val = pd.DataFrame(validations)
-    if not val.empty:
-        val.to_csv(outdir / "validation_known_intervals.csv", index=False)
+    val = pd.DataFrame(validations, columns=VALIDATION_COLUMNS)
+    val.to_csv(outdir / "validation_known_intervals.csv", index=False)
 
     _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
                   known_genes=set(pd.concat([g for k, g in interval_genes.items()
-                                             if k in known])["gene_name"]) if known else set())
-    _write_audit(cfg, outdir, "extract_genes", extra={
+                                             if k[0] == "known_interval"])[
+                                                 "gene_id" if "gene_id" in qc_df else "gene_name"]) if known else set())
+    run.data.update({
         "n_candidates": int(cand["gene_symbol"].nunique()) if not cand.empty else 0,
-        "validation": validations})
+        "validation": val.astype(object).where(pd.notna(val), None).to_dict("records")})
     return cand, qc_df, val
 
 
@@ -338,26 +628,33 @@ def cmd_extract_genes(cfg):
 def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
                   known_genes=None):
     lines = ["# scRNA-seq → 缺失区间基因 工作流报告", ""]
+    direct = cfg.get("extract", {}).get("mode", "cnv") == "intervals-only"
+    lines.append(f"提取模式: {'intervals-only（仅区间；未运行 CNV/表达验证）' if direct else 'cnv'}")
     lines.append(f"项目: {cfg.get('project')} · "
-                 f"样本: {', '.join(s['id'] + '(' + s['group'] + ')' for s in cfg['samples'])}")
+                 f"样本: {', '.join(s['id'] + '(' + s['group'] + ')' for s in cfg.get('samples', [])) or '未提供（区间提取不需要样本）'}")
     lines.append("")
     lines.append("## 验收门槛 (AC)")
     lines.append("")
     if val.empty:
         lines.append("（config 中未配置 known_intervals，跳过验证）")
+    elif direct:
+        lines.append("| interval | 区间基因数 | CNV/表达验证 | 原因 |")
+        lines.append("|---|---|---|---|")
+        for _, r in val.iterrows():
+            lines.append(f"| {r['interval']} | {r['n_genes']} | NOT_EVALUATED | 仅输入区间，未请求 CNV/表达验证 |")
     else:
-        lines.append("| interval | 区间基因数 | 检出基因数 | 区间基因平均 log2FC | 自动发现覆盖率 | AC-CNV-1 | AC-CNV-2 |")
-        lines.append("|---|---|---|---|---|---|---|")
+        lines.append("| interval | 区间基因数 | 检出基因数 | 区间基因平均 log2FC | 自动发现覆盖率 | AC-CNV-1 | AC-CNV-2 | 原因 |")
+        lines.append("|---|---|---|---|---|---|---|---|")
         for _, r in val.iterrows():
             lines.append(f"| {r['interval']} | {r['n_genes']} | {r['n_genes_in_expression']} | "
                          f"{r['mean_log2fc_interval_genes']:.2f} | "
                          f"{r['auto_overlap_frac']:.0%} | "
                          f"{r['AC-CNV-1 (auto recovers known interval)']} | "
-                         f"{r['AC-CNV-2 (markers detected in data)']} |")
+                         f"{r['AC-CNV-2 (markers detected in data)']} | {r['reason']} |")
         lines.append("")
-        lines.append("> 区间基因平均 log2FC ≈ 0 并不否定缺失存在：本项目 E8 已发现"
-                     "杂合缺失在稳态 mRNA 层面被剂量补偿吸收（'mRNA 隐身'）。"
-                     "这也正是表达型 CNV 自动发现困难的机制原因。")
+        lines.append("> 区间基因平均 log2FC ≈ 0 并不否定缺失存在，也不能证明剂量补偿。"
+                     "测序深度、相对归一化、细胞组成与样本差异均可影响结果；"
+                     "缺失需独立 DNA 证据，补偿机制及蛋白水平需另行验证。")
         if (val["AC-CNV-1 (auto recovers known interval)"] == "FAIL").any():
             lines.append("")
             lines.append("> **AC-CNV-1 FAIL（负结果，预期内）**：表达型 CNV 推断未能自动恢复已知微缺失。"
@@ -367,7 +664,7 @@ def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
     lines.append("## 自动发现的缺失片段（探索性，需正交验证）")
     lines.append("")
     if auto.empty:
-        lines.append("（无）")
+        lines.append("（未执行；intervals-only 不读取自动分段）" if direct else "（无）")
     else:
         lines.append("| chr | start | end | 窗口数 | mean_z | resolution |")
         lines.append("|---|---|---|---|---|---|")
@@ -382,22 +679,26 @@ def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
                  f"{cand['gene_symbol'].nunique() if not cand.empty else 0} 个基因"
                  f"{'（含自动片段基因）' if include_auto else '（仅已知临床区间，推荐）'}")
     lines.append(f"- `candidates_all.csv`（已知区间 + 自动片段并集）: "
-                 f"{cand_all['gene_symbol'].nunique() if not cand_all.empty else 0} 个基因")
+                 f"{len(cand_all)} 个基因编号；不同编号共用符号时分行保留")
     lines.append(f"- `auto_segment_genes.csv`（仅自动片段，探索性）")
+    lines.append("- `candidate_provenance.csv`：逐条提取来源、基因身份、参考基因组与区间坐标；"
+                 "`in_candidates` 标识是否纳入 L1 输入。")
+    lines.append("- 每个基因仅进入候选一次；存在重复提取时，`candidate_provenance` JSON 字段"
+                 "保留各候选全部来源并传到排名。多来源候选的 `deletion_id` 留空，混合来源的 `source` 为 `multiple`。")
     lines.append("")
     lines.append("接入 L1 管线：")
     lines.append("```bash")
     lines.append(f"cp {outdir}/candidates.csv input/candidates.csv")
     lines.append("python -m src.normalize --input input/candidates.csv "
-                 "--out data/normalized.csv --hgnc-alias data/hgnc_aliases.tsv")
+                 "--out outputs_repro/normalized.csv --hgnc-alias data/hgnc_aliases.tsv")
     lines.append("```")
     lines.append("")
     lines.append("## 区间基因表达 QC（防 E6 型 pivot，仅已知临床区间）")
     lines.append("")
-    qc_show = (qc_df[qc_df["gene_name"].isin(known_genes)] if known_genes else qc_df) \
+    qc_show = (qc_df[qc_df["gene_id" if "gene_id" in qc_df else "gene_name"].isin(known_genes)] if known_genes else qc_df) \
         if not qc_df.empty else qc_df
     if qc_show.empty:
-        lines.append("（无 h5ad 或无区间基因，跳过）")
+        lines.append("（NOT_EVALUATED：intervals-only 不读取表达数据）" if direct else "（无 h5ad 或无区间基因，跳过）")
     else:
         sub = qc_show.sort_values("log2fc_patient_vs_ref").head(10)
         lines.append("患者 vs 对照 log2FC 最低的 10 个区间基因：")
@@ -423,7 +724,9 @@ def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
     lines.append("- 已知临床区间的基因提取**不依赖**表达信号，AC-CNV-1 失败不影响 candidates.csv 的生成。")
     lines.append("- 表达 QC 用 raw counts；log2FC 加 0.5 伪计数。")
     lines.append("")
-    lines.append("审计: `audit/run_*.json` · 热图: `heatmap_patient.png`")
+    lines.append("审计: `audit/run_extract_genes.json`（含输入/输出校验和、参数与执行状态）")
+    if not direct:
+        lines.append("热图是否生成请查 infercnv 审计中的 heatmap 状态；不以目录中存在同名文件作为成功依据。")
     (outdir / "cnv_report.md").write_text("\n".join(lines))
     print(f"report → {outdir / 'cnv_report.md'}")
 
@@ -436,24 +739,33 @@ def main():
                  "call-segments", "extract-genes", "all"):
         p = sub.add_parser(name)
         p.add_argument("--config", required=True)
+        if name == "extract-genes":
+            p.add_argument("--mode", choices=("cnv", "intervals-only"),
+                           help="explicitly skip CNV/expression inputs with intervals-only")
     args = ap.parse_args()
-    cfg = load_config(args.config)
-
-    if args.cmd == "stage-samples":
-        cmd_stage_samples(cfg)
-    elif args.cmd == "prepare-order":
-        cmd_prepare_order(cfg)
-    elif args.cmd == "infercnv":
-        cmd_infercnv(cfg)
-    elif args.cmd == "call-segments":
-        cmd_call_segments(cfg)
-    elif args.cmd == "extract-genes":
-        cmd_extract_genes(cfg)
-    elif args.cmd == "all":
-        cmd_prepare_order(cfg)
-        cmd_infercnv(cfg)
-        cmd_call_segments(cfg)
-        cmd_extract_genes(cfg)
+    try:
+        cfg = load_config(args.config)
+        if getattr(args, "mode", None):
+            cfg.setdefault("extract", {})["mode"] = args.mode
+        if args.cmd == "stage-samples":
+            cmd_stage_samples(cfg)
+        elif args.cmd == "prepare-order":
+            cmd_prepare_order(cfg)
+        elif args.cmd == "infercnv":
+            cmd_infercnv(cfg)
+        elif args.cmd == "call-segments":
+            cmd_call_segments(cfg)
+        elif args.cmd == "extract-genes":
+            cmd_extract_genes(cfg)
+        elif args.cmd == "all":
+            if cfg.get("extract", {}).get("mode") == "intervals-only":
+                raise ValueError("intervals-only: use extract-genes instead of all; no CNV steps are needed")
+            cmd_prepare_order(cfg)
+            cmd_infercnv(cfg)
+            cmd_call_segments(cfg)
+            cmd_extract_genes(cfg)
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        ap.error(f"{args.cmd}: {exc}")
 
 
 if __name__ == "__main__":

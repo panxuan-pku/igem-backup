@@ -1,9 +1,0 @@
-# Reproduced on Python 3.11.15, macOS arm64. Install into a new venv.
-numpy==2.4.6
-pandas==2.3.3
-PyYAML==6.0.3
-pyarrow==25.0.1
-scipy==1.17.1
-anndata==0.12.19
-matplotlib==3.11.1
-requests>=2.32,<3

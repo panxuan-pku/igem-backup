@@ -1,142 +1,97 @@
 #!/usr/bin/env python3
-"""Recessive disease gene filter (v2.1 — 质询 #2, #4).
+"""Annotate reported recessive inheritance, not absence of dominant effects.
 
-Marks genes known to cause disease only in biallelic/compound-heterozygous
-state.  These genes will get a high *gnomAD* constraint score (no homozygous
-knockouts in the population) but their **heterozygous** deletion may have no
-phenotype — the very scenario SINEUP is targeting.
-
-Data sources (public, versioned):
-  * OMIM genemap2.txt (mim2gene) — inheritance column
-  * ClinVar gene-specific summaries — optional augmentation
-
-Output: CSV with hgnc_id + recessive flag, usable by merge_evidence.
+gnomAD pLI/LOEUF measure depletion of predicted loss-of-function variation,
+not inheritance. Default scoring is neutral; downweighting is opt-in heuristic.
 """
 import argparse
-import sys
+from pathlib import Path
 import pandas as pd
-
-
-RECESSIVE_INHERITANCE = {
-    "Autosomal recessive",
-    "autosomal recessive",
-    "X-linked recessive",
-    "Recessive",
-}
+from src.normalize import load_alias_map
 
 
 def load_omim_recessive(path):
-    """Parse OMIM genemap2.txt and return set of HGNC ids for recessive genes.
+    """Read named genemap2 columns; return autosomal recessive symbols.
 
-    Expected columns (tab-separated, no header):
-      # Chromosome  Genomic Position Start ... Gene Symbols  ... Phenotypes ...
-    Fields we care about: column ~10-13 (symbols), column ~8 (inheritance).
+    Mixed dominant/recessive rows are not tagged. X-linked inheritance needs
+    sex/ploidy context and is not treated as autosomal recessive here.
     """
+    with open(path) as f:
+        header_row = next((i for i, line in enumerate(f)
+                           if "\tPhenotypes\t" in line and "Approved Gene Symbol" in line), None)
+    if header_row is None:
+        raise ValueError("OMIM genemap2: missing named Phenotypes/Approved Gene Symbol columns")
+    df = pd.read_csv(path, sep="\t", skiprows=header_row, dtype=str)
+    df.columns = df.columns.str.lstrip("#").str.strip()
     recessive = set()
-    try:
-        df = pd.read_csv(path, sep="\t", comment="#", header=None, dtype=str)
-    except Exception:
-        print(f"WARN: cannot parse OMIM file {path} — skipping recessive filter",
-              file=sys.stderr)
-        return recessive
-
     for _, row in df.iterrows():
-        inheritance = str(row.iloc[8]) if len(row) > 8 else ""
-        if any(inh.lower() in {r.lower() for r in RECESSIVE_INHERITANCE}
-               for inh in inheritance.split(",")):
-            symbols = str(row.iloc[10]) if len(row) > 10 else ""
-            for sym in symbols.split(","):
-                recessive.add(sym.strip().upper())
+        inheritance = str(row["Phenotypes"]).lower()
+        if "autosomal recessive" in inheritance and "dominant" not in inheritance:
+            symbols = row.get("Approved Gene Symbol")
+            if pd.isna(symbols):
+                symbols = row.get("Gene Symbols", "")
+            if pd.notna(symbols):
+                recessive.update(s.strip().upper() for s in symbols.split(",") if s.strip())
     return recessive
 
 
 def load_clinvar_recessive(path):
-    """Parse ClinVar gene-specific summary (optional)."""
-    recessive = set()
+    """Read an explicitly prepared inheritance table, not variant_summary.txt."""
     if path is None:
-        return recessive
-    try:
-        df = pd.read_csv(path, sep="\t", dtype=str)
-    except Exception:
-        print(f"WARN: cannot parse ClinVar file {path}", file=sys.stderr)
-        return recessive
-    for _, row in df.iterrows():
-        if str(row.get("ModeOfInheritance", "")).strip().lower() in {
-            r.lower() for r in RECESSIVE_INHERITANCE
-        }:
-            recessive.add(str(row.get("GeneSymbol", "")).strip().upper())
-    return recessive
-
-
-def filter_recessive(candidates_df, recessive_symbols, symbol_map):
-    """Add recessive annotations to candidates.
-
-    candidates_df: DataFrame with at least hgnc_id, input_symbol
-    symbol_map: dict {UPPERCASED symbol -> set of hgnc_ids} for reverse lookup
-    Returns DataFrame with added columns: recessive, recessive_source
-    """
-    recessive_hgnc = set()
-    for sym in recessive_symbols:
-        if sym in symbol_map:
-            recessive_hgnc.update(symbol_map[sym])
-
-    candidates = candidates_df.copy()
-    candidates["recessive"] = candidates["hgnc_id"].isin(recessive_hgnc)
-    candidates["recessive_source"] = candidates["recessive"].map(
-        {True: "OMIM", False: ""}
-    )
-    n_tagged = candidates["recessive"].sum()
-    print(f"recessive filter: {n_tagged}/{len(candidates)} genes tagged as recessive disease")
-    return candidates
+        return set()
+    df = pd.read_csv(path, sep="\t", dtype=str)
+    if not {"ModeOfInheritance", "GeneSymbol"} <= set(df.columns):
+        raise ValueError("ClinVar input must have GeneSymbol/ModeOfInheritance columns")
+    symbols = df["GeneSymbol"].str.strip().str.upper()
+    inheritance = df["ModeOfInheritance"].fillna("").str.strip().str.lower()
+    dominant = set(symbols[inheritance.str.contains("dominant")].dropna())
+    recessive = set(symbols[inheritance.eq("autosomal recessive")].dropna())
+    return recessive - dominant
 
 
 def build_symbol_map(aliases_path):
-    """From HGNC aliases file, build {uppercased symbol -> [hgnc_id, ...]}."""
-    df = pd.read_csv(aliases_path, sep=None, engine="python", dtype=str)
-    m = {}
-    for _, row in df.iterrows():
-        hid = row["hgnc_id"]
-        for col in ("symbol", "prev_symbol", "alias_symbol"):
-            for s in str(row.get(col, "")).split(","):
-                s = s.strip().upper()
-                if s:
-                    m.setdefault(s, set()).add(hid)
-    return m
+    return {s.upper(): {hid} for s, hid in load_alias_map(aliases_path).items()}
+
+
+def filter_recessive(candidates_df, recessive_symbols, symbol_map, source="OMIM"):
+    """False means no matching record, not proof of non-recessive inheritance."""
+    ids = set()
+    for sym in recessive_symbols:
+        ids.update(symbol_map.get(sym, set()))
+    candidates = candidates_df.copy()
+    candidates["hgnc_id"] = candidates["hgnc_id"].astype("string").str.strip()
+    candidates["recessive"] = candidates["hgnc_id"].isin(ids)
+    candidates["recessive_source"] = candidates["recessive"].map({True: source, False: ""})
+    return candidates
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--normalized", required=True)
     ap.add_argument("--hgnc-alias", required=True)
-    ap.add_argument("--omim", default=None, help="OMIM genemap2.txt")
-    ap.add_argument("--clinvar", default=None)
+    ap.add_argument("--omim", default=None, help="OMIM genemap2.txt with named header")
+    ap.add_argument("--clinvar", default=None, help="prepared GeneSymbol/ModeOfInheritance TSV")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-
-    norm = pd.read_csv(args.normalized)
-
-    recessive_symbols = set()
-    if args.omim:
-        recessive_symbols = load_omim_recessive(args.omim)
-        print(f"OMIM: {len(recessive_symbols)} recessive gene symbols loaded")
-
-    if args.clinvar:
-        clinvar_set = load_clinvar_recessive(args.clinvar)
-        recessive_symbols |= clinvar_set
-        print(f"ClinVar: {len(clinvar_set)} additional recessive symbols")
-
-    if not recessive_symbols:
-        print("WARN: No recessive gene source provided; writing unfiltered output",
-              file=sys.stderr)
-        norm["recessive"] = False
-        norm["recessive_source"] = ""
-        norm.to_csv(args.out, index=False)
-        return
-
+    result = pd.read_csv(args.normalized)
     sym_map = build_symbol_map(args.hgnc_alias)
-    result = filter_recessive(norm, recessive_symbols, sym_map)
+    sources = {}
+    if args.omim:
+        sources["OMIM"] = load_omim_recessive(args.omim)
+    if args.clinvar:
+        sources["ClinVar"] = load_clinvar_recessive(args.clinvar)
+    result["recessive"] = False
+    result["recessive_source"] = ""
+    result["recessive_assessment"] = "records_checked" if sources else "not_assessed"
+    for name, symbols in sources.items():
+        tagged = filter_recessive(result, symbols, sym_map, source=name)
+        mask = tagged["recessive"]
+        result["recessive"] |= mask
+        result.loc[mask, "recessive_source"] += name + ";"
+    result["recessive_source"] = result["recessive_source"].str.rstrip(";")
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(args.out, index=False)
-    print(f"wrote {args.out}")
+    print(f"wrote {args.out}: {result['recessive'].sum()} recessive annotations")
 
 
 if __name__ == "__main__":

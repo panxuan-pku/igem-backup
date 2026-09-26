@@ -3,35 +3,93 @@
 **/.venv/
 **/__pycache__/
 **/.pytest_cache/
+/test_artifacts/
 **/.benchmarks/
 **/.DS_Store
 *.py[cod]
 *.log
 
-# Generated CNV sample layouts are rebuilt from the six raw GEO files.
-03_pipeline/data/scrna/GSE283473/CTRL1/
-03_pipeline/data/scrna/GSE283473/WS1/
-03_pipeline/data/scrna/GSE283473/CTRL1_repro/
-03_pipeline/data/scrna/GSE283473/WS1_repro/
-
-# Local validation copies and newly generated artifacts are not release inputs.
+# Local validation copies and generated outputs.
 07_independent_reproduction_20260916/
 08_gitlab_export/
 09_github_export/
 03_pipeline/outputs_repro/
-05_tools/VirtualCellTool/test_artifacts/
-05_tools/VirtualCellTool/.mplconfig_repro/
-05_tools/VirtualCellTool/.mplconfig/
-05_tools/VirtualCellTool/.playwright-browsers/
+03_pipeline/outputs/review_20260919/sources/
 
-# Public raw data and regenerable products are fetched/rebuilt after clone.
+# Local agent knowledge and conversation-generated inventories/evidence.
+/00_docs/02_agent/
+/00_docs/04_acceptance/
+**/INVENTORY.yaml
+**/AGENT_*.yaml
+**/AGENT_*.yml
+**/*.visual-check.json
+/00_docs/CNV_UNRESOLVED_IDS_2026-09-25*
+/00_docs/01_guides/CR046_DEEPLOF_REVIEW.html
+/00_docs/01_guides/DOCUMENTATION_RULES.html
+/03_pipeline/outputs/**/audit/
+/03_pipeline/outputs/**/audit_*/
+/03_pipeline/outputs/**/*.audit.json
+
+# Historical source documents stay on disk until fresh-clone verification.
+/00_docs/03_history/
+**/docs/sources/
+/02_disease-williams/05_report/sources/
+/03_pipeline/outputs/sources/
+/03_pipeline/outputs/wbs/sources/
+/03_pipeline/docs/**/*.md
+/03_pipeline/outputs/**/*.md
+/06_epidemiology/README_原outputs索引.md
+/06_epidemiology/deliverables/**/*.md
+
+# Reports are published as self-contained HTML; source drafts stay local.
+/04_reports/**
+!/04_reports/**/
+!/04_reports/**/*.html
+/00_docs/06_project_history/agent/
+/00_docs/06_project_history/sources/
+/03_pipeline/docs/diagrams/
+
+# Third-party checkouts are installed from upstream, never vendored here.
+/05_tools/
+
+# All scientific inputs, matrices, weights and computed result tables stay local.
+# This includes small data: public clones obtain inputs separately and recompute.
+*.csv
+*.tsv
+*.h5ad
+*.h5
+*.loom
+*.npy
+*.npz
+*.pkl
+*.pt
+*.ckpt
+*.parquet
+*.mtx
+*.gz
+*.zip
+*.tar
 /01_disease-22q11.2/data/
 /02_disease-williams/01_rawdata/
-/02_disease-williams/03_intermediate/processed.h5ad
-/03_pipeline/data/scrna/GSE283473/
-/03_pipeline/outputs/cnv/cnv_input.h5ad
-/05_tools/SIGnature/model_files/model_files.tar.gz
-/05_tools/VirtualCellTool/gears_data/norman/
-/05_tools/VirtualCellTool/gears_data/norman.zip
-/05_tools/VirtualCellTool/data/ms_attribution_fp16.npy
-/05_tools/VirtualCellTool/data/cipher_*.npz
+/02_disease-williams/03_intermediate/
+/02_disease-williams/04_results/
+/03_pipeline/input/
+/03_pipeline/data/
+/03_pipeline/outputs/**/*.json
+/03_pipeline/outputs/**/*.txt
+/05_virtual_cell/data/
+/05_virtual_cell/gears_data/
+/05_virtual_cell/gears_ckpt/
+/05_virtual_cell/outputs/**
+!/05_virtual_cell/outputs/figures/
+!/05_virtual_cell/outputs/figures/*.png
+!/05_virtual_cell/outputs/figures/*.svg
+/05_virtual_cell/docs/*.md
+/05_virtual_cell/docs/*.json
+/05_virtual_cell/docs/architecture*
+/05_virtual_cell/test_artifacts/
+/05_virtual_cell/.mplconfig*/
+/05_virtual_cell/.playwright-browsers/
+/06_epidemiology/data/
+/06_epidemiology/deliverables/**/data/
+# Static report illustrations and synthetic test fixtures in source code remain public.

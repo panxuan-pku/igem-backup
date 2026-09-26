@@ -4,8 +4,9 @@
 Given scRNA-seq data with patient/control groups, computes per-gene
 compensation ratio and classification.
 
-A hemizygous deletion without compensation predicts ratio ≈ 0.5.
-Ratio ≈ 1.0 suggests transcriptional dosage compensation.
+Legacy compensation labels describe relative expression, not mechanisms.
+A ratio near one does not establish compensation, protein deficiency or
+SINEUP suitability. Cell composition and donor effects remain confounders.
 """
 import argparse
 import sys
@@ -23,12 +24,15 @@ COMPENSATION_THRESHOLDS = {
 def compute_compensation(adata, genes_of_interest, group_col="condition",
                          patient_cat="WS", ref_cat="CTRL",
                          layer="counts",
-                         min_detection_pct=0.01):
+                         min_detection_pct=0.01, library_size_col=None,
+                         full_gene_matrix=False):
     """For each gene, compute patient/control expression ratio and classify.
 
     Returns DataFrame: gene, ratio, compensation_class, mean_pat, mean_ref,
     pct_pat, pct_ref, n_pat, n_ref
     """
+    if len(genes_of_interest) == 0:
+        raise ValueError("candidate gene list is empty; check the input candidate table")
     if group_col not in adata.obs.columns:
         raise ValueError(f"adata.obs lacks {group_col!r}")
     groups = adata.obs[group_col].astype(str)
@@ -38,7 +42,24 @@ def compute_compensation(adata, genes_of_interest, group_col="condition",
         raise ValueError(f"No cells for {patient_cat!r} or {ref_cat!r}")
 
     X = adata.layers[layer] if layer else adata.X
+    data = X.data if hasattr(X, "tocsr") else np.asarray(X)
+    if not np.isfinite(data).all() or (data < 0).any() or not np.allclose(data, np.rint(data)):
+        raise ValueError("expression input must contain non-negative raw counts, not log/transformed values")
+    if library_size_col:
+        library_sizes = pd.to_numeric(adata.obs[library_size_col], errors="raise").to_numpy()
+    elif full_gene_matrix:
+        library_sizes = np.asarray(X.sum(axis=1)).ravel()
+    else:
+        raise ValueError("provide full-gene library_size_col or explicitly confirm full_gene_matrix; HVG subsets are not valid denominators")
+    if not np.isfinite(library_sizes).all() or (library_sizes <= 0).any():
+        raise ValueError("zero-library cells must be removed before relative expression analysis")
+    if (library_sizes + 1e-6 < np.asarray(X.sum(axis=1)).ravel()).any():
+        raise ValueError("full-gene library sizes cannot be smaller than matrix row sums")
     var_idx = pd.Index(adata.var_names.astype(str))
+    if not var_idx.is_unique:
+        raise ValueError("duplicate gene names in expression matrix")
+    if str(patient_cat) == str(ref_cat):
+        raise ValueError("patient and reference must be different groups")
 
     rows = []
     in_data = [g for g in genes_of_interest if g in var_idx]
@@ -46,11 +67,14 @@ def compute_compensation(adata, genes_of_interest, group_col="condition",
     if missing:
         print(f"WARN: {len(missing)} genes not in adata: {missing[:5]}...",
               file=sys.stderr)
+    if not in_data:
+        raise ValueError("no candidate genes match expression var_names; check gene symbols and input sources")
 
     for gene in in_data:
         gi = var_idx.get_loc(gene)
         col = X[:, gi]
         vals = col.toarray().ravel() if hasattr(col, "toarray") else np.asarray(col).ravel()
+        vals = vals / library_sizes * 10000  # all genes, not just interval genes
         pv, rv = vals[pat_mask], vals[ref_mask]
         mp, mr = float(pv.mean()), float(rv.mean())
         pp = float((pv > 0).mean())
@@ -77,6 +101,8 @@ def compute_compensation(adata, genes_of_interest, group_col="condition",
             "gene": gene,
             "compensation_ratio": round(ratio, 4) if not np.isnan(ratio) else np.nan,
             "compensation_class": classification,
+            "expression_basis": "mean_library_normalized_counts_per_10000",
+            "mechanism_status": "not_established",
             "mean_patient": round(mp, 4),
             "mean_reference": round(mr, 4),
             "pct_patient": round(pp, 4),
@@ -95,6 +121,8 @@ def main():
     ap.add_argument("--group-col", default="condition")
     ap.add_argument("--patient", default="WS")
     ap.add_argument("--reference", default="CTRL")
+    ap.add_argument("--library-size-col", help="obs column of full-gene raw library sizes, saved before gene subsetting")
+    ap.add_argument("--full-gene-matrix", action="store_true", help="explicitly confirm input counts include all measured genes, not HVGs")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -104,16 +132,27 @@ def main():
         print("FATAL: scanpy not installed", file=sys.stderr)
         sys.exit(3)
 
-    adata = sc.read_h5ad(args.h5ad)
-    genes_df = pd.read_csv(args.genes)
-    gene_col = "gene_symbol" if "gene_symbol" in genes_df.columns else genes_df.columns[0]
-    genes = genes_df[gene_col].dropna().astype(str).tolist()
-
-    result = compute_compensation(adata, genes,
-                                  group_col=args.group_col,
-                                  patient_cat=args.patient,
-                                  ref_cat=args.reference)
+    try:
+        genes_df = pd.read_csv(args.genes)
+        gene_col = "gene_symbol" if "gene_symbol" in genes_df.columns else genes_df.columns[0]
+        genes = genes_df[gene_col].dropna().astype(str).tolist()
+        if not genes:
+            raise ValueError("candidate gene list is empty; check the input candidate table")
+        adata = sc.read_h5ad(args.h5ad)
+        result = compute_compensation(adata, genes,
+                                      group_col=args.group_col,
+                                      patient_cat=args.patient,
+                                      ref_cat=args.reference,
+                                      library_size_col=args.library_size_col,
+                                      full_gene_matrix=args.full_gene_matrix)
+    except pd.errors.EmptyDataError:
+        ap.error(f"{args.genes}: candidate gene list is empty")
+    except (OSError, ValueError, KeyError) as exc:
+        ap.error(f"compensation input ({args.genes}, {args.h5ad}): {exc}")
+    from pathlib import Path
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(args.out, index=False)
+    print("WARNING: legacy labels describe relative RNA only; compensation mechanism and protein status are not established")
     print(f"wrote {args.out}: {len(result)} genes assessed")
 
     # summary

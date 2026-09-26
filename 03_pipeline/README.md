@@ -1,32 +1,49 @@
 # 微缺失区间候选基因筛选管线
 
-本目录包含可直接运行的 WBS/WHS 示例输入、证据表、配置、源码和测试。核心筛选不需要 GEO 单细胞原始文件；可选 CNV 工作流要按仓库根目录 README 下载 GSE283473。运行环境由仓库根目录的 `scripts/setup_envs.sh` 创建；旧 `.venv` 不属于交付内容。
+## 1. 阅读入口
 
-## 从克隆目录运行
+- **负责人：** [流程、操作与文件盘点](docs/index.html)。编号章节先讲如何使用，技术细节按需展开。
+- **工程验证：** [测试与技术参考](docs/reference/index.html)。
 
-先在仓库根目录执行 `git lfs pull` 和 `bash scripts/setup_envs.sh`，再进入本目录：
+## 2. 唯一安装入口
+
+在仓库根目录，准备 Python 3.11 后执行：
 
 ```bash
-cd 03_pipeline
-../.venv/pipeline/bin/python -m pytest tests/ -q
-../.venv/pipeline/bin/python -m src.normalize \
-  --input input/candidates.csv --out outputs_repro/wbs_normalized.csv \
-  --hgnc-alias data/hgnc_aliases.tsv
-../.venv/pipeline/bin/python -m src.merge_evidence \
-  --normalized outputs_repro/wbs_normalized.csv --config config/pipeline.yaml \
-  --out outputs_repro/wbs_evidence.parquet --audit outputs_repro/wbs_audit
-../.venv/pipeline/bin/python -m src.consensus_v2 \
-  --evidence outputs_repro/wbs_evidence.parquet --ai-scores outputs/ai_scores.csv \
-  --config config/pipeline.yaml --mode rank --controls input/controls_wbs.txt \
-  --sensitivity --out outputs_repro/wbs_ranked.csv --report outputs_repro/wbs_report.md
+bash scripts/setup_envs.sh --pipeline-only
+.venv/pipeline/bin/python scripts/test_pipeline.py
 ```
 
-WHS 用 `input/candidates_whs.csv`、同一个 `config/pipeline.yaml` 和对应输出路径重复这三步；`controls_whs.txt` 是否适用于该次排序应按研究目的选用。所有新输出写入 `outputs_repro/`，不会覆盖历史报告。`merge_evidence` 默认读本目录的 `data/`，也支持显式 `--data-dir`；缺少必需数据会失败，避免生成看似成功的空证据。
+安装会清除并重建 `.venv/pipeline`，依赖只读取 `03_pipeline/requirements.txt`；`pyproject.toml` 的包依赖也引用同一文件。旧 `uv.lock` 已删除，历史 uv 安装/运行命令不再是当前入口。
 
-## 模式与解释
+接着按[数据准备与运行说明](../00_docs/01_guides/DATA_SETUP.html)执行三步筛选。新疾病需更换候选、显式控制基因（未设置时用 `[]` 或空控制文件）、独立输出目录；`config/pipeline.yaml` 的控制清单不能直接当作每个新疾病的控制基因。
 
-`src.consensus_v2` 支持 `auto`、`validate`、`rank`、`full`、`exploratory`。`rank` 用于有争议候选排序；`validate` 面向预先确定的基因；`full` 加入补偿状态集成；`exploratory` 面向未知区间，不给实验建议。配置权重在 `config/`。当前 WBS 正对照清单是 4 个，不是旧文档所写的 6 个；旧 WHS 输出使用过不同配置，不能当作当前配置的逐值基准。
+已完成首批 12 项及源码 18 项整理。源码盘点见 Agent 记录（仅本地）及[阅读页第 5.2 节](docs/index.html#source-inventory)；测试 24 项已原位保留，见 Agent 测试盘点（仅本地）与[阅读页第 5.4 节](docs/index.html#tests-inventory)；数据 15 项已整理，见数据盘点（仅本地）和[阅读页第 5.5 节](docs/index.html#data-inventory)；输出和其余文档继续逐批盘点。旧版 `src.consensus` 已退役，当前评分入口为 `src.consensus_v2`。CNV 自动识别开发、项目合并及科学重跑继续暂停。
 
-AI 预评分文件 `outputs/ai_scores.csv` 是可选输入，不能替代 ClinGen、gnomAD、HPA 数据。CNV 单细胞工作流是可选上游功能，见 [`docs/cnv_workflow.md`](docs/cnv_workflow.md)；需要另装 `requirements-cnv.txt`，下载六个原始 GEO 文件，再由 `stage-samples` 重建样本布局。不要使用历史留下的、指向项目外部的样本符号链接。
+<a id="data-sources"></a>
+## 3. 数据从哪里获得
 
-实验归档与历史输出索引见 [`outputs/README.md`](outputs/README.md)。历史记录只说明当时运行条件，不保证与现行配置一致。
+**所有数据不入库，需从上游获取或自行生成。** 下表用于查找上游和准备新版本，不表示今天下载的数据与历史快照相同。文件放在 `03_pipeline/data/`；自备完整证据目录可用 `merge_evidence --data-dir` 指定。
+
+| 数据 | 官方入口与获取方法 | 管线实际读取的文件名及要求 |
+| --- | --- | --- |
+| ClinGen 剂量敏感性 | [官方 FTP 目录](https://ftp.clinicalgenome.org/)：选择 `ClinGen_gene_curation_list_GRCh38.tsv` | 保存为 `clinGen_gene_curation_list_GRCh38.tsv`（注意本地名称大小写）；保留 `#Gene Symbol`、`Haploinsufficiency Score`、`Triplosensitivity Score` 表头及原始注释。 |
+| gnomAD 约束指标 | [下载页](https://gnomad.broadinstitute.org/downloads) · [constraint 说明](https://gnomad.broadinstitute.org/help/constraint)：查找目标版本的基因约束表；当前配置注释使用 v2.1.1 | `gnomad_constraint.tsv`；需 `gene` 或 `gene_symbol`、`pLI`、`oe_lof_upper`。不能假定新版列名或统计口径兼容。 |
+| HPA 组织 RNA | [官方下载页](https://www.proteinatlas.org/about/download)：选择 Tissue 下的 RNA expression (consensus)，下载并解压 | `rna_tissue_consensus.tsv`；需 `Gene name`、`Tissue`、`nTPM`。旧登记中的 `rna_expression_consensus.tsv` 不是当前读取名。 |
+| HGNC 基因命名 | [官方自定义下载说明](https://www.genenames.org/help/custom-downloads/)：导出命名及历史别名字段的 TSV | `hgnc_aliases.tsv`；至少 `hgnc_id`、`symbol`，保留 `alias_symbol`、`prev_symbol`；DeepLOF 按编号转换还需要 `ensembl_gene_id`。下载字段名需核对是否符合此契约。 |
+
+**核实边界（2026-09-25）：** 已查看 ClinGen 目录、HPA 下载页与 HGNC 字段说明；gnomAD 页面为动态页面，本次未能读取下载条目。未重新下载或替换数据，未证明本地快照与源站当前版本一致。HPA 当前页面标为 25.1；旧登记的 v23、基因数量和 `verified: 2025-09-01` 仅是历史文字，不作为核实证据。旧 ClinGen 校验和是占位符，不能用于校验。
+
+准备新数据时，记录实际下载 URL、版本、日期和 SHA256，核对以上字段，再在独立输出目录验证；不要覆盖历史数据后仍声称复现原结果。运行审计的 `data_checksums.txt` / `run.json` 保存实际读取文件的校验和，这能追溯内容，但不能单独证明来源真实。
+
+可选 DeepLOF 的来源与身份检查见 [技术参考中的 AI 分数契约](docs/reference/index.html)；正式替换仍暂停。可选 CNV 的 GEO / GENCODE 输入见 [技术参考中的 CNV 工作流](docs/reference/index.html)，不属于核心筛选必需下载。
+
+旧 `config/sources.json` 已退出配置目录：内容整合到本节，原文仅在 冻结来源（仅本地）保留，运行程序不读取该登记表。
+
+## 4. 可选扩展与 CNV 决策
+
+DeepLOF 已有预计算分数转换与评分读取接口，但正式数据替换和科学核验仍暂停；不等于已运行 DeepLOF 模型。表达比较和遗传方式注释脚本保留，未来可评估结合到管线中，本轮未自动接入。
+
+我们曾尝试从单细胞表达自动发现缺失区间，但真实数据未通过“找回已知区间”的检查；因此核心采用候选列表或已知区间提取。自动 CNV 开发暂停，代码保留，未来可能作为 DBTL 的探索与检验环节。原因、证据和边界见[阅读页第 5.3 节](docs/index.html#cnv-decision)。
+
+历史标准化表已归入 `outputs/history/normalized_legacy/`，仅供追溯。新运行将标准化结果写入独立输出目录；不要写回 `data/` 或覆盖归档。核心参考表及其配置路径保持原位。

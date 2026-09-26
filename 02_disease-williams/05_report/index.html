@@ -1,0 +1,160 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微缺失病计算通路 · 完整复盘</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5ef;color:#23392f;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.85}main{max-width:1050px;margin:auto;padding:42px 28px}h1{font-size:36px;line-height:1.4;margin:14px 0}h2{font-size:23px;margin:0 0 14px}h3{font-size:17px}a{color:#27654b;text-underline-offset:4px}nav{display:flex;flex-wrap:wrap;gap:18px;font-size:14px}.eyebrow{color:#62796a;font-size:13px;letter-spacing:1px;margin-top:32px}.lead{font-size:19px;color:#506658}.card{background:white;border:1px solid #d8e1d5;border-radius:16px;padding:26px;margin:22px 0}.note{background:#fff2dd;border-left:4px solid #b9853f;padding:18px 22px;border-radius:8px}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin:22px 0}.node{background:#eaf0e6;padding:18px;border-radius:12px}.node b{display:block}.missing{background:#fff1df}.arrow{color:#68856f;font-size:24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#edf2e9;padding:15px;border-radius:10px}.stat strong{display:block;font-size:28px}.muted,footer{font-size:14px;color:#65756b}code{font-size:13px;overflow-wrap:anywhere;background:#eef2ed;padding:2px 4px;border-radius:4px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #dce3d9;vertical-align:top}th{background:#eef3e9}summary{cursor:pointer;font-weight:650}li{margin:8px 0}footer{margin:28px 0}@media(max-width:700px){main{padding:22px 16px}h1{font-size:28px}.card{padding:19px}.flow,.grid{grid-template-columns:1fr}.arrow{text-align:center;transform:rotate(90deg)}td,th{min-width:100px}td:first-child,th:first-child{min-width:42px}}
+
+html{scroll-behavior:smooth}details{margin:14px 0;border:1px solid #d8e1d5;padding:16px;border-radius:10px}details[open] summary{margin-bottom:18px}summary{font-size:18px}blockquote{border-left:3px solid #b2c2ad;margin:12px 0;padding-left:16px;color:#617163}pre{overflow:auto;background:#edf2e9;padding:16px}h3{font-size:20px;margin-top:22px}hr{border:0;border-top:1px solid #dce3d9;margin:24px 0}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.steps a{padding:16px 12px;background:#eaf0e6;border-radius:10px;text-decoration:none}.steps b{display:block;font-size:26px}.toc{display:flex;flex-wrap:wrap;gap:10px 22px}section{scroll-margin-top:20px}tbody tr:nth-child(even){background:#fafbf8}@media(max-width:700px){.steps{grid-template-columns:1fr 1fr}table{font-size:13px}}@media print{details{break-inside:avoid}main{max-width:none}nav{display:none}}</style></head><body><main><div class="eyebrow">研究历史 / 2026-08-18 原报告 · 2026-09-25 阅读整理</div><h1>染色体微缺失疾病<br>计算验证通路复盘报告</h1><p class="lead">从选病到扰动验证：保留当时的问题、思路、方法、结果与不足。</p><blockquote>
+<p>项目：iGEM「RNA binder 剂量补偿治疗染色体微缺失病」的干实验（计算）部分
+日期：2026-08-18 ｜ 作者：船行渔歌（AI 辅助：Hermes Agent）</p>
+</blockquote><nav class="toc" aria-label="报告目录"><a href="#overview">1 阅读指引</a><a href="#background">2 背景与目标</a><a href="#five">3 五步复盘</a><a href="#limits">4 三个不足</a><a href="#conclusion">5 历史建议</a><a href="#glossary">6 术语表</a></nav><section id="overview" class="card"><h2>1. 先看这条探索路线</h2><div class="steps"><a href="#step1"><b>01</b>确定疾病</a><a href="#step2"><b>02</b>确定细胞类型</a><a href="#step3"><b>03</b>患者数据归因</a><a href="#step4"><b>04</b>候选基因列表</a><a href="#step5"><b>05</b>模拟扰动验证</a></div><p>想快速了解过程，可以先读每一步的“结果”和“不足”；要追溯设计，展开五步查看完整记录。术语集中放在文末，便于随时查阅。</p><div class="note"><strong>这是历史复盘，正文观点保留当时写法。</strong>“两个方法交叉验证”“归因无独立预测力”等表述尚不能直接当作已验证结论。现存结果能支持的观察是：GTF2I 扰动与疾病差异的整体相关接近零；归因与表达的绝对值相关很高，但带符号相关接近零。它们不能证明因果、治疗效果或模型普遍优劣。</div><p class="muted">下面完整保留原文；仅重新组织阅读顺序和版式。没有重新运行模型，也没有把当时的建议作为当前任务。</p></section><section id="background" class="card"><h2>2. 项目背景与目标</h2><p><strong>疾病</strong>：染色体微缺失病（22q11.2DS、Williams、Angelman 等）——一大段染色体丢失，段里 20~40 个基因同时&quot;单倍不足&quot;（剂量减半）。</p>
+<p><strong>药物</strong>：RNA binder（SINEUP 式）——结合目标基因 RNA 的特定区域，<strong>上调其翻译</strong>，把剩下的等位基因补回 100% 剂量（剂量补偿）。</p>
+<p><strong>本报告的目标</strong>：走通一条计算通路——<strong>确定疾病 → 确定细胞类型 → 患者单细胞数据归因 → 候选基因列表 → 模拟扰动后状态验证</strong>——并诚实记录每一步的问题、思路、方法、结果与不足。</p></section><section id="five" class="card"><h2>3. 通路五步：逐环节复盘</h2><p class="muted">每一步均保留“问题 → 思路 → 方法 → 结果 → 不足”，点击标题展开。</p><details id="step1" open><summary>第 1 步：确定疾病</summary><ul>
+<li><strong>【问题】</strong> ① 扰动工具 CellOracle 只能扰动 TF；② 微缺失病是多基因缺失、关键基因多数<strong>不是 TF</strong>；③ 人类微缺失病 scRNA 数据集中在脑类器官。</li>
+<li><strong>【思路】</strong> 选一个&quot;关键基因是 TF 且在数据里有表达&quot;的病。</li>
+<li><strong>【方法】</strong> 初选 22q11.2DS + TBX1（TF）→ 实测 TBX1 在脑里不表达 → <strong>pivot 到 Williams + GTF2I</strong>（脑表达 TF）。</li>
+<li><strong>【结果】</strong> 22q11.2DS 脑数据无法扰动（TBX1 仅 15/9293 细胞）；Williams + GTF2I 可行（GTF2I 表达于 82% 细胞）。</li>
+<li><strong>【不足】</strong> 只做了 Williams 一个病（原计划 2+ 病）；未覆盖&quot;单一主效基因&quot;型病（Angelman/UBE3A、Smith-Magenis/RAI1）；工具对非 TF 关键基因适用面窄。</li>
+</ul>
+</details><details id="step2"><summary>第 2 步：确定细胞类型</summary><ul>
+<li><strong>【问题】</strong> 脑类器官是<strong>多细胞类型混杂</strong>（16 个 cluster），非单一细胞类型；缺细胞类型注释。</li>
+<li><strong>【思路】</strong> 聚类后按 cluster 分别建 GRN；分析时做疾病 vs 对照的整体对比。</li>
+<li><strong>【方法】</strong> 6 样本合并（96969 细胞）→ QC → 归一化 → HVG（3000）+ 强制保留 Williams 区段基因 → PCA/UMAP/Leiden 聚类（16 cluster）。</li>
+<li><strong>【结果】</strong> 96969 细胞 × 3016 基因，16 cluster，GTF2I 确认高表达。</li>
+<li><strong>【不足】</strong> <strong>未注释具体细胞类型</strong>（哪种神经元/前体）；疾病 DE 是混合细胞类型的 bulk 对比，可能被&quot;细胞类型组成差异&quot;污染；未聚焦 GTF2I 最相关的细胞亚群。</li>
+</ul>
+</details><details id="step3"><summary>第 3 步：患者单细胞数据归因</summary><ul>
+<li><strong>【问题】</strong> SCimilarity 是单遍编码器（无级联）；<strong>归因 ≈ 表达</strong>（机械冗余）；归因 ≠ 因果（实测 r=0.02）；预测性测试证实<strong>归因无独立预测力</strong>。</li>
+<li><strong>【思路】</strong> 用归因看&quot;疾病里哪些基因的重要性变了&quot;，作为候选来源。</li>
+<li><strong>【方法】</strong> SIGnature + SCimilarity + IG 归因（5000 患者 + 5000 对照）→ 差异归因（WS − CTRL）。</li>
+<li><strong>【结果】</strong> 差异归因 ≈ 差异表达（<strong>r=0.949</strong>）；疾病信号 = 神经元分化基因（NEUROD2/6、SOX5、NFIA 等）；<strong>删失基因自身归因≈0 变化</strong>。</li>
+<li><strong>【不足】</strong> 归因只给&quot;重要性排序&quot;，不给因果、不给方向，且基本是差异表达的镜像、无独立信息。</li>
+</ul>
+</details><details id="step4"><summary>第 4 步：候选基因列表</summary><ul>
+<li><strong>【问题】</strong> 归因给出的候选是&quot;下游受影响程序&quot;，不是&quot;可扰动靶点&quot;；候选多数不是 TF，无法用 CellOracle 验证。</li>
+<li><strong>【思路】</strong> 从差异归因/差异表达提取候选，并与 CellOracle 结果交叉比对。</li>
+<li><strong>【方法】</strong> 取 |Δ归因| 最大的基因 + CellOracle&quot;被过表达拉回&quot;的 top 基因，求交集。</li>
+<li><strong>【结果】</strong> 候选 = 神经元分化程序（NEUROD2/6、SOX5、NFIA、ZEB2、BCL11B…）；<strong>CellOracle 与 SIGnature 两个独立方法收敛到同一批基因</strong>（交叉验证，本通路最硬的结果）。</li>
+<li><strong>【不足】</strong> 候选未经过&quot;可成药/可扰动&quot;筛选；候选基因与&quot;治疗靶点&quot;之间的<strong>因果链未建立</strong>。</li>
+</ul>
+</details><details id="step5"><summary>第 5 步：模拟扰动后状态验证</summary><ul>
+<li><strong>【问题】</strong> ① CellOracle 只能扰 TF，候选多数不是 TF；② <strong>单基因扰动 vs 多基因缺失不匹配</strong>；③ 删失基因自身 DE≈0，扰动效应弱。</li>
+<li><strong>【思路】</strong> 用 GTF2I（文献公认的脑表型主效基因）做敲低/过表达，看能否复现/逆转疾病转录组。</li>
+<li><strong>【方法】</strong> CellOracle GRN（预构建 hg38 promoter base GRN）→ <code>fit_GRN_for_simulation</code> → <code>simulate_shift</code>（GTF2I 敲低→0、过表达→2×）。</li>
+<li><strong>【结果】</strong> GTF2I 敲低 r=−0.046、过表达 r=+0.072（都 ≈0，无系统信号）；但 top 被恢复基因方向对（SOX5/NEUROD2/NFIA 等神经基因被过表达往上拉）。</li>
+<li><strong>【不足】</strong> 单基因扰动抓不到整个多基因缺失的转录组；无法扰动非 TF 基因（GTF2IRD1/ELN/LIMK1…）。</li>
+</ul></details></section><section id="limits" class="card"><h2>4. 贯穿全程的三个根本不足</h2><ol>
+<li><p><strong>翻译层盲区（最致命）</strong>：本项目药物是 RNA binder（<strong>蛋白层</strong>上调），而所有 mRNA 模型（SCimilarity/CellOracle/GEARS）都假设&quot;mRNA↔蛋白耦合成立&quot;——药物恰好人为打破这层耦合，<strong>归因和扰动都打在错误的一层</strong>，模型从结构上看不见药效。</p>
+</li>
+<li><p><strong>单基因 vs 多基因错配</strong>：微缺失病是多基因剂量敏感，而归因排序 + 单基因 TF 扰动都是单基因视角，只能抓到疾病信号的零头。</p>
+</li>
+<li><p><strong>删失基因稳态 mRNA 层面&quot;隐身&quot;</strong>：实测删失基因（GTF2I 等）的表达和重要性在患者里几乎不变（DE≈0、Δ归因≈0）——单倍不足效应在稳态 mRNA 上测不到，整条&quot;从 mRNA 数据找靶点&quot;的路都有天花板。</p>
+</li>
+</ol></section><section id="conclusion" class="card"><h2>5. 当时的结论与建议</h2><p class="muted">以下为原报告的历史判断，引用前须结合第 1 节的证据边界。</p><p><strong>结论</strong>：这条通路在&quot;转录层、单一主效 TF、有表达、单一细胞类型&quot;的理想条件下是通顺的（归因→候选→扰动验证，且两工具能交叉收敛）；但在本项目真实条件（翻译层 RNA binder + 多基因单倍不足 + 非 TF 关键基因 + 混合脑类器官）下，每一步都撞上结构性天花板。</p>
+<p><strong>最硬的正面资产</strong>：候选基因列表（神经元分化程序：NEUROD2/6、SOX5、NFIA、ZEB2、BCL11B）被两个独立工具交叉验证——可作为 iGEM 干实验结论，但须诚实标注它只是&quot;相关/候选&quot;，不是&quot;因果/可成药靶点&quot;。</p>
+<p><strong>建议</strong>：</p>
+<ul>
+<li>选病优先&quot;单一主效 + 脑表型 + 剂量敏感&quot;（如 Angelman/UBE3A、Smith-Magenis/RAI1）。</li>
+<li>若坚持 mRNA 工具，须明确&quot;转录层补偿 ≈ 翻译层补偿&quot;的假设，并注明 G 自身 mRNA 读数是盲区。</li>
+<li>翻译层药效的最终验证，仍需蛋白组/湿实验，mRNA 工具只能做&quot;候选生成&quot;。</li>
+</ul></section><section id="glossary" class="card"><h2>6. 术语表 · 24 项</h2><details><summary>展开完整术语与通俗解释</summary><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>术语</th>
+<th>通俗含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>转录因子（TF）</strong></td>
+<td>&quot;开关型&quot;基因：它的蛋白能结合 DNA，去激活/抑制别的基因。像&quot;总开关&quot;</td>
+</tr>
+<tr>
+<td><strong>归因（attribution）</strong></td>
+<td>用可解释 AI 算出&quot;每个基因对细胞身份有多重要&quot;的分数</td>
+</tr>
+<tr>
+<td><strong>差异归因</strong></td>
+<td>疾病细胞 vs 健康细胞的归因之差，看哪些基因的&quot;重要性&quot;在疾病里变了</td>
+</tr>
+<tr>
+<td><strong>Integrated Gradients（IG）</strong></td>
+<td>一种归因算法（沿&quot;全零→真实输入&quot;的路径积分梯度）</td>
+</tr>
+<tr>
+<td><strong>SCimilarity</strong></td>
+<td>Genentech 的单细胞基础模型（2300 万细胞预训练），把细胞表达编码成 128 维嵌入</td>
+</tr>
+<tr>
+<td><strong>SIGnature</strong></td>
+<td>Genentech 的归因框架，给 SCimilarity 等模型算每个基因的重要性</td>
+</tr>
+<tr>
+<td><strong>单细胞基础模型（FM）</strong></td>
+<td>在超大单细胞数据上预训练的神经网络，学到的嵌入能代表细胞状态</td>
+</tr>
+<tr>
+<td><strong>CellOracle</strong></td>
+<td>用基因调控网络（GRN）做&quot;计算机内基因扰动&quot;的工具</td>
+</tr>
+<tr>
+<td><strong>基因调控网络（GRN）</strong></td>
+<td>&quot;TF → 靶基因&quot;的有向调控关系图（谁控制谁）</td>
+</tr>
+<tr>
+<td><strong>单倍不足（haploinsufficiency）</strong></td>
+<td>两个等位基因丢了一个，剩下 50% 剂量不够用而致病</td>
+</tr>
+<tr>
+<td><strong>剂量补偿</strong></td>
+<td>把剩下的等位基因上调（转录或翻译），补回接近 100% 剂量</td>
+</tr>
+<tr>
+<td><strong>主效基因</strong></td>
+<td>一个病里起主要致病作用的基因（相对&quot;乘客基因&quot;而言）</td>
+</tr>
+<tr>
+<td><strong>motif</strong></td>
+<td>TF 结合 DNA 的短序列模式（用于推断 TF 调控关系）</td>
+</tr>
+<tr>
+<td><strong>差异表达（DE）</strong></td>
+<td>疾病 vs 健康的基因表达差异（最经典的找差异基因方法）</td>
+</tr>
+<tr>
+<td><strong>单遍编码器</strong></td>
+<td>只做&quot;输入→嵌入&quot;一次前向的模型，无法预测下游变化（无级联）</td>
+</tr>
+<tr>
+<td><strong>转录层 / 翻译层</strong></td>
+<td>基因表达的两个层次：转录产生 mRNA，翻译产生蛋白</td>
+</tr>
+<tr>
+<td><strong>RNA binder / SINEUP</strong></td>
+<td>结合 RNA 特定区域、上调其翻译的元件（<strong>本项目的药物机制</strong>）</td>
+</tr>
+<tr>
+<td><strong>反事实扰动</strong></td>
+<td>&quot;如果把这个基因改掉，细胞会怎样&quot;的模拟</td>
+</tr>
+<tr>
+<td><strong>级联（cascade）</strong></td>
+<td>扰动一个基因后，效应经调控网络逐层传播到下游</td>
+</tr>
+<tr>
+<td><strong>域迁移（domain shift）</strong></td>
+<td>模型训练数据与应用数据分布不同（如：癌细胞系 → 脑组织）</td>
+</tr>
+<tr>
+<td><strong>零样本外推</strong></td>
+<td>模型对没见过的基因/组织做预测</td>
+</tr>
+<tr>
+<td><strong>类器官（organoid）</strong></td>
+<td>干细胞分化成的微型组织（本报告用脑类器官）</td>
+</tr>
+<tr>
+<td><strong>iPSC</strong></td>
+<td>诱导多能干细胞</td>
+</tr>
+<tr>
+<td><strong>HVG（高变基因）</strong></td>
+<td>表达变化最大的基因，用于降维/聚类</td>
+</tr>
+</tbody></table></div></details></section><footer>三种重复格式已归一；这份 HTML 与 AGENT_REPORT.yaml 是两个阅读入口。sources 内只保存原文快照，不另行更新。<br>文档整理不代表历史科学结论已通过复核。<a href="#overview">返回阅读指引 ↑</a></footer></main></body></html>

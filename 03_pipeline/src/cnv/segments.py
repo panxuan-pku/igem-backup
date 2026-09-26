@@ -74,7 +74,7 @@ def filter_segments(segs, max_bp=None):
 
 def segment_overlap_frac(seg_chr, seg_start, seg_end, iv_chr, iv_start, iv_end):
     """Fraction of the known interval [iv_start, iv_end] covered by a segment."""
-    if str(seg_chr) != str(iv_chr):
+    if str(seg_chr).removeprefix("chr") != str(iv_chr).removeprefix("chr"):
         return 0.0
     ov = max(0, min(seg_end, iv_end) - max(seg_start, iv_start))
     return ov / max(1, iv_end - iv_start)

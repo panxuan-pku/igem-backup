@@ -1,0 +1,162 @@
+{
+  "policy": "All scientific data remain external; these hashes identify the pre-publication local snapshot, not a new validation or a claim that current upstream downloads are identical.",
+  "core": [
+    {
+      "path": "03_pipeline/input/candidates.csv",
+      "bytes": 2209,
+      "sha256": "f2a9991a8b80d3aa7794cedf05378ff2bdb156f2fce7aefe5c4f86e01381ce94"
+    },
+    {
+      "path": "03_pipeline/input/candidates_whs.csv",
+      "bytes": 1057,
+      "sha256": "f776340d335fba6b0802b4a54c2b75a99146b52d701fb8784db82690fb97f47f"
+    },
+    {
+      "path": "03_pipeline/input/controls_wbs.txt",
+      "bytes": 22,
+      "sha256": "ed9d2f3a34253d8df012fb08a4ac01b89bb3019ecf1324ea582374b265bb5cb6"
+    },
+    {
+      "path": "03_pipeline/data/hgnc_aliases.tsv",
+      "bytes": 187719861,
+      "sha256": "b0e18be4d7a6e6a9711d0cb94eba426b8251317798d164c8ba7f3c783c14682f"
+    },
+    {
+      "path": "03_pipeline/data/clinGen_gene_curation_list_GRCh38.tsv",
+      "bytes": 248495,
+      "sha256": "c888d46dd01797962214496bc8112d62b94fb63faff38851a7f0786b7f604e74"
+    },
+    {
+      "path": "03_pipeline/data/gnomad_constraint.tsv",
+      "bytes": 13203203,
+      "sha256": "78f14346180de3fb552747099d9a34238ca535924418a3596d75f45654837d69"
+    },
+    {
+      "path": "03_pipeline/data/rna_tissue_consensus.tsv",
+      "bytes": 37949495,
+      "sha256": "c49b5b33a076e3b9c1eb4f7d15d063ee936e07045e192ceccfeb9edcf1d90ddb"
+    },
+    {
+      "path": "03_pipeline/data/gencode.v44.basic.annotation.gtf.gz",
+      "bytes": 29570410,
+      "sha256": "3e52f82c63f8fd860bf632ccde10441c05751f4c342ad08c0a98e9e2700171a5"
+    },
+    {
+      "path": "03_pipeline/outputs/ai_scores.csv",
+      "bytes": 383465,
+      "sha256": "f2d6da21a54d2de73999dd2992f6bca01dc7102b9be25d8ef65a8145013f623d"
+    }
+  ],
+  "vct": [
+    {
+      "path": "05_virtual_cell/data/expr_aligned.npz",
+      "bytes": 4971541,
+      "sha256": "93388a9ba1836c3b322e99f22d81a3db4dbde9042e451e1116af53abe603aaca"
+    },
+    {
+      "path": "05_virtual_cell/data/embeddings.npy",
+      "bytes": 1382528,
+      "sha256": "7202f37a24d3518abb8d3d4ee129f5c442bd5db82619fa341709bd273a022e5c"
+    },
+    {
+      "path": "05_virtual_cell/data/meta.csv",
+      "bytes": 72616,
+      "sha256": "94f15eff93d3134a6fc82e6a515d38567cffb2384fa4ce60604f4e3954b85090"
+    },
+    {
+      "path": "05_virtual_cell/data/ms_expr.npz",
+      "bytes": 43314082,
+      "sha256": "ec7bc78f5a64d6d4eb6ad56b1940c9cc96a8abcb5690726a6b4dd260a807ce18"
+    },
+    {
+      "path": "05_virtual_cell/data/ms_embeddings.npy",
+      "bytes": 9113216,
+      "sha256": "c86a5735d72f860ef5777e269173a4730a4f14753aa04cb6fbaf88c1b1833d13"
+    },
+    {
+      "path": "05_virtual_cell/data/ms_web_meta.csv",
+      "bytes": 79771,
+      "sha256": "8bd5bcb6267cf658d4ce48d809496a0f5d34c73f3b62331284c1829d0f857320"
+    },
+    {
+      "path": "05_virtual_cell/data/ws_expr.npz",
+      "bytes": 27914548,
+      "sha256": "b9d8e16482b8e36a2459fa41b7c80f5e4519a25f6337501d91a3bbad477476c1"
+    },
+    {
+      "path": "05_virtual_cell/data/ws_embeddings.npy",
+      "bytes": 49648256,
+      "sha256": "a55685b6130a9056113b027cc83d47e4f91939ead538b2b2f0a1027162a378c9"
+    },
+    {
+      "path": "05_virtual_cell/data/ws_web_meta.csv",
+      "bytes": 606682,
+      "sha256": "eb7017d403102be9460eb73a0f28c2c670701f00579b5788bcc391cddb4a0563"
+    },
+    {
+      "path": "05_virtual_cell/data/umap.npy",
+      "bytes": 21728,
+      "sha256": "3828f6c80b1d8a453c90e269bc24a76eb2191e471d974c1263e82c282ce17dce"
+    },
+    {
+      "path": "05_virtual_cell/data/ms_umap.npy",
+      "bytes": 142520,
+      "sha256": "2dd37fe2b658812efd8cf6edd35002d48e3adb31fc713b22b778c2177559dc5b"
+    },
+    {
+      "path": "05_virtual_cell/data/ws_umap.npy",
+      "bytes": 775880,
+      "sha256": "934c499d59135abff38b9ec4426b310a5fdfc8b46466572b0733915e15694752"
+    },
+    {
+      "path": "05_virtual_cell/gears_ckpt/model.pt",
+      "bytes": 7538675,
+      "sha256": "d4f71164e2dcda492600a528d6dc4f35dceb3859f6420ae783bc742225c0300f"
+    },
+    {
+      "path": "05_virtual_cell/gears_ckpt/config.pkl",
+      "bytes": 1345996,
+      "sha256": "03bbd82451dd52a54713d646893e9c424b91a3800872f9154168e98c6d5dc24a"
+    },
+    {
+      "path": "05_tools/SIGnature/src/SIGnature/__init__.py",
+      "bytes": 667,
+      "sha256": "13817cd53b550b9633bfe5e535fba82f5247784a7209b8b3bf918631c02505f9"
+    },
+    {
+      "path": "05_tools/SIGnature/model_files/model_files/scimilarity/encoder.ckpt",
+      "bytes": 124616535,
+      "sha256": "a08f023788bdbded191e2d9344e5d4240ffc7d7505eca4e0b7a37526b858d19f"
+    },
+    {
+      "path": "05_tools/SIGnature/model_files/model_files/scimilarity/gene_order.tsv",
+      "bytes": 222628,
+      "sha256": "0a9aeacf7fc19399426273d8cfab8683253ec56b51be556d42edd115f125b8ca"
+    }
+  ],
+  "optional": [
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663068_CTRL1_barcodes.tsv.gz"
+    },
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663068_CTRL1_genes.tsv.gz"
+    },
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663068_CTRL1_matrix.mtx.gz"
+    },
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663071_WS1_barcodes.tsv.gz"
+    },
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663071_WS1_genes.tsv.gz"
+    },
+    {
+      "path": "03_pipeline/data/scrna/GSE283473/GSM8663071_WS1_matrix.mtx.gz"
+    },
+    {
+      "path": "05_virtual_cell/gears_data/norman/perturb_processed.h5ad",
+      "bytes": 2228610012,
+      "sha256": "23ffb0fac6a847ff927cf7509d80d85052bfefbfb97610786a2dafaaefa0b6a0"
+    }
+  ]
+}

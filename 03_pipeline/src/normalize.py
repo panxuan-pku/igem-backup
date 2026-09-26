@@ -2,39 +2,61 @@
 """
 Normalize candidate gene symbols to HGNC IDs.
 
-Reads input candidates.csv (one column 'gene_symbol'),
-builds alias map from data/hgnc_aliases.tsv, and writes data/normalized.csv
-with columns: hgnc_id, input_symbol, status.
+Reads input candidates.csv (required column 'gene_symbol'),
+builds alias map from data/hgnc_aliases.tsv, and writes to the path specified by --out
+with columns: hgnc_id, input_symbol, status, plus source, deletion_id,
+chrom, start, end, candidate_provenance when present in the input.
 """
 import argparse
 from pathlib import Path
 import pandas as pd
 import sys
+import re
+from src.output_paths import validate_output_paths
+
+EMPTY_CANDIDATES_ERROR = "candidate input is empty; check input or upstream filtering results"
 
 def load_alias_map(path):
     df = pd.read_csv(path, sep=None, engine="python", dtype=str)  # sniff , or \t
     df.columns = [c.strip() for c in df.columns]  # data files carry padded headers
-    m = {}
+    if not {"hgnc_id", "symbol"} <= set(df.columns):
+        raise ValueError("HGNC aliases require hgnc_id/symbol columns; check format and hydrate Git LFS pointers")
+    df["hgnc_id"] = df["hgnc_id"].str.strip()
+    df = df.dropna(subset=["hgnc_id", "symbol"])
+    m = dict(zip(df["symbol"].str.strip().str.lower(), df["hgnc_id"]))
+    aliases = {}
     for _, row in df.iterrows():
-        hg = row["hgnc_id"]
-        for alias in str(row.get("symbol", "")).split(","):
-            alias = alias.strip()
-            if alias:
-                m[alias.lower()] = hg
-        for alias in str(row.get("prev_symbol", "")).split(";"):
-            a = alias.strip()
-            if a and a not in m:
-                m[a.lower()] = hg
+        for col in ("prev_symbol", "alias_symbol"):
+            if pd.isna(row.get(col)):
+                continue
+            value = str(row[col]).strip()
+            # Padded TSV fields may retain the enclosing quotes after parsing.
+            if len(value) >= 2 and value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+            for alias in re.split(r"[,;|]", value):
+                a = alias.strip().lower()
+                if a:
+                    aliases.setdefault(a, set()).add(row["hgnc_id"])
+    # Approved symbols win; ambiguous historical aliases remain unresolved.
+    for alias, ids in aliases.items():
+        if alias not in m and len(ids) == 1:
+            m[alias] = next(iter(ids))
     return m
 
 def resolve(df, alias_map):
+    if df.empty:
+        raise ValueError(EMPTY_CANDIDATES_ERROR)
     out = []
     for s in df["gene_symbol"]:
-        st = s.strip()
+        st = str(s).strip() if pd.notna(s) else ""
         hid = alias_map.get(st.lower())
         status = "ok" if hid is not None else "unresolved"
         out.append({"hgnc_id": hid, "input_symbol": st, "status": status})
-    return pd.DataFrame(out)
+    normalized = pd.DataFrame(out)
+    for col in ("source", "deletion_id", "chrom", "start", "end", "candidate_provenance"):
+        if col in df.columns:
+            normalized[col] = df[col].reset_index(drop=True)
+    return normalized
 
 def main():
     ap = argparse.ArgumentParser()
@@ -43,7 +65,17 @@ def main():
     ap.add_argument("--hgnc-alias", required=True)
     args = ap.parse_args()
 
-    df = pd.read_csv(args.input)
+    try:
+        validate_output_paths([args.input, args.hgnc_alias], [args.out])
+    except (ValueError, OSError, RuntimeError) as exc:
+        ap.error(str(exc))
+
+    try:
+        df = pd.read_csv(args.input)
+    except pd.errors.EmptyDataError:
+        ap.error(EMPTY_CANDIDATES_ERROR)
+    if df.empty:
+        ap.error(EMPTY_CANDIDATES_ERROR)
     if "gene_symbol" not in df.columns:
         df.columns = [c.strip() for c in df.columns]
         if len(df.columns) != 1:

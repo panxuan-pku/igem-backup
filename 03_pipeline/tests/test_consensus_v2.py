@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 
 from src.consensus_v2 import (
-    DEFAULT_CONTROLS,
     _default_config,
     build_scoring_matrix,
     borda_points,
@@ -14,7 +13,10 @@ from src.consensus_v2 import (
     run_consensus,
 )
 
+TEST_CONTROLS = ["TBX1", "ELN", "KCTD13", "RAI1", "GTF2I"]
+
 CFG2 = load_v2_config({
+    "consensus_v2": {"tuning": {"positive_controls": TEST_CONTROLS}},
     "consensus": {"base_weights": {
         "clinGen_hi_score": 3, "gnomad_LOEUF": 2, "gnomad_pLI": 2,
         "DeepLOF_score": 1, "negative_hpa_organ": -2}},
@@ -79,7 +81,7 @@ def test_loo_tune_recovers_separable_signal():
     for i in range(40):
         rows.append({"hgnc_id": f"HGNC:{i}", "input_symbol": f"GENE{i}",
                      "gnomad_pLI": 0.1, "gnomad_LOEUF": 0.9})
-    for i, c in enumerate(DEFAULT_CONTROLS):
+    for i, c in enumerate(TEST_CONTROLS):
         rows.append({"hgnc_id": f"HGNC:C{i}", "input_symbol": c,
                      "gnomad_pLI": 0.99, "gnomad_LOEUF": 0.1})
     df = pd.DataFrame(rows)

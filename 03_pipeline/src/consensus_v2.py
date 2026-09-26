@@ -3,17 +3,17 @@
 Consensus v2 — normalized weighted scoring + Borda cross-check + optional
 leave-one-out positive-control weight tuning.
 
-Differences vs src/consensus.py (v1):
+Current behavior (the legacy v1 script was retired on 2026-09-25):
 1. Every continuous evidence is normalized (rank | zscore | raw) BEFORE
    weighting, so weights are comparable across differently-scaled sources
-   (v1 multiplied raw values of mixed scales by fixed weights).
+   (v1 used threshold-based weighted votes).
 2. HPA organ penalty reads per_organ_weight from config (v1 hard-coded -2)
    and is capped (hpa_penalty.cap) so multi-organ high expression cannot
    sink a gene without bound.
 3. Missing evidence is neutral: 0 contribution in the additive score and
    median points in Borda (config: borda.missing), never a hidden penalty.
 4. Optional Borda rank aggregation is reported next to the additive rank;
-   their Spearman agreement is shown in the report (agreement = confidence).
+   their Spearman agreement is a consistency diagnostic, not biological validation.
 5. Optional leave-one-out tuning of evidence weights against known driver
    genes (positive controls), maximizing recall@top-N with a simplicity
    tie-break (closest to default weights).
@@ -21,29 +21,33 @@ Differences vs src/consensus.py (v1):
 Expected evidence schema (see 工程化指导书 §3.4):
   hgnc_id, input_symbol,
   clinGen_hi_score (0-3), gnomad_pLI (0-1), gnomad_LOEUF (>=0, lower=constrained),
-  hpa_{organ}_expr (log1p TPM), optional AI scores
+  hpa_{organ}_expr (nTPM), optional AI scores
   (DeepLOF_score / DosaCNV_score / DeepGenePrior_score, 0-1).
 
-Drop-in CLI replacement for src/consensus.py, plus:
+Current ranking CLI options include:
   --controls PATH   txt with one positive-control symbol per line (overrides config)
   --tune            force-enable leave-one-out weight tuning
 """
 import argparse
 import itertools
+from src.phenotype_panels import load_phenotype_panels, describe_panels, render_phenotype_panels
 from pathlib import Path
 import sys
+import json
+from datetime import datetime, timezone
+from src.merge_evidence import sha256_file
+from src.output_paths import validate_output_paths
 
 import numpy as np
 import pandas as pd
 import yaml
 
-DEFAULT_CONTROLS = ["TBX1", "ELN", "KCTD13", "RAI1", "GTF2I"]
 HPA_DEFAULT_ORGANS = ["liver", "brain", "kidney", "gastrointestinal"]
 
 
 # ---------------------------------------------------------------- config
 def _default_config(cfg):
-    """Derive a v2 config from the v1 pipeline.yaml blocks (backwards compatible)."""
+    """Derive v2 scoring defaults from the v1 pipeline.yaml blocks."""
     v1w = cfg.get("consensus", {}).get("base_weights", {}) or {}
     hpa = cfg.get("hpa_filter", {}) or {}
     evidence = {}
@@ -57,8 +61,10 @@ def _default_config(cfg):
         else:
             direction = "higher_better"
         evidence[col] = {"direction": direction, "weight": float(w)}
+        if col == "clinGen_hi_score":
+            evidence[col]["ordinal_scale"] = 3
     return {
-        "normalize": "rank",
+        "normalize": "raw",
         "evidence": evidence,
         "hpa_penalty": {
             "organs": list(hpa.get("organs", HPA_DEFAULT_ORGANS)),
@@ -69,7 +75,6 @@ def _default_config(cfg):
         "borda": {"enabled": True, "missing": "median"},
         "tuning": {
             "enabled": False,
-            "positive_controls": list(DEFAULT_CONTROLS),
             "weight_grid": [0, 1, 2, 3],
             "target_top_n": 10,
         },
@@ -92,13 +97,45 @@ def load_v2_config(cfg):
     for section in ("hpa_penalty", "borda", "tuning"):
         if section in user and isinstance(user[section], dict):
             base[section].update(user[section])
+    for section in ("recessive", "validation", "warnings", "experiments", "sensitivity"):
+        base[section] = dict(cfg.get(section) or {})
+    base["pipeline_mode"] = cfg.get("pipeline_mode", "auto")
+    base["phenotype_panels"] = load_phenotype_panels(cfg)
+    validate_numeric_config(base)
     return base
+
+
+def validate_numeric_config(cfg2):
+    """Reject non-finite scoring parameters without changing their semantics."""
+    def finite(value, path):
+        try:
+            valid = np.isfinite(float(value))
+        except (TypeError, ValueError, OverflowError):
+            valid = False
+        if not valid:
+            raise ValueError(f"{path} must be a finite number; got {value!r}")
+
+    for col, spec in cfg2.get("evidence", {}).items():
+        for key in ("weight", "ordinal_scale", "low_score_penalty"):
+            if key in spec and not (key == "ordinal_scale" and spec[key] is None):
+                finite(spec[key], f"evidence.{col}.{key}")
+    for section, keys in (
+        ("hpa_penalty", ("expr_threshold", "per_organ_weight", "cap")),
+        ("tuning", ("target_top_n",)),
+        ("recessive", ("gnomad_weight_multiplier",)),
+        ("validation", ("max_missing_rate",)),
+    ):
+        for key in keys:
+            if key in cfg2.get(section, {}):
+                finite(cfg2[section][key], f"{section}.{key}")
+    for i, value in enumerate(cfg2.get("tuning", {}).get("weight_grid", [])):
+        finite(value, f"tuning.weight_grid[{i}]")
 
 
 # -------------------------------------------------------- normalization
 def normalize_series(s, method, direction, ordinal_scale=None):
     """Map an evidence column to [0,1] (NaN preserved); 1.0 = most driver-like."""
-    s = pd.to_numeric(s, errors="coerce")
+    s = pd.to_numeric(s, errors="coerce").replace([np.inf, -np.inf], np.nan)
     valid = s.dropna()
     if valid.empty:
         return s.astype(float)
@@ -110,10 +147,10 @@ def normalize_series(s, method, direction, ordinal_scale=None):
         mu, sd = float(valid.mean()), float(valid.std(ddof=0))
         z = (s - mu) / (sd if sd > 0 else 1.0)
         lo, hi = float(z.min()), float(z.max())
-        v = (z - lo) / (hi - lo) if hi > lo else pd.Series(0.5, index=s.index)
+        v = (z - lo) / (hi - lo) if hi > lo else s.where(s.isna(), 0.5)
     elif method == "raw":
         lo, hi = float(valid.min()), float(valid.max())
-        v = (s - lo) / (hi - lo) if hi > lo else pd.Series(0.5, index=s.index)
+        v = (s - lo) / (hi - lo) if hi > lo else s.where(s.isna(), 0.5)
     else:
         raise ValueError(f"unknown normalize method: {method!r} (rank|zscore|raw)")
     if direction == "lower_better":
@@ -137,7 +174,13 @@ def build_scoring_matrix(df, ev_cfg, method):
             coverage[col] = 0.0
             continue
         scale = spec.get("ordinal_scale")
-        v = normalize_series(df[col], method, spec.get("direction", "higher_better"), scale)
+        raw = pd.to_numeric(df[col], errors="coerce")
+        if col in ("clinGen_hi_score", "clinGen_triplo_score"):
+            raw = raw.where(raw.isin([0, 1, 2, 3]))
+            scale = 3  # special category codes are never ordinal scores
+            if spec.get("low_score_penalty", 0):
+                raise ValueError("ClinGen 0/1 are not negative evidence; set low_score_penalty=0")
+        v = normalize_series(raw, method, spec.get("direction", "higher_better"), scale)
         cov = float(v.notna().mean())
         coverage[col] = cov
         if cov == 0.0:
@@ -172,19 +215,20 @@ def hpa_penalty_term(df, hpa_cfg):
     return np.maximum(term, cap)  # cap is negative: never penalize more than cap
 
 
-def score_all(A, weights, hpa_term, recessive_mask=None, recessive_penalty=0.5):
-    """Compute consensus scores.
-    v2.1: If recessive_mask is provided, scale down pLI contribution for recessive genes.
-    recessive_penalty: multiplier for gnomAD weights on recessive genes (default 0.5 = halved).
-    """
-    base = A @ np.asarray(weights, dtype=float)
-    if recessive_mask is not None and recessive_mask.any():
-        # Identify which columns are gnomAD-derived (pLI, LOEUF)
-        # We don't know column order here, so apply a simpler strategy:
-        # Reduce the total score for recessive genes by a flat factor
-        # proportional to how much gnomAD contributed
-        pass  # handled in build_scoring_matrix instead
-    return base + hpa_term
+def score_all(A, weights, hpa_term):
+    with np.errstate(over="ignore", invalid="ignore"):
+        scores = A @ np.asarray(weights, dtype=float) + hpa_term
+    if not np.isfinite(scores).all():
+        raise ValueError("non-finite consensus scores; check numeric configuration and evidence scale")
+    return scores
+
+
+def ordinal_ranks(scores, ids):
+    """One deterministic tie policy for output, tuning and sensitivity."""
+    order = np.lexsort((pd.Series(ids).fillna("~").astype(str).to_numpy(), -np.asarray(scores)))
+    ranks = np.empty(len(order), dtype=int)
+    ranks[order] = np.arange(1, len(order) + 1)
+    return ranks
 
 
 def borda_points(normed, cols, weights, n, missing="median"):
@@ -199,11 +243,22 @@ def borda_points(normed, cols, weights, n, missing="median"):
         p = (n - ranks).to_numpy(dtype=float)
         fill = (n - 1) / 2.0 if missing == "median" else 0.0
         p = np.where(np.isnan(p), fill, p)
-        pts += float(w) * p
+        with np.errstate(over="ignore", invalid="ignore"):
+            pts += float(w) * p
+    if not np.isfinite(pts).all():
+        raise ValueError("non-finite borda scores; check evidence weights")
     return pts
 
 
 # -------------------------------------------------------------- tuning
+def _validated_controls(controls):
+    if (not isinstance(controls, list)
+            or any(not isinstance(c, str) or not c.strip() for c in controls)):
+        raise ValueError("tuning.positive_controls must be an explicit list of non-empty strings; "
+                         "use [] for no controls or provide --controls PATH")
+    return list(dict.fromkeys(c.strip().upper() for c in controls))
+
+
 def loo_tune(df, A, cols, default_w, tune_cfg, hpa_term, symbol_col):
     """Leave-one-out weight tuning against positive controls.
 
@@ -214,8 +269,8 @@ def loo_tune(df, A, cols, default_w, tune_cfg, hpa_term, symbol_col):
     """
     grid = [float(x) for x in tune_cfg.get("weight_grid", [0, 1, 2, 3])]
     top_n = int(tune_cfg.get("target_top_n", 10))
-    controls = [str(c).strip() for c in tune_cfg.get("positive_controls", DEFAULT_CONTROLS)]
-    syms = df[symbol_col].astype(str).str.upper()
+    controls = _validated_controls(tune_cfg.get("positive_controls"))
+    syms = df[symbol_col].astype(str).str.strip().str.upper()
     sym_set = set(syms)
     present = [c for c in controls if c.upper() in sym_set]
     missing_ctrl = [c for c in controls if c.upper() not in sym_set]
@@ -223,16 +278,18 @@ def loo_tune(df, A, cols, default_w, tune_cfg, hpa_term, symbol_col):
     result = {"controls_requested": controls, "controls_present": present,
               "controls_missing": missing_ctrl, "folds": [], "final_weights": None}
 
-    if len(present) < 2 or not cols:
-        result["note"] = "need >=2 positive controls present in candidates; tuning skipped"
+    if len(present) < 3 or not cols:
+        result["note"] = "need >=3 positive controls present in candidates; tuning skipped"
         return result
 
     combos = [w for w in itertools.product(grid, repeat=len(cols)) if any(x > 0 for x in w)]
+    if not combos:
+        raise ValueError("weight_grid must contain a positive weight")
     default_w = list(default_w)
 
     def recall(weights, control_idxs):
         scores = score_all(A, weights, hpa_term)
-        top = set(np.argsort(-scores, kind="stable")[:top_n].tolist())
+        top = set(np.flatnonzero(ordinal_ranks(scores, df["hgnc_id"]) <= top_n))
         return sum(1 for i in control_idxs if i in top) / len(control_idxs)
 
     def best_weights(train_idxs):
@@ -247,7 +304,7 @@ def loo_tune(df, A, cols, default_w, tune_cfg, hpa_term, symbol_col):
         w_star, r_train = best_weights(train)
         scores = score_all(A, w_star, hpa_term)
         held_idx = idx_of[held]
-        rank = int((scores > scores[held_idx]).sum()) + 1
+        rank = int(ordinal_ranks(scores, df["hgnc_id"])[held_idx])
         result["folds"].append({"held_out": held, "train_recall": r_train,
                                 "held_out_rank": rank, "held_out_in_topN": rank <= top_n,
                                 "weights": w_star})
@@ -265,21 +322,50 @@ def run_consensus(df, cfg2, controls_path=None, tune_override=False, sensitivity
     v2.1: sensitivity=True enables weight sensitivity analysis.
     v2.2: mode selects behaviours (validate|rank|full|exploratory|auto).
     """
+    validate_numeric_config(cfg2)
+    df = df.copy().reset_index(drop=True)
+    df["hgnc_id"] = df["hgnc_id"].astype("string").str.strip().replace("", pd.NA)
+    if df.empty:
+        raise ValueError("no candidate genes")
+    if df["hgnc_id"].dropna().duplicated().any():
+        raise ValueError("duplicate HGNC IDs in candidates")
     ev_cfg = cfg2["evidence"]
     method = cfg2.get("normalize", "rank")
     symbol_col = "input_symbol" if "input_symbol" in df.columns else (
         "gene_symbol" if "gene_symbol" in df.columns else "hgnc_id")
 
     A, cols, coverage, normed = build_scoring_matrix(df, ev_cfg, method)
+    active_cols = [c for c in cols if float(ev_cfg[c].get("weight", 0)) > 0]
+    supported = pd.DataFrame({c: normed[c].notna() for c in active_cols}, index=df.index).any(axis=1)
+    supported &= df["hgnc_id"].notna()
+    missing_rate = float((~supported).mean())
+    if missing_rate > float(cfg2.get("validation", {}).get("max_missing_rate", 0.5)):
+        raise ValueError(f"candidates without usable evidence: {missing_rate:.1%}; exceeds max_missing_rate")
+    # Apply the optional inheritance heuristic once, BEFORE every scoring path.
+    recessive_applied = False
+    factor = float(cfg2.get("recessive", {}).get("gnomad_weight_multiplier", 1.0))
+    if not 0 <= factor <= 1:
+        raise ValueError("gnomad_weight_multiplier must be in [0,1]")
+    if "recessive" in df.columns:
+        flags = df["recessive"].fillna(False).astype(str).str.strip().str.lower()
+        if not flags.isin(["true", "false", "1", "0"]).all():
+            raise ValueError("recessive flags must be boolean, not arbitrary strings")
+        r_mask = flags.isin(["true", "1"]).to_numpy()
+        for j, c in enumerate(cols):
+            if c.startswith("gnomad_"):
+                A[r_mask, j] *= factor
+                normed[c] = normed[c].where(~r_mask, normed[c] * factor)
+        recessive_applied = bool(r_mask.any() and factor != 1)
     hpa_term = hpa_penalty_term(df, cfg2["hpa_penalty"])
     default_w = [float(ev_cfg[c].get("weight", 0.0)) for c in cols]
 
     tune_cfg = dict(cfg2.get("tuning", {}))
-    controls_list = []
+    controls_list = tune_cfg.get("positive_controls")
     if controls_path:
         with open(controls_path) as f:
             controls_list = [ln.strip() for ln in f if ln.strip()]
-        tune_cfg["positive_controls"] = controls_list
+    controls_list = _validated_controls(controls_list)
+    tune_cfg["positive_controls"] = controls_list
     do_tune = bool(tune_cfg.get("enabled")) or tune_override
     tuning = None
     weights = default_w
@@ -290,30 +376,13 @@ def run_consensus(df, cfg2, controls_path=None, tune_override=False, sensitivity
 
     scores = score_all(A, weights, hpa_term)
     out = df.copy()
+    out["evidence_status"] = np.where(supported, "available", "no_usable_evidence")
+    raw_hi = pd.to_numeric(out.get("clinGen_haploinsufficiency_raw", out.get("clinGen_hi_score", pd.Series(np.nan, index=out.index))), errors="coerce")
+    out["dosage_conflict"] = raw_hi.eq(40)
     out["consensus_score"] = scores
     for j, col in enumerate(cols):
         out[f"contrib_{col}"] = A[:, j] * weights[j]
     out["hpa_penalty"] = hpa_term
-
-    # ---- v2.1: recessive penalty ----
-    recessive_applied = False
-    if "recessive" in df.columns:
-        r_mask = df["recessive"].fillna(False).to_numpy(dtype=bool)
-        if r_mask.any():
-            gnomad_cols_in = [c for c in cols if "gnomad" in c.lower()]
-            for gc in gnomad_cols_in:
-                ci = cols.index(gc)
-                penalty_factor = float(cfg2.get("recessive", {}).get("gnomad_weight_multiplier", 0.5))
-                out[f"contrib_{gc}"] = out[f"contrib_{gc}"] * (
-                    penalty_factor if r_mask.shape == out[f"contrib_{gc}"].shape
-                    else 1.0
-                )
-                if r_mask.shape == out[f"contrib_{gc}"].shape:
-                    out.loc[r_mask, f"contrib_{gc}"] *= penalty_factor
-            # recompute scores with penalized contributions
-            contribs = [out[f"contrib_{c}"] for c in cols]
-            out["consensus_score"] = sum(contribs) + hpa_term
-            recessive_applied = True
 
     # ---- v2.1: weight sensitivity (perturb each weight ±1) ----
     sensitivity_result = None
@@ -327,9 +396,9 @@ def run_consensus(df, cfg2, controls_path=None, tune_override=False, sensitivity
                 if w_pert == list(weights):
                     continue
                 s_pert = score_all(A, w_pert, hpa_term)
-                ranks_pert = pd.Series(s_pert).rank(ascending=False, method="min").astype(int)
+                ranks_pert = pd.Series(ordinal_ranks(s_pert, df["hgnc_id"]))
                 if baseline_ranks is None:
-                    baseline_ranks = pd.Series(scores).rank(ascending=False, method="min").astype(int)
+                    baseline_ranks = pd.Series(ordinal_ranks(scores, df["hgnc_id"]))
                 rank_shift = (ranks_pert - baseline_ranks).abs().max()
                 top3_baseline = set(baseline_ranks.nsmallest(3).index)
                 top3_pert = set(ranks_pert.nsmallest(3).index)
@@ -354,6 +423,7 @@ def run_consensus(df, cfg2, controls_path=None, tune_override=False, sensitivity
             "weights": dict(zip(cols, weights)), "default_weights": dict(zip(cols, default_w)),
             "tuning": tuning, "hpa_cfg": cfg2["hpa_penalty"],
             "recessive_applied": recessive_applied,
+            "recessive_multiplier": factor, "no_evidence_rate": missing_rate,
             "sensitivity": sensitivity_result,
             "mode": mode,
             "controls_list": controls_list,
@@ -364,18 +434,23 @@ def run_consensus(df, cfg2, controls_path=None, tune_override=False, sensitivity
         out["borda_score"] = borda_points(normed, cols, weights, len(df),
                                           missing=borda_cfg.get("missing", "median"))
         out["borda_rank"] = out["borda_score"].rank(ascending=False, method="min").astype(int)
-        meta["spearman"] = float(out["consensus_score"].rank().corr(out["borda_score"].rank()))
+        meta["spearman"] = (float(out["consensus_score"].rank().corr(out["borda_score"].rank()))
+                            if out["consensus_score"].nunique() > 1 and out["borda_score"].nunique() > 1 else None)
     else:
         meta["spearman"] = None
 
     out = out.sort_values(["consensus_score", "hgnc_id"], ascending=[False, True],
                           kind="stable").reset_index(drop=True)
     out.insert(0, "rank", out.index + 1)
+    meta["phenotype_panels"] = describe_panels(out, cfg2.get("phenotype_panels", []))
     return out, meta
 
 
 # ------------------------------------------------------------- report
 def render_report(out, meta, top_n=10):
+    def show(value):
+        return "—" if pd.isna(value) or value == "" else str(value)
+
     mode = meta.get("mode", "auto")
     mode_label = {
         "validate": "Mode A · 验证报告（已知主效基因）",
@@ -406,27 +481,35 @@ def render_report(out, meta, top_n=10):
 
     # ---- v2.1: recessive penalty note ----
     if meta.get("recessive_applied"):
-        lines.append("⚠️ Recessive disease penalty: gnomAD weights halved for genes tagged as "
-                     "recessive in OMIM/ClinVar (heterozygous deletion may have no phenotype).")
+        lines.append(f"⚠️ Recessive annotation: gnomAD contributions multiplied by {meta['recessive_multiplier']:g} "
+                     "only for tagged genes. This is an unvalidated, opt-in heuristic.")
+        lines.append("")
+    lines.append("排名是候选优先级，不是因果证明或 SINEUP 可行性检验。HI=40 为剂量敏感性反向证据，需人工复核；不与未评估混同。")
+    lines.append("")
+    if "clinGen_haploinsufficiency_status" in out.columns:
+        lines += ["## ClinGen 原始证据", "", "| gene | HI raw | status | evaluated |", "|---|---|---|---|"]
+        for _, r in out.iterrows():
+            lines.append(f"| {r.get('input_symbol', '')} | {show(r.get('clinGen_haploinsufficiency_raw'))} | "
+                         f"{r['clinGen_haploinsufficiency_status']} | {show(r.get('clinGen_date_last_evaluated'))} |")
         lines.append("")
 
     # ---- v2.1: compensation status ----
     if "compensation_class" in out.columns:
-        lines.append("## mRNA compensation status (scRNA-seq, when available)")
+        lines.append("## 相对 mRNA 表达（观察性，不能证明补偿机制）")
         lines.append("")
-        lines.append("| rank | gene | compensation ratio | class | SINEUP potential |")
+        lines.append("| rank | gene | patient/reference ratio | legacy class | interpretation |")
         lines.append("|---|---|---|---|---|")
         for _, r in out.head(top_n).iterrows():
             c = r.get("compensation_class", "unreliable")
             ratio = r.get("compensation_ratio", "")
             ratio_str = f"{ratio:.3f}" if isinstance(ratio, float) and not (isinstance(ratio, float) and np.isnan(ratio)) else "N/A"
-            sineup = "★ ideal" if c == "full" else ("▲ partial" if "partial" in str(c) else ("? unknown" if c == "unreliable" else "✗ not compensated"))
+            sineup = "蛋白状态及 SINEUP 可行性未知"
             lines.append(f"| {int(r['rank'])} | {r.get('input_symbol', r.get('gene', ''))} | {ratio_str} | {c} | {sineup} |")
         lines.append("")
 
     # ---- v2.2: positive-control check (Mode B/C; informative for all) ----
     cc = meta.get("controls_check")
-    if cc and mode in ("rank", "full", "validate", "auto"):
+    if cc:
         lines.append("## 正对照检验（已知主效基因位置）")
         lines.append("")
         lines.append("| gene | in candidates | rank | top-10 | consensus | ClinGen | pLI | 补偿 |")
@@ -437,10 +520,13 @@ def render_report(out, meta, top_n=10):
             else:
                 lines.append(
                     f"| {c['control']} | ✓ | {c['rank']} | {'✓' if c['top10'] else '✗'} | "
-                    f"{c['consensus_score']:.3f} | {c.get('clinGen_hi_score') or '—'} | "
-                    f"{c.get('gnomad_pLI') or '—'} | {c.get('compensation_class') or '—'} |")
+                    f"{c['consensus_score']:.3f} | {show(c.get('clinGen_hi_score'))} | "
+                    f"{show(c.get('gnomad_pLI'))} | {show(c.get('compensation_class'))} |")
         lines.append("")
         lines.append(f"正对照 top-10 命中率: **{meta['controls_top10_n']}/{meta['controls_total']}**")
+        lines.append("")
+    elif meta.get("controls_list") == []:
+        lines.append("正对照未设置，本次正对照检验未评估。")
         lines.append("")
 
     # ---- v2.2: validation panel (Mode A) ----
@@ -448,15 +534,15 @@ def render_report(out, meta, top_n=10):
     if vp:
         lines.append("## 验证报告 — 已知主效基因证据面板 (Mode A)")
         lines.append("")
-        lines.append("| gene | rank | ClinGen HI | gnomAD pLI | consensus | SINEUP 靶向条件 | 补偿状态 |")
+        lines.append("| gene | rank | ClinGen HI | gnomAD pLI | consensus | 初步遗传学支持 | 表达标签 |")
         lines.append("|---|---|---|---|---|---|---|")
         for p in vp:
             lines.append(
-                f"| {p['gene']} | {p['rank']} | {p.get('clinGen_hi_score') or '—'} | "
-                f"{p.get('gnomad_pLI') or '—'} | {p['consensus_score']:.3f} | "
-                f"{'✓ 满足 (HI≥2 或 pLI≥0.9)' if p['target_ok'] else '✗ 不满足'} | {p.get('compensation_class') or '—'} |")
+                f"| {p['gene']} | {p['rank']} | {show(p.get('clinGen_hi_score'))} | "
+                f"{show(p.get('gnomad_pLI'))} | {p['consensus_score']:.3f} | "
+                f"{'✓ 支持 (HI≥2 或 pLI≥0.9，且无 HI=40 冲突)' if p['target_ok'] else '✗ 未取得支持或有冲突'} | {show(p.get('compensation_class'))} |")
         lines.append("")
-        lines.append(f"验证结论: **{'✓ 通过 — 已知主效基因满足 SINEUP 靶向条件' if meta.get('validation_pass') else '✗ 未通过 — 无已知基因满足靶向条件'}")
+        lines.append(f"检验结论: **{'存在初步遗传学支持' if meta.get('validation_pass') else '未取得初步遗传学支持'}**；不是 SINEUP 靶向条件验证。")
         lines.append("")
 
     # ---- v2.2: exploratory disclaimer (Mode D) ----
@@ -520,7 +606,7 @@ def render_report(out, meta, top_n=10):
 
     lines.append("## 数据源校验")
     lines.append("```")
-    lines.append("checksums shown in outputs/audit/data_checksums.txt")
+    lines.append("合并阶段：所指定 audit 目录中的 run.json / data_checksums.txt；评分阶段：<排名 CSV>.audit.json（或 --audit 指定路径）。")
     lines.append("```")
 
     # ---- v2.1: weight sensitivity ----
@@ -547,6 +633,7 @@ def render_report(out, meta, top_n=10):
             lines.append(f"### {exp.get('title', '')}")
             lines.append(exp.get("body", ""))
             lines.append("")
+    lines.extend(render_phenotype_panels(out, meta.get("phenotype_panels", [])))
     return "\n".join(lines)
 
 
@@ -566,41 +653,62 @@ def main():
                     help="run weight sensitivity analysis (±1 per evidence weight)")
     ap.add_argument("--compensation", default=None,
                     help="CSV from src/compensation.py: mRNA compensation per gene")
-    ap.add_argument("--mode", default="auto",
+    ap.add_argument("--mode", default=None, choices=["auto", "validate", "rank", "full", "exploratory"],
                     help="pipeline mode: auto|validate|rank|full|exploratory (default: auto)")
     ap.add_argument("--warnings", action="store_true",
                     help="emit sparse-evidence warnings for Mode D")
+    ap.add_argument("--audit", default=None, help="run JSON (default: <out>.audit.json)")
     args = ap.parse_args()
 
+    inputs = [args.evidence, args.config, args.ai_scores, args.controls, args.compensation]
+    audit_path = Path(args.audit) if args.audit else Path(str(args.out) + ".audit.json")
+    try:
+        validate_output_paths(inputs, [args.out, args.report, audit_path])
+    except (ValueError, OSError, RuntimeError) as exc:
+        ap.error(str(exc))
+
+    def merge_optional(extra, key, source):
+        overlap = sorted((set(ev.columns) & set(extra.columns)) - {key})
+        if overlap:
+            ap.error(f"{source}: columns overlap existing evidence: {', '.join(overlap)}; "
+                     "choose one source for each column before rerunning (no automatic overwrite)")
+        return ev.merge(extra, on=key, how="left", validate="many_to_one")
+
     cfg = yaml.safe_load(open(args.config))
-    cfg2 = load_v2_config(cfg)
+    try:
+        cfg2 = load_v2_config(cfg)
+    except ValueError as exc:
+        ap.error(str(exc))
 
     ev = pd.read_parquet(args.evidence)
     if "hgnc_id" not in ev.columns:
         raise ValueError("evidence must have hgnc_id")
+    ev["hgnc_id"] = ev["hgnc_id"].astype("string").str.strip().replace("", pd.NA)
 
     if args.ai_scores:
-        try:
-            ai = pd.read_csv(args.ai_scores)
-            ev = ev.merge(ai, on="hgnc_id", how="left")
-        except Exception:
-            print("WARN: ai_scores read failed; skipping AI contribution", file=sys.stderr)
+        ai = pd.read_csv(args.ai_scores)
+        ai["hgnc_id"] = ai["hgnc_id"].astype("string").str.strip().replace("", pd.NA)
+        if ai["hgnc_id"].isna().any():
+            raise ValueError("AI scores must have non-null HGNC IDs")
+        ev = merge_optional(ai, "hgnc_id", args.ai_scores)
 
     # v2.1: merge compensation data if provided
     if args.compensation:
-        try:
-            comp = pd.read_csv(args.compensation)
-            ev = ev.merge(comp.rename(columns={"gene": "input_symbol"}),
-                         on="input_symbol", how="left")
-        except Exception:
-            print("WARN: compensation CSV read failed; skipping", file=sys.stderr)
+        comp = pd.read_csv(args.compensation)
+        ev = merge_optional(comp.rename(columns={"gene": "input_symbol"}),
+                            "input_symbol", args.compensation)
 
-    out, meta = run_consensus(ev, cfg2, controls_path=args.controls,
-                              tune_override=args.tune, sensitivity=args.sensitivity,
-                              mode=args.mode or "auto")
+    try:
+        out, meta = run_consensus(ev, cfg2, controls_path=args.controls,
+                                  tune_override=args.tune, sensitivity=args.sensitivity or cfg2.get("sensitivity", {}).get("enabled", False),
+                                  mode=args.mode or cfg2["pipeline_mode"])
+    except ValueError as exc:
+        ap.error(str(exc))
 
     # ---- v2.1: mode-dependent metadata ----
-    mode = args.mode or "auto"
+    mode = args.mode or cfg2["pipeline_mode"]
+    if mode not in ("auto", "validate", "rank", "full", "exploratory"):
+        raise ValueError(f"unknown pipeline_mode: {mode}")
     meta["mode"] = mode
 
     clinGen_cov = meta.get("coverage", {}).get("clinGen_hi_score", 0)
@@ -610,13 +718,13 @@ def main():
     # Warnings for sparse-evidence scenarios (Mode D)
     if args.warnings or mode in ("exploratory", "auto"):
         warnings = []
-        if clinGen_cov < 0.2:
+        if clinGen_cov < cfg2.get("warnings", {}).get("min_clingen_coverage", 0.2):
             warnings.append(
                 f"⚠️ ClinGen 仅覆盖该区间 {clinGen_cov:.0%} 的基因。"
                 "以下排序主要依赖 gnomAD 约束分数——这可能偏向'群体遗传学上不耐受'的基因，"
                 "漏掉'组织特异性但未被 Curators 研究过'的重要基因。"
             )
-        if n_genes > 20 and top3_scores is not None and len(top3_scores) >= 3:
+        if n_genes > cfg2.get("warnings", {}).get("max_genes_for_single_driver", 20) and top3_scores is not None and len(top3_scores) >= 3:
             score_gap = float(top3_scores[0] - top3_scores[2])
             score_mean = float(out["consensus_score"].std())
             if score_gap < score_mean:
@@ -638,10 +746,11 @@ def main():
     # Positive-control check (used by rank/full/validate; informative for exploratory)
     controls_check = []
     symbol_col = meta.get("symbol_col", "input_symbol")
-    rank_map = out.set_index(symbol_col)["rank"] if symbol_col in out.columns else None
+    symbols = out[symbol_col].astype(str).str.strip().str.upper()
+    rank_map = dict(zip(symbols, out["rank"]))
     for ctrl in meta.get("controls_list", []):
-        if rank_map is not None and ctrl in rank_map.index:
-            row = out.loc[out[symbol_col] == ctrl].iloc[0]
+        if ctrl in rank_map:
+            row = out.loc[symbols == ctrl].iloc[0]
             controls_check.append({
                 "control": ctrl,
                 "in_candidates": True,
@@ -656,14 +765,15 @@ def main():
             controls_check.append({"control": ctrl, "in_candidates": False})
     meta["controls_check"] = controls_check
     meta["controls_top10_n"] = sum(1 for c in controls_check if c.get("top10"))
-    meta["controls_total"] = sum(1 for c in controls_check if c.get("in_candidates"))
+    meta["controls_total"] = len(controls_check)
+    meta["controls_present_n"] = sum(1 for c in controls_check if c.get("in_candidates"))
 
     # Mode validate (A): known-driver evidence panel for the validation report
     if mode == "validate":
         panel = []
         for c in meta.get("controls_list", []):
             if symbol_col in out.columns:
-                m = out.loc[out[symbol_col] == c]
+                m = out.loc[symbols == c]
                 if len(m):
                     r = m.iloc[0]
                     clingen = r.get("clinGen_hi_score")
@@ -680,20 +790,20 @@ def main():
                         "gene": c, "rank": int(r["rank"]),
                         "clinGen_hi_score": clingen, "gnomad_pLI": pli,
                         "consensus_score": float(r["consensus_score"]),
-                        "target_ok": clingen_ok or pli_ok,
+                        "target_ok": (clingen_ok or pli_ok) and not bool(r["dosage_conflict"]),
                         "compensation_class": r.get("compensation_class", ""),
                     })
         meta["validation_panel"] = panel
-        meta["validation_pass"] = any(p["target_ok"] for p in panel)
+        meta["validation_pass"] = any(p["target_ok"] for p in panel) if controls_check else None
 
     # v2.1: experiment recommendations
     experiments = []
-    if mode == "exploratory":
+    if mode == "exploratory" or not cfg2.get("experiments", {}).get("enabled", True):
         # Mode D does not assert a single top candidate; no experiment recommendation.
         meta["experiments"] = experiments
     else:
         top_gene = out.iloc[0] if len(out) > 0 else None
-        if top_gene is not None:
+        if top_gene is not None and not top_gene["dosage_conflict"] and top_gene["evidence_status"] == "available":
             sym = top_gene.get("input_symbol", top_gene.get("gene_symbol", ""))
             evidence = []
             for c in meta.get("cols", []):
@@ -708,7 +818,7 @@ def main():
                     f"**证据**: {', '.join(evidence) if evidence else '参见证据面板'}\n\n"
                     f"**补偿状态**: {comp if comp else '未评估 (无scRNA-seq数据)'}\n\n"
                     "建议验证步骤:\n"
-                    "1. qPCR 确认缺失断点包含 {sym}（在患者 gDNA 上）\n"
+                    f"1. 用独立 DNA 证据核验缺失是否包含 {sym}\n"
                     "2. Western blot 确认蛋白质是否不足（翻译层未补偿）\n"
                     f"3. 如果蛋白不足 → 设计 SINEUP-{sym} → 细胞模型测试蛋白恢复\n"
                     f"4. 如果蛋白正常 → 切换到备选基因（见下）"
@@ -730,10 +840,10 @@ def main():
                     "title": "排名不确定时的建议",
                     "body": (
                         "前几个候选的证据等级相近。建议不直接靶向单一基因，"
-                        "而是先在患者细胞系中做 shRNA rescue 实验:\n"
+                        "而是以适当对照比较候选基因功能恢复后的表型:\n"
                         "- 恢复每个候选基因的表达\n"
                         "- 看哪个恢复表型最好\n"
-                        "- 用这个正对照结果更新管线的权重"
+                        "- 将独立验证结果与调权数据分开，避免循环验证"
                     )
                 })
         meta["experiments"] = experiments
@@ -742,6 +852,15 @@ def main():
     out.to_csv(args.out, index=False)
     with open(args.report, "w") as f:
         f.write(render_report(out, meta))
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    # pandas serializes numpy values and non-finite floats as standard JSON/null.
+    record = {"stage": "consensus_v2", "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "arguments": vars(args), "resolved_config": cfg2, "results": meta,
+              "runtime": {"python": sys.version, "pandas": pd.__version__, "numpy": np.__version__},
+              "code_sha256": sha256_file(__file__),
+              "input_checksums": {str(p): sha256_file(p) for p in inputs if p},
+              "output_sha256": sha256_file(args.out), "report_sha256": sha256_file(args.report)}
+    audit_path.write_text(json.dumps(json.loads(pd.Series(record).to_json()), ensure_ascii=False, indent=2))
 
     print(f"wrote {args.out} with {len(out)} rows; report at {args.report}")
     if meta.get("tuning") and meta["tuning"].get("loo_hit_rate") is not None:

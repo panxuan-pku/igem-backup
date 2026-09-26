@@ -1,0 +1,604 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WBS · 评分方案演变</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5ef;color:#23392f;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.85}main{max-width:1050px;margin:auto;padding:42px 28px}h1{font-size:36px;line-height:1.4;margin:14px 0}h2{font-size:23px;margin:0 0 14px}h3{font-size:17px}a{color:#27654b;text-underline-offset:4px}nav{display:flex;flex-wrap:wrap;gap:18px;font-size:14px}.eyebrow{color:#62796a;font-size:13px;letter-spacing:1px;margin-top:32px}.lead{font-size:19px;color:#506658}.card{background:white;border:1px solid #d8e1d5;border-radius:16px;padding:26px;margin:22px 0}.note{background:#fff2dd;border-left:4px solid #b9853f;padding:18px 22px;border-radius:8px}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin:22px 0}.node{background:#eaf0e6;padding:18px;border-radius:12px}.node b{display:block}.missing{background:#fff1df}.arrow{color:#68856f;font-size:24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#edf2e9;padding:15px;border-radius:10px}.stat strong{display:block;font-size:28px}.muted,footer{font-size:14px;color:#65756b}code{font-size:13px;overflow-wrap:anywhere;background:#eef2ed;padding:2px 4px;border-radius:4px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #dce3d9;vertical-align:top}th{background:#eef3e9}summary{cursor:pointer;font-weight:650}li{margin:8px 0}footer{margin:28px 0}@media(max-width:700px){main{padding:22px 16px}h1{font-size:28px}.card{padding:19px}.flow,.grid{grid-template-columns:1fr}.arrow{text-align:center;transform:rotate(90deg)}td,th{min-width:100px}td:first-child,th:first-child{min-width:42px}}
+
+html{scroll-behavior:smooth}details{margin:14px 0;border:1px solid #d8e1d5;padding:16px;border-radius:10px}details[open] summary{margin-bottom:18px}summary{font-size:18px}blockquote{border-left:3px solid #b2c2ad;margin:12px 0;padding-left:16px;color:#617163}pre{overflow:auto;background:#edf2e9;padding:16px}h3{font-size:20px;margin-top:22px}hr{border:0;border-top:1px solid #dce3d9;margin:24px 0}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.steps a{padding:16px 12px;background:#eaf0e6;border-radius:10px;text-decoration:none}.steps b{display:block;font-size:26px}.toc{display:flex;flex-wrap:wrap;gap:10px 22px}section{scroll-margin-top:20px}tbody tr:nth-child(even){background:#fafbf8}@media(max-width:700px){.steps{grid-template-columns:1fr 1fr}table{font-size:13px}}@media print{details{break-inside:avoid}main{max-width:none}nav{display:none}}
+pre code{background:transparent;padding:0}pre{white-space:pre;line-height:1.65;font-size:13px}details h2{font-size:20px}.toc a{white-space:nowrap}.wide td code{word-break:break-word}details:target{outline:2px solid #829c80}
+.report{overflow-wrap:anywhere}.report h1{font-size:23px}.report h2{font-size:20px}.report pre{white-space:pre-wrap}.report table{display:block;overflow-x:auto}.flow .node{min-height:100px}caption{text-align:left;font-weight:bold}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav><a href="../index.html">输出目录</a><a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 完整记录</a></nav><div class="eyebrow">WBS / 历史实验</div><h1>评分方案是怎样调整的</h1><p class="lead">三份不同排名，四份历史报告。按设计变化阅读，完整细节按需展开。</p><div class="toc"><a href="#evolution">1. 设计演变</a><a href="#compare">2. 参数与结果</a><a href="#sensitivity">3. 稳定性分析</a><a href="#full">4. 完整原报告</a><a href="#files">5. 文件去向</a></div><section class="card" id="evolution"><h2>1. 从早期基线到调整方案</h2><div class="flow"><div class="node"><b>① 无 AI 基线</b>rank 归一化；旧控制检验表现不佳</div><span class="arrow">→</span><div class="node"><b>② 加入 DeepLOF</b>增加一项基因证据，观察排名变化</div><span class="arrow">→</span><div class="node"><b>③ 调整评分</b>改为 raw，同时降低组织表达惩罚</div></div><h3>1.1 为什么保留早期结果</h3><p>最初结果帮助暴露评分与控制设置的问题。无 AI 报告的留一检验命中率为 0%，当时只有 ELN、GTF2I 两个旧控制出现在候选表中，其余 TBX1、KCTD13、RAI1 不在区间候选内。这些是设计演变的依据，不能套用为当前程序表现。</p><h3>1.2 这次调整能说明什么</h3><p>raw 方案的前列基因发生变化，两种排序算法的一致程度提高。但这次同时调整了归一化和 HPA 惩罚，因此不能单独认定是哪一项造成改善。</p></section><section class="card" id="compare"><h2>2. 当时的参数与结果</h2><div class="table-wrap"><table><thead><tr><th>实验</th><th>归一化 / DeepLOF</th><th>HPA 惩罚：每器官 / 下限</th><th>前三名</th><th>排序相关系数</th></tr></thead><tbody><tr><td>无 AI 基线</td><td>rank / 无</td><td>−2 / −4</td><td>FZD9、FKBP6、TMEM270</td><td>0.234</td></tr><tr><td>加入 AI</td><td>rank / 有</td><td>−2 / −4</td><td>FZD9、FKBP6、BAZ1B</td><td>0.364</td></tr><tr><td>调整方案</td><td>raw / 有</td><td>−1 / −2</td><td>BAZ1B、CLIP2、STX1A</td><td>0.711</td></tr></tbody></table></div><p>均为 35 个候选基因；ClinGen 覆盖 14%，gnomAD 覆盖 77%，接入后 DeepLOF 覆盖 80%。相关系数比较加权排名与 Borda 排名，<strong>不是准确率</strong>；HPA 惩罚只作用于加权排名。</p></section><section class="card" id="sensitivity"><h2>3. v21 增加了什么</h2><p>它没有产生一份不同的排名，而是在“加入 AI、仍用 rank”的同一结果上补充覆盖不足、多个贡献基因的可能性和权重敏感性分析。</p><div class="grid"><div class="stat"><strong>8 次</strong>旧报告中的权重扰动</div><div class="stat"><strong>10 位</strong>最大排名偏移</div><div class="stat"><strong>5 / 8</strong>前三名发生变化</div></div><p>当时的结论是排名对权重较敏感。应保留这段设计反思，不因排名 CSV 重复而删除报告。</p></section><section class="card" id="full"><h2>4. 完整原报告</h2><p class="note">以下是历史原文展示，未重新计算。特别是 v21 的实验建议未经本轮科学核验，且有未替换的 {sym}，仅用于追溯；请勿将其视为当前操作指引。</p><details id="report-1"><summary>4.1 无 AI 基线</summary><p><a data-local-only-href="sources/report_v2.md" title="本地保留的来源文件，不随公开仓库发布">冻结原文</a> · 配套排名：<code>candidates_ranked_v2.csv</code></p><div class="report"><h1 id="original-1-微缺失主效基因筛选--共识排名-consensus-v2">微缺失主效基因筛选 —
+共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 35 genes</p>
+<h2 id="original-1-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution):
+DeepLOF_score, DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="original-1-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:4047</td>
+<td>FZD9</td>
+<td>1.926</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:3722</td>
+<td>FKBP6</td>
+<td>1.037</td>
+<td>31</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:23018</td>
+<td>TMEM270</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:33771</td>
+<td>SPDYE8</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:45034</td>
+<td>SPDYE9</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:51506</td>
+<td>SPDYE10</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:51507</td>
+<td>SPDYE11</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>8</td>
+<td>nan</td>
+<td>ENSG00000289346</td>
+<td>0.000</td>
+<td>19</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:3327</td>
+<td>ELN</td>
+<td>-0.037</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:961</td>
+<td>BAZ1B</td>
+<td>-0.074</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.234</strong>
+(&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates
+evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="original-1-leave-one-out-weight-tuning-positive-controls">Leave-one-out
+weight tuning (positive controls)</h2>
+<p>Controls present: ELN, GTF2I (missing from candidates: TBX1, KCTD13,
+RAI1)</p>
+<table>
+<thead>
+<tr>
+<th>held-out</th>
+<th>rank</th>
+<th>in top-N</th>
+<th>train recall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ELN</td>
+<td>21</td>
+<td>✗</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>GTF2I</td>
+<td>21</td>
+<td>✗</td>
+<td>1.00</td>
+</tr>
+</tbody>
+</table>
+<p>LOO hit rate: <strong>0%</strong> · final recall@N on all controls:
+0.50</p>
+<p>Final weights: clinGen_hi_score=3, gnomad_LOEUF=2, gnomad_pLI=2</p>
+<h2 id="original-1-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+</div></details><details id="report-2"><summary>4.2 加入 DeepLOF</summary><p><a data-local-only-href="sources/report_v2_ai.md" title="本地保留的来源文件，不随公开仓库发布">冻结原文</a> · 配套排名：<code>candidates_ranked_v2_ai.csv</code></p><div class="report"><h1 id="original-2-微缺失主效基因筛选--共识排名-consensus-v2">微缺失主效基因筛选 —
+共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 35 genes</p>
+<h2 id="original-2-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>80%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution):
+DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="original-2-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:4047</td>
+<td>FZD9</td>
+<td>2.497</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:3722</td>
+<td>FKBP6</td>
+<td>1.394</td>
+<td>30</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:961</td>
+<td>BAZ1B</td>
+<td>0.926</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:2586</td>
+<td>CLIP2</td>
+<td>0.671</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:3327</td>
+<td>ELN</td>
+<td>0.356</td>
+<td>11</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:11433</td>
+<td>STX1A</td>
+<td>0.298</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:23018</td>
+<td>TMEM270</td>
+<td>0.036</td>
+<td>29</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:33771</td>
+<td>SPDYE8</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:45034</td>
+<td>SPDYE9</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:51506</td>
+<td>SPDYE10</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.364</strong>
+(&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates
+evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="original-2-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+</div></details><details id="report-3"><summary>4.3 raw 与较低 HPA 惩罚</summary><p><a data-local-only-href="sources/report_v2_ai_raw.md" title="本地保留的来源文件，不随公开仓库发布">冻结原文</a> · 配套排名：<code>candidates_ranked_v2_ai_raw.csv</code></p><div class="report"><h1 id="original-3-微缺失主效基因筛选--共识排名-consensus-v2">微缺失主效基因筛选 —
+共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>raw</strong> · 35 genes</p>
+<h2 id="original-3-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>80%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution):
+DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -1 above expr&gt;1.0, capped at -2</p>
+<h2 id="original-3-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:961</td>
+<td>BAZ1B</td>
+<td>3.000</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:2586</td>
+<td>CLIP2</td>
+<td>2.822</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:11433</td>
+<td>STX1A</td>
+<td>2.681</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:3327</td>
+<td>ELN</td>
+<td>2.450</td>
+<td>11</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:18287</td>
+<td>VPS37D</td>
+<td>2.259</td>
+<td>7</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:4047</td>
+<td>FZD9</td>
+<td>1.650</td>
+<td>15</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:6613</td>
+<td>LIMK1</td>
+<td>1.292</td>
+<td>1</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:3722</td>
+<td>FKBP6</td>
+<td>1.253</td>
+<td>30</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:12741</td>
+<td>EIF4H</td>
+<td>1.245</td>
+<td>8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:2045</td>
+<td>CLDN3</td>
+<td>0.969</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.711</strong>
+(&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates
+evidence columns only; HPA penalty is additive-only.)</p>
+<h2 id="original-3-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+</div></details><details id="report-4"><summary>4.4 v21 扩展分析</summary><p><a data-local-only-href="sources/report_v21.md" title="本地保留的来源文件，不随公开仓库发布">冻结原文</a> · 配套排名：<code>candidates_ranked_v2_ai.csv</code></p><div class="report"><h1 id="original-4-微缺失主效基因筛选--共识排名-consensus-v2">微缺失主效基因筛选 —
+共识排名 (consensus v2)</h1>
+<p>Normalization: <strong>rank</strong> · 35 genes</p>
+<h2 id="original-4-weights-used">Weights used</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>weight (default)</th>
+<th>weight (used)</th>
+<th>coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clinGen_hi_score</td>
+<td>3</td>
+<td>3</td>
+<td>14%</td>
+</tr>
+<tr>
+<td>gnomad_LOEUF</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>gnomad_pLI</td>
+<td>2</td>
+<td>2</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>DeepLOF_score</td>
+<td>1</td>
+<td>1</td>
+<td>80%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ evidence columns absent or all-missing (0 contribution):
+DosaCNV_score, DeepGenePrior_score</p>
+<p>HPA penalty: per-organ -2 above expr&gt;1.0, capped at -4</p>
+<h2 id="original-4-top-10">Top 10</h2>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>hgnc_id</th>
+<th>symbol</th>
+<th>score</th>
+<th>borda_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HGNC:4047</td>
+<td>FZD9</td>
+<td>2.497</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HGNC:3722</td>
+<td>FKBP6</td>
+<td>1.394</td>
+<td>30</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HGNC:961</td>
+<td>BAZ1B</td>
+<td>0.926</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HGNC:2586</td>
+<td>CLIP2</td>
+<td>0.671</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HGNC:3327</td>
+<td>ELN</td>
+<td>0.356</td>
+<td>11</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HGNC:11433</td>
+<td>STX1A</td>
+<td>0.298</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HGNC:23018</td>
+<td>TMEM270</td>
+<td>0.036</td>
+<td>29</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HGNC:33771</td>
+<td>SPDYE8</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HGNC:45034</td>
+<td>SPDYE9</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HGNC:51506</td>
+<td>SPDYE10</td>
+<td>0.000</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>Additive-rank vs Borda-rank Spearman ρ = <strong>0.364</strong>
+(&gt;0.8: the two aggregation schemes largely agree) (Borda aggregates
+evidence columns only; HPA penalty is additive-only.)</p>
+<p>⚠️ ClinGen 仅覆盖该区间 14% 的基因。以下排序主要依赖 gnomAD
+约束分数——这可能偏向'群体遗传学上不耐受'的基因，漏掉'组织特异性但未被
+Curators 研究过'的重要基因。</p>
+<p>⚠️ 该区间基因数较多 (35) 且排名前 3 的证据分数差距较小 (gap=1.57,
+σ=1.63)。可能存在多个表型贡献基因。单一排名不应被解译为'唯一的因果基因'。建议对前
+N 个候选进行正交验证。</p>
+<h2 id="original-4-数据源校验">数据源校验</h2>
+<pre><code>checksums shown in outputs/audit/data_checksums.txt</code></pre>
+<h2 id="original-4-balance_scale-权重敏感性分析">⚖️ 权重敏感性分析</h2>
+<ul>
+<li>8 次权重扰动测试 (±1 每个证据列)</li>
+<li>最大排名偏移: 10 位</li>
+<li>扰动导致 Top-3 变化的次数: 5/8</li>
+<li>排名稳健性: <strong>low</strong></li>
+</ul>
+<blockquote>
+<p>⚠️ 排名对权重选择敏感。建议考虑前 N
+个候选进行正交验证而非直接选择排名 #1 作为唯一靶点。</p>
+</blockquote>
+<h2 id="original-4-test_tube-实验验证建议">🧪 实验验证建议</h2>
+<h3 id="original-4-第一候选验证路径-fzd9">第一候选验证路径: FZD9</h3>
+<p><strong>证据</strong>: gnomad_LOEUF=8.3400e-01,
+gnomad_pLI=1.9309e-03, DeepLOF_score=0.51</p>
+<p><strong>补偿状态</strong>: 未评估 (无scRNA-seq数据)</p>
+<p>建议验证步骤:</p>
+<ol type="1">
+<li>qPCR 确认缺失断点包含 {sym}（在患者 gDNA 上）</li>
+<li>Western blot 确认蛋白质是否不足（翻译层未补偿）</li>
+<li>如果蛋白不足 → 设计 SINEUP-FZD9 → 细胞模型测试蛋白恢复</li>
+<li>如果蛋白正常 → 切换到备选基因（见下）</li>
+</ol>
+<h3 id="original-4-切换策略">切换策略</h3>
+<p>如果 FZD9 的蛋白质正常（翻译也补偿了），切换到以下备选:</p>
+<ul>
+<li>FKBP6</li>
+<li>BAZ1B</li>
+<li>CLIP2</li>
+</ul>
+<p>切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 FZD9</p>
+<h3 id="original-4-排名不确定时的建议">排名不确定时的建议</h3>
+<p>前几个候选的证据等级相近。建议不直接靶向单一基因，而是先在患者细胞系中做
+shRNA rescue 实验:</p>
+<ul>
+<li>恢复每个候选基因的表达</li>
+<li>看哪个恢复表型最好</li>
+<li>用这个正对照结果更新管线的权重</li>
+</ul>
+</div></details></section><section class="card" id="files"><h2>5. 文件怎样保存</h2><ul><li>三份不同排名 CSV 留在本目录，原始数值与字节不变。</li><li>四份原报告归入 sources/，通过上面的折叠区域完整阅读。</li><li>重复的 candidates_ranked_v21.csv 删除，对应报告绑定 candidates_ranked_v2_ai.csv。</li><li>原文件校验值、参数、完整分节和旧新路径在 <a data-local-only-href="INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">Agent 记录</a>，旧来源审计在 <a data-local-only-href="../audit/INVENTORY.yaml" title="本地保留的来源文件，不随公开仓库发布">审计索引</a>。</li></ul></section><footer>整理日期：2026-09-26 · 历史结果仅供追溯；本轮未重新运行实验。</footer></main></body></html>

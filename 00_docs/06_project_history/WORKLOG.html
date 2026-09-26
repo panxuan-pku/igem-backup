@@ -1,0 +1,276 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>项目时间线与工作日志</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f4f6f3;color:#20322f;font:17px/1.85 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}a{color:#176858;text-underline-offset:4px}a:focus-visible,summary:focus-visible{outline:3px solid #b7762e;outline-offset:4px}main{max-width:1220px;margin:auto;padding:32px 28px 70px}nav{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;border-bottom:1px solid #ccd7ce;padding-bottom:15px}.eyebrow{color:#647567;font-size:13px;letter-spacing:.08em;margin:26px 0 8px}h1{font-size:36px;line-height:1.4;margin:8px 0 18px}h2{font-size:25px;line-height:1.5;margin:8px 0 22px}h3{font-size:20px;line-height:1.6;margin:30px 0 12px}.lead{font-size:20px;max-width:860px}.layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:26px;align-items:start}aside{position:sticky;top:20px;background:#e8efe8;border-radius:14px;padding:18px;font-size:14px;max-height:90vh;overflow:auto}aside ol{padding-left:23px}aside li{margin:9px 0}.card,.chapter{background:white;border:1px solid #d9e2da;border-radius:16px;padding:26px;margin-bottom:24px}.note{background:#fff2df;border:1px solid #d6b88c;padding:18px 22px;border-radius:12px;margin:22px 0}.muted,small{color:#5f7066;font-size:14px}.num{display:inline-block;font-size:13px;background:#e8f1e9;color:#386047;padding:2px 10px;border-radius:16px;margin-bottom:12px}p{margin:12px 0 20px}li{margin:6px 0}blockquote{border-left:3px solid #abc4b0;margin:18px 0;padding:1px 18px;color:#42574a}.table-wrap{overflow-x:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.75}th,td{min-width:90px;vertical-align:top;text-align:left;border-bottom:1px solid #dce4dc;padding:12px}th{background:#eaf1eb}tr:nth-child(even){background:#f8faf7}code,pre{font-size:13px;background:#eef2ee;border-radius:5px;overflow-wrap:anywhere}code{padding:2px 4px}pre{padding:18px;overflow:auto;white-space:pre-wrap}hr{border:0;border-top:1px solid #dce4dc;margin:25px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.flow{display:flex;gap:12px;margin:25px 0}.flow div{flex:1;padding:14px;background:#e8efe8;border-radius:12px}.flow b{display:block}summary{cursor:pointer;font-weight:650}footer{font-size:13px;color:#5f7066;border-top:1px solid #ccd7ce;margin-top:30px;padding-top:18px}@media(max-width:850px){.layout,.grid{grid-template-columns:1fr}aside{position:static;max-height:none}aside ol{columns:2}.flow{flex-direction:column}main{padding:22px 16px}h1{font-size:29px}.chapter,.card{padding:19px}}@media(max-width:480px){aside ol{columns:1}}@media print{aside,nav{display:none}.layout{display:block}body{background:white}.chapter{border:0;padding:0;break-before:page}main{max-width:none}}</style></head><body><main><p class="note" id="publication-local-note">发布说明：本页保留历史描述。数据、模型、Agent 记录和旧原文仅保留在本地；相关引用文字不再提供下载。当前获取与运行方式见项目的数据准备指南。</p><nav aria-label="文档导航"><a href="index.html">项目历史</a><a href="../01_guides/MINIMAL_ROBUST_CORE.html">当前核心设计</a><a data-local-only-href="../01_guides/DOCUMENTATION_RULES.html" title="本地保留的来源文件，不随公开仓库发布">整理规则</a></nav><div class="eyebrow">项目日志 / 原第 15 项 / 完整阅读版</div><h1>项目时间线与工作日志</h1><p class="lead">按日期追踪设计思路、尝试、踩坑和会话来源。</p><div class="note"><strong>这是当时的记录与解释。</strong>保留原有思路、实验步骤、数字和判断，包括尚需核实的表述。文中的“已验证”“可复现”、旧路径与操作仅描述当时；当前能力及待核问题请看<a data-local-only-href="../02_agent/PROJECT_STATE.yaml" title="本地保留的来源文件，不随公开仓库发布">当前状态</a>。<br><small>这里用目录和分节帮助阅读，没有把历史内容压缩成摘要。</small></div><div class="layout"><aside id="contents"><strong>阅读目录</strong><ol><li><a href="#chapter-1">时间线总览</a></li><li><a href="#chapter-2">⓪ 07-27：项目源头——SIGnature 论文调研（会话 20260727_142714）</a></li><li><a href="#chapter-3">① 08-13：VirtualCellTool 搭建（会话 20260813_120050）</a></li><li><a href="#chapter-4">② 08-16：22q11.2DS 工作流硬检查（会话 20260816_172608）</a></li><li><a href="#chapter-5">③ 08-17：方法学检验——归因的价值边界（会话 20260817_084149）</a></li><li><a href="#chapter-6">④ 08-18：Williams 主线全通路 + 复盘报告（会话 20260818_104152）</a></li><li><a href="#chapter-7">⑤ 08-19 / 08-26：汇报打磨与方向收敛（会话 20260819_104655、20260826_182830）</a></li><li><a href="#chapter-8">⑥ 09-01：项目整理归档（本仓库）</a></li><li><a href="#chapter-9">关键数字速查</a></li><li><a href="#chapter-10">会话存档索引</a></li></ol></aside><article><div class="chapter" id="source-intro"><span class="num">原记录 · 开篇</span><div data-source="intro"><h2>iGEM-Microdeletion 项目工作日志</h2>
+<blockquote>
+<p>项目：iGEM 2026「RNA binder 剂量补偿治疗染色体微缺失病」干实验（计算）部分
+整理日期：2026-09-01 ｜ 来源：Hermes 会话历史提取（附会话链接）
+配套文档：<code>02_disease-williams/05_report/微缺失病计算通路复盘报告.md</code>（方法论复盘）、<code>architecture.html</code>（架构图）</p>
+</blockquote>
+<hr>
+</div></div><section class="chapter" id="chapter-1"><span class="num">第 1 节 · 历史记录</span><div data-source="chapter-1"><h2>时间线总览</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>日期</th>
+<th>主题</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>⓪ 项目源头</td>
+<td>07-27</td>
+<td>SIGnature 论文调研 + 仓库落地</td>
+<td>✅ 技术路线起点</td>
+</tr>
+<tr>
+<td>① 工具搭建</td>
+<td>08-13</td>
+<td>VirtualCellTool 3小时冲刺 + GEARS 闭环</td>
+<td>✅ 平台建成</td>
+</tr>
+<tr>
+<td>② 可行性验证</td>
+<td>08-16</td>
+<td>22q11.2 工作流硬检查</td>
+<td>✅ 基因覆盖确认</td>
+</tr>
+<tr>
+<td>③ 方法学检验</td>
+<td>08-17</td>
+<td>归因 vs 真实扰动、GEARS 死路检查</td>
+<td>⚠️ 负结果</td>
+</tr>
+<tr>
+<td>④ 主线验证</td>
+<td>08-18</td>
+<td>Williams 全通路（归因+扰动）+ 复盘报告</td>
+<td>⚠️ 负结果+1 硬资产</td>
+</tr>
+<tr>
+<td>⑤ 汇报与转向</td>
+<td>08-19 / 08-26</td>
+<td>汇报打磨 → 方向确定</td>
+<td>✅ 定位收敛</td>
+</tr>
+<tr>
+<td>⑥ 整理归档</td>
+<td>09-01</td>
+<td>目录重构 ×2 + 架构图</td>
+<td>✅ 本仓库成形</td>
+</tr>
+</tbody></table></div>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-2"><span class="num">第 2 节 · 历史记录</span><div data-source="chapter-2"><h2>⓪ 07-27：项目源头——SIGnature 论文调研（会话 20260727_142714）</h2>
+<p><strong>做了什么</strong>：调研 Genentech 论文 <em>Scoring gene importance by interpreting single-cell foundation models</em>（Nature Biotechnology, doi:10.1038/s41587-026-03112-5），完整覆盖背景、技术思路与结果。</p>
+<p><strong>关键内容</strong>：</p>
+<ul>
+<li><strong>核心方法</strong>：把 XAI 归因（IG/IxG/DeepLIFT）搬到单细胞基础模型上，输出与表达向量同形的&quot;基因重要性分数&quot;；系统 benchmark 5 个 FM × 3 种归因算法，选定 <strong>SCimilarity + IG</strong> 组合</li>
+<li><strong>招牌能力</strong>：attribution 可对超大图谱预计算（22M 细胞/412 研究存入 TileDB），基因集签名查询分钟级完成；MS1 案例（脓毒症签名 → 新发现川崎病/SFTS/HLH 关联 + 血清诱导实验验证）</li>
+<li><strong>局限声明</strong>（论文自己承认）：归因质量受限于 FM 表征能力；<strong>归因 ≠ 因果</strong></li>
+</ul>
+<p><strong>修改原因/决策</strong>：这是本项目的<strong>技术路线起点</strong>——同日执行了两个关键动作：</p>
+<ol>
+<li><code>git clone https://github.com/Genentech/SIGnature</code> 到 <code>~/Desktop/github/SIGnature</code>，VS Code 打开并解析了仓库框架（核心 ~2200 行，4 个模型包装器、3 个官方 notebook）</li>
+<li>确定技术资源路线：PyPI 包 <code>sc-signature</code> + Zenodo 社区预计算归因数据 + 模型文件（后续 8 月中下载解压 Zenodo 17903196 模型包、搭建 .venv 环境）</li>
+</ol>
+<blockquote>
+<p>注：08-13 之前的会话以调研为主（另有 5 月末的罕见病自查指南等工作，属 iGEM 团队其他子项目，未列入本日志范围）。SIGnature 运行环境（.venv py3.11 + torch/captum + 模型包解压）的具体搭建操作散落在 8 月上旬多个会话中，至 08-13 已就绪并用于 VirtualCellTool。</p>
+</blockquote>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-3"><span class="num">第 3 节 · 历史记录</span><div data-source="chapter-3"><h2>① 08-13：VirtualCellTool 搭建（会话 20260813_120050）</h2>
+<p><strong>目标</strong>：3 小时内建成可演示的&quot;虚拟细胞&quot;交互平台，对齐 iGEM Engineering/Contribution/Attributions 三大评审支柱。</p>
+<p><strong>做了什么（M1–M7 里程碑看板推进）</strong>：</p>
+<ul>
+<li>建工程文档骨架：问题陈述、假设清单、验收标准（AC1 方向性 / AC2 区分度 / AC3 延迟 / AC4 可复现）、<code>ATTRIBUTIONS.md</code> 归属登记表（从第一天维护）</li>
+<li>PBMC 3k 真实数据 → SCimilarity embedding → UMAP 预处理（<code>prepare_data.py</code>）</li>
+<li>核心模块：<code>perturb.py</code> 扰动引擎（改基因表达→embedding 位移）、<code>attribute.py</code>（Captum IG 归因）、<code>web/app.py</code> FastAPI 交互前端（点细胞→归因→拖滑块扰动→UMAP 箭头）</li>
+</ul>
+<p><strong>修改原因</strong>：SIGnature（无界面）、SCimilarity（只进不出）、GEARS（无归因/前端）三个工具彼此割裂，没人把&quot;归因找靶 → 扰动预览 → 交互演示&quot;缝成闭环——这是明确的 Contribution 定位。</p>
+<p><strong>验证结果</strong>：AC1/AC2 双通过（方向性 p&lt;0.0005），AC3 端到端 1.4 秒。B 细胞 attribution top = MS4A1/CD79A/BANK1，复现原论文。</p>
+<p><strong>同日追加</strong>：</p>
+<ul>
+<li><strong>GEARS v2 闭环</strong>（<code>v2_closed_loop.py</code>）：接入 GEARS（cell-gears 0.1.2，HuggingFace 预训练权重）+ Norman 数据（Zenodo 镜像，官方 dataverse 被 WAF 封锁）。CEBPA 敲低验证：预测 vs 真实 r=0.972，embedding 位移 0.338（v1 的 34 倍）。<strong>踩坑记录</strong>：PyPI 的 <code>gears</code> 是错包要用 cell-gears；pandas2 需 Series.nonzero 猴子补丁；AnnData 视图需 <code>to_memory()</code> 才能转稠密。</li>
+<li><strong>首个真实疾病数据集</strong>：CELLxGENE 16c1e722「Progressive MS 少突胶质细胞」（17,799 细胞）。批量 IG 645 细胞/秒算出真实归因矩阵，Sanity check 通过（PLP1 两组第一、MOG 在 MS 中重要性减半）。<strong>坑</strong>：CELLxGENE h5ad 的 var_names 是 Ensembl ID，需用 <code>var[&#39;feature_name&#39;]</code> 映射基因符号。</li>
+<li>产出 iGEM Attributions/Contributions 幻灯内容（含 AI 辅助逐文件标注原则）。</li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-4"><span class="num">第 4 节 · 历史记录</span><div data-source="chapter-4"><h2>② 08-16：22q11.2DS 工作流硬检查（会话 20260816_172608）</h2>
+<p><strong>问题</strong>：要不要换更广的基础模型？</p>
+<p><strong>检查结论</strong>：</p>
+<ol>
+<li><strong>基因覆盖不是问题</strong>——SCimilarity 的 28,231 基因空间对微缺失病关键基因几乎全覆盖（22q11 9/10、Williams 7/7、Angelman 4/4、SMS 3/3）；反而 scGPT（3000 HVG）、Geneformer（~16k）会缩减空间。</li>
+<li><strong>真正风险在细胞状态覆盖</strong>（脑类器官 vs 成体组织），需实测而非猜测。</li>
+<li><strong>重新定位猜想</strong>：微缺失病致病基因本来就是已知的，&quot;归因发现新致病基因&quot;不成立；正确用法是差异归因刻画疾病细胞状态、发现缺失基因下游受影响程序（候选生成）。</li>
+</ol>
+<p><strong>修改原因/决策</strong>：不换模型，先跑 22q11.2DS（GSE244005）做 3 个 sanity check 再决定。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-5"><span class="num">第 5 节 · 历史记录</span><div data-source="chapter-5"><h2>③ 08-17：方法学检验——归因的价值边界（会话 20260817_084149）</h2>
+<p><strong>做了什么</strong>：在 Norman 真实单基因敲低数据上，算「差分归因 vs 真实差异表达」的相关性。</p>
+<p><strong>结果与结论</strong>：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>检验</th>
+<th>结果</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>|DE| vs |Δattr|（5 个基因）</td>
+<td>r ≈ 0.81–0.85</td>
+<td>归因追踪真实生物学，扰动基因能被捞回（KLF1 排第 1）</td>
+</tr>
+<tr>
+<td>符号相关</td>
+<td>r ≈ 0.03–0.12</td>
+<td>归因<strong>给不了方向</strong></td>
+</tr>
+<tr>
+<td>归因 vs 真实扰动效应（n=101）</td>
+<td>r = 0.02 (p=0.83)</td>
+<td>归因<strong>不预测因果</strong>（预测性测试证实）</td>
+</tr>
+</tbody></table></div>
+<p><strong>关键判断</strong>：r=0.8 很可能是&quot;机械相关&quot;（IG 本质 ∝ 表达量×梯度），归因 ≈ 差异表达，无独立信息。<strong>归因只能当候选生成器，不能当证明器。</strong></p>
+<p><strong>同日：GEARS 死路检查</strong>——查 8 种微缺失病的 41 个候选基因在 Norman 共表达图中的覆盖：主效基因<strong>全军覆没</strong>（TBX1/UBE3A/GTF2I/RAI1 全不在图内）。根因：所有 Perturb-seq 数据集都是癌细胞系（K562 等），根本不表达发育/神经基因 → 这是<strong>结构性死路</strong>，不是换数据集能救的。替代方案：回到 SCimilarity 嵌入层做&quot;恢复 G → 朝健康态位移&quot;的药效验证。</p>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-6"><span class="num">第 6 节 · 历史记录</span><div data-source="chapter-6"><h2>④ 08-18：Williams 主线全通路 + 复盘报告（会话 20260818_104152）</h2>
+<p><strong>做了什么</strong>（当日完成下载→分析→成文全流程）：</p>
+<ol>
+<li><strong>数据</strong>：下载 GSE283473（Williams 脑类器官，CTRL1-3 + WS1-3，6 样本 ~96,969 细胞）</li>
+<li><strong>疾病选择 pivot</strong>：原计划 22q11.2DS + TBX1 → 实测 TBX1 在脑类器官仅 15/9293 细胞表达（心脏 TF）→ <strong>pivot 到 Williams + GTF2I</strong>（脑表达 TF，82% 细胞，均值 3.39）</li>
+<li><strong>预处理</strong>（<code>preprocess.py</code>）：合并 QC → HVG 3000 + <strong>强制保留 7q11.23 区段 20 基因</strong>（防止主效基因被 HVG 筛掉）→ Leiden 16 cluster → <code>processed.h5ad</code>（96,969 × 3,016）</li>
+<li><strong>SIGnature 差异归因</strong>（<code>attribution_analysis.py</code>）：5000+5000 子采样 → SCimilarity 对齐 → IG 批量归因 → 差异归因（WS−CTRL）。<strong>结果</strong>：Δattr vs DE <strong>r=0.949</strong>（≈差异表达镜像）；疾病信号=神经元分化基因（NEUROD2/6、SOX5、NFIA）；<strong>删失基因自身 Δattr≈0</strong></li>
+<li><strong>CellOracle 扰动验证</strong>（<code>celloracle_run.py</code>）：hg38 promoter base GRN → GTF2I KO（→0）/OE（2×剂量补偿）→ 对比真实疾病 DE。<strong>结果</strong>：KO r=−0.046、OE r=+0.072，全局 ≈0 无系统信号；但 top 被恢复基因方向正确（SOX5/NEUROD2/NFIA 等神经基因被 OE 往上拉）</li>
+<li><strong>最硬正面结果</strong>：SIGnature 与 CellOracle 两个独立方法<strong>收敛到同一候选集</strong>（神经元分化程序：NEUROD2/6、SOX5、NFIA、ZEB2、BCL11B）——交叉验证成立</li>
+<li><strong>复盘报告</strong>：<code>微缺失病计算通路复盘报告.md/docx/pdf</code>（五步通路逐环节【问题/思路/方法/结果/不足】+ 22 术语表 + 三个根本性不足），按用户配色（H1 红 #CC0000）排版，html2pdf.py（Playwright）转 PDF</li>
+</ol>
+<p><strong>负结果的根因分析</strong>（写进报告的三个根本不足）：</p>
+<ol>
+<li><strong>翻译层盲区</strong>：RNA binder 作用在蛋白层，所有 mRNA 模型假设 mRNA↔蛋白耦合——药效在模型结构上不可见</li>
+<li><strong>单基因 vs 多基因错配</strong>：微缺失 ~25 基因同时单倍不足，段内只有 GTF2I 一个 TF 可扰</li>
+<li><strong>删失基因稳态 mRNA&quot;隐身&quot;</strong>：DE≈0、Δattr≈0，单倍不足效应在稳态转录组测不到</li>
+</ol>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-7"><span class="num">第 7 节 · 历史记录</span><div data-source="chapter-7"><h2>⑤ 08-19 / 08-26：汇报打磨与方向收敛（会话 20260819_104655、20260826_182830）</h2>
+<p><strong>08-19 汇报反思</strong>：把负结果重构为 DBTL 叙事资产——&quot;归因 vs 因果是两个独立的量&quot;是研究生级的方法论边界发现；定位从&quot;找靶点&quot;收敛到&quot;给下游 RNA binder 设计选靶&quot;。明确 r=0.02 必须主动讲，不能藏。</p>
+<p><strong>08-26 方向确定</strong>（团队汇报后）：新目标 = 从微缺失区基因列表筛单一主效基因作 AAV+RNA binder 靶点。确立的方法论结论：</p>
+<ul>
+<li><strong>SIGnature 原理上筛不出主效基因</strong>：归因≠因果 + 区域内共缺失=完全共线不可辨识 + 半剂量仅 50% 信号弱</li>
+<li><strong>主效基因必须相对&quot;表型+细胞类型&quot;定义</strong>（Williams 区 ELN/GTF2I/LIMK1 各管一表型）</li>
+<li><strong>证据金字塔替代单一模型</strong>：L1 人类遗传学（LOEUF/pLI/pHaplo）→ L2 真实 Perturb-seq → L3 虚拟扰动仅做机制假设+诚实报负结果</li>
+<li><strong>必做正对照</strong>：RAI1/ELN/TBX1 已知答案反测流程排序能力</li>
+<li>A/B 线解耦：药物线靶点用文献结论定，工具线独立作为 Contribution 交付物</li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-8"><span class="num">第 8 节 · 历史记录</span><div data-source="chapter-8"><h2>⑥ 09-01：项目整理归档（本仓库）</h2>
+<p><strong>第一轮</strong>（应&quot;整理工作目录&quot;需求）：<code>CellOracle_Williams/</code> 内部按流水线重排为 <code>01_rawdata → 02_scripts → 03_intermediate → 04_results → 05_report</code> 五层编号结构；同步修正 3 个脚本内的硬编码路径；新增 README。</p>
+<p><strong>第二轮</strong>（应&quot;整个项目版图&quot;需求）：新建总目录 <code>~/Desktop/github/iGEM-Microdeletion/</code>，把 4 个散落仓库收拢——</p>
+<pre><code>01_disease-22q11.2/   废弃 pivot 案例（TBX1 脑不表达证据，保留）
+02_disease-williams/  主线五层结构 + 复盘报告
+tools/SIGnature/      归因框架（.venv + 235MB 模型）
+tools/VirtualCellTool/ 交互 demo（端口 8377）
+</code></pre>
+<p>批量修正 <strong>17 个文件</strong>的旧路径（<code>~/Desktop/github/SIGnature</code> 等 → 新位置）；验证 .venv 与核心模块 import 正常；记忆系统同步更新。</p>
+<p><strong>同日：archify skill 安装 + 架构图</strong>：</p>
+<ul>
+<li>诊断 Desktop Skill Market 下载失败原因：该 skill 仓库结构非标准（SKILL.md 在 <code>archify/</code> 子目录），skills.sh 索引抓取失效</li>
+<li>手动从 GitHub 装入完整包（SKILL.md + references + bin + schemas + renderers + scripts 校验运行器），<code>doctor</code> 全绿</li>
+<li>产出 <code>architecture.html</code>：五步通路映射为架构图（数据主线 / SIGnature+CellOracle 双工具分叉汇合「双方法交叉验证」/ 22q11 pivot 虚线 / tools 边界），showcase 级校验 9/9 通过，浏览器证据 pass</li>
+</ul>
+<hr>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-9"><span class="num">第 9 节 · 历史记录</span><div data-source="chapter-9"><h2>关键数字速查</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GEARS held-out r</td>
+<td>0.972</td>
+<td>v2 闭环预测 vs 真实扰动（Norman/CEBPA）</td>
+</tr>
+<tr>
+<td>归因 vs 真实扰动</td>
+<td>r=0.02</td>
+<td>归因不预测因果（n=101）</td>
+</tr>
+<tr>
+<td>差异归因 vs 差异表达</td>
+<td>r=0.949</td>
+<td>归因≈DE 镜像，无独立信息</td>
+</tr>
+<tr>
+<td>GTF2I KO / OE vs 疾病 DE</td>
+<td>−0.046 / +0.072</td>
+<td>单基因扰动无系统信号</td>
+</tr>
+<tr>
+<td>Williams 数据</td>
+<td>96,969 细胞 × 3,016 基因，16 cluster</td>
+<td>GSE283473</td>
+</tr>
+<tr>
+<td>GTF2I 表达</td>
+<td>82% 细胞，均值 3.39</td>
+<td>pivot 依据</td>
+</tr>
+<tr>
+<td>VCT 延迟 / 方向性</td>
+<td>1.4s / p&lt;0.0005</td>
+<td>AC1/AC2/AC3 通过</td>
+</tr>
+</tbody></table></div>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><section class="chapter" id="chapter-10"><span class="num">第 10 节 · 历史记录</span><div data-source="chapter-10"><h2>会话存档索引</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>日期</th>
+<th>会话</th>
+<th>主题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>07-27</td>
+<td>@session:default/20260727_142714_bf5a5d3e</td>
+<td>SIGnature 论文调研 + 仓库克隆（项目起点）</td>
+</tr>
+<tr>
+<td>08-13</td>
+<td>@session:default/20260813_120050_362dbb3f</td>
+<td>VirtualCellTool 搭建 + GEARS 闭环</td>
+</tr>
+<tr>
+<td>08-16</td>
+<td>@session:default/20260816_172608_b32271a2</td>
+<td>22q11.2 工作流硬检查</td>
+</tr>
+<tr>
+<td>08-17</td>
+<td>@session:default/20260817_084149_d3d9be1b</td>
+<td>归因方法学检验 + GEARS 死路</td>
+</tr>
+<tr>
+<td>08-18</td>
+<td>@session:default/20260818_104152_0aea53d1</td>
+<td>Williams 全通路 + 复盘报告</td>
+</tr>
+<tr>
+<td>08-19</td>
+<td>@session:default/20260819_104655_37786720</td>
+<td>汇报反思</td>
+</tr>
+<tr>
+<td>08-26</td>
+<td>@session:default/20260826_182830_c6ec3c91</td>
+<td>主效基因筛选方向确定</td>
+</tr>
+<tr>
+<td>09-01</td>
+<td>（本会话）</td>
+<td>目录重构 + archify 架构图</td>
+</tr>
+</tbody></table></div>
+</div><a class="muted" href="#contents">回到目录 ↑</a></section><details class="card"><summary>来源与查阅说明</summary><p><a data-local-only-href="sources/WORKLOG.md" title="本地保留的来源文件，不随公开仓库发布">逐字保留的原 Markdown</a> · <a data-local-only-href="agent/WORKLOG.yaml" title="本地保留的来源文件，不随公开仓库发布">agent 索引与完整分节记录</a> · <a data-local-only-href="agent/INDEX.yaml" title="本地保留的来源文件，不随公开仓库发布">旧路径与引用注意事项</a></p><p>原文内的代码路径和会话编号保持历史写法；可点击链接已指向现位置。外部科学来源、本机旧会话和旧环境没有在本轮重新核验。</p></details></article></div><footer>2026-09-25 格式整理 · 原记录覆盖 2026-07-27 至 09-01 · 本批未重新运行历史实验或核验其科学结论。</footer></main></body></html>

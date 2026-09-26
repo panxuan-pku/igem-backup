@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""Portable pipeline acceptance. Run with the installed pipeline interpreter.
+
+No installs, downloads, scientific data or existing outputs are modified.
+Each invocation creates a new directory containing logs and summary.json.
+"""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import importlib
+from importlib import metadata
+import json
+import os
+from pathlib import Path
+import platform
+import subprocess
+import sys
+import tempfile
+import tomllib
+import xml.etree.ElementTree as ET
+
+ROOT = Path(__file__).resolve().parents[1]
+PIPELINE = ROOT / "03_pipeline"
+REQUIREMENTS = PIPELINE / "requirements.txt"
+
+
+def check_environment(requirements=REQUIREMENTS):
+    # packaging is installed by pytest; report a broken environment if absent.
+    try:
+        from packaging.requirements import Requirement
+    except ImportError as exc:
+        raise RuntimeError("missing packaging (pytest dependency); reinstall requirements.txt") from exc
+    versions, errors = {}, []
+    for line in requirements.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        req = Requirement(line)
+        if req.marker and not req.marker.evaluate():
+            continue
+        try:
+            version = metadata.version(req.name)
+            versions[req.name] = version
+            if version not in req.specifier:
+                raise RuntimeError(f"installed {version}, required {req.specifier}")
+            module = {"pyyaml": "yaml"}.get(req.name.lower(), req.name.lower().replace("-", "_"))
+            importlib.import_module(module)
+        except Exception as exc:
+            errors.append(f"{req.name}: {type(exc).__name__}: {exc}")
+    if errors:
+        raise RuntimeError("incomplete pipeline environment; install 03_pipeline/requirements.txt:\n" + "\n".join(errors))
+    return versions
+
+
+def check_declarations():
+    cfg = tomllib.loads((PIPELINE / "pyproject.toml").read_text())
+    if (cfg["project"].get("dynamic") != ["dependencies"] or "dependencies" in cfg["project"]
+            or "dependency-groups" in cfg or cfg.get("tool", {}).get("setuptools", {}).get(
+                "dynamic", {}).get("dependencies") != {"file": ["requirements.txt"]}):
+        raise RuntimeError("package dependencies must read only requirements.txt")
+
+
+def create_output(path=None):
+    if path is not None:
+        path = Path(path).resolve()
+        path.mkdir(parents=True, exist_ok=False)
+        return path
+    parent = ROOT / "test_artifacts" / "pipeline"
+    parent.mkdir(parents=True, exist_ok=True)
+    return Path(tempfile.mkdtemp(prefix=datetime.now().strftime("%Y%m%d-%H%M%S-"), dir=parent))
+
+
+def check_results(path):
+    suites = list(ET.parse(path).getroot().iter("testsuite"))
+    counts = {key: sum(int(s.get(key, 0)) for s in suites)
+              for key in ("tests", "failures", "errors", "skipped")}
+    if not counts["tests"] or any(counts[k] for k in ("failures", "errors", "skipped")):
+        raise RuntimeError(f"acceptance requires executed tests with no failures/errors/skips: {counts}")
+    return counts
+
+
+def run_command(command, log, env):
+    with log.open("w") as handle:
+        handle.write(f"command: {command!r}\n")
+        handle.flush()
+        result = subprocess.run(command, cwd=PIPELINE, env=env, stdout=handle,
+                                stderr=subprocess.STDOUT, timeout=1800)
+    if result.returncode:
+        raise RuntimeError(f"command exited {result.returncode}; see {log}\n" + "\n".join(log.read_text().splitlines()[-20:]))
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--suite", choices=("environment", "smoke", "full"), default="full")
+    parser.add_argument("--output", type=Path, help="new output directory; existing paths are refused")
+    args = parser.parse_args(argv)
+    try:
+        output = create_output(args.output)
+    except OSError as exc:
+        parser.error(f"cannot create a NEW test output directory: {exc}")
+    summary = {"status": "running", "suite": args.suite, "started_at": datetime.now(timezone.utc).isoformat(),
+               "python": sys.version, "executable": sys.executable, "platform": platform.platform(),
+               "requirements_sha256": hashlib.sha256(REQUIREMENTS.read_bytes()).hexdigest(),
+               "output": str(output), "stages": {}}
+    path = output / "summary.json"
+    path.write_text(json.dumps(summary, indent=2))
+    print(f"Pipeline acceptance ({args.suite}); logs and artifacts: {output}", flush=True)
+    # Keep plotting/JIT caches with this run, not in a user's home or source tree.
+    os.environ["MPLCONFIGDIR"] = str(output / "matplotlib-cache")
+    os.environ["NUMBA_CACHE_DIR"] = str(output / "numba-cache")
+    env = os.environ.copy()
+    # Do not let machine-local pytest options/plugins silently deselect tests.
+    for key in ("PYTEST_ADDOPTS", "PYTEST_PLUGINS", "PYTHONPATH"):
+        env.pop(key, None)
+    env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
+    code = 1
+    try:
+        if sys.version_info[:2] != (3, 11):
+            raise RuntimeError("this acceptance baseline requires Python 3.11")
+        check_declarations()
+        summary["versions"] = check_environment()
+        run_command([sys.executable, "-m", "pip", "check"], output / "pip-check.log", env)
+        summary["stages"]["environment"] = "passed"
+        print("Environment: PASS (declarations, versions, imports, pip check)", flush=True)
+        if args.suite != "environment":
+            targets = (["tests/test_environment_contract.py", "tests/test_pipeline_dataflow.py"]
+                       if args.suite == "smoke" else ["tests"])
+            command = [sys.executable, "-m", "pytest", *targets, "-q", "--strict-config", "--strict-markers",
+                       f"--junitxml={output / 'junit.xml'}", f"--basetemp={output / 'work'}"]
+            run_command(command, output / "pytest.log", env)
+            summary["tests"] = check_results(output / "junit.xml")
+            summary["stages"]["tests"] = "passed"
+            print(f"Tests: PASS {summary['tests']}", flush=True)
+        summary["status"] = "passed"
+        code = 0
+    except (Exception, KeyboardInterrupt) as exc:
+        summary["status"] = "failed"
+        summary["error"] = f"{type(exc).__name__}: {exc}"
+        print(summary["error"], file=sys.stderr)
+    finally:
+        summary["finished_at"] = datetime.now(timezone.utc).isoformat()
+        path.write_text(json.dumps(summary, indent=2))
+        print(f"Result: {summary['status'].upper()}; summary: {path}", flush=True)
+    return code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
