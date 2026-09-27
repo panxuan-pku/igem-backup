@@ -16,9 +16,9 @@ bash scripts/setup_envs.sh --pipeline-only
 
 安装会清除并重建 `.venv/pipeline`，依赖只读取 `03_pipeline/requirements.txt`；`pyproject.toml` 的包依赖也引用同一文件。旧 `uv.lock` 已删除，历史 uv 安装/运行命令不再是当前入口。
 
-接着按[数据准备与运行说明](../00_docs/01_guides/DATA_SETUP.html)执行三步筛选。新疾病需更换候选、显式控制基因（未设置时用 `[]` 或空控制文件）、独立输出目录；`config/pipeline.yaml` 的控制清单不能直接当作每个新疾病的控制基因。
+当前合并入口为仓库根目录的 `scripts/run_screening.py`，使用 `config/screening.yaml`。请按[统一筛选指南](../00_docs/01_guides/UNIFIED_SCREENING.html)下载参考并运行区间或列表输入；新配置的控制基因显式为空。下方旧 `pipeline.yaml` 与手工三步流程保留历史兼容用途，不是首次运行入口。
 
-已完成首批 12 项及源码 18 项整理。源码盘点见 Agent 记录（仅本地）及[阅读页第 5.2 节](docs/index.html#source-inventory)；测试 24 项已原位保留，见 Agent 测试盘点（仅本地）与[阅读页第 5.4 节](docs/index.html#tests-inventory)；数据 15 项已整理，见数据盘点（仅本地）和[阅读页第 5.5 节](docs/index.html#data-inventory)；输出和其余文档继续逐批盘点。旧版 `src.consensus` 已退役，当前评分入口为 `src.consensus_v2`。CNV 自动识别开发、项目合并及科学重跑继续暂停。
+已完成首批 12 项及源码 18 项整理。源码盘点见 Agent 记录（仅本地）及[阅读页第 5.2 节](docs/index.html#source-inventory)；测试 24 项已原位保留，见 Agent 测试盘点（仅本地）与[阅读页第 5.4 节](docs/index.html#tests-inventory)；数据 15 项已整理，见数据盘点（仅本地）和[阅读页第 5.5 节](docs/index.html#data-inventory)；输出和其余文档继续逐批盘点。旧版 `src.consensus` 已退役，当前评分入口为 `src.consensus_v2`。项目合并后的主入口已实现；CNV 自动识别继续暂停，正式 WHS 案例重跑及结果验证待完成。
 
 <a id="data-sources"></a>
 ## 3. 数据从哪里获得

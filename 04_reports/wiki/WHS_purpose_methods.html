@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WHS｜研究目的与总体方法</title><style>*{box-sizing:border-box}body{margin:0;background:#f2f5f7;color:#20333f;font:17px/1.85 system-ui,-apple-system,sans-serif}main{max-width:1060px;margin:auto;padding:40px 24px 70px}header{padding:16px 4px 28px}h1{font-size:34px;line-height:1.3;max-width:850px}h2{font-size:23px;line-height:1.4;margin:0 0 16px}h3{font-size:18px;margin:22px 0 8px}p{margin:10px 0}section{background:white;border:1px solid #dfe7ec;padding:26px 30px;margin:18px 0;border-radius:14px}.eyebrow{color:#176c66;font-size:13px;letter-spacing:1.8px;font-weight:700}.lead{font-size:20px;color:#375c68}.note{border-left:4px solid #c7973c;padding:12px 18px;background:#fff8e8;margin:18px 0}.ok{border-color:#278477;background:#eff8f5}nav{display:flex;gap:10px 24px;flex-wrap:wrap}a{color:#066b7b;text-underline-offset:3px;overflow-wrap:anywhere}nav a{text-decoration:none}table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #e0e7ed}th{background:#edf4f5}.scroll{overflow:auto}code{font-size:.87em;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#142f3b;color:#e1f1ef;border-radius:9px;padding:18px;font-size:13px;line-height:1.8}details{margin:18px 0;padding:16px 18px;border:1px solid #dfe7ec;border-radius:9px}summary{font-weight:650;cursor:pointer}.flow{display:grid;gap:10px;text-align:center;padding:10px 0}.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px}.node{background:#edf5f7;border:1px solid #cbdde5;padding:12px;border-radius:8px}.node strong{display:block}.core{background:#e5f3ed;border-color:#9fcbbc}.arrow{color:#567b83;font-size:22px;line-height:1}.small{font-size:14px;color:#526873}.pending{background:repeating-linear-gradient(135deg,#fff,#fff 18px,#f6f8fa 18px,#f6f8fa 36px)}li{margin:8px 0}footer{font-size:14px;color:#546b75;padding:20px 4px}@media(max-width:650px){main{padding:20px 14px 40px}section{padding:20px 17px}h1{font-size:28px}h2{font-size:21px}.inputs{grid-template-columns:1fr}td,th{padding:9px}body{font-size:16px}}</style></head><body><main><header><div class="eyebrow">iGEM 2026 · WIKI 正文工作稿 · 2026-09-26</div>
+<h1>从染色体缺失到可验证的干预候选</h1><p class="lead">以 WHS 为展示疾病，将剂量证据、疾病背景和 RNA 设计约束连接成一条可追溯的筛选流程。</p>
+<p class="small">当前完成范围：研究目的与总体方法。以下为可进入 Wiki 的中文正文；结果、实验与效果结论待正式案例重跑后补充。</p>
+<nav><a href="#purpose">1 研究目的</a><a href="#architecture">2 总体框架</a><a href="#inputs">3 统一输入</a><a href="#evidence">4 证据与排名</a><a href="#design">5 设计检查</a><a href="#repro">6 可复现性</a><a href="#results">7 待填结果</a></nav></header>
+<section id="purpose"><h2>1. 研究目的：优先验证哪些基因？</h2>
+<p>染色体微缺失可能同时影响多个基因。对于旨在补偿基因剂量不足的研究，首先需要明确哪些候选最值得进入后续设计与实验，而不能仅依据“位于缺失区间”就推定每个基因具有相同贡献。我们以 Wolf–Hirschhorn syndrome（WHS）为展示疾病，建立一个将缺失范围转换为研究优先级的计算工作流。</p>
+<p>WHS 相关研究显示，不同病例的缺失范围及表型存在差异。因此，本项目使用具体案例的缺失区间或明确提供的缺失基因列表，而不将某一条坐标视为所有 WHS 病例共有的标准区间。<a href="https://pubmed.ncbi.nlm.nih.gov/12563561/">Zollino 等，2003</a></p>
+<p>我们的研究设想是：对仍保留可表达拷贝的候选基因，探索通过 RNA 调控提升蛋白产出、缓解部分剂量不足的可能性。含反向 SINEB2 元件的反义 RNA 促进特定靶标翻译的研究，为这一思路提供了机制依据。该依据来自特定实验体系，不能直接证明本项目构建对 WHS 有效。<a href="https://www.nature.com/articles/nature11508">Carrieri 等，2012</a></p>
+<p>本阶段的产物是一份<strong>可解释、可复查的候选排名及设计检查表</strong>。它帮助安排后续验证顺序；是否能够改善分子或细胞表型，仍需在相关实验体系中检验。</p></section>
+<section id="architecture"><h2>2. 总体框架：取长补短，统一排名</h2>
+<p>合并后的流程沿用原主项目的身份标准化、核心证据整合和排序实现，吸收 SINEB2-ChromDel 的区间输入、转录本设计检查与模块预算思路。所有候选经过同一套评分规则，再附加疾病背景及设计状态。</p>
+<div class="flow" role="img" aria-label="缺失区间或基因列表进入唯一候选表，统一证据排名并附加注释，再做30bp设计检查及模块预算，交给后续实验验证">
+<div class="inputs"><div class="node"><strong>输入 A：具体缺失区间</strong>GRCh38 · 起止点 · 来源</div><div class="node"><strong>输入 B：缺失基因列表</strong>基因编号或符号 · 来源</div></div><div class="arrow">↓</div>
+<div class="node"><strong>统一候选表</strong>GENCODE 位置和转录本 → Ensembl / HGNC 身份核对</div><div class="arrow">↓</div>
+<div class="node core"><strong>一套核心证据排名</strong>ClinGen 剂量证据 + gnomAD 约束证据</div>
+<div class="node"><strong>伴随注释</strong>OT 疾病与表型关联 · HPA 表达 · 可选 IMPC 证据<br><span class="small">提供解释，不增加主分数</span></div><div class="arrow">↓</div>
+<div class="node"><strong>设计检查与预算内选择</strong>固定转录本 · 剪接后 3′UTR ≥30 bp · 等大小模块预算</div><div class="arrow">↓</div>
+<div class="node"><strong>后续验证</strong>靶序列与构建核查 → 相关模型实验 → 依据结果修订设计</div></div>
+<p class="small">VCT 与 SIGnature 保留为独立的探索工具，需要另外准备适用数据、核对模型并操作；当前没有自动接入以上主排名，也不提供已验证的 WHS 疗效预测。CNV 自动推断属于暂停的可选方向；已知缺失区间输入不依赖 CNV 推断。</p></section>
+<section id="inputs"><h2>3. 统一输入：病例范围决定候选集合</h2>
+<h3>3.1 区间输入</h3><p>输入采用 GRCh38、从 1 开始且两端包含的坐标。程序从固定 GENCODE v44 注释提取与区间重叠的蛋白编码基因，区分完整覆盖与部分重叠。部分重叠保留供复核，不自动解释为完整功能缺失。本入口不自动转换 GRCh37 或 BED 坐标，也不从疾病名称猜测缺失区间。</p>
+<h3>3.2 基因列表输入</h3><p>用户可以直接提供 Ensembl gene ID、HGNC ID 或基因符号。符号和历史别名通过同一 HGNC 快照核对；原始输入留存。只有能明确映射到一个身份及一个蛋白编码基因位置的记录才进入正式排名，重复身份或歧义会停止运行并报告。列表代表用户提供的候选范围，不自动推断为该疾病的完整基因集合。</p>
+<h3>3.3 两种输入如何保持一致</h3><p>后续模块均读取同一张候选表，并按唯一编号关联证据。对于同一套基因身份，使用同一参考快照和参数时，两种输入产生相同的主排名。候选集合改变时，部分分数的归一化范围也会改变，因此不同输入集合的分数不能直接作为绝对强弱比较。</p></section>
+<section id="evidence"><h2>4. 证据整合：分清排序依据与解释信息</h2>
+<div class="scroll"><table><thead><tr><th>证据</th><th>统一口径</th><th>用途</th></tr></thead><tbody>
+<tr><td>ClinGen</td><td>GRCh38 下载快照；保留原类别和评估日期</td><td>0–3 类剂量证据参与排名；30（隐性疾病关联）只注释；40 保留为剂量证据冲突标记。</td></tr>
+<tr><td>gnomAD</td><td>v4.1.1；Ensembl 编号关联；MANE Select 优先、canonical 回退</td><td>LOEUF 与 pLI 参与排名；原值、转录本和质量标记留存，有质量标记的记录不计分。</td></tr>
+<tr><td>Open Targets</td><td>26.09；WHS：MONDO_0008684；直接关联</td><td>按 WHS 直接证据、预设相关表型、其他疾病背景分列，仅作注释。</td></tr>
+<tr><td>HPA</td><td>v24 下载入口；组织表达 nTPM</td><td>表达背景注释；表达高低不直接解释为上调安全性。</td></tr>
+<tr><td>IMPC（可选）</td><td>有明确人鼠编号映射、数据来源和版本的补充表</td><td>保留存活/致死等状态；小鼠 viable 不触发自动排除。</td></tr>
+</tbody></table></div>
+<p>gnomAD v4.1.1 更新了约束度计算与质量信息。统一版使用同一版本重算，不拼接旧 v2.1.1 和新版本的数值。对质量标记采取保守处理，是本项目的使用规则；它不等于认定该基因没有生物学意义。<a href="https://gnomad.broadinstitute.org/news/2026-03-gnomad-v4-1-1/">gnomAD 发布说明</a></p>
+<details><summary>4.1 主排名如何计算？</summary>
+<p>沿用现有 consensus_v2 排序器，固定权重：ClinGen 3、LOEUF 2、pLI 2。ClinGen 的 0–3 分除以 3；两项连续指标在本次候选的有效数值内做最小—最大归一化，LOEUF 反向，使数值越低贡献越高。有效值全相同时该列记 0.5。各项乘权重后求和，输出每项贡献；同分按 HGNC ID 确定顺序。</p>
+<pre>主分数 = 3 × ClinGen标准化值
+       + 2 × LOEUF反向标准化值
+       + 2 × pLI标准化值</pre>
+<p>缺失项不贡献分数，并保留缺失标记；没有任何可用计分证据的候选超过 50% 时停止运行。缺失不能解释成阴性证据。本版不自动调权，控制基因显式为空，不启用第二套 Borda 排名。</p>
+<p>上述权重是研究排序的启发式设定。pLI 与 LOEUF 来自相关约束信息，并非两项独立验证；分数也不是致病概率或治疗成功概率。正式结果应检验其对候选范围、缺失证据和权重选择的敏感性。</p></details>
+<details><summary>4.2 OT 为什么不直接加到分数里？</summary>
+<p>跨疾病最高分可能来自其他疾病，不能替代 WHS 证据。OT 本身也整合多个来源，把它叠加到已有证据上可能重复计入信息。我们因此只查询明确疾病编号的直接关联，并将其他信息分列，不继承旧项目的跨疾病最大值及 0.7 权重。OT 分数不应被视为关联置信度或治疗成功概率。<a href="https://platform-docs.opentargets.org/associations">Open Targets 官方说明</a></p>
+<p>相关表型默认留空，只有预先指定编号后才查询；其他疾病仅展示直接关联排名前 10 条中的背景记录，不声称穷尽所有疾病。查询成功无记录、真实零分和查询/版本失败分别保留。每次响应记录查询内容及数据库版本，可离线重放。</p></details>
+<p class="note">当前 IMPC 接入的是有来源的补充表，尚未实现自动、经核验的人鼠同源映射与全量查询。没有提供表时明确记为“未提供”，不伪装成已有存活结论。</p></section>
+<section id="design"><h2>5. 从排名到设计检查</h2>
+<h3>5.1 保留本项目的 30 bp 要求</h3><p>设计转录本优先选取固定 GENCODE 注释中的 MANE Select，其次为 Ensembl canonical；若均缺失，只在唯一编码转录本的情况下回退。仍有歧义时保留候选排名，标记设计信息未解决。计算 3′UTR 时按链方向累计终止密码子之后的外显子碱基，不计入内含子；不完整的编码终止注释不用于通过门槛。</p>
+<p><strong>3′UTR 至少 30 bp 是本项目特定的设计约束。</strong>长度达标只表示通过这一检查，不说明已找到有效结合序列、完成脱靶分析或证明翻译增强。文献中的 SINEB2 机制证据也不能单独证明本项目的具体靶位点设计有效。约束度证据使用的转录本与设计转录本分别留存，避免混淆。</p>
+<h3>5.2 固定模块预算</h3><p>在通过长度检查的候选中，按主排名依次选择，直到达到预算允许的模块数。默认模块预算为 4,400 bp，假定每个模块 300 bp。该计算用于估算固定大小模块的候选容量；启动子、骨架和调控元件等完整构建长度尚需另行核算，不能据此宣称已验证载体包装或最优治疗组合。</p></section>
+<section id="repro"><h2>6. 可复现性与项目交付</h2>
+<p>同一次运行使用一套参考快照。每份参考记录来源、版本或下载时间、文件大小及 SHA-256；运行前复核校验值。运行清单同时保存输入、候选编号、参数、OT 响应快照、代码提交及源码校验值。科学数据与计算结果保留在本地，GitHub 提供代码和下载、生成说明。</p>
+<p>固定的版本名不能替代实际文件：HGNC 和 ClinGen 的最新下载入口会变化，OT 实时服务也会升级。严格重现应复用原参考文件和响应快照；正式 Wiki 发布前需确定这些快照的外部归档方式。只有哈希值不足以重新获得历史数据。</p>
+<p>完整运行步骤见<a href="../../00_docs/01_guides/UNIFIED_SCREENING.html">统一筛选使用指南</a>；软件入口为<a href="../../scripts/run_screening.py">run_screening.py</a>。实验迭代中可将新证据反馈到筛选与设计，但本阶段尚未完成这条实验闭环。</p></section>
+<section id="results" class="pending"><h2>7. 正式结果：待统一案例完成后填写</h2>
+<p>本页不填写历史候选数量、排名、入选组合或实验效果。正式结果需要补齐：</p><ol>
+<li>一份有来源的 WHS 缺失区间或缺失基因列表，以及本次范围的选择理由。</li>
+<li>对应冻结参考快照下的证据覆盖、完整排名、质量/缺失标记、3′UTR 与预算选择结果。</li>
+<li>针对结论的敏感性分析、靶序列与构建核查，以及能够支撑主张的实验记录。</li>
+<li>可公开获取的复现材料和发布版本，再填入结果图表。</li></ol>
+<p>合成测试与少量真实基因的工程试跑用于检查软件流程，不作为 WHS 正式筛选结果或生物学有效性证据。</p></section>
+<footer>本文统一使用 WHS 表示 Wolf–Hirschhorn syndrome；历史工具中的 WS / WBS 指 Williams 综合征，不能混用。正文方法对应合并后的统一入口，历史文档中的其他评分流程仅作记录。</footer></main></body></html>
