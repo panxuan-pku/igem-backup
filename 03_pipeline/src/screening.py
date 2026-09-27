@@ -113,15 +113,15 @@ def select_modules(ranked, capacity=4400, module_size=300):
     for row in out.to_dict("records"):
         note = []
         if row.get("clinGen_haploinsufficiency_raw") == 30:
-            note.append("ClinGen 隐性疾病关联：仅注释，不自动排除或证明无剂量效应。")
+            note.append("ClinGen recessive association: annotation only; neither automatic exclusion nor evidence of no dosage effect.")
         if row.get("clinGen_haploinsufficiency_raw") == 40:
-            note.append("ClinGen 剂量敏感性不太可能：存在证据冲突，需人工复核。")
+            note.append("ClinGen dosage sensitivity unlikely: conflicting evidence requires manual review.")
         if row.get("impc_viability") == "viable":
-            note.append("IMPC 小鼠存活：不等于无其他表型或人类缺失无影响。")
+            note.append("IMPC mouse viability does not establish absence of other phenotypes or effects of a human deletion.")
         if row.get("interval_overlap") == "partial":
-            note.append("基因仅部分重叠区间，功能缺失及剩余拷贝状态需复核。")
+            note.append("Partial interval overlap: review functional impact and the status of the remaining copy.")
         if row.get("evidence_status") == "no_usable_evidence":
-            note.append("缺少可计分核心证据，不能把低分视为阴性。")
+            note.append("No usable core evidence; a low score is not negative evidence.")
         if row.get("utr3_status") != "ok" or pd.isna(row.get("utr3_bp")):
             reason = "unresolved_transcript_or_utr"
         elif row["utr3_bp"] < minimum:
@@ -135,5 +135,5 @@ def select_modules(ranked, capacity=4400, module_size=300):
         reasons.append(reason)
         notes.append(" ".join(note))
     out["selected"], out["selection_reason"], out["evidence_notes"] = selected, reasons, notes
-    out["selection_caveat"] = "固定模块预算估算；完整构建长度、包装、靶序列特异性及治疗效果未验证。"
+    out["selection_caveat"] = "Fixed module-budget estimate; full construct length, packaging, target-sequence specificity and therapeutic effects remain unvalidated."
     return out

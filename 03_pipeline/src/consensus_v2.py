@@ -453,13 +453,13 @@ def render_report(out, meta, top_n=10):
 
     mode = meta.get("mode", "auto")
     mode_label = {
-        "validate": "Mode A · 验证报告（已知主效基因）",
-        "rank": "Mode B · 增强筛选（排序 + 正对照检验）",
-        "full": "Mode C · 全栈筛选（排序 + 补偿状态）",
-        "exploratory": "Mode D · 探索性粗筛",
-        "auto": "auto（自动）",
+        "validate": "Mode A · Validation report (known driver genes)",
+        "rank": "Mode B · Ranking with positive-control checks",
+        "full": "Mode C · Ranking with expression status",
+        "exploratory": "Mode D · Exploratory prioritization",
+        "auto": "auto",
     }.get(mode, mode)
-    lines = ["# 微缺失主效基因筛选 — 共识排名 (consensus v2)", ""]
+    lines = ["# Microdeletion candidate prioritization — consensus ranking (v2)", ""]
     lines.append(f"Pipeline mode: **{mode_label}** · Normalization: **{meta['method']}** · {len(out)} genes")
     lines.append("")
     lines.append("## Weights used")
@@ -484,10 +484,10 @@ def render_report(out, meta, top_n=10):
         lines.append(f"⚠️ Recessive annotation: gnomAD contributions multiplied by {meta['recessive_multiplier']:g} "
                      "only for tagged genes. This is an unvalidated, opt-in heuristic.")
         lines.append("")
-    lines.append("排名是候选优先级，不是因果证明或 SINEUP 可行性检验。HI=40 为剂量敏感性反向证据，需人工复核；不与未评估混同。")
+    lines.append("Ranks indicate candidate priority, not causality or SINEUP feasibility. HI=40 is evidence against dosage sensitivity and requires review; it differs from not evaluated.")
     lines.append("")
     if "clinGen_haploinsufficiency_status" in out.columns:
-        lines += ["## ClinGen 原始证据", "", "| gene | HI raw | status | evaluated |", "|---|---|---|---|"]
+        lines += ["## Raw ClinGen evidence", "", "| gene | HI raw | status | evaluated |", "|---|---|---|---|"]
         for _, r in out.iterrows():
             lines.append(f"| {r.get('input_symbol', '')} | {show(r.get('clinGen_haploinsufficiency_raw'))} | "
                          f"{r['clinGen_haploinsufficiency_status']} | {show(r.get('clinGen_date_last_evaluated'))} |")
@@ -495,7 +495,7 @@ def render_report(out, meta, top_n=10):
 
     # ---- v2.1: compensation status ----
     if "compensation_class" in out.columns:
-        lines.append("## 相对 mRNA 表达（观察性，不能证明补偿机制）")
+        lines.append("## Relative mRNA expression (observational; does not establish compensation mechanisms)")
         lines.append("")
         lines.append("| rank | gene | patient/reference ratio | legacy class | interpretation |")
         lines.append("|---|---|---|---|---|")
@@ -503,55 +503,55 @@ def render_report(out, meta, top_n=10):
             c = r.get("compensation_class", "unreliable")
             ratio = r.get("compensation_ratio", "")
             ratio_str = f"{ratio:.3f}" if isinstance(ratio, float) and not (isinstance(ratio, float) and np.isnan(ratio)) else "N/A"
-            sineup = "蛋白状态及 SINEUP 可行性未知"
+            sineup = "Protein status and SINEUP feasibility unknown"
             lines.append(f"| {int(r['rank'])} | {r.get('input_symbol', r.get('gene', ''))} | {ratio_str} | {c} | {sineup} |")
         lines.append("")
 
     # ---- v2.2: positive-control check (Mode B/C; informative for all) ----
     cc = meta.get("controls_check")
     if cc:
-        lines.append("## 正对照检验（已知主效基因位置）")
+        lines.append("## Positive-control check (ranks of known driver genes)")
         lines.append("")
-        lines.append("| gene | in candidates | rank | top-10 | consensus | ClinGen | pLI | 补偿 |")
+        lines.append("| gene | in candidates | rank | top-10 | consensus | ClinGen | pLI | Expression status |")
         lines.append("|---|---|---|---|---|---|---|---|")
         for c in cc:
             if not c.get("in_candidates"):
-                lines.append(f"| {c['control']} | ❌ 不在候选 | — | — | — | — | — | — |")
+                lines.append(f"| {c['control']} | Not in candidates | — | — | — | — | — | — |")
             else:
                 lines.append(
                     f"| {c['control']} | ✓ | {c['rank']} | {'✓' if c['top10'] else '✗'} | "
                     f"{c['consensus_score']:.3f} | {show(c.get('clinGen_hi_score'))} | "
                     f"{show(c.get('gnomad_pLI'))} | {show(c.get('compensation_class'))} |")
         lines.append("")
-        lines.append(f"正对照 top-10 命中率: **{meta['controls_top10_n']}/{meta['controls_total']}**")
+        lines.append(f"Positive-control top-10 hit rate: **{meta['controls_top10_n']}/{meta['controls_total']}**")
         lines.append("")
     elif meta.get("controls_list") == []:
-        lines.append("正对照未设置，本次正对照检验未评估。")
+        lines.append("No positive controls configured; this check was not evaluated.")
         lines.append("")
 
     # ---- v2.2: validation panel (Mode A) ----
     vp = meta.get("validation_panel")
     if vp:
-        lines.append("## 验证报告 — 已知主效基因证据面板 (Mode A)")
+        lines.append("## Validation report — evidence panels for known driver genes (Mode A)")
         lines.append("")
-        lines.append("| gene | rank | ClinGen HI | gnomAD pLI | consensus | 初步遗传学支持 | 表达标签 |")
+        lines.append("| gene | rank | ClinGen HI | gnomAD pLI | consensus | Preliminary genetic support | Expression label |")
         lines.append("|---|---|---|---|---|---|---|")
         for p in vp:
             lines.append(
                 f"| {p['gene']} | {p['rank']} | {show(p.get('clinGen_hi_score'))} | "
                 f"{show(p.get('gnomad_pLI'))} | {p['consensus_score']:.3f} | "
-                f"{'✓ 支持 (HI≥2 或 pLI≥0.9，且无 HI=40 冲突)' if p['target_ok'] else '✗ 未取得支持或有冲突'} | {show(p.get('compensation_class'))} |")
+                f"{'Supported (HI>=2 or pLI>=0.9, without an HI=40 conflict)' if p['target_ok'] else 'Unsupported or conflicting evidence'} | {show(p.get('compensation_class'))} |")
         lines.append("")
-        lines.append(f"检验结论: **{'存在初步遗传学支持' if meta.get('validation_pass') else '未取得初步遗传学支持'}**；不是 SINEUP 靶向条件验证。")
+        lines.append(f"Check result: **{'Preliminary genetic support found' if meta.get('validation_pass') else 'No preliminary genetic support found'}**; this does not validate SINEUP targeting conditions.")
         lines.append("")
 
     # ---- v2.2: exploratory disclaimer (Mode D) ----
     if mode == "exploratory":
-        lines.append("## ⚠️ 探索模式声明 (Mode D)")
+        lines.append("## ⚠️ Exploratory-mode statement (Mode D)")
         lines.append("")
-        lines.append("本区间无可信人工金标准（ClinGen 覆盖低）或已知主效基因。以下排名为"
-                     "**探索性粗筛**：只表示群体约束 + 表达可行性的初步排序，"
-                     "**不构成确定性靶点结论**。建议补充文献/实验正对照后再读此排名。")
+        lines.append("This interval lacks a trusted curated benchmark (low ClinGen coverage) or known driver genes. This ranking is "
+                     "**exploratory prioritization** based on population constraint and expression context; it "
+                     "**does not establish definitive targets**. Add literature or experimental positive controls before interpreting the ranking.")
         lines.append("")
 
     lines.append(f"## Top {min(top_n, len(out))}")
@@ -604,30 +604,30 @@ def render_report(out, meta, top_n=10):
                 f"{c}={w:g}" for c, w in zip(meta["cols"], t["final_weights"])))
         lines.append("")
 
-    lines.append("## 数据源校验")
+    lines.append("## Data-source verification")
     lines.append("```")
-    lines.append("合并阶段：所指定 audit 目录中的 run.json / data_checksums.txt；评分阶段：<排名 CSV>.audit.json（或 --audit 指定路径）。")
+    lines.append("Merge stage: run.json / data_checksums.txt in the specified audit directory. Scoring stage: <ranked CSV>.audit.json (or the --audit path).")
     lines.append("```")
 
     # ---- v2.1: weight sensitivity ----
     sens = meta.get("sensitivity")
     if sens:
         lines.append("")
-        lines.append("## ⚖️ 权重敏感性分析")
+        lines.append("## ⚖️ Weight sensitivity analysis")
         lines.append("")
-        lines.append(f"- {sens['n_perturbations_tested']} 次权重扰动测试 (±1 每个证据列)")
-        lines.append(f"- 最大排名偏移: {sens['max_rank_shift']} 位")
-        lines.append(f"- 扰动导致 Top-3 变化的次数: {sens['n_causing_top3_change']}/{sens['n_perturbations_tested']}")
-        lines.append(f"- 排名稳健性: **{sens['robustness']}**")
+        lines.append(f"- {sens['n_perturbations_tested']} weight perturbation tests (+/-1 per evidence column)")
+        lines.append(f"- Maximum rank shift: {sens['max_rank_shift']} positions")
+        lines.append(f"- Perturbations changing the top 3: {sens['n_causing_top3_change']}/{sens['n_perturbations_tested']}")
+        lines.append(f"- Ranking robustness: **{sens['robustness']}**")
         lines.append("")
         if sens["robustness"] == "low":
-            lines.append("> ⚠️ 排名对权重选择敏感。建议考虑前 N 个候选进行正交验证"
-                         "而非直接选择排名 #1 作为唯一靶点。")
+            lines.append("> ⚠️ Ranking is sensitive to weight choices. Consider orthogonal validation of the top N candidates "
+                         "instead of selecting rank #1 as the sole target.")
     
     # ---- v2.1: experiment recommendations ----
     if "experiments" in meta:
         lines.append("")
-        lines.append("## 🧪 实验验证建议")
+        lines.append("## 🧪 Experimental validation suggestions")
         lines.append("")
         for exp in meta["experiments"]:
             lines.append(f"### {exp.get('title', '')}")
@@ -720,25 +720,25 @@ def main():
         warnings = []
         if clinGen_cov < cfg2.get("warnings", {}).get("min_clingen_coverage", 0.2):
             warnings.append(
-                f"⚠️ ClinGen 仅覆盖该区间 {clinGen_cov:.0%} 的基因。"
-                "以下排序主要依赖 gnomAD 约束分数——这可能偏向'群体遗传学上不耐受'的基因，"
-                "漏掉'组织特异性但未被 Curators 研究过'的重要基因。"
+                f"⚠️ ClinGen covers only {clinGen_cov:.0%} of genes in this interval. "
+                "Ranking mainly relies on gnomAD constraint, potentially favoring population-intolerant genes and "
+                "missing important tissue-specific genes that have not been curated."
             )
         if n_genes > cfg2.get("warnings", {}).get("max_genes_for_single_driver", 20) and top3_scores is not None and len(top3_scores) >= 3:
             score_gap = float(top3_scores[0] - top3_scores[2])
             score_mean = float(out["consensus_score"].std())
             if score_gap < score_mean:
                 warnings.append(
-                    f"⚠️ 该区间基因数较多 ({n_genes}) 且排名前 3 的证据分数差距较小"
-                    f" (gap={score_gap:.2f}, σ={score_mean:.2f})。"
-                    "可能存在多个表型贡献基因。单一排名不应被解译为'唯一的因果基因'。"
-                    "建议对前 N 个候选进行正交验证。"
+                    f"⚠️ This interval contains many genes ({n_genes}) with similar top-3 evidence scores"
+                    f" (gap={score_gap:.2f}, σ={score_mean:.2f})."
+                    "Multiple genes may contribute to the phenotype. A rank does not establish a unique causal gene. "
+                    "Consider orthogonal validation of the top N candidates."
                 )
         if clinGen_cov == 0:
             warnings.append(
-                "⚠️ 该区间的所有基因均无 ClinGen 剂量敏感性评级。"
-                "排序完全依赖 gnomAD 约束和 HPA 表达数据——置信度低。"
-                "建议在实验验证前补充分子生物学文献调研。"
+                "⚠️ No genes in this interval have ClinGen dosage-sensitivity ratings. "
+                "Ranking relies entirely on gnomAD constraint and HPA expression data, with low confidence. "
+                "Review molecular biology literature before experimental validation."
             )
         meta["warnings"] = warnings
 
@@ -813,37 +813,37 @@ def main():
                         evidence.append(f"{c}={val:.2f}" if isinstance(val, (int, float)) else f"{c}={val}")
             comp = top_gene.get("compensation_class", "")
             experiments.append({
-                "title": f"第一候选验证路径: {sym}",
+                "title": f"Validation path for the leading candidate: {sym}",
                 "body": (
-                    f"**证据**: {', '.join(evidence) if evidence else '参见证据面板'}\n\n"
-                    f"**补偿状态**: {comp if comp else '未评估 (无scRNA-seq数据)'}\n\n"
-                    "建议验证步骤:\n"
-                    f"1. 用独立 DNA 证据核验缺失是否包含 {sym}\n"
-                    "2. Western blot 确认蛋白质是否不足（翻译层未补偿）\n"
-                    f"3. 如果蛋白不足 → 设计 SINEUP-{sym} → 细胞模型测试蛋白恢复\n"
-                    f"4. 如果蛋白正常 → 切换到备选基因（见下）"
+                    f"**Evidence**: {', '.join(evidence) if evidence else 'See evidence panels'}\n\n"
+                    f"**Expression status**: {comp if comp else 'Not evaluated (no scRNA-seq data)'}\n\n"
+                    "Suggested validation steps:\n"
+                    f"1. Use independent DNA evidence to check whether the deletion includes {sym}\n"
+                    "2. Use Western blot to assess protein deficiency (without sufficient restoration at the translation level)\n"
+                    f"3. If protein is deficient: design SINEUP-{sym} and test protein restoration in a cellular model\n"
+                    f"4. If protein levels are normal: consider alternative genes below"
                 )
             })
             # backup candidates
             top5_symbols = out["input_symbol" if "input_symbol" in out.columns else "hgnc_id"].head(5).tolist()
             backup = [s for s in top5_symbols[1:] if s != sym]
             experiments.append({
-                "title": "切换策略",
+                "title": "Alternative-target strategy",
                 "body": (
-                    f"如果 {sym} 的蛋白质正常（翻译也补偿了），切换到以下备选:\n"
+                    f"If {sym} protein levels are normal, consider these alternatives:\n"
                     + "\n".join(f"- {b}" for b in backup[:3])
-                    + f"\n\n切换标准: ≥1 项正交证据（pLI/ClinGen/表达）独立于 {sym}"
+                    + f"\n\nSwitching criterion: at least one orthogonal evidence source (pLI/ClinGen/expression) independent of {sym}"
                 )
             })
             if len(backup) >= 3:
                 experiments.append({
-                    "title": "排名不确定时的建议",
+                    "title": "Suggestions when ranking is uncertain",
                     "body": (
-                        "前几个候选的证据等级相近。建议不直接靶向单一基因，"
-                        "而是以适当对照比较候选基因功能恢复后的表型:\n"
-                        "- 恢复每个候选基因的表达\n"
-                        "- 看哪个恢复表型最好\n"
-                        "- 将独立验证结果与调权数据分开，避免循环验证"
+                        "The leading candidates have similar evidence levels. Compare candidates "
+                        "using appropriate controls and measure phenotypes after functional restoration:\n"
+                        "- Restore expression of each candidate gene\n"
+                        "- Compare phenotypic restoration\n"
+                        "- Keep independent validation separate from weight-tuning data to avoid circular validation"
                     )
                 })
         meta["experiments"] = experiments

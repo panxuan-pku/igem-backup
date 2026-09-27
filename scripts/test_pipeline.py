@@ -25,11 +25,11 @@ REQUIREMENTS = PIPELINE / "requirements.txt"
 
 
 def check_environment(requirements=REQUIREMENTS):
-    # packaging is installed by pytest; report a broken environment if absent.
+    # packaging validates dependency constraints without requiring pytest.
     try:
         from packaging.requirements import Requirement
     except ImportError as exc:
-        raise RuntimeError("missing packaging (pytest dependency); reinstall requirements.txt") from exc
+        raise RuntimeError("missing packaging; reinstall 03_pipeline/requirements.txt") from exc
     versions, errors = {}, []
     for line in requirements.read_text().splitlines():
         line = line.strip()
@@ -48,7 +48,7 @@ def check_environment(requirements=REQUIREMENTS):
         except Exception as exc:
             errors.append(f"{req.name}: {type(exc).__name__}: {exc}")
     if errors:
-        raise RuntimeError("incomplete pipeline environment; install 03_pipeline/requirements.txt:\n" + "\n".join(errors))
+        raise RuntimeError(f"incomplete pipeline environment; install {requirements}:\n" + "\n".join(errors))
     return versions
 
 
@@ -86,13 +86,15 @@ def run_command(command, log, env):
         result = subprocess.run(command, cwd=PIPELINE, env=env, stdout=handle,
                                 stderr=subprocess.STDOUT, timeout=1800)
     if result.returncode:
-        raise RuntimeError(f"command exited {result.returncode}; see {log}\n" + "\n".join(log.read_text().splitlines()[-20:]))
+        raise RuntimeError(f"command exited {result.returncode}; detailed log: {log}")
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--suite", choices=("environment", "smoke", "full"), default="full")
+    parser.add_argument("--suite", choices=("environment", "smoke", "core", "full"), default="full")
     parser.add_argument("--output", type=Path, help="new output directory; existing paths are refused")
+    parser.add_argument("--with-cnv", action="store_true", help="also check CNV dependencies")
+    parser.add_argument("--with-dev", action="store_true", help="also check test dependencies")
     args = parser.parse_args(argv)
     try:
         output = create_output(args.output)
@@ -104,7 +106,8 @@ def main(argv=None):
                "output": str(output), "stages": {}}
     path = output / "summary.json"
     path.write_text(json.dumps(summary, indent=2))
-    print(f"Pipeline acceptance ({args.suite}); logs and artifacts: {output}", flush=True)
+    print(f"\n=== Pipeline checks: {args.suite} ===", flush=True)
+    print("[INFO] Checking the environment and dependencies...", flush=True)
     # Keep plotting/JIT caches with this run, not in a user's home or source tree.
     os.environ["MPLCONFIGDIR"] = str(output / "matplotlib-cache")
     os.environ["NUMBA_CACHE_DIR"] = str(output / "numba-cache")
@@ -119,28 +122,51 @@ def main(argv=None):
             raise RuntimeError("this acceptance baseline requires Python 3.11")
         check_declarations()
         summary["versions"] = check_environment()
+        extras = []
+        if args.with_cnv or args.suite == "full":
+            extras.append("cnv")
+        if args.with_dev or args.suite != "environment":
+            extras.append("dev")
+        summary["optional_requirements_sha256"] = {}
+        for extra in extras:
+            requirements = PIPELINE / f"requirements-{extra}.txt"
+            summary["optional_requirements_sha256"][extra] = hashlib.sha256(requirements.read_bytes()).hexdigest()
+            summary["versions"].update(check_environment(requirements))
         run_command([sys.executable, "-m", "pip", "check"], output / "pip-check.log", env)
         summary["stages"]["environment"] = "passed"
-        print("Environment: PASS (declarations, versions, imports, pip check)", flush=True)
+        print("[OK] Environment verified: dependency declarations, versions, imports and pip check", flush=True)
         if args.suite != "environment":
-            targets = (["tests/test_environment_contract.py", "tests/test_pipeline_dataflow.py"]
-                       if args.suite == "smoke" else ["tests"])
+            if args.suite == "smoke":
+                targets = ["tests/test_environment_contract.py", "tests/test_pipeline_dataflow.py",
+                           "tests/test_unified_screening.py"]
+            elif args.suite == "core":
+                # These files exercise optional single-cell code; full runs still require them.
+                targets = ["tests", "--ignore-glob=tests/test_cnv_*.py",
+                           "--ignore=tests/test_optional_cli_safety.py",
+                           "--ignore=tests/test_sample_identity.py",
+                           "--ignore=tests/test_single_cell_compensation.py"]
+            else:
+                targets = ["tests"]
             command = [sys.executable, "-m", "pytest", *targets, "-q", "--strict-config", "--strict-markers",
                        f"--junitxml={output / 'junit.xml'}", f"--basetemp={output / 'work'}"]
+            print("[INFO] Running tests; detailed output is saved to pytest.log", flush=True)
             run_command(command, output / "pytest.log", env)
             summary["tests"] = check_results(output / "junit.xml")
             summary["stages"]["tests"] = "passed"
-            print(f"Tests: PASS {summary['tests']}", flush=True)
+            print(f"[OK] {summary['tests']['tests']} tests passed with no failures, errors or skips", flush=True)
         summary["status"] = "passed"
         code = 0
     except (Exception, KeyboardInterrupt) as exc:
         summary["status"] = "failed"
         summary["error"] = f"{type(exc).__name__}: {exc}"
-        print(summary["error"], file=sys.stderr)
+        print(f"[FAIL] {summary['error']}", file=sys.stderr, flush=True)
     finally:
         summary["finished_at"] = datetime.now(timezone.utc).isoformat()
         path.write_text(json.dumps(summary, indent=2))
-        print(f"Result: {summary['status'].upper()}; summary: {path}", flush=True)
+        label = "OK" if code == 0 else "FAIL"
+        print(f"\n[{label}] Checks {'passed' if code == 0 else 'failed'} ({args.suite})", flush=True)
+        print(f"  Check records: {path}", flush=True)
+        print("  These checks do not download reference data or produce disease screening results.", flush=True)
     return code
 
 

@@ -39,12 +39,12 @@ def test_panels_preserve_scores_and_show_all_candidates_and_missingness():
     assert a["genes_with_expression"] == 2  # zero is measured, not missing
     assert b["coverage_status"] == "unavailable"
     report = render_report(out, meta, top_n=1)
-    panel_text = report.split("## 分表型证据面板", 1)[1]
+    panel_text = report.split("## Phenotype evidence panels", 1)[1]
     assert "Phenotype A" in panel_text and "Phenotype B" in panel_text
     assert "UNKNOWN" in panel_text and " B " in panel_text
-    assert "无数据" in panel_text and "覆盖不完整" in panel_text
-    assert "不是表型独立排名" in panel_text
-    assert "## 分表型证据面板" not in render_report(baseline, base_meta)
+    assert "No data" in panel_text and "Incomplete coverage" in panel_text
+    assert "not a phenotype-specific ranking" in panel_text
+    assert "## Phenotype evidence panels" not in render_report(baseline, base_meta)
 
 
 @pytest.mark.parametrize("panels", [None, {}, "brain", ["brain"],
@@ -63,7 +63,7 @@ def test_complete_panel_and_legacy_evidence():
     frame = pd.DataFrame({"hgnc_id": ["HGNC:1"], "input_symbol": ["A"], "gnomad_pLI": [0.9]})
     out, meta = run_consensus(frame, configuration(PANELS[:1]))
     assert meta["phenotype_panels"][0]["coverage_status"] == "unavailable"
-    assert "无可用组织列" in render_report(out, meta)
+    assert "no available tissue columns" in render_report(out, meta)
     frame["hpa_tissue::cerebral cortex::ntpm"] = 0.0
     frame["hpa_tissue::cerebellum::ntpm"] = 2.0
     _, meta = run_consensus(frame, configuration(PANELS[:1]))

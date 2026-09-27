@@ -50,7 +50,7 @@ def test_interval_boundaries_and_core_run(inputs):
     assert set(ranked.hgnc_id) == {"HGNC:1", "HGNC:2"}
     assert ranked.loc[ranked["rank"].eq(1), "input_symbol"].item() == "TEST_A"
     quickstart.write_report(output, ranked)
-    assert "控制基因设为空" in (output / "report.html").read_text()
+    assert "Control genes are empty" in (output / "report.html").read_text()
 
 
 @pytest.mark.parametrize("problem", ["missing_id", "ambiguous_id", "duplicate_hgnc", "symbol_conflict"])
@@ -114,7 +114,7 @@ def test_download_failure_removes_partial_and_retries(tmp_path, monkeypatch):
     monkeypatch.setattr(requests, "get", get)
     monkeypatch.setattr(quickstart.time, "sleep", lambda _: None)
     target = tmp_path / "data.tsv"
-    with pytest.raises(ValueError, match="下载不完整"):
+    with pytest.raises(ValueError, match="Incomplete download"):
         quickstart.download(Response.url, target)
     assert len(attempts) == 3
     assert not list(tmp_path.iterdir())

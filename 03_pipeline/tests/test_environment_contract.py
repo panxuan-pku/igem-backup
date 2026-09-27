@@ -18,14 +18,24 @@ def runner():
     return module
 
 
-def test_package_dependencies_read_the_only_requirements_file():
+def test_package_dependencies_include_only_core_requirements():
     config = tomllib.loads((PIPELINE / "pyproject.toml").read_text())
     assert config["project"]["dynamic"] == ["dependencies"]
     assert "dependencies" not in config["project"]
     assert "dependency-groups" not in config
     assert config["tool"]["setuptools"]["dynamic"]["dependencies"] == {"file": ["requirements.txt"]}
-    assert sorted(p.name for p in PIPELINE.glob("*requirements*.txt")) == ["requirements.txt"]
-    assert '"$ROOT/03_pipeline/requirements.txt"' in (ROOT / "scripts/setup_envs.sh").read_text()
+    assert sorted(p.name for p in PIPELINE.glob("*requirements*.txt")) == [
+        "requirements-cnv.txt", "requirements-dev.txt", "requirements.txt"]
+    from packaging.requirements import Requirement
+    groups = {name: {Requirement(line).name.lower() for line in
+                    (PIPELINE / filename).read_text().splitlines()
+                    if line.strip() and not line.startswith("#")}
+              for name, filename in [("core", "requirements.txt"),
+                                     ("cnv", "requirements-cnv.txt"),
+                                     ("dev", "requirements-dev.txt")]}
+    assert not groups["core"] & (groups["cnv"] | groups["dev"])
+    assert {"scanpy", "anndata", "infercnvpy"} <= groups["cnv"]
+    assert groups["dev"] == {"pytest"}
 
 
 @pytest.mark.parametrize("name", ["test_cnv_expression_qc.py", "test_cnv_infercnv_synthetic.py"])

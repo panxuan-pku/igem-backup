@@ -53,7 +53,7 @@ consensus_v2:
       direction: higher_better
       weight: 2
   hpa_penalty:
-    _comment: v2.1 落实：HPA 不再在 rank 中扣分；靶向可行性与安全性在证据面板显示（见 evidence.panel）
+    _comment: "v2.1: HPA no longer penalizes ranking; targeting feasibility and safety are shown in evidence panels (see evidence.panel)"
     cap: 0.0
     expr_threshold: 9999.0
     organs:

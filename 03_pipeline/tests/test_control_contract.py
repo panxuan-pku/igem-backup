@@ -118,8 +118,8 @@ def test_explicit_empty_controls_are_reported_as_not_evaluated(case, tmp_path, m
                              "--mode", mode, *extra],
                             cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
-    assert "正对照未设置，本次正对照检验未评估" in report.read_text()
-    assert "正对照 top-10 命中率" not in report.read_text()
+    assert "No positive controls configured; this check was not evaluated" in report.read_text()
+    assert "Positive-control top-10 hit rate" not in report.read_text()
     results = json.loads((tmp_path / "rank.csv.audit.json").read_text())["results"]
     assert results["controls_list"] == [] and results["controls_check"] == []
     if mode == "validate":

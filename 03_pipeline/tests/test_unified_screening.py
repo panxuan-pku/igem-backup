@@ -148,7 +148,7 @@ def test_ot_fetch_filters_exact_disease_and_checks_release():
     assert fetch_snapshot(["G1"], "MONDO_0008684", [], "25.12", post=post)["records"]["G1"]["status"] == "query_failed"
 
 
-def test_cli_two_inputs_replay_and_reference_tampering(inputs, tmp_path):
+def test_cli_two_inputs_replay_and_reference_tampering(inputs, tmp_path, monkeypatch):
     import gzip
     import hashlib
     import subprocess
@@ -176,22 +176,113 @@ def test_cli_two_inputs_replay_and_reference_tampering(inputs, tmp_path):
                                "records": {gid: {"status": "ok", "associations": []}
                                            for gid in ["ENSG00000000001", "ENSG00000000002"]}}))
     common = [sys.executable, str(root / "scripts/run_screening.py"), "run", "--references", str(refs), "--ot-snapshot", str(snap)]
+    prepared_inputs = []
+    for name, kind, file_format, text, options in [
+        ("prepared_genes", "genes", "tsv", "Gene stable ID\nOLD_A\nHGNC:2\n", ["--gene-column", "Gene stable ID"]),
+        ("prepared_interval", "interval", "bed", "chr4\t99\t699\n", ["--genome-build", "GRCh38"]),
+    ]:
+        raw, prepared = tmp_path / (name + ".txt"), tmp_path / (name + ".json")
+        raw.write_text(text)
+        converted = subprocess.run([sys.executable, str(root / "scripts/prepare_screening_input.py"), kind,
+                                    "--input", str(raw), "--format", file_format, "--source", "synthetic download",
+                                    "--output", str(prepared), *options], capture_output=True, text=True)
+        assert converted.returncode == 0, converted.stderr
+        prepared_inputs.append((name, ["--input-file", str(prepared)]))
+    gene_list = tmp_path / "genes.txt"
+    gene_list.write_text("OLD_A\nHGNC:2\n")
     outputs = []
-    for name, cli in [("interval", ["--interval", "chr4:100-699"]), ("list", ["--genes", "OLD_A", "HGNC:2"])]:
+    for name, cli in [("interval", ["--interval", "chr4:100-699"]), ("list", ["--genes", "OLD_A", "HGNC:2"]),
+                      ("list_file", ["--gene-list", str(gene_list)]), *prepared_inputs]:
         output = tmp_path / name
+        input_type = "interval" if "interval" in name else "gene_list"
         result = subprocess.run([*common, *cli, "--output", str(output)], capture_output=True, text=True)
         assert result.returncode == 0, result.stdout + result.stderr
-        outputs.append(pd.read_csv(output / "ranked.csv"))
-        manifest = json.loads((output / "manifest.json").read_text())
+        assert "[OK] Screening complete" in result.stdout
+        import re
+        assert not re.search(r"[\u4e00-\u9fff]", result.stdout)
+        for generated in output.iterdir():
+            assert not re.search(r"[\u4e00-\u9fff]", generated.read_text(encoding="utf-8-sig")), generated.name
+        assert str(output / f"{input_type}_report.html") in result.stdout
+        outputs.append(pd.read_csv(output / f"{input_type}_ranked.csv"))
+        summary = pd.read_csv(output / f"{input_type}_summary.csv")
+        assert len(summary.columns) == 16
+        pd.testing.assert_frame_equal(summary, outputs[-1][summary.columns])
+        manifest = json.loads((output / f"{input_type}_manifest.json").read_text())
         assert manifest["status"] == "complete"
+        assert manifest["input"]["input_type"] == input_type
+        assert f" ({input_type})" in result.stdout
+        assert set(p.name for p in output.iterdir()) == {
+            f"{input_type}_{name}" for name in (
+                "report.html", "summary.csv", "ranked.csv", "candidates.csv",
+                "manifest.json", "config.yaml", "ot_snapshot.json",
+            )
+        }
+        from html.parser import HTMLParser
+
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.local = []
+
+            def handle_starttag(self, tag, attrs):
+                href = dict(attrs).get("href", "")
+                if tag == "a" and href and ":" not in href:
+                    self.local.append(href)
+
+        links = Links()
+        links.feed((output / f"{input_type}_report.html").read_text())
+        assert links.local
+        assert all((output / name).is_file() for name in links.local)
+        assert all(name.startswith(input_type + "_") for name in links.local)
+        assert all((output / name).is_file() for name in manifest["outputs"].values())
+        assert all((output / f"{input_type}_{name}.csv").read_bytes().startswith(b"\xef\xbb\xbf")
+                   for name in ("summary", "ranked", "candidates"))
         assert manifest["code"]["file_sha256"]
-        assert (output / "report.html").is_file()
-    assert outputs[0].gene_id.tolist() == outputs[1].gene_id.tolist()
-    assert outputs[0].consensus_score.tolist() == outputs[1].consensus_score.tolist()
+        assert manifest["output_sha256"][f"{input_type}_summary.csv"] == hashlib.sha256((output / f"{input_type}_summary.csv").read_bytes()).hexdigest()
+        if name.startswith("prepared_"):
+            assert manifest["input"]["source"] == "synthetic download"
+            assert manifest["input"]["preparation"]["original_file"]["sha256"]
+            assert manifest["optional_inputs"]["input_file"]["sha256"]
+        assert (output / f"{input_type}_report.html").is_file()
+    for actual in outputs[1:]:
+        assert outputs[0].gene_id.tolist() == actual.gene_id.tolist()
+        assert outputs[0].consensus_score.tolist() == actual.consensus_score.tolist()
     assert outputs[0].selected.tolist() == [True, False]
-    before = (tmp_path / "list/ranked.csv").read_bytes()
+    # Default directories identify the input type, including prepared JSON inputs.
+    import importlib.util
+    monkeypatch.syspath_prepend(str(root / "scripts"))
+    spec = importlib.util.spec_from_file_location("screening_cli_output_names", root / "scripts/run_screening.py")
+    cli_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli_module)
+    monkeypatch.setattr(cli_module, "ROOT", tmp_path)
+    monkeypatch.setattr(cli_module, "code_provenance", lambda: {})
+    for input_type, arguments in [("interval", ["--input-file", str(tmp_path / "prepared_interval.json")]),
+                                  ("gene_list", ["--gene-list", str(gene_list)])]:
+        monkeypatch.setattr(sys, "argv", [str(root / "scripts/run_screening.py"), *common[2:], *arguments])
+        cli_module.main()
+        directories = list((tmp_path / "03_pipeline/outputs_repro").glob(f"{input_type}_*"))
+        assert len(directories) == 1
+        assert (directories[0] / f"{input_type}_manifest.json").is_file()
+    # Incomplete optional annotation must not be reported as complete success.
+    snapshot = json.loads(snap.read_text())
+    snapshot["records"]["ENSG00000000001"] = {"status": "query_failed", "error": "synthetic outage"}
+    snap.write_text(json.dumps(snapshot))
+    gaps = subprocess.run([*common, "--interval", "chr4:100-699", "--output", str(tmp_path / "gaps")],
+                          capture_output=True, text=True)
+    assert gaps.returncode == 0, gaps.stderr
+    assert "[WARN] Ranking generated" in gaps.stdout and "[OK] Screening complete" not in gaps.stdout
+    assert "completed_with_annotation_gaps" in gaps.stdout
+    assert pd.read_csv(tmp_path / "gaps/interval_ranked.csv").consensus_score.tolist() == outputs[0].consensus_score.tolist()
+    before = (tmp_path / "list/gene_list_ranked.csv").read_bytes()
     repeated = subprocess.run([*common, "--genes", "A", "--output", str(tmp_path / "list")], capture_output=True)
-    assert repeated.returncode != 0 and (tmp_path / "list/ranked.csv").read_bytes() == before
+    assert repeated.returncode != 0 and (tmp_path / "list/gene_list_ranked.csv").read_bytes() == before
+    failed = subprocess.run([*common, "--genes", "UNKNOWN_GENE", "--output", str(tmp_path / "failed")],
+                            capture_output=True, text=True)
+    assert failed.returncode != 0
+    failed_manifest = json.loads((tmp_path / "failed/gene_list_manifest.json").read_text())
+    assert failed_manifest["status"] == "failed"
+    assert failed_manifest["input"]["input_type"] == "gene_list"
+    assert not (tmp_path / "failed/gene_list_report.html").exists()
     (refs / "hgnc.tsv").write_text("tampered")
     bad = subprocess.run([*common, "--genes", "A", "--output", str(tmp_path / "bad")], capture_output=True, text=True)
     assert bad.returncode != 0 and "checksum mismatch" in bad.stderr
@@ -221,3 +312,26 @@ def test_impc_requires_provenance_and_never_removes_candidates(inputs, tmp_path)
     path.write_text(path.read_text().replace("orthology_source", ""))
     with pytest.raises(ValueError, match="nonempty"):
         add_impc(frame, path)
+
+
+def test_reference_default_is_same_for_prepare_and_run(monkeypatch, tmp_path):
+    import importlib.util
+    import sys
+
+    root = Path(__file__).resolve().parents[2]
+    monkeypatch.syspath_prepend(str(root / "scripts"))
+    spec = importlib.util.spec_from_file_location("screening_cli_defaults", root / "scripts/run_screening.py")
+    cli = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli)
+    observed = []
+    monkeypatch.setattr(cli, "prepare", lambda directory: observed.append(directory))
+    monkeypatch.setattr(cli, "run", lambda args: observed.append(args.references.resolve()))
+    monkeypatch.chdir(tmp_path)
+    for arguments in (["prepare"], ["run", "--genes", "NSD2"]):
+        monkeypatch.setattr(sys, "argv", ["run_screening.py", *arguments])
+        cli.main()
+    assert observed == [root / "03_pipeline/data/screening_refs"] * 2
+    for arguments in (["prepare"], ["run", "--genes", "NSD2"]):
+        monkeypatch.setattr(sys, "argv", ["run_screening.py", *arguments, "--references", "custom"])
+        cli.main()
+    assert observed[2:] == [tmp_path / "custom"] * 2

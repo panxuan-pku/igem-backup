@@ -4,11 +4,11 @@
 
 ## 从克隆目录启动
 
-先按[数据和第三方接入指南](../00_docs/01_guides/VCT_SETUP.html)准备 SIGnature、模型、配套矩阵与注释；所有数据都不随 Git 交付。安装依赖使用根目录 `bash scripts/setup_envs.sh`，源码检查使用 `python3 scripts/check_release.py`。数据就绪后：
+先按[数据和第三方接入指南](../00_docs/01_guides/VCT_SETUP.html)准备 SIGnature、模型、配套矩阵与注释；所有数据都不随 Git 交付。在仓库根目录执行 `conda env create --file environment-vct.yml` 创建独立环境，再执行 `conda activate virtual-cell`（Windows / macOS / Linux 相同，无需单独安装 Python；完整步骤见根目录 README）。之后每次使用只需激活该环境；本页所有 `python` 命令均在 `virtual-cell` 环境中执行。源码检查使用 `python scripts/check_release.py`。数据就绪后：
 
 ```bash
 cd 05_virtual_cell
-../.venv/vct/bin/python web/app.py
+python web/app.py
 ```
 
 打开 `http://127.0.0.1:8377/`；数据集在页面顶部切换，不需要多个服务实例。macOS 也可双击 `启动VirtualCellTool.command`，该启动器使用同一个仓库根目录环境。通过终端启动时按 Ctrl-C 停止，不要用宽泛的 `pkill` 命令。不要沿用 `SIGnature/.venv`：旧环境含绝对路径，不可搬迁。
@@ -17,7 +17,7 @@ cd 05_virtual_cell
 
 后台服务需要停止时，先访问 `http://127.0.0.1:8377/api/health` 核对项目路径和 PID，再用 `lsof -nP -iTCP:8377 -sTCP:LISTEN`、`ps -p <PID> -o command=` 核对监听进程确为本项目，最后执行 `kill -TERM <PID>`；旧服务没有健康接口时仍须用进程命令和工作目录确认，不能按模糊名称批量停止。服务不会热重载 Python 后端；更新后端后需重启，刷新网页只能重新读取前端。
 
-服务运行期间，另开终端运行 `../.venv/vct/bin/python tests_api.py --skip-gears`，验收健康接口、三个数据集及不需要 Norman 数据的 17/19 项 API；按仓库根目录 README 下载并解压 Norman 数据后，去掉 `--skip-gears` 验收全部 19 项。测试包含 4xx 错误状态、坐标/标签/表达数量与有限值、数据来源、表达汇总/单细胞值的一致性，以及加载 MS/WS 前后的 PBMC 结果一致性；仍不是科学有效性验收。细胞数是当前交付数据的回归基准，主动更换数据时需同步核对测试预期，不能忽略失败。
+服务运行期间，另开终端运行 `python tests_api.py --skip-gears`，验收健康接口、三个数据集及不需要 Norman 数据的 17/19 项 API；按仓库根目录 README 下载并解压 Norman 数据后，去掉 `--skip-gears` 验收全部 19 项。测试包含 4xx 错误状态、坐标/标签/表达数量与有限值、数据来源、表达汇总/单细胞值的一致性，以及加载 MS/WS 前后的 PBMC 结果一致性；仍不是科学有效性验收。细胞数是当前交付数据的回归基准，主动更换数据时需同步核对测试预期，不能忽略失败。
 
 启动器、API 测试和浏览器测试均读取 `VCT_PORT`（默认 8377）。使用非默认端口时，在服务与测试命令前均加上同一 `VCT_PORT=8399`，避免连到另一服务。
 
@@ -55,7 +55,7 @@ cd 05_virtual_cell
 无需启动服务、下载模型或读取患者表达矩阵的核心回归（在本目录运行；历史面板测试会读取仓库中的小型存档报告与结果）：
 
 ```bash
-../.venv/vct/bin/python -m unittest discover -s tests -v
+python -m unittest discover -s tests -v
 ```
 
 此测试独立于下述 API/浏览器验收，覆盖引擎异常输入、基因名与返回数值对应、资源预检、归因输出保护、PBMC 注释对齐/完整发布、稀疏最大值格式、API 参数契约及初始化失败/并发，不代表真实疾病预测效果或全量模型验收。PBMC 合成数据流测试使用模型/UMAP 替身；API 测试执行实际路由与 FastAPI 校验，但跳过 app 导入时的模型启动；缓存读写用临时目录及真实小矩阵引擎。不加载真实模型或联网下载。使用现有 VCT 环境，不另加 Python 测试依赖。CIPHER 拟合至少需要两个细胞；baseline 可接受一个细胞。矩阵维度、基因名数量/唯一性及有限值必须有效；未知的返回子集基因会明确报错，不再静默过滤。
@@ -75,9 +75,9 @@ Web 输入约定：省略 `ds` 仍默认 PBMC；数据集相关端点显式传�
 浏览器回归测试还需要可选依赖：
 
 ```bash
-../.venv/vct/bin/python -m pip install -r requirements-e2e.txt
-PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright-browsers" ../.venv/vct/bin/python -m playwright install chromium
-../.venv/vct/bin/python tests_e2e_playwright.py
+python -m pip install -r requirements-e2e.txt
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright-browsers" python -m playwright install chromium
+python tests_e2e_playwright.py
 ```
 
 若已安装系统 Chrome，也可不下载 Playwright Chromium，设置 `PLAYWRIGHT_CHROMIUM_EXECUTABLE` 为 Chrome 可执行文件路径后运行同一测试。测试使用独立的无头浏览器，不操作个人资料或现有标签页。通过真实鼠标点击 UMAP、点击归因行、输入搜索/选择基因和按钮完成流程；只读取绘图坐标来定位鼠标，不调用页面内部选择函数。等待具体响应和界面状态，每步最长 180 秒，不用固定秒数猜测是否完成。测试仅检查反事实位移能计算/出图，不把非零位移当科学验收条件。
@@ -95,7 +95,7 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright-browsers" ../.venv/vct/bin/python -m 
 `src/compute_ms_attribution.py` 将效应量排序和配套结果全部完成后，先写临时目录，再发布到新运行目录：
 
 ```bash
-../.venv/vct/bin/python src/compute_ms_attribution.py --output outputs/ms_run_001
+python src/compute_ms_attribution.py --output outputs/ms_run_001
 ```
 
 省略 `--output` 时使用带时间戳的新目录；已有目标拒绝覆盖。结果包含归因矩阵、embedding、样本表、差异归因表以及矩阵列顺序 `gene_order.txt`（差异表按效应量排序，不能替代矩阵列顺序）。不会自动替换网页 `data/`，需核对整套结果后再决定如何更新展示数据。中途写入失败不发布半套运行目录，临时文件正常异常退出时清理；强制终止可能遗留临时目录。脚本仍是昂贵的全量归因，不应把这里的输出保护误认为适用于它的内存预算保护。
@@ -105,7 +105,7 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright-browsers" ../.venv/vct/bin/python -m 
 PBMC 是早期验证工具可行性的测试数据，不是本项目微缺失疾病的患者数据。直接使用现有网页数据不需要重建。需要重建时，在本目录运行：
 
 ```bash
-../.venv/vct/bin/python src/prepare_data.py \
+python src/prepare_data.py \
   --metadata /path/to/approved_pbmc_labels.csv --output outputs/pbmc_run_001
 ```
 

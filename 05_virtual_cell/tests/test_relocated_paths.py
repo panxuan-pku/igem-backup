@@ -19,7 +19,8 @@ class RelocatedPathsTests(unittest.TestCase):
             paths = runpy.run_path(str(ROOT / 'src/paths.py'))
         self.assertEqual(Path(paths['MODEL_DIR']), ROOT / 'external-signature/model_files/model_files/scimilarity')
 
-    def test_launcher_uses_repository_environment(self):
+    def test_launcher_uses_conda_environment(self):
         launcher = (ROOT / '启动VirtualCellTool.command').read_text()
-        self.assertIn('$VCT/../.venv/vct/bin/python', launcher)
-        self.assertNotIn('$VCT/../../.venv', launcher)
+        self.assertIn('run --no-capture-output -n virtual-cell python', launcher)
+        self.assertIn('"$VCT/src/web_launcher.py"', launcher)
+        self.assertNotIn('.venv', launcher)

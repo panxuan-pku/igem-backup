@@ -627,23 +627,23 @@ def cmd_extract_genes(cfg, run):
 # ------------------------------------------------------------------ report
 def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
                   known_genes=None):
-    lines = ["# scRNA-seq → 缺失区间基因 工作流报告", ""]
+    lines = ["# scRNA-seq to deletion-interval genes: workflow report", ""]
     direct = cfg.get("extract", {}).get("mode", "cnv") == "intervals-only"
-    lines.append(f"提取模式: {'intervals-only（仅区间；未运行 CNV/表达验证）' if direct else 'cnv'}")
-    lines.append(f"项目: {cfg.get('project')} · "
-                 f"样本: {', '.join(s['id'] + '(' + s['group'] + ')' for s in cfg.get('samples', [])) or '未提供（区间提取不需要样本）'}")
+    lines.append(f"Extraction mode: {'intervals-only (CNV/expression validation not run)' if direct else 'cnv'}")
+    lines.append(f"Project: {cfg.get('project')} · "
+                 f"Samples: {', '.join(s['id'] + '(' + s['group'] + ')' for s in cfg.get('samples', [])) or 'Not supplied (samples not required for interval extraction)'}")
     lines.append("")
-    lines.append("## 验收门槛 (AC)")
+    lines.append("## Acceptance criteria (AC)")
     lines.append("")
     if val.empty:
-        lines.append("（config 中未配置 known_intervals，跳过验证）")
+        lines.append("No known_intervals configured; validation skipped.")
     elif direct:
-        lines.append("| interval | 区间基因数 | CNV/表达验证 | 原因 |")
+        lines.append("| interval | Interval gene count | CNV/expression validation | Reason |")
         lines.append("|---|---|---|---|")
         for _, r in val.iterrows():
-            lines.append(f"| {r['interval']} | {r['n_genes']} | NOT_EVALUATED | 仅输入区间，未请求 CNV/表达验证 |")
+            lines.append(f"| {r['interval']} | {r['n_genes']} | NOT_EVALUATED | Interval input only; CNV/expression validation not requested |")
     else:
-        lines.append("| interval | 区间基因数 | 检出基因数 | 区间基因平均 log2FC | 自动发现覆盖率 | AC-CNV-1 | AC-CNV-2 | 原因 |")
+        lines.append("| interval | Interval gene count | Detected gene count | Mean interval-gene log2FC | Automatic discovery coverage | AC-CNV-1 | AC-CNV-2 | Reason |")
         lines.append("|---|---|---|---|---|---|---|---|")
         for _, r in val.iterrows():
             lines.append(f"| {r['interval']} | {r['n_genes']} | {r['n_genes_in_expression']} | "
@@ -652,56 +652,56 @@ def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
                          f"{r['AC-CNV-1 (auto recovers known interval)']} | "
                          f"{r['AC-CNV-2 (markers detected in data)']} | {r['reason']} |")
         lines.append("")
-        lines.append("> 区间基因平均 log2FC ≈ 0 并不否定缺失存在，也不能证明剂量补偿。"
-                     "测序深度、相对归一化、细胞组成与样本差异均可影响结果；"
-                     "缺失需独立 DNA 证据，补偿机制及蛋白水平需另行验证。")
+        lines.append("> Mean interval-gene log2FC near zero neither excludes a deletion nor establishes dosage compensation. "
+                     "Sequencing depth, relative normalization, cell composition and sample differences can affect results. "
+                     "Deletions require independent DNA evidence; compensation mechanisms and protein levels require separate validation.")
         if (val["AC-CNV-1 (auto recovers known interval)"] == "FAIL").any():
             lines.append("")
-            lines.append("> **AC-CNV-1 FAIL（负结果，预期内）**：表达型 CNV 推断未能自动恢复已知微缺失。"
-                         "胚系杂合 1–3 Mb 缺失处于 inferCNV 分辨率极限；自动片段只作探索性候选，"
-                         "candidates.csv 的生成不依赖它们。")
+            lines.append("> **AC-CNV-1 FAIL (expected negative result)**: expression-based CNV inference did not automatically recover the known microdeletion. "
+                         "Germline heterozygous deletions of 1–3 Mb are at the resolution limit of inferCNV; automatic segments are exploratory candidates. "
+                         "Generation of candidates.csv does not depend on them.")
     lines.append("")
-    lines.append("## 自动发现的缺失片段（探索性，需正交验证）")
+    lines.append("## Automatically discovered deletion segments (exploratory; require orthogonal validation)")
     lines.append("")
     if auto.empty:
-        lines.append("（未执行；intervals-only 不读取自动分段）" if direct else "（无）")
+        lines.append("Not run; intervals-only does not read automatic segments." if direct else "None")
     else:
-        lines.append("| chr | start | end | 窗口数 | mean_z | resolution |")
+        lines.append("| chr | start | end | Window count | mean_z | resolution |")
         lines.append("|---|---|---|---|---|---|")
         for _, s in auto.iterrows():
             lines.append(f"| {s['chr']} | {int(s['start'])} | {int(s['end'])} | "
                          f"{s.get('n_windows', '')} | {s.get('mean_z', float('nan')):.2f} | "
                          f"{s['resolution']} |")
     lines.append("")
-    lines.append("## 候选基因（供 L1 管线）")
+    lines.append("## Candidate genes (for the L1 pipeline)")
     lines.append("")
-    lines.append(f"- `candidates.csv`（**L1 管线输入**）: "
-                 f"{cand['gene_symbol'].nunique() if not cand.empty else 0} 个基因"
-                 f"{'（含自动片段基因）' if include_auto else '（仅已知临床区间，推荐）'}")
-    lines.append(f"- `candidates_all.csv`（已知区间 + 自动片段并集）: "
-                 f"{len(cand_all)} 个基因编号；不同编号共用符号时分行保留")
-    lines.append(f"- `auto_segment_genes.csv`（仅自动片段，探索性）")
-    lines.append("- `candidate_provenance.csv`：逐条提取来源、基因身份、参考基因组与区间坐标；"
-                 "`in_candidates` 标识是否纳入 L1 输入。")
-    lines.append("- 每个基因仅进入候选一次；存在重复提取时，`candidate_provenance` JSON 字段"
-                 "保留各候选全部来源并传到排名。多来源候选的 `deletion_id` 留空，混合来源的 `source` 为 `multiple`。")
+    lines.append(f"- `candidates.csv` (**L1 pipeline input**): "
+                 f"{cand['gene_symbol'].nunique() if not cand.empty else 0} genes"
+                 f"{' (including genes from automatic segments)' if include_auto else ' (known clinical intervals only; recommended)'}")
+    lines.append(f"- `candidates_all.csv` (union of known intervals and automatic segments): "
+                 f"{len(cand_all)} gene IDs; distinct IDs sharing a symbol are retained separately")
+    lines.append(f"- `auto_segment_genes.csv` (automatic segments only; exploratory)")
+    lines.append("- `candidate_provenance.csv`: per-extraction source, gene identity, genome build and interval coordinates; "
+                 "`in_candidates` records inclusion in L1 input.")
+    lines.append("- Each gene enters the candidate set once. For repeated extractions, the `candidate_provenance` JSON field "
+                 "retains all sources through ranking. For multiple sources, `deletion_id` is empty and mixed `source` is `multiple`.")
     lines.append("")
-    lines.append("接入 L1 管线：")
+    lines.append("Run the L1 pipeline:")
     lines.append("```bash")
     lines.append(f"cp {outdir}/candidates.csv input/candidates.csv")
     lines.append("python -m src.normalize --input input/candidates.csv "
                  "--out outputs_repro/normalized.csv --hgnc-alias data/hgnc_aliases.tsv")
     lines.append("```")
     lines.append("")
-    lines.append("## 区间基因表达 QC（防 E6 型 pivot，仅已知临床区间）")
+    lines.append("## Interval-gene expression QC (E6 check; known clinical intervals only)")
     lines.append("")
     qc_show = (qc_df[qc_df["gene_id" if "gene_id" in qc_df else "gene_name"].isin(known_genes)] if known_genes else qc_df) \
         if not qc_df.empty else qc_df
     if qc_show.empty:
-        lines.append("（NOT_EVALUATED：intervals-only 不读取表达数据）" if direct else "（无 h5ad 或无区间基因，跳过）")
+        lines.append("NOT_EVALUATED: intervals-only does not read expression data." if direct else "Skipped: no h5ad or interval genes.")
     else:
         sub = qc_show.sort_values("log2fc_patient_vs_ref").head(10)
-        lines.append("患者 vs 对照 log2FC 最低的 10 个区间基因：")
+        lines.append("Ten interval genes with the lowest patient-versus-control log2FC:")
         lines.append("")
         lines.append("| gene | chr | mean_counts_patient | mean_counts_ref | "
                      "pct_expr_patient | pct_expr_ref | log2FC |")
@@ -714,19 +714,19 @@ def _write_report(cfg, outdir, cand, cand_all, qc_df, auto, val, include_auto,
         silent = qc_show[(qc_show["found"] == True) & (qc_show["pct_expr_patient"] < 0.05)]
         if not silent.empty:
             lines.append("")
-            lines.append(f"⚠️ 患者中表达细胞比例 <5% 的区间基因（E6 风险，"
-                         f"L3 扰动工具不可用）: {', '.join(silent['gene_name'])}")
+            lines.append(f"⚠️ Interval genes expressed in <5% of patient cells (E6 risk; "
+                         f"unsupported by the L3 perturbation tool): {', '.join(silent['gene_name'])}")
     lines.append("")
-    lines.append("## 方法学说明")
+    lines.append("## Method notes")
     lines.append("")
-    lines.append("- 表达型 CNV 推断（infercnvpy）为**回退路径**：胚系杂合微缺失（1–3 Mb）"
-                 "处于其分辨率极限，自动片段只作候选，需正交方法（CNV 芯片/WGS/MLPA）确认。")
-    lines.append("- 已知临床区间的基因提取**不依赖**表达信号，AC-CNV-1 失败不影响 candidates.csv 的生成。")
-    lines.append("- 表达 QC 用 raw counts；log2FC 加 0.5 伪计数。")
+    lines.append("- Expression-based CNV inference (infercnvpy) is a **fallback**. Germline heterozygous microdeletions (1–3 Mb) are "
+                 "at its resolution limit; automatic segments require orthogonal confirmation (CNV arrays/WGS/MLPA).")
+    lines.append("- Gene extraction from known clinical intervals **does not depend** on expression. AC-CNV-1 failure does not prevent candidates.csv generation.")
+    lines.append("- Expression QC uses raw counts with a pseudocount of 0.5 for log2FC.")
     lines.append("")
-    lines.append("审计: `audit/run_extract_genes.json`（含输入/输出校验和、参数与执行状态）")
+    lines.append("Audit: `audit/run_extract_genes.json` (input/output checksums, parameters and execution status)")
     if not direct:
-        lines.append("热图是否生成请查 infercnv 审计中的 heatmap 状态；不以目录中存在同名文件作为成功依据。")
+        lines.append("Check heatmap status in the infercnv audit; an existing file alone does not establish successful generation.")
     (outdir / "cnv_report.md").write_text("\n".join(lines))
     print(f"report → {outdir / 'cnv_report.md'}")
 

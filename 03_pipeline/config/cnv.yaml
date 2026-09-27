@@ -47,7 +47,7 @@ known_intervals:
     end: 74800000   # 首轮验证修正：GTF2I 位于 74.65–74.76Mb（GENCODE v44），原 74.4Mb 终点会漏掉它
     genome_build: GRCh38
     markers: [ELN, GTF2I, LIMK1, CLIP2]
-    note: "WBS 经典 ~1.55Mb 缺失，GRCh38 近似坐标 —— 生产使用前以 DECIPHER/ClinGen 核实"
+    note: "Classic WBS ~1.55 Mb deletion, approximate GRCh38 coordinates; verify against DECIPHER/ClinGen before production use"
 
 extract:
   include_auto_in_candidates: false   # candidates.csv 默认只含已知区间；自动片段基因见 auto_segment_genes.csv

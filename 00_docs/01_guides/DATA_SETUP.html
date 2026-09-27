@@ -87,19 +87,20 @@
 </table>
 <p><a href="DATA_REQUIREMENTS.json">历史文件指纹清单</a>只登记本地旧快照的大小和 SHA256，便于辨认版本；它不是下载器，也不证明来源正确。若拿不到旧版本，可用明确登记的新版本重新分析，但不能声称逐值复现历史结果。候选清单同样要自行确定，旧清单不入库。</p>
 <h2 id="安装检查与运行">3. 安装、检查与运行</h2>
-<p>在仓库根目录运行。安装脚本会重建同名 <code>.venv/pipeline</code> 环境。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh <span class="at">--pipeline-only</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/pipeline/bin/python</span> scripts/test_pipeline.py</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/check_release.py</span></code></pre></div>
-<p>工程测试使用合成输入。<code>check_release.py</code> 默认只检查发布源码完整性，不表示真实数据已经就绪。准备好第 2 节文件后，执行：</p>
+<p>在仓库根目录运行。Conda 默认创建仅含基础依赖的 <code>virtual-screening</code> 环境；已有环境时只需激活。下方多行命令使用 Bash 续行，Windows 操作见根目录 README。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>conda env create --file environment.yml
+conda activate virtual-screening</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/test_pipeline.py --suite environment</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/check_release.py</span></code></pre></div>
+<p>开发测试需要额外安装 requirements-dev.txt，完整 CNV 测试还需 requirements-cnv.txt；具体命令见根目录 README。工程测试使用合成输入。<code>check_release.py</code> 默认只检查发布源码完整性，不表示真实数据已经就绪。准备好第 2 节文件后，执行：</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 03_pipeline</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.normalize <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.normalize <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span> input/my_candidates.csv <span class="at">--hgnc-alias</span> data/hgnc_aliases.tsv <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/normalized.csv</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.merge_evidence <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.merge_evidence <span class="dt">\</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--normalized</span> outputs_repro/my_run/normalized.csv <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/evidence.parquet <span class="at">--audit</span> outputs_repro/my_run/audit</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/pipeline/bin/python</span> <span class="at">-m</span> src.consensus_v2 <span class="dt">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> src.consensus_v2 <span class="dt">\</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evidence</span> outputs_repro/my_run/evidence.parquet <span class="at">--config</span> config/pipeline.yaml <span class="dt">\</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> rank <span class="at">--controls</span> input/my_controls.txt <span class="dt">\</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> outputs_repro/my_run/ranked.csv <span class="at">--report</span> outputs_repro/my_run/report.md</span></code></pre></div>

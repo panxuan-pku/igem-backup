@@ -52,34 +52,34 @@ def render_phenotype_panels(frame, panels):
 
     def show(value):
         if pd.isna(value) or value == "":
-            return "无数据"
+            return "No data"
         return " ".join(str(value).splitlines()).replace("|", "\\|")
 
-    lines = ["", "## 分表型证据面板", "",
-             "以下展示全部候选，沿用总排名顺序；不是表型独立排名，不改变总分、权重或候选集合。",
-             "表型—组织对应关系由配置指定；表达仅为组织背景证据，不代表表型因果或安全性。",
-             "0 表示测得的零表达；无数据不等于零表达。覆盖状态指组织列可用性，逐基因缺失另列。"]
+    lines = ["", "## Phenotype evidence panels", "",
+             "All candidates follow the overall ranking; this is not a phenotype-specific ranking and does not change scores, weights or candidates.",
+             "Phenotype-to-tissue mappings come from the configuration. Expression provides tissue context, not evidence of phenotype causality or safety.",
+             "Zero means measured zero expression; missing data is not zero. Coverage describes available tissue columns; per-gene missingness is listed separately."]
     evidence = [("clinGen_hi_score", "ClinGen HI"),
-                ("clinGen_haploinsufficiency_status", "ClinGen HI 状态"),
+                ("clinGen_haploinsufficiency_status", "ClinGen HI status"),
                 ("gnomad_pLI", "pLI"), ("gnomad_LOEUF", "LOEUF")]
     evidence = [(col, label) for col, label in evidence if col in frame.columns]
     for panel in panels:
-        status = {"complete": "组织列齐全", "partial": "覆盖不完整",
-                  "unavailable": "无法评估：无可用组织列"}[panel["coverage_status"]]
+        status = {"complete": "Complete tissue coverage", "partial": "Incomplete coverage",
+                  "unavailable": "Not evaluated: no available tissue columns"}[panel["coverage_status"]]
         lines += ["", f"### {show(panel['disease'])} / {show(panel['phenotype'])} ({show(panel['id'])})", "",
-                  f"{status}；有表达记录的候选：{panel['genes_with_expression']}/{len(frame)}。",
-                  "缺少的组织列：" + ("、".join(show(t) for t in panel["missing_tissues"]) or "无") + "。"]
+                  f"{status}; candidates with expression records: {panel['genes_with_expression']}/{len(frame)}.",
+                  "Missing tissue columns: " + (", ".join(show(t) for t in panel["missing_tissues"]) or "None") + "."]
         if panel["missing_tissues"]:
-            lines.append("请核对 HPA 源数据及合并配置；旧证据表需使用同一面板配置重新合并，不能据此推断组织不表达。")
-        headers = ["总排名（参考）", "基因", "HGNC", "总分（参考）"]
+            lines.append("Check HPA source data and merge configuration. Rebuild older evidence tables with the same panel configuration; missing data does not establish absence of tissue expression.")
+        headers = ["Overall rank (reference)", "Gene", "HGNC", "Overall score (reference)"]
         headers += [label for _, label in evidence]
-        headers += [show(t) + " nTPM" for t in panel["tissues"]] + ["逐基因组织覆盖"]
+        headers += [show(t) + " nTPM" for t in panel["tissues"]] + ["Per-gene tissue coverage"]
         lines += ["", "| " + " | ".join(headers) + " |", "| " + " | ".join(["---"] * len(headers)) + " |"]
         for _, row in frame.iterrows():
             values = [pd.to_numeric(row.get(tissue_column(t)), errors="coerce") for t in panel["tissues"]]
             n = sum(pd.notna(v) for v in values)
             cells = [row.get("rank"), row.get("input_symbol"), row.get("hgnc_id"), row.get("consensus_score")]
             cells += [row.get(col) for col, _ in evidence] + values
-            cells += [f"{n}/{len(values)}" + ("（无数据）" if n == 0 else "（覆盖不完整）" if n < len(values) else "")]
+            cells += [f"{n}/{len(values)}" + (" (no data)" if n == 0 else " (incomplete coverage)" if n < len(values) else "")]
             lines.append("| " + " | ".join(show(v) for v in cells) + " |")
     return lines

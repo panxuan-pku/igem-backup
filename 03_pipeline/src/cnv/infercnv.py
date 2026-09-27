@@ -63,7 +63,8 @@ def _import_deps():
     except ImportError as e:
         raise ImportError(
             "scanpy/infercnvpy missing from the pipeline environment. "
-            "Run 'bash scripts/setup_envs.sh' from the repository root, then retry."
+            "From the repository root, run 'conda activate virtual-screening' and "
+            "'python -m pip install -r 03_pipeline/requirements-cnv.txt', then retry."
         ) from e
     return sc, cnv
 

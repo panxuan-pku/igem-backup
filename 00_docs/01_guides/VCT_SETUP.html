@@ -33,8 +33,9 @@
 </table>
 <p>VCT 与核心候选排名管线目前独立，尚未自动串联。编码器位移不是细胞类型转化或治疗效果预测；CIPHER 是线性近似，GEARS 的训练背景也不能直接等同微缺失疾病。外部工作归属见 <a href="../../05_virtual_cell/ATTRIBUTIONS.md">ATTRIBUTIONS</a>。</p>
 <h2 id="获取第三方源码和环境">2. 获取第三方源码和环境</h2>
-<p>先安装 Python 3.11，在仓库根目录执行。安装会清除并重建 <code>.venv/pipeline</code> 和 <code>.venv/vct</code>；依赖安装需要网络。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/setup_envs.sh</span>
+<p>准备 Conda，在仓库根目录创建并激活独立的 <code>virtual-cell</code> 环境，无需单独安装 Python。已有环境时只需激活。本页 Python 命令均使用该环境；数据准备的 Bash 示例及 Windows 操作说明见根目录 README。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>conda env create --file environment-vct.yml
+conda activate virtual-cell</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> 05_tools</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/Genentech/SIGnature.git 05_tools/SIGnature</span></code></pre></div>
 <p>若目录已经存在，不要重复克隆或覆盖。VCT 直接从该 checkout 的 <code>src/</code> 导入 SIGnature，项目依赖由 <code>requirements-web.txt</code> 安装；无需再向主环境安装一套 SIGnature。独立使用第三方包时，按<a href="https://genentech.github.io/SIGnature/install.html">SIGnature 官方安装说明</a>操作。</p>
@@ -88,16 +89,16 @@
 </table>
 <p>PBMC 的准备命令（在 VCT 目录内）：</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 05_virtual_cell</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> src/prepare_data.py <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/prepare_data.py <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metadata</span> /path/to/approved_pbmc_labels.csv <span class="at">--output</span> outputs/pbmc_run_001</span></code></pre></div>
 <p>该命令生成新目录，不自动替换网页 <code>data/</code>。核对同一次生成的 <code>expr_aligned.npz</code>、<code>embeddings.npy</code>、<code>meta.csv</code>、<code>umap.npy</code>、<code>gene_order.txt</code> 后整套部署到 <code>data/</code>，不能混用不同运行的矩阵与标签。MS 归因同样生成独立输出目录；必须核对后整套部署，准备脚本不会自动完成全部网页发布步骤。</p>
 <p><a href="DATA_REQUIREMENTS.json">文件指纹清单</a>列出历史演示所用文件，可辅助核对，但不是可下载的数据包。新克隆默认没有 PBMC/MS/WS 数据；没有准备的页面功能会缺数据，不能宣称三个数据集已经可用。</p>
 <h2 id="检查并启动">5. 检查并启动</h2>
 <p>先在 VCT 目录做离线回归，要求 SIGnature checkout 和 VCT 依赖可导入；历史实数据回归在缺少本地归档时明确跳过：</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> tests <span class="at">-v</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">../.venv/vct/bin/python</span> web/app.py</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> tests <span class="at">-v</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> web/app.py</span></code></pre></div>
 <p>浏览器访问 <code>http://127.0.0.1:8377/</code>。macOS 双击 <code>启动VirtualCellTool.command</code> 使用同一环境。服务启动不代表所有数据集已准备好。</p>
-<p>三个数据集都准备好后，可在另一个终端执行 <code>../.venv/vct/bin/python tests_api.py --skip-gears</code>；GEARS 完整数据就绪后再去掉该选项。历史 API 测试含特定细胞数，主动更换数据时需核对预期；测试通过仍不是科学有效性证明。更详细的端口、停止、浏览器测试和方法边界见 <a href="../../05_virtual_cell/README.md">VCT README</a>。</p>
+<p>三个数据集都准备好后，可在另一个终端执行 <code>python tests_api.py --skip-gears</code>；GEARS 完整数据就绪后再去掉该选项。历史 API 测试含特定细胞数，主动更换数据时需核对预期；测试通过仍不是科学有效性证明。更详细的端口、停止、浏览器测试和方法边界见 <a href="../../05_virtual_cell/README.md">VCT README</a>。</p>
 <h2 id="本次改动的验证边界">6. 本次改动的验证边界</h2>
 <p>本次检查源码迁移、忽略规则与工程回归；没有重新下载全部模型/疾病数据，没有完成从远程新克隆到全部演示的一键重建。独立复现需在 push 后的新克隆、新环境中继续进行，不能直接沿用本机历史输出。</p>
 </main></body></html>

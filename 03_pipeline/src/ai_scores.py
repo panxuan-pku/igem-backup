@@ -10,8 +10,8 @@ Output contract (docs/api/ai_scores.md): outputs/ai_scores.csv with columns
   hgnc_id, DeepLOF_score
 read by src/consensus_v2.py via `--ai-scores`.
 
-Usage (from 03_pipeline/):
-  ../.venv/pipeline/bin/python -m src.ai_scores deeplof \
+Usage (from 03_pipeline/, after conda activate virtual-screening):
+  python -m src.ai_scores deeplof \
       --scores data/DeepLOF_scores.csv \
       --aliases data/hgnc_aliases.tsv \
       --out outputs/ai_scores.csv

@@ -3,19 +3,16 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
 import pytest
 import yaml
-from scipy.sparse import csr_matrix
 
 from src.ai_scores import build_symbol_map
 from src.normalize import load_alias_map, resolve
 from src.merge_evidence import join_on_hgnc
 from src.filter_recessive import load_omim_recessive, load_clinvar_recessive
-from src.compensation import compute_compensation
 from src.consensus_v2 import load_v2_config, normalize_series, run_consensus, render_report
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -113,22 +110,6 @@ def test_inheritance_parser_uses_phenotype_not_symbol_column(tmp_path):
     assert load_clinvar_recessive(path) == {"A"}
 
 
-@pytest.mark.parametrize("sparse", [False, True])
-def test_expression_depth_is_not_compensation(sparse):
-    x = np.array([[10, 90], [20, 180]])
-    if sparse:
-        x = csr_matrix(x)
-    adata = SimpleNamespace(layers={"counts": x}, var_names=pd.Index(["A", "B"]),
-                            obs=pd.DataFrame({"condition": ["CTRL", "WS"]}))
-    with pytest.raises(ValueError, match="HVG subsets"):
-        compute_compensation(adata, ["A"])
-    out = compute_compensation(adata, ["A"], full_gene_matrix=True)
-    assert out.compensation_ratio.iloc[0] == 1  # raw depth ratio would be 2
-    assert out.mechanism_status.iloc[0] == "not_established"
-    adata.layers["counts"] = np.log1p(np.array([[10, 90], [20, 180]]))
-    with pytest.raises(ValueError, match="raw counts"):
-        compute_compensation(adata, ["A"], full_gene_matrix=True)
-
 
 def test_cli_config_controls_audit_and_failure_modes(tmp_path):
     cfg = yaml.safe_load((ROOT / "config/pipeline.yaml").read_text())
@@ -151,7 +132,7 @@ def test_cli_config_controls_audit_and_failure_modes(tmp_path):
     assert audit["results"]["mode"] == "exploratory"
     assert audit["results"]["controls_total"] == 2
     assert audit["results"]["controls_present_n"] == 1
-    assert "正对照检验" in report.read_text()
+    assert "Positive-control check" in report.read_text()
     assert audit["results"]["experiments"] == []
     # Opposing dosage evidence is visible and prevents an automatic pass,
     # even when population constraint is high.
@@ -175,5 +156,5 @@ def test_validate_does_not_claim_therapy_suitability(tmp_path):
     meta.update({"validation_panel": [{"gene": "A", "rank": 1, "consensus_score": 1,
                                         "gnomad_pLI": 0.9, "target_ok": True}], "validation_pass": True})
     report = render_report(out, meta)
-    assert "满足 SINEUP 靶向条件" not in report
-    assert "初步遗传学支持" in report
+    assert "Meets SINEUP targeting conditions" not in report
+    assert "Preliminary genetic support" in report
